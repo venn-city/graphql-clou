@@ -1,0 +1,46 @@
+{
+  "name": "@venncity/graphql-clou",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Venn Engineering",
+  "description": "a mono-repo for sequelize-based graphql opencrud data-access packages",
+  "scripts": {
+    "preinstall": "node ./scripts/verifyNodeVersion.js",
+    "commit": "git-cz",
+    "exec-changed": "./scripts/executeOnChanged.js",
+    "bootstrap": "lerna bootstrap",
+    "new:package": "hygen package new",
+    "test:ci": "export JEST_JUNIT_OUTPUT=`pwd`/reports/junit/ && yarn exec-changed lerna exec --concurrency 1 'JEST_JUNIT_OUTPUT=$JEST_JUNIT_OUTPUT/\\$LERNA_PACKAGE_NAME-test-results.xml yarn test:ci'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "license": "ISC",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@venncity/coverage-police": "^1.1.1"
+  },
+  "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.0.9",
+    "lerna": "^3.18.3",
+    "lint-staged": "^9.4.2",
+    "typescript": "^3.6.4"
+  }
+}

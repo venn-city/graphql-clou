@@ -1,0 +1,132 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: venncity/circleci
+
+jobs:
+  checkout:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Authenticate with NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && cp .npmrc ~/.npmrc
+      - run:
+          name: install Lerna
+          command: cd .. && yarn global add lerna
+      - run:
+          name: changed packages
+          command: export PATH="$PATH:$(yarn global bin)" && lerna changed > lerna-changed.txt && lerna changed
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "lerna-changed.txt" }}
+      - run:
+          name: bootstrap relevant packages
+          command: yarn exec-changed lerna bootstrap && yarn lerna run build
+      - save_cache:
+          paths:
+            - ~/.cache
+          key: v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "lerna-changed.txt" }}
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  test:
+    <<: *defaults
+    environment:
+      ENV: test
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Run tests
+          command: |
+            yarn test:ci
+      - run:
+          name: Authenticate with NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && cp .npmrc ~/.npmrc
+      - store_test_results:
+          path: reports/junit/@venncity
+      - store_artifacts:
+          path: reports/junit/@venncity
+      - run:
+          name: Coverage Enforce
+          command: |
+            yarn global add @venncity/coverage-police
+            yarn exec-changed lerna exec 'COVERAGE_PROJECT_NAME=$LERNA_PACKAGE_NAME PATH="$PATH:$(yarn global bin)" coverage-enforce'
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Run lint
+          command: |
+            export LINT_JUNIT_OUTPUT=`pwd`/reports/junit/
+            yarn exec-changed lerna exec 'LINT_JUNIT_OUTPUT=$LINT_JUNIT_OUTPUT/\$LERNA_PACKAGE_NAME-lint-results.xml yarn lint:ci'
+            yarn exec-changed lerna run type-check
+      - store_test_results:
+          path: reports/junit/@venncity
+      - store_artifacts:
+          path: reports/junit/@venncity
+  bump-version:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Running version and changelog generate
+          command: |
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "<email>"
+            git config user.name "Deployment Bot"
+            git config --global push.default simple
+            export GITHUB_TOKEN=`aws ssm get-parameters --names "/externalProviders/github/vennCI/ACCESS_TOKEN" --with-decryption | jq -r '.Parameters[0].Value'`
+            git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "git@github.com:"
+            git stash
+            node_modules/.bin/lerna version --yes
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && cp .npmrc ~/.npmrc
+      - run:
+          name: Publish packages
+          command: node_modules/.bin/lerna publish from-package --yes
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - checkout:
+          context: venn-global
+      - test:
+          context: venn-global
+          requires:
+            - checkout
+      - lint:
+          context: venn-global
+          requires:
+            - checkout
+      - bump-version:
+          context: venn-global
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
+            - lint
+      - publish:
+          context: venn-global
+          requires:
+            - bump-version
+          filters:
+            branches:
+              only:
+                - master

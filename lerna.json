@@ -1,0 +1,18 @@
+{
+    "lerna": "3.18.3",
+    "version": "fixed",
+    "npmClient": "yarn",
+    "useWorkspaces": true,
+    "command": {
+      "publish": {
+        "conventionalCommits": true,
+        "allowBranch": "master"
+      },
+      "version": {
+        "message": "chore(release): update versions [ci skip]"
+      }
+    },
+    "packages": [
+      "packages/*"
+    ]
+  }

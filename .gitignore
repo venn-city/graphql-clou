@@ -1,0 +1,9 @@
+node_modules/
+.idea
+.project
+.settings
+.init_lock
+**/**/coverage
+**/**/junit.xml
+lerna-changed.temp
+lerna-changed.txt
