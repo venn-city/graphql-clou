@@ -5,7 +5,7 @@
         "path": "./test/datamodel.graphql"
       },
       "sdl": {
-        "path": "./test/openCrud.graphql"
+        "path": "./test/openCRUD.graphql"
       }
     }
   }
