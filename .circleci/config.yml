@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: venncity/circleci
+    - image: venncity/circleci:10-0.1.17
 
 jobs:
   checkout:
