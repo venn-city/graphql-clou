@@ -1,0 +1,12 @@
+{
+  "graphql": {
+    "schema": {
+      "datamodel": {
+        "path": "./test/datamodel.graphql"
+      },
+      "sdl": {
+        "path": "./test/openCRUD.graphql"
+      }
+    }
+  }
+}

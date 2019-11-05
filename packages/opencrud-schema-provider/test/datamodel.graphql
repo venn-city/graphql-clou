@@ -1,0 +1,69 @@
+directive @unique on FIELD_DEFINITION | FIELD
+directive @pgTable(name: String) on FIELD_DEFINITION | FIELD | OBJECT
+directive @pgColumn(name: String) on FIELD_DEFINITION | FIELD
+directive @default(value: ANY) on FIELD_DEFINITION | FIELD
+directive @pgRelation(column: String) on FIELD_DEFINITION | FIELD
+directive @relationTable on FIELD_DEFINITION | FIELD
+directive @relation(link: String, name: String) on FIELD_DEFINITION | FIELD
+directive @vnCascade(direct: OPERATION, inverse: OPERATION) on FIELD_DEFINITION | FIELD
+
+union ANY = String | Int
+
+enum OPERATION {
+  DELETE
+  DISCONNECT
+  DISCONNECT_DELETE
+}
+
+type Ministry @pgTable(name: "ministries") {
+  id:                     ID!                     @unique
+  name:                   String                  @pgColumn(name: "name")
+  minister:               Minister                @pgRelation(column: "minister_id")
+  government:             Government              @pgRelation(column: "government_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type Minister @pgTable(name: "ministers") {
+  id:                     ID!                     @unique
+  name:                   String                  @pgColumn(name: "name")
+  votes:                  [Vote]                  @relation(link: TABLE, name:"MinisterVotesRelation")
+  ministry:               Ministry                @pgRelation
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type Government @pgTable(name: "governments") {
+  id:                     ID!                     @unique
+  name:                   String                  @pgColumn(name: "name")
+  ministries:             [Ministry]              @pgRelation
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type Vote @pgTable(name: "votes") {
+  id:                     ID!                     @unique
+  name:                   String                  @pgColumn(name: "name")
+  minister:               Minister                @relation(link: TABLE, name:"MinisterVotesRelation")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type MinisterVotesRelation @relationTable @pgTable(name: "ministers_votes_join_table") {
+  # prisma inserts the id as null in the db so we keep it as a dummy id
+  id:                     ID!                     @unique @pgColumn(name: "dummy_id")
+  minister:               Minister!               @pgColumn(name: "minister_id")
+  vote:                   Vote!                   @pgColumn(name: "vote_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
