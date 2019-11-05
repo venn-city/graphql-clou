@@ -10,7 +10,13 @@
     "exec-changed": "./scripts/executeOnChanged.js",
     "bootstrap": "lerna bootstrap",
     "new:package": "hygen package new",
-    "test:ci": "export JEST_JUNIT_OUTPUT=`pwd`/reports/junit/ && yarn exec-changed lerna exec --concurrency 1 'JEST_JUNIT_OUTPUT=$JEST_JUNIT_OUTPUT/\\$LERNA_PACKAGE_NAME-test-results.xml yarn test:ci'"
+    "test:ci": "export JEST_JUNIT_OUTPUT=`pwd`/reports/junit/ && yarn exec-changed lerna exec --concurrency 1 'JEST_JUNIT_OUTPUT=$JEST_JUNIT_OUTPUT/\\$LERNA_PACKAGE_NAME-test-results.xml yarn test:ci'",
+    "db:bootstrap:local": "yarn db:start && yarn db:createSchema && yarn db:migrate",
+    "db:bootstrap": "yarn db:createSchema && yarn db:migrate",
+    "db:createSchema": "wait-on -d 5000 tcp:5432 && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -c \"create schema venn;\"",
+    "db:migrate": "wait-on tcp:5432 && NODE_ENV=test sequelize-cli db:migrate",
+    "db:seed": "NODE_ENV=test sequelize-cli db:seed:all",
+    "db:start": "docker-compose up -d"
   },
   "husky": {
     "hooks": {
@@ -41,6 +47,7 @@
     "husky": "^3.0.9",
     "lerna": "^3.18.3",
     "lint-staged": "^9.4.2",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "wait-on": "^3.3.0"
   }
 }
