@@ -7,3 +7,4 @@ node_modules/
 **/**/junit.xml
 lerna-changed.temp
 lerna-changed.txt
+.env

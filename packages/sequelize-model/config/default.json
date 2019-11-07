@@ -1,0 +1,13 @@
+{
+  "db": {
+    "host": "localhost",
+    "user": "postgres",
+    "password": "postgres",
+    "name": "venn",
+    "schema": "venn"
+  },
+  "sequelize": {
+    "dialect": "postgres",
+    "logging": "false"
+  }
+}

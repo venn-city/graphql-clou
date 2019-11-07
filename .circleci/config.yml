@@ -11,6 +11,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Generate .env
+          command: cp .env.example .env
+      - run:
           name: Authenticate with NPM
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && cp .npmrc ~/.npmrc
       - run:
@@ -33,15 +36,26 @@ jobs:
           root: ~/repo
           paths: .
   test:
-    <<: *defaults
+    working_directory: ~/repo
+    docker:
+      - image: venncity/circleci:10-0.1.17
+      - image: kartoza/postgis:11.0-2.5
+        environment:
+          POSTGRES_DB: venn
+          POSTGRES_PASS: postgres
+          POSTGRES_USER: postgres
     environment:
       ENV: test
     steps:
       - attach_workspace:
           at: ~/repo
       - run:
+          name: Install psql
+          command: sudo apt-get install -y postgresql-client
+      - run:
           name: Run tests
           command: |
+            yarn db:bootstrap
             yarn test:ci
       - run:
           name: Authenticate with NPM
