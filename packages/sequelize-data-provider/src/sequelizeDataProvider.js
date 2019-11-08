@@ -6,6 +6,7 @@ const async = require('async');
 const { openCrudToSequelize } = require('@venncity/graphql-transformers');
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
 

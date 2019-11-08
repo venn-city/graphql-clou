@@ -6,9 +6,9 @@ describe('sequelizeDataProvider', () => {
   let government;
   let ministry1;
   let ministry2;
-  let governmentName = hacker.phrase();
-  let ministryName1 = hacker.phrase();
-  let ministryName2 = hacker.phrase();
+  const governmentName = hacker.phrase();
+  const ministryName1 = hacker.phrase();
+  const ministryName2 = hacker.phrase();
 
   beforeAll(async () => {
     government = await sequelizeDataProvider.createEntity('Government', { name: governmentName });
@@ -31,33 +31,33 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('getEntity', async () => {
-    let fetchedGovernment = await sequelizeDataProvider.getEntity('Government', { name: governmentName });
+    const fetchedGovernment = await sequelizeDataProvider.getEntity('Government', { name: governmentName });
     expect(fetchedGovernment).toMatchObject(government);
   });
 
   test('getAllEntities', async () => {
-    let fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName } });
+    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName } });
     expect(fetchedGovernments).toHaveLength(1);
     expect(fetchedGovernments[0]).toMatchObject(government);
   });
 
   test('getEntitiesConnection', async () => {
-    let fetchedGovernmentConnection = await sequelizeDataProvider.getEntitiesConnection('Government', { where: { name: governmentName } });
+    const fetchedGovernmentConnection = await sequelizeDataProvider.getEntitiesConnection('Government', { where: { name: governmentName } });
     expect(fetchedGovernmentConnection).toHaveProperty('aggregate', { __typename: 'AggregateGovernment', count: 1 });
   });
 
   test('getRelatedEntity', async () => {
-    let fetchedGovernment = await sequelizeDataProvider.getRelatedEntity('Ministry', ministry1.id, 'government');
+    const fetchedGovernment = await sequelizeDataProvider.getRelatedEntity('Ministry', ministry1.id, 'government');
     expect(fetchedGovernment).toMatchObject(government);
   });
 
   test('getRelatedEntityId', async () => {
-    let fetchedGovernmentId = await sequelizeDataProvider.getRelatedEntityId('Ministry', ministry1.id, 'government');
+    const fetchedGovernmentId = await sequelizeDataProvider.getRelatedEntityId('Ministry', ministry1.id, 'government');
     expect(fetchedGovernmentId).toEqual(government.id);
   });
 
   test('getRelatedEntities', async () => {
-    let fetchedMinistries = await sequelizeDataProvider.getRelatedEntities('Government', government.id, 'ministries');
+    const fetchedMinistries = await sequelizeDataProvider.getRelatedEntities('Government', government.id, 'ministries');
     expect(
       fetchedMinistries.sort().map(m =>
         mapKeys(m, (v, k) => {
@@ -71,13 +71,13 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('getRelatedEntityIds', async () => {
-    let fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries');
+    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries');
     expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id].sort());
   });
 
   test('createEntity', async () => {
-    let createdGovernmentName = hacker.phrase();
-    let createdGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
+    const createdGovernmentName = hacker.phrase();
+    const createdGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
     expect(createdGovernment).toMatchObject({
       name: createdGovernmentName,
       createdAt: expect.any(Date),
@@ -88,10 +88,10 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('updateEntity', async () => {
-    let createdGovernmentName = hacker.phrase();
-    let updatedGovernmentName = hacker.phrase();
+    const createdGovernmentName = hacker.phrase();
+    const updatedGovernmentName = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
-    let updatedGovernment = await sequelizeDataProvider.updateEntity(
+    const updatedGovernment = await sequelizeDataProvider.updateEntity(
       'Government',
       {
         name: updatedGovernmentName
@@ -110,22 +110,22 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('deleteEntity', async () => {
-    let createdGovernmentName = hacker.phrase();
+    const createdGovernmentName = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
     await sequelizeDataProvider.deleteEntity('Government', { name: createdGovernmentName });
-    let deletedGovernment = await sequelizeDataProvider.getEntity('Government', {
+    const deletedGovernment = await sequelizeDataProvider.getEntity('Government', {
       name: createdGovernmentName
     });
     expect(deletedGovernment).toBeFalsy();
   });
 
   test('updateManyEntities', async () => {
-    let createdGovernmentName1 = hacker.phrase();
-    let createdGovernmentName2 = hacker.phrase();
-    let updatedGovernmentName = hacker.phrase();
+    const createdGovernmentName1 = hacker.phrase();
+    const createdGovernmentName2 = hacker.phrase();
+    const updatedGovernmentName = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName1 });
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName2 });
-    let updatedGovernments = await sequelizeDataProvider.updateManyEntities(
+    const updatedGovernments = await sequelizeDataProvider.updateManyEntities(
       'Government',
       {
         name: updatedGovernmentName
@@ -146,9 +146,8 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('deleteManyEntities', async () => {
-    let createdGovernmentName1 = hacker.phrase();
-    let createdGovernmentName2 = hacker.phrase();
-    let updatedGovernmentName = hacker.phrase();
+    const createdGovernmentName1 = hacker.phrase();
+    const createdGovernmentName2 = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName1 });
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName2 });
     await sequelizeDataProvider.deleteManyEntities('Government', {
