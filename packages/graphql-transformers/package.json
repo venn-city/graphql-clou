@@ -1,6 +1,6 @@
 {
   "name": "@venncity/graphql-transformers",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     ]
   },
   "dependencies": {
-    "@venncity/clou-utils": "^1.0.0",
+    "@venncity/clou-utils": "^1.1.0",
     "@venncity/opencrud-schema-provider": "^1.0.0",
     "@venncity/sequelize-model": "^1.0.0",
     "lodash": "^4.17.15",
