@@ -1,0 +1,49 @@
+{
+  "name": "@venncity/sequelize-data-provider",
+  "version": "1.0.0",
+  "author": "Venn Engineering",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "test:watch": "npm run test -- --watchAll",
+    "lint": "npx eslint --fix src",
+    "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
+    "lint:ci": "npx eslint src --format junit -o $LINT_JUNIT_OUTPUT",
+    "generate-opencrud-schema": "node ./scripts/generateOpenCRUDSchema.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "@venncity/opencrud-schema-provider": "^1.2.0",
+    "@venncity/graphql-transformers": "^1.0.0",
+    "@venncity/nested-config": "^1.2.6",
+    "async": "^3.1.0",
+    "lodash": "^4.17.15",
+    "sequelize": "^5.21.2"
+  },
+  "devDependencies": {
+    "@venncity/eslint-config": "^1.0.11",
+    "@venncity/prettier-config-server": "^1.1.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "faker": "^4.1.0",
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "jest-junit": "^9.0.0",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2"
+  }
+}
