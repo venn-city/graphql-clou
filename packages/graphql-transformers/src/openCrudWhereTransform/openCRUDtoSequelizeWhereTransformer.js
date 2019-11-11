@@ -1,4 +1,4 @@
-const { drop, endsWith, trimEnd, isNil, isEmpty, isArray, map, flatMap, lowerFirst, isString, snakeCase } = require('lodash');
+const { drop, endsWith, trimEnd, isNil, isEmpty, isArray, map, flatMap, lowerFirst, isString } = require('lodash');
 const Sequelize = require('sequelize');
 require('@venncity/nested-config')(__dirname);
 let opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
@@ -241,7 +241,8 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
       if (isString(fieldName) && getField(openCrudSchema, relatedEntityName, fieldName)) {
         const pathWithoutRoot = drop(pathWithinSchema, 1);
         const ancestorRelations = isEmptyArray(pathWithoutRoot) ? '' : `${pathWithoutRoot.join('.')}.`;
-        return `$${ancestorRelations}${associationAlias}.${snakeCase(fieldName)}$`;
+        const relatedColumnName = sq[relatedEntityName].rawAttributes[fieldName].field;
+        return `$${ancestorRelations}${associationAlias}.${relatedColumnName}$`;
       }
       return fieldName;
     } // TODO: also handle: entity: null - e.g. parentEntity { childEntity: null}
