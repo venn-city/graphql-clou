@@ -18,7 +18,7 @@ enum OPERATION {
 type Ministry @pgTable(name: "ministries") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
-  minister:               Minister                @pgRelation(column: "minister_id")
+  minister:               Minister                @pgRelation(column: "minister_id") @vnCascade(direct: DISCONNECT)
   government:             Government              @pgRelation(column: "government_id")
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
@@ -29,8 +29,8 @@ type Ministry @pgTable(name: "ministries") {
 type Minister @pgTable(name: "ministers") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
-  votes:                  [Vote]                  @relation(link: TABLE, name:"MinisterVotesRelation")
-  ministry:               Ministry                @pgRelation
+  votes:                  [Vote]                  @relation(link: TABLE, name:"MinisterVotesRelation") @vnCascade(direct: DELETE)
+  ministry:               Ministry                @pgRelation @vnCascade(direct: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
   deletedAt:              DateTime                @pgColumn(name: "deleted_at")
@@ -40,7 +40,7 @@ type Minister @pgTable(name: "ministers") {
 type Government @pgTable(name: "governments") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
-  ministries:             [Ministry]              @pgRelation
+  ministries:             [Ministry]              @pgRelation @vnCascade(direct: DISCONNECT_DELETE, inverse: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
   deletedAt:              DateTime                @pgColumn(name: "deleted_at")
@@ -50,7 +50,7 @@ type Government @pgTable(name: "governments") {
 type Vote @pgTable(name: "votes") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
-  minister:               Minister                @relation(link: TABLE, name:"MinisterVotesRelation")
+  minister:               Minister                @relation(link: TABLE, name:"MinisterVotesRelation") @vnCascade(direct: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
   deletedAt:              DateTime                @pgColumn(name: "deleted_at")
@@ -58,7 +58,7 @@ type Vote @pgTable(name: "votes") {
 }
 
 type MinisterVotesRelation @relationTable @pgTable(name: "ministers_votes_join_table") {
-  # prisma inserts the id as null in the db so we keep it as a dummy id
+  # TODO: no longer need dummy_id
   id:                     ID!                     @unique @pgColumn(name: "dummy_id")
   minister:               Minister!               @pgColumn(name: "minister_id")
   vote:                   Vote!                   @pgColumn(name: "vote_id")
