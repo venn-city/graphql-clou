@@ -7,8 +7,6 @@ describe('sequelizeDataProvider', () => {
   let ministry1;
   let ministry2;
   let minister;
-  let vote1;
-  let vote2;
   const governmentName = hacker.phrase();
   const ministryName1 = hacker.phrase();
   const ministryName2 = hacker.phrase();
@@ -37,7 +35,7 @@ describe('sequelizeDataProvider', () => {
     minister = await sequelizeDataProvider.createEntity('Minister', {
       name: ministerName
     });
-    vote1 = await sequelizeDataProvider.createEntity('Vote', {
+    await sequelizeDataProvider.createEntity('Vote', {
       name: voteName1,
       minister: {
         connect: {
@@ -45,7 +43,7 @@ describe('sequelizeDataProvider', () => {
         }
       }
     });
-    vote2 = await sequelizeDataProvider.createEntity('Vote', {
+    await sequelizeDataProvider.createEntity('Vote', {
       name: voteName2,
       minister: {
         connect: {
