@@ -6,9 +6,13 @@ describe('sequelizeDataProvider', () => {
   let government;
   let ministry1;
   let ministry2;
+  let minister;
   const governmentName = hacker.phrase();
   const ministryName1 = hacker.phrase();
   const ministryName2 = hacker.phrase();
+  const ministerName = hacker.phrase();
+  const voteName1 = hacker.phrase();
+  const voteName2 = hacker.phrase();
 
   beforeAll(async () => {
     government = await sequelizeDataProvider.createEntity('Government', { name: governmentName });
@@ -25,6 +29,25 @@ describe('sequelizeDataProvider', () => {
       government: {
         connect: {
           id: government.id
+        }
+      }
+    });
+    minister = await sequelizeDataProvider.createEntity('Minister', {
+      name: ministerName
+    });
+    await sequelizeDataProvider.createEntity('Vote', {
+      name: voteName1,
+      minister: {
+        connect: {
+          id: minister.id
+        }
+      }
+    });
+    await sequelizeDataProvider.createEntity('Vote', {
+      name: voteName2,
+      minister: {
+        connect: {
+          id: minister.id
         }
       }
     });
@@ -73,6 +96,25 @@ describe('sequelizeDataProvider', () => {
   test('getRelatedEntityIds', async () => {
     const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries');
     expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id].sort());
+  });
+
+  test('getRelatedEntityIds with args', async () => {
+    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries', {
+      first: 1,
+      orderBy: 'createdAt_ASC'
+    });
+    expect(fetchedMinistryIds).toHaveLength(1);
+    expect(fetchedMinistryIds[0]).toEqual(ministry1.id);
+  });
+
+  test('getRelatedEntityIds with args for nXm relation', async () => {
+    const fetchedVoteIds = await sequelizeDataProvider.getRelatedEntityIds('Minister', minister.id, 'votes', {
+      first: 1,
+      orderBy: 'createdAt_ASC'
+    });
+    // TODO: for now ignore these params as sequelize does not support them in nested nXm relations.
+    // https://github.com/sequelize/sequelize/issues/4376
+    expect(fetchedVoteIds).toHaveLength(2);
   });
 
   test('createEntity', async () => {

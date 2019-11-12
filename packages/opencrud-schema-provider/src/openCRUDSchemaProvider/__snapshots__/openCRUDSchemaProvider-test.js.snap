@@ -13123,6 +13123,12 @@ Object {
               },
               "name": "pgRelation",
             },
+            Object {
+              "arguments": Object {
+                "direct": "DISCONNECT",
+              },
+              "name": "vnCascade",
+            },
           ],
           "idStrategy": null,
           "isCreatedAt": false,
@@ -13142,6 +13148,12 @@ Object {
               Object {
                 "arguments": Object {},
                 "name": "pgRelation",
+              },
+              Object {
+                "arguments": Object {
+                  "direct": "DISCONNECT",
+                },
+                "name": "vnCascade",
               },
             ],
             "idStrategy": null,
@@ -13220,7 +13232,14 @@ Object {
                 "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
-                "directives": Array [],
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "direct": "DELETE",
+                    },
+                    "name": "vnCascade",
+                  },
+                ],
                 "idStrategy": null,
                 "isCreatedAt": false,
                 "isId": false,
@@ -13235,7 +13254,14 @@ Object {
                   "comments": Array [],
                   "databaseName": null,
                   "defaultValue": null,
-                  "directives": Array [],
+                  "directives": Array [
+                    Object {
+                      "arguments": Object {
+                        "direct": "DISCONNECT",
+                      },
+                      "name": "vnCascade",
+                    },
+                  ],
                   "idStrategy": null,
                   "isCreatedAt": false,
                   "isId": false,
@@ -13312,7 +13338,14 @@ Object {
                       "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
-                      "directives": Array [],
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
+                        },
+                      ],
                       "idStrategy": null,
                       "isCreatedAt": false,
                       "isId": false,
@@ -13440,6 +13473,12 @@ Object {
                   Object {
                     "arguments": Object {},
                     "name": "pgRelation",
+                  },
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
                   },
                 ],
                 "idStrategy": null,
@@ -13592,6 +13631,13 @@ Object {
                 "arguments": Object {},
                 "name": "pgRelation",
               },
+              Object {
+                "arguments": Object {
+                  "direct": "DISCONNECT_DELETE",
+                  "inverse": "DISCONNECT",
+                },
+                "name": "vnCascade",
+              },
             ],
             "idStrategy": null,
             "isCreatedAt": false,
@@ -13673,6 +13719,13 @@ Object {
                   Object {
                     "arguments": Object {},
                     "name": "pgRelation",
+                  },
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT_DELETE",
+                      "inverse": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
                   },
                 ],
                 "idStrategy": null,
@@ -13959,7 +14012,14 @@ Object {
           "comments": Array [],
           "databaseName": null,
           "defaultValue": null,
-          "directives": Array [],
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "direct": "DELETE",
+              },
+              "name": "vnCascade",
+            },
+          ],
           "idStrategy": null,
           "isCreatedAt": false,
           "isId": false,
@@ -13974,7 +14034,14 @@ Object {
             "comments": Array [],
             "databaseName": null,
             "defaultValue": null,
-            "directives": Array [],
+            "directives": Array [
+              Object {
+                "arguments": Object {
+                  "direct": "DISCONNECT",
+                },
+                "name": "vnCascade",
+              },
+            ],
             "idStrategy": null,
             "isCreatedAt": false,
             "isId": false,
@@ -14051,7 +14118,14 @@ Object {
                 "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
-                "directives": Array [],
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
+                  },
+                ],
                 "idStrategy": null,
                 "isCreatedAt": false,
                 "isId": false,
@@ -14180,6 +14254,12 @@ Object {
               "arguments": Object {},
               "name": "pgRelation",
             },
+            Object {
+              "arguments": Object {
+                "direct": "DISCONNECT",
+              },
+              "name": "vnCascade",
+            },
           ],
           "idStrategy": null,
           "isCreatedAt": false,
@@ -14201,6 +14281,12 @@ Object {
                   "column": "minister_id",
                 },
                 "name": "pgRelation",
+              },
+              Object {
+                "arguments": Object {
+                  "direct": "DISCONNECT",
+                },
+                "name": "vnCascade",
               },
             ],
             "idStrategy": null,
@@ -14286,6 +14372,12 @@ Object {
                     },
                     "name": "pgRelation",
                   },
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
+                  },
                 ],
                 "idStrategy": null,
                 "isCreatedAt": false,
@@ -14331,6 +14423,13 @@ Object {
                     Object {
                       "arguments": Object {},
                       "name": "pgRelation",
+                    },
+                    Object {
+                      "arguments": Object {
+                        "direct": "DISCONNECT_DELETE",
+                        "inverse": "DISCONNECT",
+                      },
+                      "name": "vnCascade",
                     },
                   ],
                   "idStrategy": null,
@@ -14413,6 +14512,13 @@ Object {
                         Object {
                           "arguments": Object {},
                           "name": "pgRelation",
+                        },
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT_DELETE",
+                            "inverse": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
                         },
                       ],
                       "idStrategy": null,
@@ -14809,6 +14915,13 @@ Object {
               "arguments": Object {},
               "name": "pgRelation",
             },
+            Object {
+              "arguments": Object {
+                "direct": "DISCONNECT_DELETE",
+                "inverse": "DISCONNECT",
+              },
+              "name": "vnCascade",
+            },
           ],
           "idStrategy": null,
           "isCreatedAt": false,
@@ -14915,6 +15028,12 @@ Object {
                     },
                     "name": "pgRelation",
                   },
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
+                  },
                 ],
                 "idStrategy": null,
                 "isCreatedAt": false,
@@ -14934,6 +15053,12 @@ Object {
                     Object {
                       "arguments": Object {},
                       "name": "pgRelation",
+                    },
+                    Object {
+                      "arguments": Object {
+                        "direct": "DISCONNECT",
+                      },
+                      "name": "vnCascade",
                     },
                   ],
                   "idStrategy": null,
@@ -15012,7 +15137,14 @@ Object {
                       "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
-                      "directives": Array [],
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "direct": "DELETE",
+                          },
+                          "name": "vnCascade",
+                        },
+                      ],
                       "idStrategy": null,
                       "isCreatedAt": false,
                       "isId": false,
@@ -15027,7 +15159,14 @@ Object {
                         "comments": Array [],
                         "databaseName": null,
                         "defaultValue": null,
-                        "directives": Array [],
+                        "directives": Array [
+                          Object {
+                            "arguments": Object {
+                              "direct": "DISCONNECT",
+                            },
+                            "name": "vnCascade",
+                          },
+                        ],
                         "idStrategy": null,
                         "isCreatedAt": false,
                         "isId": false,
@@ -15104,7 +15243,14 @@ Object {
                             "comments": Array [],
                             "databaseName": null,
                             "defaultValue": null,
-                            "directives": Array [],
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "direct": "DISCONNECT",
+                                },
+                                "name": "vnCascade",
+                              },
+                            ],
                             "idStrategy": null,
                             "isCreatedAt": false,
                             "isId": false,
@@ -15232,6 +15378,12 @@ Object {
                         Object {
                           "arguments": Object {},
                           "name": "pgRelation",
+                        },
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
                         },
                       ],
                       "idStrategy": null,
@@ -15649,7 +15801,14 @@ Object {
           "comments": Array [],
           "databaseName": null,
           "defaultValue": null,
-          "directives": Array [],
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "direct": "DISCONNECT",
+              },
+              "name": "vnCascade",
+            },
+          ],
           "idStrategy": null,
           "isCreatedAt": false,
           "isId": false,
@@ -15664,7 +15823,14 @@ Object {
             "comments": Array [],
             "databaseName": null,
             "defaultValue": null,
-            "directives": Array [],
+            "directives": Array [
+              Object {
+                "arguments": Object {
+                  "direct": "DELETE",
+                },
+                "name": "vnCascade",
+              },
+            ],
             "idStrategy": null,
             "isCreatedAt": false,
             "isId": false,
@@ -15741,7 +15907,14 @@ Object {
                 "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
-                "directives": Array [],
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "direct": "DELETE",
+                    },
+                    "name": "vnCascade",
+                  },
+                ],
                 "idStrategy": null,
                 "isCreatedAt": false,
                 "isId": false,
@@ -15765,6 +15938,12 @@ Object {
                     "arguments": Object {},
                     "name": "pgRelation",
                   },
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
+                  },
                 ],
                 "idStrategy": null,
                 "isCreatedAt": false,
@@ -15786,6 +15965,12 @@ Object {
                         "column": "minister_id",
                       },
                       "name": "pgRelation",
+                    },
+                    Object {
+                      "arguments": Object {
+                        "direct": "DISCONNECT",
+                      },
+                      "name": "vnCascade",
                     },
                   ],
                   "idStrategy": null,
@@ -15871,6 +16056,12 @@ Object {
                           },
                           "name": "pgRelation",
                         },
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
+                        },
                       ],
                       "idStrategy": null,
                       "isCreatedAt": false,
@@ -15916,6 +16107,13 @@ Object {
                           Object {
                             "arguments": Object {},
                             "name": "pgRelation",
+                          },
+                          Object {
+                            "arguments": Object {
+                              "direct": "DISCONNECT_DELETE",
+                              "inverse": "DISCONNECT",
+                            },
+                            "name": "vnCascade",
                           },
                         ],
                         "idStrategy": null,
@@ -15998,6 +16196,13 @@ Object {
                               Object {
                                 "arguments": Object {},
                                 "name": "pgRelation",
+                              },
+                              Object {
+                                "arguments": Object {
+                                  "direct": "DISCONNECT_DELETE",
+                                  "inverse": "DISCONNECT",
+                                },
+                                "name": "vnCascade",
                               },
                             ],
                             "idStrategy": null,
@@ -16560,7 +16765,14 @@ Object {
                 "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
-                "directives": Array [],
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "direct": "DELETE",
+                    },
+                    "name": "vnCascade",
+                  },
+                ],
                 "idStrategy": null,
                 "isCreatedAt": false,
                 "isId": false,
@@ -16575,7 +16787,14 @@ Object {
                   "comments": Array [],
                   "databaseName": null,
                   "defaultValue": null,
-                  "directives": Array [],
+                  "directives": Array [
+                    Object {
+                      "arguments": Object {
+                        "direct": "DISCONNECT",
+                      },
+                      "name": "vnCascade",
+                    },
+                  ],
                   "idStrategy": null,
                   "isCreatedAt": false,
                   "isId": false,
@@ -16652,7 +16871,14 @@ Object {
                       "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
-                      "directives": Array [],
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
+                        },
+                      ],
                       "idStrategy": null,
                       "isCreatedAt": false,
                       "isId": false,
@@ -16781,6 +17007,12 @@ Object {
                     "arguments": Object {},
                     "name": "pgRelation",
                   },
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
+                  },
                 ],
                 "idStrategy": null,
                 "isCreatedAt": false,
@@ -16802,6 +17034,12 @@ Object {
                         "column": "minister_id",
                       },
                       "name": "pgRelation",
+                    },
+                    Object {
+                      "arguments": Object {
+                        "direct": "DISCONNECT",
+                      },
+                      "name": "vnCascade",
                     },
                   ],
                   "idStrategy": null,
@@ -16887,6 +17125,12 @@ Object {
                           },
                           "name": "pgRelation",
                         },
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
+                        },
                       ],
                       "idStrategy": null,
                       "isCreatedAt": false,
@@ -16932,6 +17176,13 @@ Object {
                           Object {
                             "arguments": Object {},
                             "name": "pgRelation",
+                          },
+                          Object {
+                            "arguments": Object {
+                              "direct": "DISCONNECT_DELETE",
+                              "inverse": "DISCONNECT",
+                            },
+                            "name": "vnCascade",
                           },
                         ],
                         "idStrategy": null,
@@ -17014,6 +17265,13 @@ Object {
                               Object {
                                 "arguments": Object {},
                                 "name": "pgRelation",
+                              },
+                              Object {
+                                "arguments": Object {
+                                  "direct": "DISCONNECT_DELETE",
+                                  "inverse": "DISCONNECT",
+                                },
+                                "name": "vnCascade",
                               },
                             ],
                             "idStrategy": null,
@@ -17430,7 +17688,14 @@ Object {
                 "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
-                "directives": Array [],
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "direct": "DISCONNECT",
+                    },
+                    "name": "vnCascade",
+                  },
+                ],
                 "idStrategy": null,
                 "isCreatedAt": false,
                 "isId": false,
@@ -17445,7 +17710,14 @@ Object {
                   "comments": Array [],
                   "databaseName": null,
                   "defaultValue": null,
-                  "directives": Array [],
+                  "directives": Array [
+                    Object {
+                      "arguments": Object {
+                        "direct": "DELETE",
+                      },
+                      "name": "vnCascade",
+                    },
+                  ],
                   "idStrategy": null,
                   "isCreatedAt": false,
                   "isId": false,
@@ -17522,7 +17794,14 @@ Object {
                       "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
-                      "directives": Array [],
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "direct": "DELETE",
+                          },
+                          "name": "vnCascade",
+                        },
+                      ],
                       "idStrategy": null,
                       "isCreatedAt": false,
                       "isId": false,
@@ -17546,6 +17825,12 @@ Object {
                           "arguments": Object {},
                           "name": "pgRelation",
                         },
+                        Object {
+                          "arguments": Object {
+                            "direct": "DISCONNECT",
+                          },
+                          "name": "vnCascade",
+                        },
                       ],
                       "idStrategy": null,
                       "isCreatedAt": false,
@@ -17567,6 +17852,12 @@ Object {
                               "column": "minister_id",
                             },
                             "name": "pgRelation",
+                          },
+                          Object {
+                            "arguments": Object {
+                              "direct": "DISCONNECT",
+                            },
+                            "name": "vnCascade",
                           },
                         ],
                         "idStrategy": null,
@@ -17652,6 +17943,12 @@ Object {
                                 },
                                 "name": "pgRelation",
                               },
+                              Object {
+                                "arguments": Object {
+                                  "direct": "DISCONNECT",
+                                },
+                                "name": "vnCascade",
+                              },
                             ],
                             "idStrategy": null,
                             "isCreatedAt": false,
@@ -17697,6 +17994,13 @@ Object {
                                 Object {
                                   "arguments": Object {},
                                   "name": "pgRelation",
+                                },
+                                Object {
+                                  "arguments": Object {
+                                    "direct": "DISCONNECT_DELETE",
+                                    "inverse": "DISCONNECT",
+                                  },
+                                  "name": "vnCascade",
                                 },
                               ],
                               "idStrategy": null,
@@ -17779,6 +18083,13 @@ Object {
                                     Object {
                                       "arguments": Object {},
                                       "name": "pgRelation",
+                                    },
+                                    Object {
+                                      "arguments": Object {
+                                        "direct": "DISCONNECT_DELETE",
+                                        "inverse": "DISCONNECT",
+                                      },
+                                      "name": "vnCascade",
                                     },
                                   ],
                                   "idStrategy": null,

@@ -57,9 +57,17 @@ async function getRelatedEntityIds(entityName, originalEntityId, relationEntityN
 }
 
 async function getRelatedEntities(entityName, originalEntityId, relationFieldName, args) {
-  const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName), schema);
+  const fieldType = getFieldType(schema, entityName, relationFieldName);
+  const associationInfo = Object.values(sq[upperFirst(entityName)].associations).find(association => association.as === relationFieldName);
+  if (args && associationInfo.associationType === 'BelongsToMany') {
+    // TODO: for now ignore these params as sequelize does not support them in nested nXm relations.
+    // https://github.com/sequelize/sequelize/issues/4376
+    delete args.first;
+    delete args.skip;
+  }
+  const sqFilter = args && openCrudToSequelize(args, upperFirst(fieldType), schema);
   let include = {
-    model: model(getFieldType(schema, entityName, relationFieldName)),
+    model: model(fieldType),
     as: relationFieldName,
     required: true
   };
@@ -146,7 +154,7 @@ async function handleRelatedConnects(entityName, entityField, entity) {
       where: { [Op.or]: entity[entityField].connect }
     });
     relatedEntities.forEach(relatedEntity => {
-      listRelations.push({ relatedEntityName: upperFirst(fieldInSchema.type.name), relatedEntityId: relatedEntity.id });
+      listRelations.push({ relatedEntityField: upperFirst(entityField), relatedEntityId: relatedEntity.id });
     });
   }
   return listRelations;
@@ -172,7 +180,7 @@ async function handleRelatedDisconnects(entityName, entityField, entity, entityI
       relatedEntities = await entityInstance[`get${upperFirst(entityField)}`]();
     }
     relatedEntities.forEach(relatedEntity => {
-      listRelations.push({ relatedEntityName: upperFirst(fieldInSchema.type.name), relatedEntityId: relatedEntity.id });
+      listRelations.push({ relatedEntityField: upperFirst(entityField), relatedEntityId: relatedEntity.id });
     });
   }
   return listRelations;
@@ -181,7 +189,7 @@ async function handleRelatedDisconnects(entityName, entityField, entity, entityI
 async function associateRelations(listRelations, entity) {
   if (listRelations.length) {
     await asyncEach(listRelations, async listRelation => {
-      await entity[`add${listRelation.relatedEntityName}`](listRelation.relatedEntityId);
+      await entity[`add${listRelation.relatedEntityField}`](listRelation.relatedEntityId);
     });
   }
 }
@@ -189,7 +197,7 @@ async function associateRelations(listRelations, entity) {
 async function disassociateRelations(listRelations, entity) {
   if (listRelations.length) {
     await asyncEach(listRelations, async listRelation => {
-      await entity[`remove${listRelation.relatedEntityName}`](listRelation.relatedEntityId);
+      await entity[`remove${listRelation.relatedEntityField}`](listRelation.relatedEntityId);
     });
   }
 }
