@@ -1,0 +1,9 @@
+{
+  "service": {
+    "stage": "test",
+    "name": "clou"
+  },
+  "function": {
+    "name": "baseDao"
+  }
+}
