@@ -13,7 +13,7 @@
     "test:ci": "export JEST_JUNIT_OUTPUT=`pwd`/reports/junit/ && yarn exec-changed lerna exec --concurrency 1 'JEST_JUNIT_OUTPUT=$JEST_JUNIT_OUTPUT/\\$LERNA_PACKAGE_NAME-test-results.xml yarn test:ci'",
     "db:bootstrap:local": "yarn db:start && yarn db:createSchema && yarn db:migrate",
     "db:bootstrap": "yarn db:createSchema && yarn db:migrate",
-    "db:createSchema": "wait-on -d 5000 tcp:5432 && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -c \"CREATE SCHEMA IF NOT EXISTS venn;\"",
+    "db:createSchema": "wait-on -d 10000 tcp:5432 && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -c \"CREATE SCHEMA IF NOT EXISTS venn;\"",
     "db:migrate": "wait-on tcp:5432 && NODE_ENV=test sequelize-cli db:migrate",
     "db:seed": "NODE_ENV=test sequelize-cli db:seed:all",
     "db:start": "docker-compose up -d"

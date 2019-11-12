@@ -72,8 +72,16 @@ describe('sequelizeDataProvider', () => {
 
   test('getRelatedEntityIds', async () => {
     const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries');
-    // TODO: add test for getRelatedEntityIds(..., args)
     expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id].sort());
+  });
+
+  test('getRelatedEntityIds with args', async () => {
+    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries', {
+      first: 1,
+      orderBy: 'createdAt_ASC'
+    });
+    expect(fetchedMinistryIds).toHaveLength(1);
+    expect(fetchedMinistryIds[0]).toEqual(ministry1.id);
   });
 
   test('createEntity', async () => {
