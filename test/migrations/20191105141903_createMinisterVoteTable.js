@@ -3,13 +3,9 @@ module.exports = {
     return queryInterface.createTable(
       { schema: 'venn', tableName: 'ministers_votes_join_table' },
       {
-        id: {
-          allowNull: false,
-          primaryKey: true,
-          type: Sequelize.STRING(30)
-        },
         minister_id: {
           type: Sequelize.STRING,
+          primaryKey: true,
           references: {
             model: {
               tableName: 'ministers',
@@ -20,6 +16,7 @@ module.exports = {
         },
         vote_id: {
           type: Sequelize.STRING,
+          primaryKey: true,
           references: {
             model: {
               tableName: 'votes',

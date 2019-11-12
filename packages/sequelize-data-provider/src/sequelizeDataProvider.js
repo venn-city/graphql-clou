@@ -60,7 +60,7 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
   const fieldType = getFieldType(schema, entityName, relationFieldName);
   const associationInfo = Object.values(sq[upperFirst(entityName)].associations).find(association => association.as === relationFieldName);
   if (args && associationInfo.associationType === 'BelongsToMany') {
-    // TODO: for now ignore these params as sequelize does not support them in nested nxm relations.
+    // TODO: for now ignore these params as sequelize does not support them in nested nXm relations.
     // https://github.com/sequelize/sequelize/issues/4376
     delete args.first;
     delete args.skip;
