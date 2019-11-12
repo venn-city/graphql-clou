@@ -1,8 +1,8 @@
-const { cascadeDelete } = require('./cascadeDelete');
 const { hacker } = require('faker');
 const sinon = require('sinon');
 const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');
 const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
+const { cascadeDelete } = require('./cascadeDelete');
 
 describe('cascade delete', () => {
   let context;
@@ -10,8 +10,8 @@ describe('cascade delete', () => {
   let government;
   let ministry1;
   let ministry2;
-  let updateGovernmentStub = sinon.stub();
-  let deleteManyMinistriesStub = sinon.stub();
+  const updateGovernmentStub = sinon.stub();
+  const deleteManyMinistriesStub = sinon.stub();
   updateGovernmentStub.resolves();
   deleteManyMinistriesStub.resolves();
 
