@@ -57,10 +57,6 @@ function getFieldType(field) {
   }
 }
 
-// function getFieldType(field) {
-//   return (field.type.kind === KINDS.LIST && field.type.ofType.ofType.name) || field.type.name || (field.type.ofType && field.type.ofType.name);
-// }
-
 // e.g. firstName / member / leaseContracts / ...
 function getFieldName(field) {
   switch (calcType(field)) {
