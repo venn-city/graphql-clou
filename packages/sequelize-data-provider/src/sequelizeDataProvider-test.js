@@ -151,6 +151,66 @@ describe('sequelizeDataProvider', () => {
     });
   });
 
+  test('updateEntity which does not exist', async () => {
+    const updatedGovernment = await sequelizeDataProvider.updateEntity(
+      'Government',
+      {
+        name: hacker.phrase()
+      },
+      {
+        id: hacker.phrase()
+      }
+    );
+    expect(updatedGovernment).toBeNull();
+  });
+
+  test('updateEntity with connect and disconnect', async () => {
+    const createdGovernmentName = hacker.phrase();
+    const updatedGovernmentName = hacker.phrase();
+    const anotherGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
+    const minsitry = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
+    const minsitry2 = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
+
+    // Update with connect.
+    const updatedGovernmentWithMinistries = await sequelizeDataProvider.updateEntity(
+      'Government',
+      {
+        name: updatedGovernmentName,
+        ministries: {
+          connect: [{ id: minsitry.id }, { id: minsitry2.id }]
+        }
+      },
+      {
+        name: createdGovernmentName
+      }
+    );
+    const ministryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', anotherGovernment.id, 'ministries');
+    expect(ministryIds.sort()).toEqual([minsitry.id, minsitry2.id].sort());
+    expect(updatedGovernmentWithMinistries).toMatchObject({
+      name: updatedGovernmentName,
+      createdAt: expect.any(Date),
+      updatedAt: expect.any(Date),
+      deletedAt: null,
+      deleted: null
+    });
+
+    // Update with connect.
+    await sequelizeDataProvider.updateEntity(
+      'Government',
+      {
+        name: updatedGovernmentName,
+        ministries: {
+          disconnect: [{ id: minsitry.id }, { id: minsitry2.id }]
+        }
+      },
+      {
+        name: updatedGovernmentName
+      }
+    );
+    const ministryIdsAfterDisconnect = await sequelizeDataProvider.getRelatedEntityIds('Government', anotherGovernment.id, 'ministries');
+    expect(ministryIdsAfterDisconnect).toBeFalsy();
+  });
+
   test('deleteEntity', async () => {
     const createdGovernmentName = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
