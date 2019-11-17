@@ -8,8 +8,7 @@ const { getQueryWhereInputName, getMutationWhereInputName } = require('@venncity
 const { transformComputedFieldsWhereArguments } = require('@venncity/graphql-transformers');
 const { cascadeDelete } = require('@venncity/cascade-delete');
 const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
-const { publishCrudEvent } = require('../test/publishCRUD/crudPublish');
-// const { enforcePagination } = require('../../pagination/pagination');
+const { enforcePagination } = require('@venncity/graphql-pagination-enforce');
 
 const asyncMap = util.promisify(async.map);
 
@@ -19,7 +18,7 @@ const CRUD_TOPIC_OPERATION_NAMES = {
   DELETED: 'DELETED'
 };
 
-function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAuth }) {
+function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAuth, publishCrudEvent }) {
   const {
     CREATE_ENTITY_FUNCTION_NAME,
     GET_ENTITIES_BY_IDS_FUNCTION_NAME,
@@ -109,7 +108,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
           context
         })
       };
-      // enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME); // TODO: uncomment once pagination is available as a package
+      enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME);
 
       const fetchedEntities = await dataProvider.getAllEntities(entityName, transformedArgs);
       const entitiesThatUserCanAccess = [];

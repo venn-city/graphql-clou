@@ -1669,6 +1669,14 @@
     config "^3.0.1"
     memcached "2.2.2"
 
+"@venncity/graphql-pagination-enforce@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@venncity/graphql-pagination-enforce/-/graphql-pagination-enforce-1.1.0.tgz#68fb7f2e949dba4a4a0930cf073a34c79db8975a"
+  integrity sha512-CKvSKKMGqhYVjrHBCaLr8A8EyxD5duFLxIA7ahwih6Rk6Z79L843EUWb4jiOhpmnPy2eU00za0yNp3gvRyqFeA==
+  dependencies:
+    "@venncity/errors" "^1.4.1"
+    "@venncity/nested-config" "^1.1.0"
+
 "@venncity/logger@1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@venncity/logger/-/logger-1.0.5.tgz#2cc2e4a4a92361dea4fc3d4d156eea29cecbe1de"
@@ -1679,7 +1687,7 @@
     pino "^5.10.5"
     pino-pretty "^2.5.0"
 
-"@venncity/nested-config@^1.2.6":
+"@venncity/nested-config@^1.1.0", "@venncity/nested-config@^1.2.6":
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/@venncity/nested-config/-/nested-config-1.2.6.tgz#19bcccd339d8d7d5279faab4a31738c9e9fca26b"
   integrity sha512-APEcdxATXrpXHMHuHNAIrxQ7m3nW78f/rZUumZIJNWlCZ8ARBIAVhT7rGvAAcBVfi6i5DfNJq7aVnIEts/qaCQ==
