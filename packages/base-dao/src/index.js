@@ -1,7 +1,8 @@
 const { createEntityDAO } = require('./baseDAO');
-const { runGenericDAOTests } = require('./../test/baseTestForDAOs');
+const { runGenericDAOTests, BASE_DAO_TEST_TYPES } = require('./../test/baseTestForDAOs');
 
 module.exports = {
   createEntityDAO,
-  runGenericDAOTests
+  runGenericDAOTests,
+  BASE_DAO_TEST_TYPES
 };
