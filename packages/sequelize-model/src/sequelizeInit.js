@@ -10,7 +10,9 @@ const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');
 const sq = {};
 
 const entityTypesSchema = openCrudDataModel.types;
-const schemaPath = config.has('sequelize.schemaPath') ? config.get('sequelize.schemaPath') : path.join(__dirname, '../test/schema');
+const schemaPath = config.has('sequelize.schemaPath')
+  ? path.join(process.cwd(), config.get('sequelize.schemaPath'))
+  : path.join(__dirname, '../test/schema');
 const loggingEnabled = config.get('sequelize.logging') === 'true';
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
@@ -68,6 +70,9 @@ sq.sequelize = sequelize;
 sq.Sequelize = Sequelize;
 
 function runSchemaBasedHooks(entityInput, hooks) {
+  if (!entityInput) {
+    return;
+  }
   const entities = _.isArray(entityInput) ? entityInput : [entityInput];
   entities.forEach(entity => {
     if (!entity) {
