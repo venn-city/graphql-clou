@@ -1,5 +1,6 @@
 const baseDAO = require('./../src/baseDAO');
 const daoAuth = require('./auth/daoAuth');
+const { publishCrudEvent } = require('./publishCRUD/crudPublish');
 
 // eslint-disable-next-line no-unused-vars
 function buildAuthContext(context) {
@@ -12,7 +13,7 @@ async function getAuthDataFromDB(context, governmentId) {
 }
 
 function createGovernmentDAO() {
-  const governmentDAO = baseDAO.createEntityDAO({ entityName: 'government', hooks, daoAuth });
+  const governmentDAO = baseDAO.createEntityDAO({ entityName: 'government', hooks, daoAuth, publishCrudEvent });
   return {
     ...governmentDAO
   };

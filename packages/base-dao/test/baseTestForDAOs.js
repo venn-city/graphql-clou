@@ -283,7 +283,7 @@ async function createAdminAuthContext() {
   };
 }
 
-const GRAPHQL_SERVER_MAX_PAGE_SIZE = 100;
+const GRAPHQL_SERVER_MAX_PAGE_SIZE = 50;
 
 async function getAllEntitiesWithPagination(entityDao, queryName, context, queryArgs = {}) {
   let fetchedEntities = [];

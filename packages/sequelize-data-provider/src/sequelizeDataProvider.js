@@ -105,6 +105,10 @@ async function updateEntity(entityName, data, where) {
   const entity = await model(entityName).findOne({
     where
   });
+  if (!entity) {
+    // TODO: throw error instead of returning null?
+    return null;
+  }
   await asyncEach(Object.keys(data), async entityField => {
     if (isObject(data[entityField]) && data[entityField].connect) {
       listRelationsToAssociate.push(...(await handleRelatedConnects(entityName, entityField, data)));
@@ -127,10 +131,10 @@ async function updateManyEntities(entityName, data, where) {
   return map(updatedEntities, 'dataValues');
 }
 
-function isTableBasedRelation(fieldInSchema) {
+function isListRelation(fieldInSchema) {
   const relationName = openCrudDataModel.types.find(entityType => entityType.name === fieldInSchema.relationName);
-  const isListRelation = relationName && relationName.directives.find(d => d.name === 'relationTable');
-  return isListRelation;
+  const isTableBasedRelation = relationName && relationName.directives.find(d => d.name === 'relationTable');
+  return isTableBasedRelation || fieldInSchema.isList;
 }
 
 async function handleRelatedConnects(entityName, entityField, entity) {
@@ -138,18 +142,19 @@ async function handleRelatedConnects(entityName, entityField, entity) {
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
   const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
-  if (pgRelationDirective) {
+  if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
     const uniqueIdentifier = Object.keys(entity[entityField].connect)[0];
     if (uniqueIdentifier === 'id') {
       entity[camelCase(columnName)] = entity[entityField].connect.id;
+    } else {
+      const relatedEntity = await model(fieldInSchema.type.name).findOne({
+        where: { ...entity[entityField].connect }
+      });
+      entity[camelCase(columnName)] = relatedEntity.id;
     }
-    const relatedEntity = await model(fieldInSchema.type.name).findOne({
-      where: { ...entity[entityField].connect }
-    });
-    entity[camelCase(columnName)] = relatedEntity.id;
   }
-  if (isTableBasedRelation(fieldInSchema)) {
+  if (isListRelation(fieldInSchema)) {
     const relatedEntities = await model(fieldInSchema.type.name).findAll({
       where: { [Op.or]: entity[entityField].connect }
     });
@@ -165,11 +170,11 @@ async function handleRelatedDisconnects(entityName, entityField, entity, entityI
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
   const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
-  if (pgRelationDirective) {
+  if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
     entity[camelCase(columnName)] = null;
   }
-  if (isTableBasedRelation(fieldInSchema)) {
+  if (isListRelation(fieldInSchema)) {
     const disconnectArgValue = entity[entityField].disconnect;
     let relatedEntities;
     if (isObject(disconnectArgValue) || Array.isArray(disconnectArgValue)) {
