@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.1.2...@venncity/sequelize-data-provider@1.1.3) (2019-11-18)
+
+
+### Bug Fixes
+
+* **sequelizeDataProvider:** remove redundant schema param ([48b2043](https://github.com/venn-city/graphql-clou/commit/48b20434b3a2d851662e153417083dba61e96e19))
+
+
+
+
+
 ## [1.1.2](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.1.1...@venncity/sequelize-data-provider@1.1.2) (2019-11-17)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.3...@venncity/sequelize-model@1.1.4) (2019-11-18)
+
+
+### Bug Fixes
+
+* **sequelize-model:** read the schema path properly ([a703af1](https://github.com/venn-city/graphql-clou/commit/a703af1370085c9f6bf038c934d8fac362d75726))
+
+
+
+
+
 ## [1.1.3](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.2...@venncity/sequelize-model@1.1.3) (2019-11-17)
 
 **Note:** Version bump only for package @venncity/sequelize-model
