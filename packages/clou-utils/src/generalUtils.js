@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { isEmpty, isArray, every, isUndefined } = require('lodash');
+const { isEmpty, isArray, every, isUndefined, get } = require('lodash');
 const config = require('@venncity/nested-config')(__dirname);
 
 const encryptionKey = Buffer.from(JSON.parse(config.get('encryption.key')));
@@ -56,14 +56,17 @@ function decrypt(data) {
   return decrypted;
 }
 
-function getAdditionalInfoFromHeaders(req) {
-  const xrayTraceId = req.headers.xrayTraceId || req.headers.xraytraceid || null;
-  const serviceName = req.headers.serviceName || req.headers.servicename || null;
-  const functionName = req.headers.functionName || req.headers.functionname || null;
-  const onBehalfOfUser = req.headers.onBehalfOfUser || req.headers.onbehalfofuser || null;
-  const impersonated = req.headers.impersonated || null;
+function getAdditionalInfoFromRequest(req) {
+  const xrayTraceId = get(req, 'headers.xrayTraceId') || get(req, 'headers.xraytraceid') || null;
+  const serviceName = get(req, 'headers.serviceName') || get(req, 'headers.servicename') || null;
+  const functionName = get(req, 'headers.functionName') || get(req, 'headers.functionname') || null;
+  const onBehalfOfUser = get(req, 'headers.onBehalfOfUser') || get(req, 'headers.onbehalfofuser') || null;
+  const impersonated = get(req, 'headers.impersonated') || null;
+  const graphqlQuery = get(req, 'body.query') || null;
+  let graphqlVariables = get(req, 'body.variables');
+  graphqlVariables = isEmpty(graphqlVariables) ? null : JSON.stringify(graphqlVariables);
 
-  return { xrayTraceId, serviceName, functionName, onBehalfOfUser, impersonated };
+  return { xrayTraceId, serviceName, functionName, onBehalfOfUser, impersonated, graphqlQuery, graphqlVariables };
 }
 
 function extractWhereFromFederationReference(reference) {
@@ -86,7 +89,7 @@ module.exports = {
   isFalse,
   encrypt,
   decrypt,
-  getAdditionalInfoFromHeaders,
+  getAdditionalInfoFromRequest,
   extractWhereFromFederationReference,
   isEmptyArray
 };
