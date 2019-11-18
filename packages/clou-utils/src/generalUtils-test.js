@@ -61,15 +61,36 @@ describe('utils', () => {
         functionName: 'functionName',
         onBehalfOfUser: 'bla123',
         impersonated: 'false'
+      },
+      body: {
+        query: 'query blah blah blah',
+        variables: {
+          hail: 'satan'
+        }
       }
     };
-    const result = utils.getAdditionalInfoFromHeaders(test);
+    const result = utils.getAdditionalInfoFromRequest(test);
     expect(result).toEqual({
+      graphqlQuery: 'query blah blah blah',
+      graphqlVariables: JSON.stringify(test.body.variables),
       xrayTraceId: null,
       serviceName: 'serviceName',
       functionName: 'functionName',
       onBehalfOfUser: 'bla123',
       impersonated: 'false'
+    });
+  });
+  test('extracting request headers doesnt crash when headers are falsy', () => {
+    const test = {};
+    const result = utils.getAdditionalInfoFromRequest(test);
+    expect(result).toEqual({
+      graphqlQuery: null,
+      graphqlVariables: null,
+      xrayTraceId: null,
+      serviceName: null,
+      functionName: null,
+      onBehalfOfUser: null,
+      impersonated: null
     });
   });
 });
