@@ -31,7 +31,7 @@ describe('generic tests', () => {
   });
 
   test('fetch connection', async () => {
-    let governmentsConnectionResult = await governmentDAO.governmentsConnection(null, { where: { id: 'x' } }, serviceContext);
+    const governmentsConnectionResult = await governmentDAO.governmentsConnection(null, { where: { id: 'x' } }, serviceContext);
     expect(governmentsConnectionResult.aggregate).toHaveProperty('count', 0);
   });
 });
