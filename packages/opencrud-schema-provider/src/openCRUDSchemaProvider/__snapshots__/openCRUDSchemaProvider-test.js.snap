@@ -957,6 +957,16 @@ Object {
             "ofType": null,
           },
         },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
       ],
       "interfaces": null,
       "kind": "INPUT_OBJECT",
@@ -971,6 +981,16 @@ Object {
       "interfaces": null,
       "kind": "SCALAR",
       "name": "ID",
+      "possibleTypes": null,
+    },
+    Object {
+      "description": "The \`String\` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+      "enumValues": null,
+      "fields": null,
+      "inputFields": null,
+      "interfaces": null,
+      "kind": "SCALAR",
+      "name": "String",
       "possibleTypes": null,
     },
     Object {
@@ -999,6 +1019,18 @@ Object {
           "description": "",
           "isDeprecated": false,
           "name": "name",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "country",
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
@@ -1161,16 +1193,6 @@ Object {
       "interfaces": Array [],
       "kind": "OBJECT",
       "name": "Government",
-      "possibleTypes": null,
-    },
-    Object {
-      "description": "The \`String\` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-      "enumValues": null,
-      "fields": null,
-      "inputFields": null,
-      "interfaces": null,
-      "kind": "SCALAR",
-      "name": "String",
       "possibleTypes": null,
     },
     Object {
@@ -3866,6 +3888,162 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "country",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_not",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_not_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_lt",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_lte",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_gt",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_gte",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_contains",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_not_contains",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_starts_with",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_not_starts_with",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_ends_with",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country_not_ends_with",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "ministries_every",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -4965,6 +5143,18 @@ Object {
           "description": "",
           "isDeprecated": false,
           "name": "name_DESC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "country_ASC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "country_DESC",
         },
         Object {
           "deprecationReason": null,
@@ -6737,6 +6927,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "country",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "ministries",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -7047,6 +7247,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "name",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country",
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
@@ -9572,6 +9782,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "country",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -9815,6 +10035,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "name",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country",
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
@@ -10110,6 +10340,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "name",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "country",
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
@@ -11178,6 +11418,18 @@ Object {
           "description": "",
           "isDeprecated": false,
           "name": "name",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "country",
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
@@ -13713,6 +13965,32 @@ Object {
               Object {
                 "associatedSequence": null,
                 "comments": Array [],
+                "databaseName": "country_code",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "country_code",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": true,
+                "isUpdatedAt": false,
+                "name": "country",
+                "relatedField": null,
+                "relationName": null,
+                "type": "String",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
                 "directives": Array [
@@ -14506,6 +14784,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "country_code",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "country_code",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": true,
+                      "isUpdatedAt": false,
+                      "name": "country",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
                       "directives": Array [
@@ -14901,6 +15205,32 @@ Object {
           "isUnique": false,
           "isUpdatedAt": false,
           "name": "name",
+          "relatedField": null,
+          "relationName": null,
+          "type": "String",
+        },
+        Object {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": "country_code",
+          "defaultValue": null,
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "name": "country_code",
+              },
+              "name": "pgColumn",
+            },
+          ],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": true,
+          "isUpdatedAt": false,
+          "name": "country",
           "relatedField": null,
           "relationName": null,
           "type": "String",
@@ -16190,6 +16520,32 @@ Object {
                           Object {
                             "associatedSequence": null,
                             "comments": Array [],
+                            "databaseName": "country_code",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "country_code",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": true,
+                            "isUpdatedAt": false,
+                            "name": "country",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
                             "databaseName": null,
                             "defaultValue": null,
                             "directives": Array [
@@ -17259,6 +17615,32 @@ Object {
                           Object {
                             "associatedSequence": null,
                             "comments": Array [],
+                            "databaseName": "country_code",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "country_code",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": true,
+                            "isUpdatedAt": false,
+                            "name": "country",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
                             "databaseName": null,
                             "defaultValue": null,
                             "directives": Array [
@@ -18077,6 +18459,32 @@ Object {
                                 Object {
                                   "associatedSequence": null,
                                   "comments": Array [],
+                                  "databaseName": "country_code",
+                                  "defaultValue": null,
+                                  "directives": Array [
+                                    Object {
+                                      "arguments": Object {
+                                        "name": "country_code",
+                                      },
+                                      "name": "pgColumn",
+                                    },
+                                  ],
+                                  "idStrategy": null,
+                                  "isCreatedAt": false,
+                                  "isId": false,
+                                  "isList": false,
+                                  "isReadOnly": false,
+                                  "isRequired": false,
+                                  "isUnique": true,
+                                  "isUpdatedAt": false,
+                                  "name": "country",
+                                  "relatedField": null,
+                                  "relationName": null,
+                                  "type": "String",
+                                },
+                                Object {
+                                  "associatedSequence": null,
+                                  "comments": Array [],
                                   "databaseName": null,
                                   "defaultValue": null,
                                   "directives": Array [
@@ -18842,6 +19250,7 @@ scalar DateTime
 type Government {
   id: ID!
   name: String
+  country: String
   ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -18857,6 +19266,7 @@ type GovernmentConnection {
 
 input GovernmentCreateInput {
   name: String
+  country: String
   ministries: MinistryCreateManyWithoutGovernmentInput
   deletedAt: DateTime
   deleted: Int
@@ -18869,6 +19279,7 @@ input GovernmentCreateOneWithoutMinistriesInput {
 
 input GovernmentCreateWithoutMinistriesInput {
   name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -18883,6 +19294,8 @@ enum GovernmentOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  country_ASC
+  country_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -18896,6 +19309,7 @@ enum GovernmentOrderByInput {
 type GovernmentPreviousValues {
   id: ID!
   name: String
+  country: String
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -18922,6 +19336,7 @@ input GovernmentSubscriptionWhereInput {
 
 input GovernmentUpdateInput {
   name: String
+  country: String
   ministries: MinistryUpdateManyWithoutGovernmentInput
   deletedAt: DateTime
   deleted: Int
@@ -18929,6 +19344,7 @@ input GovernmentUpdateInput {
 
 input GovernmentUpdateManyMutationInput {
   name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -18944,6 +19360,7 @@ input GovernmentUpdateOneWithoutMinistriesInput {
 
 input GovernmentUpdateWithoutMinistriesDataInput {
   name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -18982,6 +19399,20 @@ input GovernmentWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  country: String
+  country_not: String
+  country_in: [String!]
+  country_not_in: [String!]
+  country_lt: String
+  country_lte: String
+  country_gt: String
+  country_gte: String
+  country_contains: String
+  country_not_contains: String
+  country_starts_with: String
+  country_not_starts_with: String
+  country_ends_with: String
+  country_not_ends_with: String
   ministries_every: MinistryWhereInput
   ministries_some: MinistryWhereInput
   ministries_none: MinistryWhereInput
@@ -19024,6 +19455,7 @@ input GovernmentWhereInput {
 
 input GovernmentWhereUniqueInput {
   id: ID
+  country: String
 }
 
 scalar Long

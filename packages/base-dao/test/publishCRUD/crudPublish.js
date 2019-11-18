@@ -5,7 +5,7 @@ const ENTITY_CRUD_TOPIC_NAME = 'entity-crud';
 
 async function publishCrudEvent({ entityName, operation, entityBefore, entityAfter, context }) {
   const entityNameUpperSnake = toUpperSnakeCase(entityName);
-  const { requestAdditionalInfo } = context;
+  const { requestAdditionalInfo } = context.requestAdditionalInfo ? context : { requestAdditionalInfo: undefined };
 
   const messageAttributes = {
     entityType: entityNameUpperSnake,
@@ -16,7 +16,7 @@ async function publishCrudEvent({ entityName, operation, entityBefore, entityAft
     eventType: operation,
     entityBefore,
     entityAfter,
-    authData: buildAuthDataForPublishingEvent(context),
+    authData: context && buildAuthDataForPublishingEvent(context),
     requestAdditionalInfo
   };
 

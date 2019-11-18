@@ -25,7 +25,7 @@ async function getAllEntities(entityName, args) {
 }
 
 async function getAllEntitiesSqObjects(args, entityName) {
-  const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName), schema);
+  const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName));
   return model(entityName).findAll(sqFilter);
 }
 
@@ -65,7 +65,7 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
     delete args.first;
     delete args.skip;
   }
-  const sqFilter = args && openCrudToSequelize(args, upperFirst(fieldType), schema);
+  const sqFilter = args && openCrudToSequelize(args, upperFirst(fieldType));
   let include = {
     model: model(fieldType),
     as: relationFieldName,
@@ -224,7 +224,7 @@ async function deleteManyEntities(entityName, where) {
 }
 
 async function getEntitiesConnection(entityName, args) {
-  const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName), schema);
+  const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName));
   const entityCount = await model(entityName).count(sqFilter);
   return {
     aggregate: {

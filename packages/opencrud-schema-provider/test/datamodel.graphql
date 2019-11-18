@@ -40,6 +40,7 @@ type Minister @pgTable(name: "ministers") {
 type Government @pgTable(name: "governments") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
+  country:                String                  @unique @pgColumn(name: "country_code")
   ministries:             [Ministry]              @pgRelation @vnCascade(direct: DISCONNECT_DELETE, inverse: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")

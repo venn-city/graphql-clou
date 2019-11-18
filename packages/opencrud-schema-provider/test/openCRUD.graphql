@@ -23,6 +23,7 @@ scalar DateTime
 type Government {
   id: ID!
   name: String
+  country: String
   ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -38,6 +39,7 @@ type GovernmentConnection {
 
 input GovernmentCreateInput {
   name: String
+  country: String
   ministries: MinistryCreateManyWithoutGovernmentInput
   deletedAt: DateTime
   deleted: Int
@@ -50,6 +52,7 @@ input GovernmentCreateOneWithoutMinistriesInput {
 
 input GovernmentCreateWithoutMinistriesInput {
   name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -64,6 +67,8 @@ enum GovernmentOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  country_ASC
+  country_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -77,6 +82,7 @@ enum GovernmentOrderByInput {
 type GovernmentPreviousValues {
   id: ID!
   name: String
+  country: String
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -103,6 +109,7 @@ input GovernmentSubscriptionWhereInput {
 
 input GovernmentUpdateInput {
   name: String
+  country: String
   ministries: MinistryUpdateManyWithoutGovernmentInput
   deletedAt: DateTime
   deleted: Int
@@ -110,6 +117,7 @@ input GovernmentUpdateInput {
 
 input GovernmentUpdateManyMutationInput {
   name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -125,6 +133,7 @@ input GovernmentUpdateOneWithoutMinistriesInput {
 
 input GovernmentUpdateWithoutMinistriesDataInput {
   name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -163,6 +172,20 @@ input GovernmentWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  country: String
+  country_not: String
+  country_in: [String!]
+  country_not_in: [String!]
+  country_lt: String
+  country_lte: String
+  country_gt: String
+  country_gte: String
+  country_contains: String
+  country_not_contains: String
+  country_starts_with: String
+  country_not_starts_with: String
+  country_ends_with: String
+  country_not_ends_with: String
   ministries_every: MinistryWhereInput
   ministries_some: MinistryWhereInput
   ministries_none: MinistryWhereInput
@@ -205,6 +228,7 @@ input GovernmentWhereInput {
 
 input GovernmentWhereUniqueInput {
   id: ID
+  country: String
 }
 
 scalar Long

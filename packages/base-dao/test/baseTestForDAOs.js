@@ -2,7 +2,6 @@ const pluralize = require('pluralize'); // eslint-disable-line import/no-extrane
 const momentRandom = require('moment-random'); // eslint-disable-line import/no-extraneous-dependencies
 const _ = require('lodash');
 const { getFunctionNamesForEntity } = require('./../src/baseDAO');
-let createAllDAOs = require('./DAOs');
 const { getOpenCrudIntrospection, openCrudDataModel } = require('@venncity/opencrud-schema-provider');
 
 const BASE_DAO_TEST_TYPES = {
@@ -31,6 +30,8 @@ const BASE_DAO_TEST_TYPES = {
  */
 function runGenericDAOTests({
   entityName,
+  createAllDAOs,
+  createAdminAuthContext = createServiceAuthContext,
   getDefaultEntityFunc,
   pluralizationFunction = pluralize,
   stringFieldName: fieldName,
@@ -64,7 +65,7 @@ function runGenericDAOTests({
     const DAOs = createAllDAOs();
 
     beforeAll(async () => {
-      adminContext = await createAdminAuthContext();
+      adminContext = await createAdminAuthContext(DAOs);
       adminContext.DAOs = DAOs;
     });
 
@@ -272,14 +273,14 @@ function randomValuesByType(dataType) {
   }
 }
 
-async function createAdminAuthContext() {
+async function createServiceAuthContext(DAOs) {
   return {
     auth: {
       isService: true
     },
     openCrudIntrospection: getOpenCrudIntrospection(),
     openCrudDataModel,
-    DAOs: createAllDAOs()
+    DAOs
   };
 }
 
@@ -300,4 +301,4 @@ async function getAllEntitiesWithPagination(entityDao, queryName, context, query
   return fetchedEntities;
 }
 
-module.exports = { runGenericDAOTests, BASE_DAO_TEST_TYPES };
+module.exports = { runGenericDAOTests, BASE_DAO_TEST_TYPES, createServiceAuthContext };
