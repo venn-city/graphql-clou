@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     'Government',
     {
       ...baseModel,
-      name: DataTypes.STRING
+      name: DataTypes.STRING,
+      country: { type: DataTypes.STRING, field: 'country_code' }
     },
     { underscored: true }
   );

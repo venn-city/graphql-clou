@@ -301,4 +301,4 @@ async function getAllEntitiesWithPagination(entityDao, queryName, context, query
   return fetchedEntities;
 }
 
-module.exports = { runGenericDAOTests, BASE_DAO_TEST_TYPES };
+module.exports = { runGenericDAOTests, BASE_DAO_TEST_TYPES, createServiceAuthContext };
