@@ -462,6 +462,7 @@ input MinisterWhereUniqueInput {
 type Ministry {
   id: ID!
   name: String
+  budget: Float
   minister: Minister
   government: Government
   createdAt: DateTime!
@@ -478,6 +479,7 @@ type MinistryConnection {
 
 input MinistryCreateInput {
   name: String
+  budget: Float
   minister: MinisterCreateOneWithoutMinistryInput
   government: GovernmentCreateOneWithoutMinistriesInput
   deletedAt: DateTime
@@ -496,6 +498,7 @@ input MinistryCreateOneWithoutMinisterInput {
 
 input MinistryCreateWithoutGovernmentInput {
   name: String
+  budget: Float
   minister: MinisterCreateOneWithoutMinistryInput
   deletedAt: DateTime
   deleted: Int
@@ -503,6 +506,7 @@ input MinistryCreateWithoutGovernmentInput {
 
 input MinistryCreateWithoutMinisterInput {
   name: String
+  budget: Float
   government: GovernmentCreateOneWithoutMinistriesInput
   deletedAt: DateTime
   deleted: Int
@@ -518,6 +522,8 @@ enum MinistryOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  budget_ASC
+  budget_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -531,6 +537,7 @@ enum MinistryOrderByInput {
 type MinistryPreviousValues {
   id: ID!
   name: String
+  budget: Float
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -566,6 +573,14 @@ input MinistryScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  budget: Float
+  budget_not: Float
+  budget_in: [Float!]
+  budget_not_in: [Float!]
+  budget_lt: Float
+  budget_lte: Float
+  budget_gt: Float
+  budget_gte: Float
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -623,6 +638,7 @@ input MinistrySubscriptionWhereInput {
 
 input MinistryUpdateInput {
   name: String
+  budget: Float
   minister: MinisterUpdateOneWithoutMinistryInput
   government: GovernmentUpdateOneWithoutMinistriesInput
   deletedAt: DateTime
@@ -631,12 +647,14 @@ input MinistryUpdateInput {
 
 input MinistryUpdateManyDataInput {
   name: String
+  budget: Float
   deletedAt: DateTime
   deleted: Int
 }
 
 input MinistryUpdateManyMutationInput {
   name: String
+  budget: Float
   deletedAt: DateTime
   deleted: Int
 }
@@ -669,6 +687,7 @@ input MinistryUpdateOneWithoutMinisterInput {
 
 input MinistryUpdateWithoutGovernmentDataInput {
   name: String
+  budget: Float
   minister: MinisterUpdateOneWithoutMinistryInput
   deletedAt: DateTime
   deleted: Int
@@ -676,6 +695,7 @@ input MinistryUpdateWithoutGovernmentDataInput {
 
 input MinistryUpdateWithoutMinisterDataInput {
   name: String
+  budget: Float
   government: GovernmentUpdateOneWithoutMinistriesInput
   deletedAt: DateTime
   deleted: Int
@@ -726,6 +746,14 @@ input MinistryWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  budget: Float
+  budget_not: Float
+  budget_in: [Float!]
+  budget_not_in: [Float!]
+  budget_lt: Float
+  budget_lte: Float
+  budget_gt: Float
+  budget_gte: Float
   minister: MinisterWhereInput
   government: GovernmentWhereInput
   createdAt: DateTime

@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     'Ministry',
     {
       ...baseModel,
-      name: DataTypes.STRING
+      name: DataTypes.STRING,
+      budget: { type: DataTypes.FLOAT, field: 'budget_in_million_usd' }
     },
     { underscored: true }
   );
