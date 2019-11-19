@@ -370,7 +370,11 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                 id: {
                   [Op.ne]: {
                     [Op.all]: {
-                      val: 'SELECT "vote_id" FROM "venn"."votes" AS "Vote" WHERE NOT (("Vote"."name" = \'ku\'))'
+                      val:
+                        'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
+                        '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
+                        '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
+                        '"Minister"."id" = "votes->ministersvotes"."minister_id" WHERE NOT (("Minister"."name" = \'ku\'))'
                     }
                   }
                 }
@@ -394,7 +398,11 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                 id: {
                   [Op.ne]: {
                     [Op.all]: {
-                      val: 'SELECT "vote_id" FROM "venn"."votes" AS "Vote" WHERE (("Vote"."name" = \'ku\'))'
+                      val:
+                        'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
+                        '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
+                        '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
+                        '"Minister"."id" = "votes->ministersvotes"."minister_id" WHERE (("Minister"."name" = \'ku\'))'
                     }
                   }
                 }

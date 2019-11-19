@@ -3,6 +3,6 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*)(-test).js?(x)'],
   testEnvironment: 'node',
   coverageReporters: ['json-summary', 'json', 'lcov', 'text', 'clover'],
-  coveragePathIgnorePatterns: ['src./test/.', '.jest.js'],
+  coveragePathIgnorePatterns: ['src./test/.', 'test/.', '.jest.js'],
   reporters: ['default', 'jest-junit']
 };

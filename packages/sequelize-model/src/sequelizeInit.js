@@ -18,7 +18,7 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
   host: config.get('db.host'),
   schema: config.get('db.schema'),
   dialect: config.get('sequelize.dialect'),
-  logging: () => loggingEnabled,
+  logging: loggingEnabled || undefined,
   define: {
     hooks: {
       beforeCreate: entity => {

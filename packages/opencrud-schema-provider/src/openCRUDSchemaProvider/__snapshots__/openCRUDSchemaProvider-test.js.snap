@@ -1515,6 +1515,102 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_not",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_not_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_lt",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_lte",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_gt",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_gte",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -1974,6 +2070,16 @@ Object {
       "interfaces": null,
       "kind": "INPUT_OBJECT",
       "name": "MinistryWhereInput",
+      "possibleTypes": null,
+    },
+    Object {
+      "description": "The \`Float\` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+      "enumValues": null,
+      "fields": null,
+      "inputFields": null,
+      "interfaces": null,
+      "kind": "SCALAR",
+      "name": "Float",
       "possibleTypes": null,
     },
     Object {
@@ -4546,6 +4652,18 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "budget_ASC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "budget_DESC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "createdAt_ASC",
         },
         Object {
@@ -4627,6 +4745,18 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
             "ofType": null,
           },
         },
@@ -7035,6 +7165,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -7523,6 +7663,16 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
             "ofType": null,
           },
         },
@@ -9243,6 +9393,102 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_not",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_not_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_lt",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_lte",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_gt",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget_gte",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "createdAt",
           "type": Object {
             "kind": "SCALAR",
@@ -9741,6 +9987,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -9956,6 +10212,16 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
             "ofType": null,
           },
         },
@@ -10221,6 +10487,16 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
             "ofType": null,
           },
         },
@@ -10519,6 +10795,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -10580,6 +10866,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -10635,6 +10931,16 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
             "ofType": null,
           },
         },
@@ -12059,6 +12365,18 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "budget",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "createdAt",
           "type": Object {
             "kind": "NON_NULL",
@@ -13366,6 +13684,32 @@ Object {
         Object {
           "associatedSequence": null,
           "comments": Array [],
+          "databaseName": "budget_in_million_usd",
+          "defaultValue": null,
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "name": "budget_in_million_usd",
+              },
+              "name": "pgColumn",
+            },
+          ],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "budget",
+          "relatedField": null,
+          "relationName": null,
+          "type": "Float",
+        },
+        Object {
+          "associatedSequence": null,
+          "comments": Array [],
           "databaseName": null,
           "defaultValue": null,
           "directives": Array [
@@ -14641,6 +14985,32 @@ Object {
               Object {
                 "associatedSequence": null,
                 "comments": Array [],
+                "databaseName": "budget_in_million_usd",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "budget_in_million_usd",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "budget",
+                "relatedField": null,
+                "relationName": null,
+                "type": "Float",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
                 "databaseName": null,
                 "defaultValue": null,
                 "directives": Array [
@@ -15345,6 +15715,32 @@ Object {
                 "relatedField": null,
                 "relationName": null,
                 "type": "String",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "budget_in_million_usd",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "budget_in_million_usd",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "budget",
+                "relatedField": null,
+                "relationName": null,
+                "type": "Float",
               },
               Object {
                 "associatedSequence": null,
@@ -16373,6 +16769,32 @@ Object {
                       "relatedField": null,
                       "relationName": null,
                       "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": "budget_in_million_usd",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "budget_in_million_usd",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "budget",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "Float",
                     },
                     Object {
                       "associatedSequence": null,
@@ -17472,6 +17894,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "budget_in_million_usd",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "budget_in_million_usd",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "budget",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "Float",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
                       "directives": Array [
@@ -18316,6 +18764,32 @@ Object {
                           Object {
                             "associatedSequence": null,
                             "comments": Array [],
+                            "databaseName": "budget_in_million_usd",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "budget_in_million_usd",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "budget",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "Float",
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
                             "databaseName": null,
                             "defaultValue": null,
                             "directives": Array [
@@ -19063,6 +19537,7 @@ GraphQLSchema {
     "BatchPayload": "BatchPayload",
     "Boolean": "Boolean",
     "DateTime": "DateTime",
+    "Float": "Float",
     "Government": "Government",
     "GovernmentConnection": "GovernmentConnection",
     "GovernmentCreateInput": "GovernmentCreateInput",
@@ -19689,6 +20164,7 @@ input MinisterWhereUniqueInput {
 type Ministry {
   id: ID!
   name: String
+  budget: Float
   minister: Minister
   government: Government
   createdAt: DateTime!
@@ -19705,6 +20181,7 @@ type MinistryConnection {
 
 input MinistryCreateInput {
   name: String
+  budget: Float
   minister: MinisterCreateOneWithoutMinistryInput
   government: GovernmentCreateOneWithoutMinistriesInput
   deletedAt: DateTime
@@ -19723,6 +20200,7 @@ input MinistryCreateOneWithoutMinisterInput {
 
 input MinistryCreateWithoutGovernmentInput {
   name: String
+  budget: Float
   minister: MinisterCreateOneWithoutMinistryInput
   deletedAt: DateTime
   deleted: Int
@@ -19730,6 +20208,7 @@ input MinistryCreateWithoutGovernmentInput {
 
 input MinistryCreateWithoutMinisterInput {
   name: String
+  budget: Float
   government: GovernmentCreateOneWithoutMinistriesInput
   deletedAt: DateTime
   deleted: Int
@@ -19745,6 +20224,8 @@ enum MinistryOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  budget_ASC
+  budget_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -19758,6 +20239,7 @@ enum MinistryOrderByInput {
 type MinistryPreviousValues {
   id: ID!
   name: String
+  budget: Float
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -19793,6 +20275,14 @@ input MinistryScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  budget: Float
+  budget_not: Float
+  budget_in: [Float!]
+  budget_not_in: [Float!]
+  budget_lt: Float
+  budget_lte: Float
+  budget_gt: Float
+  budget_gte: Float
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -19850,6 +20340,7 @@ input MinistrySubscriptionWhereInput {
 
 input MinistryUpdateInput {
   name: String
+  budget: Float
   minister: MinisterUpdateOneWithoutMinistryInput
   government: GovernmentUpdateOneWithoutMinistriesInput
   deletedAt: DateTime
@@ -19858,12 +20349,14 @@ input MinistryUpdateInput {
 
 input MinistryUpdateManyDataInput {
   name: String
+  budget: Float
   deletedAt: DateTime
   deleted: Int
 }
 
 input MinistryUpdateManyMutationInput {
   name: String
+  budget: Float
   deletedAt: DateTime
   deleted: Int
 }
@@ -19896,6 +20389,7 @@ input MinistryUpdateOneWithoutMinisterInput {
 
 input MinistryUpdateWithoutGovernmentDataInput {
   name: String
+  budget: Float
   minister: MinisterUpdateOneWithoutMinistryInput
   deletedAt: DateTime
   deleted: Int
@@ -19903,6 +20397,7 @@ input MinistryUpdateWithoutGovernmentDataInput {
 
 input MinistryUpdateWithoutMinisterDataInput {
   name: String
+  budget: Float
   government: GovernmentUpdateOneWithoutMinistriesInput
   deletedAt: DateTime
   deleted: Int
@@ -19953,6 +20448,14 @@ input MinistryWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  budget: Float
+  budget_not: Float
+  budget_in: [Float!]
+  budget_not_in: [Float!]
+  budget_lt: Float
+  budget_lte: Float
+  budget_gt: Float
+  budget_gte: Float
   minister: MinisterWhereInput
   government: GovernmentWhereInput
   createdAt: DateTime

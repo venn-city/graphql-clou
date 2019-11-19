@@ -11,6 +11,9 @@ module.exports = {
         name: {
           type: Sequelize.STRING
         },
+        budget_in_million_usd: {
+          type: Sequelize.FLOAT
+        },
         minister_id: {
           type: Sequelize.STRING,
           references: {

@@ -7,7 +7,7 @@ directive @relationTable on FIELD_DEFINITION | FIELD
 directive @relation(link: String, name: String) on FIELD_DEFINITION | FIELD
 directive @vnCascade(direct: OPERATION, inverse: OPERATION) on FIELD_DEFINITION | FIELD
 
-union ANY = String | Int
+union ANY = String | Int | Float
 
 enum OPERATION {
   DELETE
@@ -18,6 +18,7 @@ enum OPERATION {
 type Ministry @pgTable(name: "ministries") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
+  budget:                 Float                   @pgColumn(name: "budget_in_million_usd")
   minister:               Minister                @pgRelation(column: "minister_id") @vnCascade(direct: DISCONNECT)
   government:             Government              @pgRelation(column: "government_id")
   createdAt:              DateTime!               @pgColumn(name: "created_at")
