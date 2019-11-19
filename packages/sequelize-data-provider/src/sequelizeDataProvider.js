@@ -7,7 +7,7 @@ const { openCrudToSequelize, sequelizeConsts } = require('@venncity/graphql-tran
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 
-const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
+const { BELONGS_TO_MANY } = sequelizeConsts.RELATION_TYPES;
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
 
