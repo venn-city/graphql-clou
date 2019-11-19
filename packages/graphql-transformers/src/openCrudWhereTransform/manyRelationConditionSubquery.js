@@ -1,15 +1,17 @@
 const Sequelize = require('sequelize');
 const { trimEnd, lowerFirst } = require('lodash');
+const sequelizeConsts = require('./sequelizeConsts');
+const { BELONGS_TO_MANY } = sequelizeConsts.RELATION_TYPES;
 
 const Op = Sequelize.Op;
 
 function buildConditionSubquery(targetModel, entityName, relatedEntityFilter, isNegative = false) {
   const positiveOrNegative = isNegative ? Op.not : Op.and;
   const queryGenerator = targetModel.QueryGenerator;
-  let associationKey = Object.keys(targetModel.associations).find(k => targetModel.associations[k].target.name === entityName);
-  let association = targetModel.associations[associationKey];
+  const associationKey = Object.keys(targetModel.associations).find(k => targetModel.associations[k].target.name === entityName);
+  const association = targetModel.associations[associationKey];
   let selectQuery;
-  if (association.associationType === 'BelongsToMany') {
+  if (association.associationType === BELONGS_TO_MANY) {
     selectQuery = handleBelongToMany(queryGenerator, association, targetModel, positiveOrNegative, relatedEntityFilter);
   } else {
     selectQuery = handleHasMany(queryGenerator, targetModel, entityName, positiveOrNegative, relatedEntityFilter);
@@ -18,7 +20,7 @@ function buildConditionSubquery(targetModel, entityName, relatedEntityFilter, is
 }
 
 function handleBelongToMany(queryGenerator, association, targetModel, positiveOrNegative, relatedEntityFilter) {
-  let referencingAssociationModel = association.target;
+  const referencingAssociationModel = association.target;
   const fieldAlias = Object.keys(referencingAssociationModel.associations).find(
     k => referencingAssociationModel.associations[k].target.name === targetModel.name
   );

@@ -7,6 +7,8 @@ let { openCrudSchema } = opencrudSchemaProvider;
 const { isEmptyArray, transformWithSymbols } = require('@venncity/clou-utils');
 const { sq } = require('@venncity/sequelize-model');
 const { buildConditionSubquery } = require('./manyRelationConditionSubquery');
+const sequelizeConsts = require('./sequelizeConsts');
+const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
 
 const Op = Sequelize.Op;
 const AND = 'AND';
@@ -20,7 +22,13 @@ function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWi
     let whereResult;
     if (where) {
       Object.keys(where).forEach(whereArg => {
-        const { sqWhereElement, sqIncludeElement } = openCrudFilterToSequelize(whereArg, where[whereArg], entityName, pathWithinSchema, useColumnNames);
+        const { sqWhereElement, sqIncludeElement } = openCrudFilterToSequelize(
+          whereArg,
+          where[whereArg],
+          entityName,
+          pathWithinSchema,
+          useColumnNames
+        );
         pushNotEmpty(sqWhereElements, sqWhereElement);
         pushNotEmpty(sqIncludeElements, sqIncludeElement);
       });
@@ -218,7 +226,15 @@ function handleManyRelationNone(whereArg, whereValue, entityName, pathWithinSche
   return { includeElement, whereElement };
 }
 
-function handleRelation({ whereValue, entityName, associationAlias, required, pathWithinSchema, transformAssociationToNested = true, useColumnNames = false }) {
+function handleRelation({
+  whereValue,
+  entityName,
+  associationAlias,
+  required,
+  pathWithinSchema,
+  transformAssociationToNested = true,
+  useColumnNames = false
+}) {
   const relatedEntityName = getFieldType(openCrudSchema, entityName, associationAlias);
   const relatedEntityFilter = openCrudToSequelize({ where: whereValue }, relatedEntityName, [...pathWithinSchema, associationAlias], useColumnNames);
 
@@ -239,7 +255,7 @@ function handleRelation({ whereValue, entityName, associationAlias, required, pa
 function correctManyRelationJoin(associationInfo, transformAssociationToNested, includeElement) {
   // Without the 'duplicating' flag, sequelize produced an invalid sql statement.
   // For reference see: https://github.com/sequelize/sequelize/issues/9869
-  if ((associationInfo.associationType === 'BelongsToMany' || associationInfo.associationType === 'HasMany') && transformAssociationToNested) {
+  if ((associationInfo.associationType === BELONGS_TO_MANY || associationInfo.associationType === HAS_MANY) && transformAssociationToNested) {
     includeElement.duplicating = false;
   }
 }

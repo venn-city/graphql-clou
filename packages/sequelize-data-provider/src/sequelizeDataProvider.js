@@ -3,10 +3,11 @@ const Sequelize = require('sequelize');
 
 const util = require('util');
 const async = require('async');
-const { openCrudToSequelize } = require('@venncity/graphql-transformers');
+const { openCrudToSequelize, sequelizeConsts } = require('@venncity/graphql-transformers');
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 
+const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
 
@@ -59,7 +60,7 @@ async function getRelatedEntityIds(entityName, originalEntityId, relationEntityN
 async function getRelatedEntities(entityName, originalEntityId, relationFieldName, args) {
   const fieldType = getFieldType(schema, entityName, relationFieldName);
   const associationInfo = Object.values(sq[upperFirst(entityName)].associations).find(association => association.as === relationFieldName);
-  if (args && associationInfo.associationType === 'BelongsToMany') {
+  if (args && associationInfo.associationType === BELONGS_TO_MANY) {
     // TODO: for now ignore these params as sequelize does not support them in nested nXm relations.
     // https://github.com/sequelize/sequelize/issues/4376
     delete args.first;
