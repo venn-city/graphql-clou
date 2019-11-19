@@ -1,4 +1,5 @@
 const sq = require('./sequelizeInit');
+const { hacker } = require('faker');
 
 describe('sequelizeInit', () => {
   test('sequelize should be initialized properly with models for all test schema entities', async () => {
@@ -16,5 +17,18 @@ describe('sequelizeInit', () => {
 
     const votes = await sq.Vote.findAll({ where: { id: 'x' } });
     expect(votes).toHaveLength(0);
+  });
+
+  test('sequelize should call schema hooks', async () => {
+    const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: 77.9 });
+    const fetchedMinistry = await sq.Ministry.findOne({
+      where: {
+        id: createdMinistry.id
+      }
+    });
+    const updatedEntity = await fetchedMinistry.update({
+      budget: 88.2
+    });
+    expect(updatedEntity.dataValues).toHaveProperty('budget', 88.2);
   });
 });
