@@ -1,25 +1,26 @@
-const { drop, endsWith, trimEnd, isNil, isEmpty, isArray, map, flatMap, lowerFirst, isString } = require('lodash');
+const { drop, endsWith, isNil, isEmpty, isArray, map, flatMap, isString } = require('lodash');
 const Sequelize = require('sequelize');
 require('@venncity/nested-config')(__dirname);
-let opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 const { isScalar, isObject, isList, getField, getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 let { openCrudSchema } = opencrudSchemaProvider;
 const { isEmptyArray, transformWithSymbols } = require('@venncity/clou-utils');
 const { sq } = require('@venncity/sequelize-model');
+const { buildConditionSubquery } = require('./manyRelationConditionSubquery');
 
 const Op = Sequelize.Op;
 const AND = 'AND';
 const OR = 'OR';
 const NOT = 'NOT';
 
-function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWithinSchema = [entityName]) {
+function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWithinSchema = [entityName], useColumnNames = false) {
   try {
     const sqWhereElements = [];
     const sqIncludeElements = [];
     let whereResult;
     if (where) {
       Object.keys(where).forEach(whereArg => {
-        const { sqWhereElement, sqIncludeElement } = openCrudFilterToSequelize(whereArg, where[whereArg], entityName, pathWithinSchema);
+        const { sqWhereElement, sqIncludeElement } = openCrudFilterToSequelize(whereArg, where[whereArg], entityName, pathWithinSchema, useColumnNames);
         pushNotEmpty(sqWhereElements, sqWhereElement);
         pushNotEmpty(sqIncludeElements, sqIncludeElement);
       });
@@ -50,7 +51,7 @@ function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWi
   }
 }
 
-function openCrudFilterToSequelize(whereArg, whereValue, entityName, pathWithinSchema) {
+function openCrudFilterToSequelize(whereArg, whereValue, entityName, pathWithinSchema, useColumnNames) {
   let sqWhereElement;
   let sqIncludeElement;
 
@@ -81,7 +82,7 @@ function openCrudFilterToSequelize(whereArg, whereValue, entityName, pathWithinS
   } else {
     const whereArgField = getField(openCrudSchema, entityName, whereArg);
     if (isScalar(whereArgField.type)) {
-      sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue);
+      sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames);
     } else if (isObject(whereArgField.type)) {
       const objectFieldTransform = handleObjectField(whereArg, whereValue, entityName, pathWithinSchema);
       sqWhereElement = objectFieldTransform.sqWhereElement;
@@ -109,17 +110,23 @@ function handleObjectField(whereArg, whereValue, entityName, pathWithinSchema) {
   return { sqWhereElement, sqIncludeElement: includeElement };
 }
 
-function handleScalarField(whereArgField, whereArg, whereValue) {
+function getFieldNameForQuery(useColumnNames, fieldName, entityName) {
+  return !useColumnNames ? fieldName : sq[entityName].rawAttributes[fieldName].field;
+}
+
+function handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames) {
   let sqWhereElement;
   if (whereArgField.name === whereArg) {
-    sqWhereElement = { [whereArg]: whereValue };
+    const fieldNameForQuery = getFieldNameForQuery(useColumnNames, whereArg, entityName);
+    sqWhereElement = { [fieldNameForQuery]: whereValue };
   } else {
     Object.keys(gqlPostfixesToSqOps).forEach(gqlPostfixToSqOpKey => {
       if (endsWith(whereArg, gqlPostfixToSqOpKey)) {
         const fieldName = whereArg.replace(new RegExp(`${gqlPostfixToSqOpKey}$`), '');
+        const fieldNameForQuery = getFieldNameForQuery(useColumnNames, fieldName, entityName);
         const gqlPostfixesToSqOp = gqlPostfixesToSqOps[gqlPostfixToSqOpKey];
         sqWhereElement = {
-          [fieldName]: {
+          [fieldNameForQuery]: {
             [gqlPostfixesToSqOp.op]: gqlPostfixesToSqOp.valueTransformer(whereValue)
           }
         };
@@ -175,7 +182,8 @@ function handleManyRelationEvery(whereArg, whereValue, entityName, pathWithinSch
     associationAlias,
     required: false,
     pathWithinSchema,
-    transformAssociationToNested: false
+    transformAssociationToNested: false,
+    useColumnNames: true
   });
   const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter, true);
   const whereElement = {
@@ -196,7 +204,8 @@ function handleManyRelationNone(whereArg, whereValue, entityName, pathWithinSche
     associationAlias,
     required: false,
     pathWithinSchema,
-    transformAssociationToNested: false
+    transformAssociationToNested: false,
+    useColumnNames: true
   });
   const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter);
   const whereElement = {
@@ -209,9 +218,9 @@ function handleManyRelationNone(whereArg, whereValue, entityName, pathWithinSche
   return { includeElement, whereElement };
 }
 
-function handleRelation({ whereValue, entityName, associationAlias, required, pathWithinSchema, transformAssociationToNested = true }) {
+function handleRelation({ whereValue, entityName, associationAlias, required, pathWithinSchema, transformAssociationToNested = true, useColumnNames = false }) {
   const relatedEntityName = getFieldType(openCrudSchema, entityName, associationAlias);
-  const relatedEntityFilter = openCrudToSequelize({ where: whereValue }, relatedEntityName, [...pathWithinSchema, associationAlias]);
+  const relatedEntityFilter = openCrudToSequelize({ where: whereValue }, relatedEntityName, [...pathWithinSchema, associationAlias], useColumnNames);
 
   if (transformAssociationToNested) {
     relatedEntityFilter.where = transformWhereToNested(relatedEntityName, pathWithinSchema, associationAlias, relatedEntityFilter);
@@ -247,25 +256,6 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
       return fieldName;
     } // TODO: also handle: entity: null - e.g. parentEntity { childEntity: null}
   })(relatedEntityFilter.where);
-}
-
-function buildConditionSubquery(targetModel, entityName, relatedEntityFilter, isNegative = false) {
-  const tableName = targetModel.getTableName();
-  const queryGenerator = targetModel.QueryGenerator;
-  const positiveOrNegative = isNegative ? Op.not : Op.and;
-  return trimEnd(
-    queryGenerator.selectQuery(
-      tableName,
-      {
-        attributes: [targetModel.associations[lowerFirst(entityName)].identifierField],
-        where: {
-          [positiveOrNegative]: relatedEntityFilter.where
-        }
-      },
-      targetModel
-    ),
-    ';'
-  );
 }
 
 function pushNotEmpty(array, other) {

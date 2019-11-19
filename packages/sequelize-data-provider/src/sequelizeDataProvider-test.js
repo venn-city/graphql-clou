@@ -18,6 +18,7 @@ describe('sequelizeDataProvider', () => {
     government = await sequelizeDataProvider.createEntity('Government', { name: governmentName });
     ministry1 = await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName1,
+      budget: 7,
       government: {
         connect: {
           id: government.id
@@ -26,6 +27,7 @@ describe('sequelizeDataProvider', () => {
     });
     ministry2 = await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName2,
+      budget: 99.2,
       government: {
         connect: {
           id: government.id
@@ -62,6 +64,38 @@ describe('sequelizeDataProvider', () => {
     const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName } });
     expect(fetchedGovernments).toHaveLength(1);
     expect(fetchedGovernments[0]).toMatchObject(government);
+  });
+
+  test('getAllEntities with nested _every filter for 1xn relation', async () => {
+    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+      where: { ministries_every: { budget_not: -1 }, name: governmentName }
+    });
+    expect(fetchedGovernments).toHaveLength(1);
+    expect(fetchedGovernments[0]).toMatchObject(government);
+  });
+
+  test('getAllEntities with nested _none filter for 1xn relation', async () => {
+    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+      where: { ministries_none: { id: 'boo' }, name: governmentName }
+    });
+    expect(fetchedGovernments).toHaveLength(1);
+    expect(fetchedGovernments[0]).toMatchObject(government);
+  });
+
+  test('getAllEntities with nested _every filter for nxm relation', async () => {
+    const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+      where: { votes_every: { id_not: 'py' }, id: minister.id }
+    });
+    expect(fetchedMinisters).toHaveLength(1);
+    expect(fetchedMinisters[0]).toMatchObject(minister);
+  });
+
+  test('getAllEntities with nested _none filter for nxm relation', async () => {
+    const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+      where: { votes_none: { id: 'py' }, id: minister.id }
+    });
+    expect(fetchedMinisters).toHaveLength(1);
+    expect(fetchedMinisters[0]).toMatchObject(minister);
   });
 
   test('getEntitiesConnection', async () => {
