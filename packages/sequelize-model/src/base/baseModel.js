@@ -8,7 +8,7 @@ const baseModel = {
   createdAt: Sequelize.DATE,
   updatedAt: Sequelize.DATE,
   deletedAt: Sequelize.DATE,
-  deleted: Sequelize.NUMBER
+  deleted: Sequelize.INTEGER
 };
 
 module.exports = {
