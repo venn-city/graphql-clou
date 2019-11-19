@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.4...@venncity/sequelize-model@1.1.5) (2019-11-19)
+
+
+### Bug Fixes
+
+* **basemodel:** changed deleted field to INTEGER type ([bd23990](https://github.com/venn-city/graphql-clou/commit/bd23990f872ddfc2093a54402b033f4a9b6c3a40))
+* **sequelize-model:** fix loggingEnabled config ([9720cc0](https://github.com/venn-city/graphql-clou/commit/9720cc09dcfe97f7ce4270f310b4c0198c682cf2))
+
+
+
+
+
 ## [1.1.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.3...@venncity/sequelize-model@1.1.4) (2019-11-18)
 
 

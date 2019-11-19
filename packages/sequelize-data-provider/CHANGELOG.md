@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.1.4...@venncity/sequelize-data-provider@1.2.0) (2019-11-19)
+
+
+### Features
+
+* properly handle nested queries on nxm relations ([9210466](https://github.com/venn-city/graphql-clou/commit/9210466317248371328a5d43873f85f73564ff21))
+
+
+
+
+
 ## [1.1.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.1.3...@venncity/sequelize-data-provider@1.1.4) (2019-11-18)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider
