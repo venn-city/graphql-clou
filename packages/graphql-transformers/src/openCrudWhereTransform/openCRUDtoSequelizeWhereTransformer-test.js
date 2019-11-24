@@ -1,6 +1,6 @@
 const { sq } = require('@venncity/sequelize-model');
-let { Op } = require('sequelize');
-let { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
+const { Op } = require('sequelize');
+const { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
 
 describe('openCRUDtoSequelizeWhereTransformer', () => {
   describe('openCrudToSequelize should transform graphql openCRUD { where, first, skip, orderBy } to sequelize', () => {
@@ -129,7 +129,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
         });
         expect(sqFilter).toHaveProperty('include', [
           {
-            model: sq['Ministry'],
+            model: sq.Ministry,
             as: 'ministries',
             required: false
           }
@@ -209,7 +209,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Minister'],
+              model: sq.Minister,
               as: 'minister',
               required: false,
               include: []
@@ -232,7 +232,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministry',
               required: false,
               include: []
@@ -255,7 +255,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Minister'],
+              model: sq.Minister,
               as: 'minister',
               required: false,
               duplicating: false,
@@ -281,7 +281,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministries',
               required: false,
               duplicating: false,
@@ -309,7 +309,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministries',
               required: false
             }
@@ -335,7 +335,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministries',
               required: false
             }
@@ -359,7 +359,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Vote'],
+              model: sq.Vote,
               as: 'votes',
               required: false,
               duplicating: false,
@@ -389,7 +389,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Vote'],
+              model: sq.Vote,
               as: 'votes',
               required: false
             }
@@ -417,7 +417,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Vote'],
+              model: sq.Vote,
               as: 'votes',
               required: false
             }

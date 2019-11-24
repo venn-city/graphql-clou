@@ -9,7 +9,7 @@ const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
-const { shouldLimitInFetch, limitAfterFetch, omitLimitArgs } = resultLimiter;
+const { shouldLimitInFetch, limitAfterFetch, omitLimitArgsIfRequired } = resultLimiter;
 
 const Op = Sequelize.Op;
 const asyncEach = util.promisify(async.each);
@@ -22,7 +22,7 @@ async function getEntity(entityName, where) {
 
 async function getAllEntities(entityName, args) {
   let fetchedEntities = await getAllEntitiesSqObjects(args, entityName);
-  if (shouldLimitInFetch(args)) {
+  if (!shouldLimitInFetch(args)) {
     fetchedEntities = limitAfterFetch(args, fetchedEntities);
   }
   return map(fetchedEntities, 'dataValues');
@@ -62,8 +62,8 @@ async function getRelatedEntityIds(entityName, originalEntityId, relationEntityN
 
 async function getRelatedEntities(entityName, originalEntityId, relationFieldName, args) {
   const fieldType = getFieldType(schema, entityName, relationFieldName);
-  const argsWithoutFirst = omitLimitArgs(entityName, relationFieldName, args);
-  const sqFilter = args && openCrudToSequelize(argsWithoutFirst, upperFirst(fieldType));
+  const argsAfterLimitFiltering = omitLimitArgsIfRequired(entityName, relationFieldName, args);
+  const sqFilter = args && openCrudToSequelize(argsAfterLimitFiltering, upperFirst(fieldType));
   let include = {
     model: model(fieldType),
     as: relationFieldName,
@@ -81,12 +81,11 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
   });
   let relatedEntities = originalEntity ? originalEntity[relationFieldName] : [];
   relatedEntities = limitAfterFetch(args, relatedEntities);
-  if (Array.isArray(relatedEntities) && relatedEntities.length === 0) {
-    return [];
+
+  if (Array.isArray(relatedEntities)) {
+    return relatedEntities.map(relatedEntity => relatedEntity.dataValues);
   }
-  return (
-    relatedEntities && (Array.isArray(relatedEntities) ? relatedEntities.map(relatedEntity => relatedEntity.dataValues) : relatedEntities.dataValues)
-  );
+  return relatedEntities ? relatedEntities.dataValues : [];
 }
 
 async function createEntity(entityName, entityToCreate) {

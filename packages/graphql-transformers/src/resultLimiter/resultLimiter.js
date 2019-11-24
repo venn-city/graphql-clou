@@ -4,7 +4,7 @@ const { sq } = require('@venncity/sequelize-model');
 const { BELONGS_TO_MANY } = require('./../openCrudWhereTransform/sequelizeConsts').RELATION_TYPES;
 
 function shouldLimitInFetch(args) {
-  return args && containsEveryOrNone(args.where);
+  return args && !containsEveryOrNone(args.where);
 }
 
 function containsEveryOrNone(where) {
@@ -22,7 +22,7 @@ function limitAfterFetch(args, fetchedEntities) {
 
 // TODO: for now omit these args as sequelize does not support them in nested nXm relations.
 // https://github.com/sequelize/sequelize/issues/4376
-function omitLimitArgs(entityName, relationFieldName, args) {
+function omitLimitArgsIfRequired(entityName, relationFieldName, args) {
   const associationInfo = Object.values(sq[upperFirst(entityName)].associations).find(association => association.as === relationFieldName);
   if (args && associationInfo.associationType === BELONGS_TO_MANY) {
     return omit(args, ['first', 'skip']);
@@ -34,5 +34,5 @@ module.exports = {
   shouldLimitInFetch,
   containsEveryOrNone,
   limitAfterFetch,
-  omitLimitArgs
+  omitLimitArgsIfRequired
 };
