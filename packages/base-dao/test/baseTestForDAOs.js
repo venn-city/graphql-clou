@@ -258,7 +258,7 @@ function randomValuesByType(dataType) {
     // Hardcoded values, e.g. enum.
     return [dataType[0], dataType[1]];
   }
-  const timeZoneSuffix = '';
+  const timeZoneSuffix = 'T00:00:00.000Z';
   switch (dataType) {
     case 'date':
       return [`${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`, `${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`];
