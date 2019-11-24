@@ -1,139 +1,400 @@
-const { hacker } = require('faker');
-const { mapKeys } = require('lodash');
+/* eslint-disable no-unused-vars */
+const { hacker, random } = require('faker');
+const { omit } = require('lodash');
 const sequelizeDataProvider = require('./sequelizeDataProvider');
 
 describe('sequelizeDataProvider', () => {
-  let government;
+  /**
+
+   +------------+                                 +--------------+
+   |Government1 +-------------------------+       |Government2   |
+   | Atlantis   +-------+                 |       | Sorcha       |
+   | 9500BC     |       |                 |       | 1964         |
+   +-----+------+       |                 |       +--------------+
+         |              |                 |
+         |              |                 |
+   +-----+----+   +-----+----+     +------+-----+
+   |Ministry1 |   |Ministry2 |     |Ministry3   |
+   | Finance  |   | Defence  |     | Healthcare |
+   | 87       |   | 22.1     |     | 22.1       |
+   +----------+   +----------+     +------------+
+         |             |
+         |             |
+         |             |
+   +-----+----+   +----------+                     +-------------+
+   |Minister1 |   |Minister2 +-----------+         |Minister3    |
+   | Lazaros  |   | Natassas |           |         | Vasileia    |
+   +----------+   +----------+   +-------+-----+   +-------------+
+       |               |         |Vote3        |
+       |               |         | Raise taxes |
+       |               |         | Nay         |
+   +---+--------+      |         +-------------+
+   |Vote1       |      |
+   | Build walls|  +---+--------+
+   | Yea        |  |Vote2       |
+   +------------+  | Build walls|
+                   | Nay        |
+                   +------------+
+   */
+
+  const randomNumber = random.number();
+
+  let government1;
+  const governmentName1 = `9500BC${randomNumber}`;
+  const governmentCountry1 = `Atlantis${randomNumber}`;
+  let government2;
+  const governmentName2 = `1966${randomNumber}`;
+  const governmentCountry2 = `Sorcha${randomNumber}`;
+
   let ministry1;
+  const ministryName1 = `Finance${randomNumber}`;
+  const ministryBudget1 = 87 + randomNumber;
   let ministry2;
-  let minister;
-  const governmentName = hacker.phrase();
-  const ministryName1 = hacker.phrase();
-  const ministryName2 = hacker.phrase();
-  const ministerName = hacker.phrase();
-  const voteName1 = hacker.phrase();
-  const voteName2 = hacker.phrase();
+  const ministryName2 = `Defence${randomNumber}`;
+  const ministryBudget2 = 22.1 + randomNumber;
+  let ministry3;
+  const ministryName3 = `Healthcare${randomNumber}`;
+  const ministryBudget3 = 22.1 + randomNumber;
+
+  let minister1;
+  const ministerName1 = `Lazaros${randomNumber}`;
+  let minister2;
+  const ministerName2 = `Natassas${randomNumber}`;
+  let minister3;
+  const ministerName3 = `Vasileia${randomNumber}`;
+
+  let vote1;
+  const voteName1 = `Build walls${randomNumber}`;
+  const voteBallot1 = 'YEA';
+  let vote2;
+  const voteName2 = `Build walls${randomNumber}`;
+  const voteBallot2 = 'NAY';
+  let vote3;
+  const voteName3 = `Raise taxes${randomNumber}`;
+  const voteBallot3 = 'NAY';
 
   beforeAll(async () => {
-    government = await sequelizeDataProvider.createEntity('Government', { name: governmentName });
+    console.info('random seed', randomNumber);
+    government1 = await sequelizeDataProvider.createEntity('Government', { name: governmentName1, country: governmentCountry1 });
+    government2 = await sequelizeDataProvider.createEntity('Government', { name: governmentName2, country: governmentCountry2 });
+    minister1 = await sequelizeDataProvider.createEntity('Minister', {
+      name: ministerName1
+    });
+    minister2 = await sequelizeDataProvider.createEntity('Minister', {
+      name: ministerName2
+    });
+    minister3 = await sequelizeDataProvider.createEntity('Minister', {
+      name: ministerName3
+    });
     ministry1 = await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName1,
-      budget: 7,
+      budget: ministryBudget1,
       government: {
         connect: {
-          id: government.id
+          id: government1.id
+        }
+      },
+      minister: {
+        connect: {
+          id: minister1.id
         }
       }
     });
     ministry2 = await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName2,
-      budget: 99.2,
+      budget: ministryBudget2,
       government: {
         connect: {
-          id: government.id
+          id: government1.id
+        }
+      },
+      minister: {
+        connect: {
+          id: minister2.id
         }
       }
     });
-    minister = await sequelizeDataProvider.createEntity('Minister', {
-      name: ministerName
+    ministry3 = await sequelizeDataProvider.createEntity('Ministry', {
+      name: ministryName3,
+      budget: ministryBudget3,
+      government: {
+        connect: {
+          id: government1.id
+        }
+      }
     });
-    await sequelizeDataProvider.createEntity('Vote', {
+
+    vote1 = await sequelizeDataProvider.createEntity('Vote', {
       name: voteName1,
+      ballot: voteBallot1,
       minister: {
         connect: {
-          id: minister.id
+          id: minister1.id
         }
       }
     });
-    await sequelizeDataProvider.createEntity('Vote', {
+    vote2 = await sequelizeDataProvider.createEntity('Vote', {
       name: voteName2,
+      ballot: voteBallot2,
       minister: {
         connect: {
-          id: minister.id
+          id: minister2.id
+        }
+      }
+    });
+    vote3 = await sequelizeDataProvider.createEntity('Vote', {
+      name: voteName3,
+      ballot: voteBallot3,
+      minister: {
+        connect: {
+          id: minister2.id
         }
       }
     });
   });
 
   test('getEntity', async () => {
-    const fetchedGovernment = await sequelizeDataProvider.getEntity('Government', { name: governmentName });
-    expect(fetchedGovernment).toMatchObject(government);
+    const fetchedGovernment = await sequelizeDataProvider.getEntity('Government', { name: governmentName1 });
+    expect(fetchedGovernment).toMatchObject(government1);
   });
 
   test('getAllEntities', async () => {
-    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName } });
+    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName1 } });
     expect(fetchedGovernments).toHaveLength(1);
-    expect(fetchedGovernments[0]).toMatchObject(government);
+    expect(fetchedGovernments[0]).toMatchObject(government1);
   });
 
-  test('getAllEntities with nested _every filter for 1xn relation', async () => {
-    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
-      where: { ministries_every: { budget_not: -1 }, name: governmentName }
+  describe('1xn', () => {
+    test('getAllEntities with nested _every filter for 1xn relation, _every condition complies', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_every: { name_ends_with: `e${randomNumber}` }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
     });
-    expect(fetchedGovernments).toHaveLength(1);
-    expect(fetchedGovernments[0]).toMatchObject(government);
+
+    test('getAllEntities with nested _every filter for 1xn relation, and another level of nesting', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_every: { name_ends_with: `e${randomNumber}`, minister: { name_ends_with: `${randomNumber}` } }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
+    });
+
+    test('getAllEntities with nested _every filter for 1xn relation, _every condition not complies', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_none: { name_ends_with: `re${randomNumber}` }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _every filter for 1xn relation, _every condition complies emptily', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_none: { name_ends_with: `e${randomNumber}` }, name: governmentName2 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government2);
+    });
+
+    test('getAllEntities with nested _none filter for 1xn relation, _none condition complies', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_every: { name_ends_with: `e${randomNumber}` }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
+    });
+
+    test('getAllEntities with nested _none filter for 1xn relation, _none condition not complies', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_every: { name_ends_with: `ce${randomNumber}` }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _none filter for 1xn relation, _none condition complies emptily', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_none: { name_ends_with: `e${randomNumber}` }, name: governmentName2 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government2);
+    });
+
+    test('getAllEntities with nested _some filter for 1xn relation, _some condition complies', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_some: { name_ends_with: `re${randomNumber}` }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
+    });
+
+    test('getAllEntities with nested _some filter for 1xn relation, _some condition not complies', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_some: { name_ends_with: `XX${randomNumber}` }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _some filter for 1xn relation, _some condition not complies emptily', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_some: { name_ends_with: `e${randomNumber}` }, name: governmentName2 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _some filter for 1xn relation, inside 1x1', async () => {
+      const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+        where: { government: { ministries_some: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } },
+        first: 5
+      });
+      expect(fetchedMinistries).toHaveLength(3);
+    });
+
+    // Breaks as the government table name is lower case and not upperFirst in this case.
+    test.skip('getAllEntities with nested _none filter for 1xn relation, inside 1x1', async () => {
+      const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+        where: { government: { ministries_none: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } },
+        first: 5
+      });
+      expect(fetchedMinistries).toHaveLength(0);
+    });
   });
 
-  test('getAllEntities with nested _none filter for 1xn relation', async () => {
-    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
-      where: { ministries_none: { id: 'boo' }, name: governmentName }
+  describe('nxm', () => {
+    test('getAllEntities with nested _every filter for nxm relation, _every condition complies', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_every: { ballot: 'NAY' }, id: minister2.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(1);
+      expect(fetchedMinisters[0]).toMatchObject(minister2);
     });
-    expect(fetchedGovernments).toHaveLength(1);
-    expect(fetchedGovernments[0]).toMatchObject(government);
-  });
 
-  test('getAllEntities with nested _every filter for nxm relation', async () => {
-    const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
-      where: { votes_every: { id_not: 'py' }, id: minister.id }
+    // TODO: Fails without first filtering!
+    test('getAllEntities with nested _every filter for nxm and 1x1 relations', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_every: { ballot: 'NAY' }, id: minister2.id, ministry: { name: ministryName2 } },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(1);
+      expect(fetchedMinisters[0]).toMatchObject(minister2);
     });
-    expect(fetchedMinisters).toHaveLength(1);
-    expect(fetchedMinisters[0]).toMatchObject(minister);
-  });
 
-  test('getAllEntities with nested _none filter for nxm relation', async () => {
-    const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
-      where: { votes_none: { id: 'py' }, id: minister.id }
+    test('getAllEntities with nested _every filter for nxm relation, _every condition not complies', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_every: { name: `Build walls${randomNumber}` }, id: minister2.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(0);
     });
-    expect(fetchedMinisters).toHaveLength(1);
-    expect(fetchedMinisters[0]).toMatchObject(minister);
+
+    test('getAllEntities with nested _every filter for nxm relation, _every condition complies emptily', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_every: { ballot: 'NAY' }, id: minister3.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(1);
+      expect(fetchedMinisters[0]).toMatchObject(minister3);
+    });
+
+    test('getAllEntities with nested _none filter for nxm relation, _none condition complies', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_none: { name: 'Fix roads' }, id: minister2.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(1);
+      expect(fetchedMinisters[0]).toMatchObject(minister2);
+    });
+
+    test('getAllEntities with nested _none filter for nxm relation, _none condition not complies', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_none: { ballot: 'NAY' }, id: minister2.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _none filter for nxm relation, _none condition complies emptily', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_none: { ballot: 'NAY' }, id: minister3.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(1);
+      expect(fetchedMinisters[0]).toMatchObject(minister3);
+    });
+
+    test('getAllEntities with nested _some filter for nxm relation, _some condition complies', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_some: { name: `Build walls${randomNumber}` }, id: minister2.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(1);
+      expect(fetchedMinisters[0]).toMatchObject(minister2);
+    });
+
+    test('getAllEntities with nested _some filter for nxm relation, _some condition not complies', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_some: { ballot: 'ABSTAIN' }, id: minister2.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _some filter for nxm relation, _some condition not complies emptily', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_some: { ballot: 'NAY' }, id: minister3.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(0);
+    });
+
+    test('getAllEntities with nested _some filter for nxm relation, _some condition not complies emptily', async () => {
+      const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+        where: { votes_some: { ballot: 'NAY' }, id: minister3.id },
+        first: 5
+      });
+      expect(fetchedMinisters).toHaveLength(0);
+    });
   });
 
   test('getEntitiesConnection', async () => {
-    const fetchedGovernmentConnection = await sequelizeDataProvider.getEntitiesConnection('Government', { where: { name: governmentName } });
+    const fetchedGovernmentConnection = await sequelizeDataProvider.getEntitiesConnection('Government', { where: { name: governmentName1 } });
     expect(fetchedGovernmentConnection).toHaveProperty('aggregate', { __typename: 'AggregateGovernment', count: 1 });
   });
 
   test('getRelatedEntity', async () => {
     const fetchedGovernment = await sequelizeDataProvider.getRelatedEntity('Ministry', ministry1.id, 'government');
-    expect(fetchedGovernment).toMatchObject(government);
+    expect(fetchedGovernment).toMatchObject(government1);
   });
 
   test('getRelatedEntityId', async () => {
     const fetchedGovernmentId = await sequelizeDataProvider.getRelatedEntityId('Ministry', ministry1.id, 'government');
-    expect(fetchedGovernmentId).toEqual(government.id);
+    expect(fetchedGovernmentId).toEqual(government1.id);
   });
 
   test('getRelatedEntities', async () => {
-    const fetchedMinistries = await sequelizeDataProvider.getRelatedEntities('Government', government.id, 'ministries');
-    expect(
-      fetchedMinistries.sort().map(m =>
-        mapKeys(m, (v, k) => {
-          if (k === 'ministerId') {
-            return 'minister_id';
-          }
-          return k;
-        })
-      )
-    ).toEqual([ministry1, ministry2].sort());
+    const fetchedMinistries = await sequelizeDataProvider.getRelatedEntities('Government', government1.id, 'ministries');
+    expect(fetchedMinistries.sort().map(m => omit(m, 'ministerId'))).toEqual(
+      [ministry1, ministry2, ministry3].sort().map(m => omit(m, 'ministerId'))
+    );
   });
 
   test('getRelatedEntityIds', async () => {
-    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries');
-    expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id].sort());
+    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government1.id, 'ministries');
+    expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id, ministry3.id].sort());
   });
 
   test('getRelatedEntityIds with args', async () => {
-    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government.id, 'ministries', {
+    const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government1.id, 'ministries', {
       first: 1,
       orderBy: 'createdAt_ASC'
     });
@@ -142,13 +403,11 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('getRelatedEntityIds with args for nXm relation', async () => {
-    const fetchedVoteIds = await sequelizeDataProvider.getRelatedEntityIds('Minister', minister.id, 'votes', {
+    const fetchedVoteIds = await sequelizeDataProvider.getRelatedEntityIds('Minister', minister1.id, 'votes', {
       first: 1,
       orderBy: 'createdAt_ASC'
     });
-    // TODO: for now ignore these params as sequelize does not support them in nested nXm relations.
-    // https://github.com/sequelize/sequelize/issues/4376
-    expect(fetchedVoteIds).toHaveLength(2);
+    expect(fetchedVoteIds).toHaveLength(1);
   });
 
   test('createEntity', async () => {
@@ -242,7 +501,7 @@ describe('sequelizeDataProvider', () => {
       }
     );
     const ministryIdsAfterDisconnect = await sequelizeDataProvider.getRelatedEntityIds('Government', anotherGovernment.id, 'ministries');
-    expect(ministryIdsAfterDisconnect).toBeFalsy();
+    expect(ministryIdsAfterDisconnect).toHaveLength(0);
   });
 
   test('deleteEntity', async () => {
