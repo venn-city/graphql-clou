@@ -19,7 +19,7 @@ describe('generic tests', () => {
   let serviceContext;
   let governmentDAO;
   beforeAll(async () => {
-    serviceContext = await createServiceAuthContext();
+    serviceContext = await createServiceAuthContext(createAllDAOs());
     governmentDAO = createAllDAOs().governmentDAO;
   });
 
