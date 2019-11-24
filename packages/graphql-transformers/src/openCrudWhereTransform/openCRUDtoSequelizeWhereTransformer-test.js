@@ -1,6 +1,6 @@
 const { sq } = require('@venncity/sequelize-model');
-let { Op } = require('sequelize');
-let { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
+const { Op } = require('sequelize');
+const { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
 
 describe('openCRUDtoSequelizeWhereTransformer', () => {
   describe('openCrudToSequelize should transform graphql openCRUD { where, first, skip, orderBy } to sequelize', () => {
@@ -114,7 +114,9 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                       id: {
                         [Op.ne]: {
                           [Op.all]: {
-                            val: 'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (("Ministry"."name" = \'py\'))'
+                            val:
+                              'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE ((("Ministry"."name" = \'py\')) ' +
+                              'AND "Ministry"."government_id" = "Government"."id")'
                           }
                         }
                       }
@@ -127,7 +129,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
         });
         expect(sqFilter).toHaveProperty('include', [
           {
-            model: sq['Ministry'],
+            model: sq.Ministry,
             as: 'ministries',
             required: false
           }
@@ -207,7 +209,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Minister'],
+              model: sq.Minister,
               as: 'minister',
               required: false,
               include: []
@@ -230,7 +232,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministry',
               required: false,
               include: []
@@ -253,7 +255,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Minister'],
+              model: sq.Minister,
               as: 'minister',
               required: false,
               duplicating: false,
@@ -279,7 +281,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministries',
               required: false,
               duplicating: false,
@@ -296,7 +298,9 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                 id: {
                   [Op.ne]: {
                     [Op.all]: {
-                      val: 'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE NOT (("Ministry"."name" = \'ku\'))'
+                      val:
+                        'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (NOT (("Ministry"."name" = \'ku\')) ' +
+                        'AND "Ministry"."government_id" = "Government"."id")'
                     }
                   }
                 }
@@ -305,7 +309,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministries',
               required: false
             }
@@ -320,7 +324,9 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                 id: {
                   [Op.ne]: {
                     [Op.all]: {
-                      val: 'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (("Ministry"."name" = \'ku\'))'
+                      val:
+                        'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE ((("Ministry"."name" = \'ku\')) ' +
+                        'AND "Ministry"."government_id" = "Government"."id")'
                     }
                   }
                 }
@@ -329,7 +335,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Ministry'],
+              model: sq.Ministry,
               as: 'ministries',
               required: false
             }
@@ -353,7 +359,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Vote'],
+              model: sq.Vote,
               as: 'votes',
               required: false,
               duplicating: false,
@@ -374,7 +380,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                         'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
                         '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
                         '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
-                        '"Minister"."id" = "votes->ministersvotes"."minister_id" WHERE NOT (("Minister"."name" = \'ku\'))'
+                        '"Minister"."id" = "votes->ministersvotes"."minister_id" AND NOT (("votes"."name" = \'ku\'))'
                     }
                   }
                 }
@@ -383,7 +389,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Vote'],
+              model: sq.Vote,
               as: 'votes',
               required: false
             }
@@ -402,7 +408,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                         'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
                         '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
                         '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
-                        '"Minister"."id" = "votes->ministersvotes"."minister_id" WHERE (("Minister"."name" = \'ku\'))'
+                        '"Minister"."id" = "votes->ministersvotes"."minister_id" AND (("votes"."name" = \'ku\'))'
                     }
                   }
                 }
@@ -411,7 +417,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           });
           expect(sqFilter).toHaveProperty('include', [
             {
-              model: sq['Vote'],
+              model: sq.Vote,
               as: 'votes',
               required: false
             }

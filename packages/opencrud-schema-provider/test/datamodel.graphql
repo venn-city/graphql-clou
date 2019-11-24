@@ -9,10 +9,18 @@ directive @vnCascade(direct: OPERATION, inverse: OPERATION) on FIELD_DEFINITION 
 
 union ANY = String | Int | Float
 
+scalar Json
+
 enum OPERATION {
   DELETE
   DISCONNECT
   DISCONNECT_DELETE
+}
+
+enum BALLOT {
+  YEA,
+  NAY,
+  ABSTAIN
 }
 
 type Ministry @pgTable(name: "ministries") {
@@ -52,6 +60,8 @@ type Government @pgTable(name: "governments") {
 type Vote @pgTable(name: "votes") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
+  ballot:                 BALLOT                  @pgColumn(name: "ballot")
+  lawInfo:                Json                    @pgColumn(name: "law_info")
   minister:               Minister                @relation(link: TABLE, name:"MinisterVotesRelation") @vnCascade(direct: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
@@ -60,8 +70,6 @@ type Vote @pgTable(name: "votes") {
 }
 
 type MinisterVotesRelation @relationTable @pgTable(name: "ministers_votes_join_table") {
-  # TODO: no longer need dummy_id
-  id:                     ID!                     @unique @pgColumn(name: "dummy_id")
   minister:               Minister!               @pgColumn(name: "minister_id")
   vote:                   Vote!                   @pgColumn(name: "vote_id")
   createdAt:              DateTime!               @pgColumn(name: "created_at")

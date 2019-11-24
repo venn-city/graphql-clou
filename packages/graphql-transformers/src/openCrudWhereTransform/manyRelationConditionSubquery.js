@@ -14,7 +14,7 @@ function buildConditionSubquery(targetModel, entityName, relatedEntityFilter, is
   if (association.associationType === BELONGS_TO_MANY) {
     selectQuery = handleBelongToMany(queryGenerator, association, targetModel, positiveOrNegative, relatedEntityFilter);
   } else {
-    selectQuery = handleHasMany(queryGenerator, targetModel, entityName, positiveOrNegative, relatedEntityFilter);
+    selectQuery = handleHasMany(queryGenerator, association, targetModel, entityName, positiveOrNegative, relatedEntityFilter);
   }
   return trimEnd(selectQuery, ';');
 }
@@ -45,28 +45,47 @@ function handleBelongToMany(queryGenerator, association, targetModel, positiveOr
                 return association.throughModel.getTableName();
               }
             }
+          },
+          where: {
+            [positiveOrNegative]: relatedEntityFilter.where
           }
         }
-      ],
-      where: {
-        [positiveOrNegative]: relatedEntityFilter.where
-      }
+      ]
     },
-    targetModel.associations.minister.target
+    referencingAssociationModel
   );
 }
 
-function handleHasMany(queryGenerator, targetModel, entityName, positiveOrNegative, relatedEntityFilter) {
-  return queryGenerator.selectQuery(
+/*
+ Generates something like:
+   SELECT "government_id"
+   FROM "venn"."ministries" AS "Ministry"
+   WHERE (NOT (("Ministry"."name" LIKE '%e28447')) AND
+          "Ministry"."government_id" = "Government"."id")
+ */
+function handleHasMany(queryGenerator, association, targetModel, entityName, positiveOrNegative, relatedEntityFilter) {
+  const foreignKeyColumnToOriginalEntity = targetModel.associations[lowerFirst(entityName)].identifierField;
+  const originalEntityIdColumn = Sequelize.col(`${entityName}.id`);
+  const foreignKeyFieldToOriginalEntity = Object.keys(targetModel.rawAttributes).find(
+    key => targetModel.rawAttributes[key].field === foreignKeyColumnToOriginalEntity
+  );
+  const selectQuery = queryGenerator.selectQuery(
     targetModel.getTableName(),
     {
-      attributes: [targetModel.associations[lowerFirst(entityName)].identifierField],
+      attributes: [foreignKeyColumnToOriginalEntity],
       where: {
-        [positiveOrNegative]: relatedEntityFilter.where
+        [Op.and]: [
+          {
+            [positiveOrNegative]: relatedEntityFilter.where
+          },
+          // Generates the second condition inside the where, which matches this inner select to the parent where condition.
+          Sequelize.where(targetModel.rawAttributes[foreignKeyFieldToOriginalEntity], originalEntityIdColumn)
+        ]
       }
     },
     targetModel
   );
+  return selectQuery;
 }
 
 module.exports = {

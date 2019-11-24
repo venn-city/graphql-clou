@@ -16,9 +16,13 @@ const schemaPath = config.has('sequelize.schemaPath')
 const loggingEnabled = config.get('sequelize.logging') === 'true';
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
+  port: config.has('db.port') ? config.get('db.port') : 5432,
   schema: config.get('db.schema'),
   dialect: config.get('sequelize.dialect'),
   logging: loggingEnabled || undefined,
+  dialectOptions: {
+    useUTC: true
+  },
   define: {
     hooks: {
       beforeCreate: entity => {
@@ -28,13 +32,13 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
         runSchemaBasedHooks(entityInput, [jsonToString]);
       },
       afterFind: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
       },
       afterCreate: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
       },
       afterUpdate: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
       }
     }
   }
@@ -111,6 +115,20 @@ function stringToJson(fieldInSchema, v) {
 function formatFloat(fieldInSchema, v) {
   if (fieldInSchema.type === 'Float') {
     return Number(v);
+  }
+  return v;
+}
+
+// function formatDate(fieldInSchema, v) {
+//   if (v && fieldInSchema.type === 'DateTime') {
+//     return _.isDate(v) ? v.toISOString() : new Date(v).toISOString();
+//   }
+//   return v;
+// }
+
+function convertNullToEmptyArray(fieldInSchema, v) {
+  if (fieldInSchema.isList) {
+    return v === null ? [] : v;
   }
   return v;
 }

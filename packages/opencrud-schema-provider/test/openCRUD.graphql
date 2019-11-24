@@ -14,6 +14,12 @@ type AggregateVote {
   count: Int!
 }
 
+enum BALLOT {
+  YEA
+  NAY
+  ABSTAIN
+}
+
 type BatchPayload {
   count: Long!
 }
@@ -230,6 +236,8 @@ input GovernmentWhereUniqueInput {
   id: ID
   country: String
 }
+
+scalar Json
 
 scalar Long
 
@@ -867,6 +875,8 @@ type Subscription {
 type Vote {
   id: ID!
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   minister: Minister
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -882,6 +892,8 @@ type VoteConnection {
 
 input VoteCreateInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   minister: MinisterCreateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -894,6 +906,8 @@ input VoteCreateManyWithoutMinisterInput {
 
 input VoteCreateWithoutMinisterInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -908,6 +922,10 @@ enum VoteOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  ballot_ASC
+  ballot_DESC
+  lawInfo_ASC
+  lawInfo_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -921,6 +939,8 @@ enum VoteOrderByInput {
 type VotePreviousValues {
   id: ID!
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -956,6 +976,10 @@ input VoteScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  ballot: BALLOT
+  ballot_not: BALLOT
+  ballot_in: [BALLOT!]
+  ballot_not_in: [BALLOT!]
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1013,6 +1037,8 @@ input VoteSubscriptionWhereInput {
 
 input VoteUpdateInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   minister: MinisterUpdateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -1020,12 +1046,16 @@ input VoteUpdateInput {
 
 input VoteUpdateManyDataInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
 
 input VoteUpdateManyMutationInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -1049,6 +1079,8 @@ input VoteUpdateManyWithWhereNestedInput {
 
 input VoteUpdateWithoutMinisterDataInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -1093,6 +1125,10 @@ input VoteWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  ballot: BALLOT
+  ballot_not: BALLOT
+  ballot_in: [BALLOT!]
+  ballot_not_in: [BALLOT!]
   minister: MinisterWhereInput
   createdAt: DateTime
   createdAt_not: DateTime

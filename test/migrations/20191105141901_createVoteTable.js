@@ -1,7 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      { schema: 'venn', tableName: 'votes' },
+      { schema: "venn", tableName: "votes" },
       {
         id: {
           allowNull: false,
@@ -9,6 +9,12 @@ module.exports = {
           type: Sequelize.STRING(30)
         },
         name: {
+          type: Sequelize.STRING
+        },
+        ballot: {
+          type: Sequelize.STRING
+        },
+        law_info: {
           type: Sequelize.STRING
         },
         created_at: {
@@ -28,10 +34,10 @@ module.exports = {
       }
     );
   },
-  down: (queryInterface) => {
+  down: queryInterface => {
     return queryInterface.dropTable({
-      schema: 'venn',
-      tableName: 'votes'
+      schema: "venn",
+      tableName: "votes"
     });
   }
 };

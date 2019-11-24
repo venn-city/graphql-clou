@@ -22,7 +22,7 @@ module.exports = {
     },
     updateGovernment: async (parent, { data, where = {} }, context) => {
       const postUpdateCalls = await preUpdate(context, data, where, 'Government');
-      let updateGovernment = await sequelizeDataProvider.updateEntity('Government', data, where);
+      const updateGovernment = await sequelizeDataProvider.updateEntity('Government', data, where);
       await postUpdate(postUpdateCalls, updateGovernment);
       return updateGovernment;
     }
