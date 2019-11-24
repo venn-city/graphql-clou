@@ -114,7 +114,9 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                       id: {
                         [Op.ne]: {
                           [Op.all]: {
-                            val: 'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (("Ministry"."name" = \'py\'))'
+                            val:
+                              'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE ((("Ministry"."name" = \'py\')) ' +
+                              'AND "Ministry"."government_id" = "Government"."id")'
                           }
                         }
                       }
@@ -296,7 +298,9 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                 id: {
                   [Op.ne]: {
                     [Op.all]: {
-                      val: 'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE NOT (("Ministry"."name" = \'ku\'))'
+                      val:
+                        'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (NOT (("Ministry"."name" = \'ku\')) ' +
+                        'AND "Ministry"."government_id" = "Government"."id")'
                     }
                   }
                 }
@@ -320,7 +324,9 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                 id: {
                   [Op.ne]: {
                     [Op.all]: {
-                      val: 'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (("Ministry"."name" = \'ku\'))'
+                      val:
+                        'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE ((("Ministry"."name" = \'ku\')) ' +
+                        'AND "Ministry"."government_id" = "Government"."id")'
                     }
                   }
                 }
@@ -374,7 +380,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                         'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
                         '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
                         '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
-                        '"Minister"."id" = "votes->ministersvotes"."minister_id" WHERE NOT (("Minister"."name" = \'ku\'))'
+                        '"Minister"."id" = "votes->ministersvotes"."minister_id" AND NOT (("votes"."name" = \'ku\'))'
                     }
                   }
                 }
@@ -402,7 +408,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                         'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
                         '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
                         '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
-                        '"Minister"."id" = "votes->ministersvotes"."minister_id" WHERE (("Minister"."name" = \'ku\'))'
+                        '"Minister"."id" = "votes->ministersvotes"."minister_id" AND (("votes"."name" = \'ku\'))'
                     }
                   }
                 }

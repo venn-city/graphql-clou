@@ -3,13 +3,13 @@ const Sequelize = require('sequelize');
 
 const util = require('util');
 const async = require('async');
-const { openCrudToSequelize, sequelizeConsts } = require('@venncity/graphql-transformers');
+const { openCrudToSequelize, resultLimiter } = require('@venncity/graphql-transformers');
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 
-const { BELONGS_TO_MANY } = sequelizeConsts.RELATION_TYPES;
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
+const { shouldLimitInFetch, limitAfterFetch, omitLimitArgs } = resultLimiter;
 
 const Op = Sequelize.Op;
 const asyncEach = util.promisify(async.each);
@@ -21,7 +21,10 @@ async function getEntity(entityName, where) {
 }
 
 async function getAllEntities(entityName, args) {
-  const fetchedEntities = await getAllEntitiesSqObjects(args, entityName);
+  let fetchedEntities = await getAllEntitiesSqObjects(args, entityName);
+  if (shouldLimitInFetch(args)) {
+    fetchedEntities = limitAfterFetch(args, fetchedEntities);
+  }
   return map(fetchedEntities, 'dataValues');
 }
 
@@ -59,14 +62,8 @@ async function getRelatedEntityIds(entityName, originalEntityId, relationEntityN
 
 async function getRelatedEntities(entityName, originalEntityId, relationFieldName, args) {
   const fieldType = getFieldType(schema, entityName, relationFieldName);
-  const associationInfo = Object.values(sq[upperFirst(entityName)].associations).find(association => association.as === relationFieldName);
-  if (args && associationInfo.associationType === BELONGS_TO_MANY) {
-    // TODO: for now ignore these params as sequelize does not support them in nested nXm relations.
-    // https://github.com/sequelize/sequelize/issues/4376
-    delete args.first;
-    delete args.skip;
-  }
-  const sqFilter = args && openCrudToSequelize(args, upperFirst(fieldType));
+  const argsWithoutFirst = omitLimitArgs(entityName, relationFieldName, args);
+  const sqFilter = args && openCrudToSequelize(argsWithoutFirst, upperFirst(fieldType));
   let include = {
     model: model(fieldType),
     as: relationFieldName,
@@ -82,7 +79,11 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
     where: { id: originalEntityId },
     include
   });
-  const relatedEntities = originalEntity && originalEntity[relationFieldName];
+  let relatedEntities = originalEntity ? originalEntity[relationFieldName] : [];
+  relatedEntities = limitAfterFetch(args, relatedEntities);
+  if (Array.isArray(relatedEntities) && relatedEntities.length === 0) {
+    return [];
+  }
   return (
     relatedEntities && (Array.isArray(relatedEntities) ? relatedEntities.map(relatedEntity => relatedEntity.dataValues) : relatedEntities.dataValues)
   );
