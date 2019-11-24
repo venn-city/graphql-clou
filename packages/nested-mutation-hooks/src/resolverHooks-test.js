@@ -1092,7 +1092,7 @@ describe('Nested mutations', () => {
             }
           );
           const minister = createdMinister.data.createMinister;
-          expect(minister.votes).toBeFalsy();
+          expect(minister.votes).toHaveLength(0);
           const voteName = hacker.noun();
           const updatedMinister = await executeMutation(
             `
@@ -1161,7 +1161,7 @@ describe('Nested mutations', () => {
             }
           );
           const minister = createdMinister.data.createMinister;
-          expect(minister.votes).toBeFalsy();
+          expect(minister.votes).toHaveLength(0);
           const updatedMinister = await executeMutation(
             `
           mutation ($ministerId: ID!, $voteId: ID!){
@@ -1228,7 +1228,7 @@ describe('Nested mutations', () => {
           );
           const updatedMinister = response.data.updateMinister;
           expect(updatedMinister).toHaveProperty('name', voteNameValue);
-          expect(updatedMinister.votes).toBeFalsy();
+          expect(updatedMinister.votes).toHaveLength(0);
 
           expect(mutationSpies.updateMinister.calledOnce).toBeTruthy();
           expect(mutationSpies.updateVote.notCalled).toBeTruthy();
@@ -1270,7 +1270,7 @@ describe('Nested mutations', () => {
           );
           const updatedMinister = response.data.updateMinister;
           expect(updatedMinister).toHaveProperty('name', voteNameValue);
-          expect(updatedMinister.votes).toBeFalsy();
+          expect(updatedMinister.votes).toHaveLength(0);
 
           const fetchedDeletedVote = await dataProvider.getEntity('Vote', { id: vote.id });
           expect(fetchedDeletedVote).toBeNull();
@@ -1626,7 +1626,7 @@ describe('Nested mutations', () => {
         );
         const updatedGovernment = response.data.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
-        expect(updatedGovernment.ministries).toBeFalsy();
+        expect(updatedGovernment.ministries).toHaveLength(0);
 
         expect(mutationSpies.updateGovernment.calledOnce).toBeTruthy();
         expect(mutationSpies.updateMinistry.calledOnce).toBeTruthy();
