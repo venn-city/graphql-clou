@@ -1,6 +1,6 @@
 {
   "name": "@venncity/graphql-transformers",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -23,12 +23,12 @@
     ]
   },
   "dependencies": {
-    "@venncity/nested-config": "^1.2.6",
     "@venncity/clou-utils": "^1.2.0",
-    "@venncity/opencrud-schema-provider": "^1.3.4",
-    "@venncity/sequelize-model": "^1.1.5",
-    "lodash": "^4.17.15",
+    "@venncity/nested-config": "^1.2.6",
+    "@venncity/opencrud-schema-provider": "^1.3.5",
+    "@venncity/sequelize-model": "^1.1.6",
     "deepdash": "^4.2.17",
+    "lodash": "^4.17.15",
     "pluralize": "^8.0.0",
     "sequelize": "^5.21.2"
   },

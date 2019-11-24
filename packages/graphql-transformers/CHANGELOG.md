@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.2.0...@venncity/graphql-transformers@1.3.0) (2019-11-24)
+
+
+### Bug Fixes
+
+* correctly handle 1xn every or none query building ([82f5017](https://github.com/venn-city/graphql-clou/commit/82f50177f61c5d4166eb97bd32fcba1787390d75))
+
+
+### Features
+
+* limit results in memory when required ([6bbaa44](https://github.com/venn-city/graphql-clou/commit/6bbaa442b00596d207392d703be8e3578777df61))
+
+
+
+
+
 # [1.2.0](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.1.5...@venncity/graphql-transformers@1.2.0) (2019-11-19)
 
 

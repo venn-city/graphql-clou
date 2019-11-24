@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.0.4...@venncity/nested-mutation-hooks@1.0.5) (2019-11-24)
+
+
+### Bug Fixes
+
+* return empty arrays instead of nulls ([4a18f48](https://github.com/venn-city/graphql-clou/commit/4a18f48730fea6f2ecd8f96fe9f475ecff77f61a))
+
+
+
+
+
 ## [1.0.4](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.0.3...@venncity/nested-mutation-hooks@1.0.4) (2019-11-19)
 
 **Note:** Version bump only for package @venncity/nested-mutation-hooks

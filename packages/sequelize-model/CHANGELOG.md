@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.5...@venncity/sequelize-model@1.1.6) (2019-11-24)
+
+
+### Bug Fixes
+
+* return empty arrays instead of nulls ([4a18f48](https://github.com/venn-city/graphql-clou/commit/4a18f48730fea6f2ecd8f96fe9f475ecff77f61a))
+
+
+
+
+
 ## [1.1.5](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.4...@venncity/sequelize-model@1.1.5) (2019-11-19)
 
 
