@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     'Vote',
     {
       ...baseModel,
-      name: DataTypes.STRING
+      name: DataTypes.STRING,
+      ballot: DataTypes.STRING,
+      lawInfo: DataTypes.STRING
     },
     { underscored: true }
   );

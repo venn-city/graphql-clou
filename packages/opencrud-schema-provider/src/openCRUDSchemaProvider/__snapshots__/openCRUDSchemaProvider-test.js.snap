@@ -3203,6 +3203,62 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot_not",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "ENUM",
+                "name": "BALLOT",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot_not_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "ENUM",
+                "name": "BALLOT",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -3652,6 +3708,35 @@ Object {
       "interfaces": null,
       "kind": "INPUT_OBJECT",
       "name": "VoteWhereInput",
+      "possibleTypes": null,
+    },
+    Object {
+      "description": "",
+      "enumValues": Array [
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "YEA",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "NAY",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "ABSTAIN",
+        },
+      ],
+      "fields": null,
+      "inputFields": null,
+      "interfaces": null,
+      "kind": "ENUM",
+      "name": "BALLOT",
       "possibleTypes": null,
     },
     Object {
@@ -5084,6 +5169,30 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "ballot_ASC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "ballot_DESC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfo_ASC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfo_DESC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "createdAt_ASC",
         },
         Object {
@@ -5173,6 +5282,30 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "minister",
           "type": Object {
             "kind": "OBJECT",
@@ -5245,6 +5378,16 @@ Object {
       "interfaces": Array [],
       "kind": "OBJECT",
       "name": "Vote",
+      "possibleTypes": null,
+    },
+    Object {
+      "description": "",
+      "enumValues": null,
+      "fields": null,
+      "inputFields": null,
+      "interfaces": null,
+      "kind": "SCALAR",
+      "name": "Json",
       "possibleTypes": null,
     },
     Object {
@@ -7355,6 +7498,26 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -8064,6 +8227,26 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -8455,6 +8638,62 @@ Object {
             "kind": "SCALAR",
             "name": "String",
             "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot_not",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "ENUM",
+                "name": "BALLOT",
+                "ofType": null,
+              },
+            },
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot_not_in",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "ENUM",
+                "name": "BALLOT",
+                "ofType": null,
+              },
+            },
           },
         },
         Object {
@@ -8952,6 +9191,26 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
             "ofType": null,
           },
         },
@@ -10988,6 +11247,26 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -11115,6 +11394,26 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
             "ofType": null,
           },
         },
@@ -11327,6 +11626,26 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "String",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
             "ofType": null,
           },
         },
@@ -12686,6 +13005,30 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "ballot",
+          "type": Object {
+            "kind": "ENUM",
+            "name": "BALLOT",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "createdAt",
           "type": Object {
             "kind": "NON_NULL",
@@ -13626,6 +13969,75 @@ Object {
     },
     Object {
       "comments": Array [],
+      "databaseName": null,
+      "directives": Array [],
+      "fields": Array [
+        GQLScalarField {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": null,
+          "defaultValue": null,
+          "directives": Array [],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "YEA",
+          "relatedField": null,
+          "relationName": null,
+          "type": "String",
+        },
+        GQLScalarField {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": null,
+          "defaultValue": null,
+          "directives": Array [],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "NAY",
+          "relatedField": null,
+          "relationName": null,
+          "type": "String",
+        },
+        GQLScalarField {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": null,
+          "defaultValue": null,
+          "directives": Array [],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "ABSTAIN",
+          "relatedField": null,
+          "relationName": null,
+          "type": "String",
+        },
+      ],
+      "indices": Array [],
+      "isEmbedded": false,
+      "isEnum": true,
+      "isRelationTable": false,
+      "name": "BALLOT",
+    },
+    Object {
+      "comments": Array [],
       "databaseName": "ministries",
       "directives": Array [
         Object {
@@ -13928,6 +14340,126 @@ Object {
                       "relatedField": null,
                       "relationName": null,
                       "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": "ballot",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "ballot",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "ballot",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": Object {
+                        "comments": Array [],
+                        "databaseName": null,
+                        "directives": Array [],
+                        "fields": Array [
+                          GQLScalarField {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": null,
+                            "defaultValue": null,
+                            "directives": Array [],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "YEA",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                          GQLScalarField {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": null,
+                            "defaultValue": null,
+                            "directives": Array [],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "NAY",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                          GQLScalarField {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": null,
+                            "defaultValue": null,
+                            "directives": Array [],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "ABSTAIN",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                        ],
+                        "indices": Array [],
+                        "isEmbedded": false,
+                        "isEnum": true,
+                        "isRelationTable": false,
+                        "name": "BALLOT",
+                      },
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": "law_info",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "law_info",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "lawInfo",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "Json",
                     },
                     Object {
                       "associatedSequence": null,
@@ -14734,6 +15266,126 @@ Object {
                 "relatedField": null,
                 "relationName": null,
                 "type": "String",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "ballot",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "ballot",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "ballot",
+                "relatedField": null,
+                "relationName": null,
+                "type": Object {
+                  "comments": Array [],
+                  "databaseName": null,
+                  "directives": Array [],
+                  "fields": Array [
+                    GQLScalarField {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": null,
+                      "defaultValue": null,
+                      "directives": Array [],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "YEA",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    GQLScalarField {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": null,
+                      "defaultValue": null,
+                      "directives": Array [],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "NAY",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    GQLScalarField {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": null,
+                      "defaultValue": null,
+                      "directives": Array [],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "ABSTAIN",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                  ],
+                  "indices": Array [],
+                  "isEmbedded": false,
+                  "isEnum": true,
+                  "isRelationTable": false,
+                  "name": "BALLOT",
+                },
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "law_info",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "law_info",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "lawInfo",
+                "relatedField": null,
+                "relationName": null,
+                "type": "Json",
               },
               Object {
                 "associatedSequence": null,
@@ -15967,6 +16619,126 @@ Object {
                           Object {
                             "associatedSequence": null,
                             "comments": Array [],
+                            "databaseName": "ballot",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "ballot",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "ballot",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": Object {
+                              "comments": Array [],
+                              "databaseName": null,
+                              "directives": Array [],
+                              "fields": Array [
+                                GQLScalarField {
+                                  "associatedSequence": null,
+                                  "comments": Array [],
+                                  "databaseName": null,
+                                  "defaultValue": null,
+                                  "directives": Array [],
+                                  "idStrategy": null,
+                                  "isCreatedAt": false,
+                                  "isId": false,
+                                  "isList": false,
+                                  "isReadOnly": false,
+                                  "isRequired": false,
+                                  "isUnique": false,
+                                  "isUpdatedAt": false,
+                                  "name": "YEA",
+                                  "relatedField": null,
+                                  "relationName": null,
+                                  "type": "String",
+                                },
+                                GQLScalarField {
+                                  "associatedSequence": null,
+                                  "comments": Array [],
+                                  "databaseName": null,
+                                  "defaultValue": null,
+                                  "directives": Array [],
+                                  "idStrategy": null,
+                                  "isCreatedAt": false,
+                                  "isId": false,
+                                  "isList": false,
+                                  "isReadOnly": false,
+                                  "isRequired": false,
+                                  "isUnique": false,
+                                  "isUpdatedAt": false,
+                                  "name": "NAY",
+                                  "relatedField": null,
+                                  "relationName": null,
+                                  "type": "String",
+                                },
+                                GQLScalarField {
+                                  "associatedSequence": null,
+                                  "comments": Array [],
+                                  "databaseName": null,
+                                  "defaultValue": null,
+                                  "directives": Array [],
+                                  "idStrategy": null,
+                                  "isCreatedAt": false,
+                                  "isId": false,
+                                  "isList": false,
+                                  "isReadOnly": false,
+                                  "isRequired": false,
+                                  "isUnique": false,
+                                  "isUpdatedAt": false,
+                                  "name": "ABSTAIN",
+                                  "relatedField": null,
+                                  "relationName": null,
+                                  "type": "String",
+                                },
+                              ],
+                              "indices": Array [],
+                              "isEmbedded": false,
+                              "isEnum": true,
+                              "isRelationTable": false,
+                              "name": "BALLOT",
+                            },
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": "law_info",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "law_info",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "lawInfo",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "Json",
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
                             "databaseName": null,
                             "defaultValue": null,
                             "directives": Array [
@@ -16521,6 +17293,126 @@ Object {
           "relatedField": null,
           "relationName": null,
           "type": "String",
+        },
+        Object {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": "ballot",
+          "defaultValue": null,
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "name": "ballot",
+              },
+              "name": "pgColumn",
+            },
+          ],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "ballot",
+          "relatedField": null,
+          "relationName": null,
+          "type": Object {
+            "comments": Array [],
+            "databaseName": null,
+            "directives": Array [],
+            "fields": Array [
+              GQLScalarField {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": null,
+                "defaultValue": null,
+                "directives": Array [],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "YEA",
+                "relatedField": null,
+                "relationName": null,
+                "type": "String",
+              },
+              GQLScalarField {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": null,
+                "defaultValue": null,
+                "directives": Array [],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "NAY",
+                "relatedField": null,
+                "relationName": null,
+                "type": "String",
+              },
+              GQLScalarField {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": null,
+                "defaultValue": null,
+                "directives": Array [],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "ABSTAIN",
+                "relatedField": null,
+                "relationName": null,
+                "type": "String",
+              },
+            ],
+            "indices": Array [],
+            "isEmbedded": false,
+            "isEnum": true,
+            "isRelationTable": false,
+            "name": "BALLOT",
+          },
+        },
+        Object {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": "law_info",
+          "defaultValue": null,
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "name": "law_info",
+              },
+              "name": "pgColumn",
+            },
+          ],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "lawInfo",
+          "relatedField": null,
+          "relationName": null,
+          "type": "Json",
         },
         Object {
           "associatedSequence": null,
@@ -17434,32 +18326,6 @@ Object {
         Object {
           "associatedSequence": null,
           "comments": Array [],
-          "databaseName": "dummy_id",
-          "defaultValue": null,
-          "directives": Array [
-            Object {
-              "arguments": Object {
-                "name": "dummy_id",
-              },
-              "name": "pgColumn",
-            },
-          ],
-          "idStrategy": null,
-          "isCreatedAt": false,
-          "isId": true,
-          "isList": false,
-          "isReadOnly": true,
-          "isRequired": true,
-          "isUnique": true,
-          "isUpdatedAt": false,
-          "name": "id",
-          "relatedField": null,
-          "relationName": null,
-          "type": "ID",
-        },
-        Object {
-          "associatedSequence": null,
-          "comments": Array [],
           "databaseName": "minister_id",
           "defaultValue": null,
           "directives": Array [
@@ -17643,6 +18509,126 @@ Object {
                       "relatedField": null,
                       "relationName": null,
                       "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": "ballot",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "ballot",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "ballot",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": Object {
+                        "comments": Array [],
+                        "databaseName": null,
+                        "directives": Array [],
+                        "fields": Array [
+                          GQLScalarField {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": null,
+                            "defaultValue": null,
+                            "directives": Array [],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "YEA",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                          GQLScalarField {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": null,
+                            "defaultValue": null,
+                            "directives": Array [],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "NAY",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                          GQLScalarField {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": null,
+                            "defaultValue": null,
+                            "directives": Array [],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "ABSTAIN",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
+                          },
+                        ],
+                        "indices": Array [],
+                        "isEmbedded": false,
+                        "isEnum": true,
+                        "isRelationTable": false,
+                        "name": "BALLOT",
+                      },
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": "law_info",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "law_info",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "lawInfo",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "Json",
                     },
                     Object {
                       "associatedSequence": null,
@@ -18512,6 +19498,126 @@ Object {
                 "relatedField": null,
                 "relationName": null,
                 "type": "String",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "ballot",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "ballot",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "ballot",
+                "relatedField": null,
+                "relationName": null,
+                "type": Object {
+                  "comments": Array [],
+                  "databaseName": null,
+                  "directives": Array [],
+                  "fields": Array [
+                    GQLScalarField {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": null,
+                      "defaultValue": null,
+                      "directives": Array [],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "YEA",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    GQLScalarField {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": null,
+                      "defaultValue": null,
+                      "directives": Array [],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "NAY",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    GQLScalarField {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": null,
+                      "defaultValue": null,
+                      "directives": Array [],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "ABSTAIN",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                  ],
+                  "indices": Array [],
+                  "isEmbedded": false,
+                  "isEnum": true,
+                  "isRelationTable": false,
+                  "name": "BALLOT",
+                },
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "law_info",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "law_info",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "lawInfo",
+                "relatedField": null,
+                "relationName": null,
+                "type": "Json",
               },
               Object {
                 "associatedSequence": null,
@@ -19534,6 +20640,7 @@ GraphQLSchema {
     "AggregateMinister": "AggregateMinister",
     "AggregateMinistry": "AggregateMinistry",
     "AggregateVote": "AggregateVote",
+    "BALLOT": "BALLOT",
     "BatchPayload": "BatchPayload",
     "Boolean": "Boolean",
     "DateTime": "DateTime",
@@ -19557,6 +20664,7 @@ GraphQLSchema {
     "GovernmentWhereUniqueInput": "GovernmentWhereUniqueInput",
     "ID": "ID",
     "Int": "Int",
+    "Json": "Json",
     "Long": "Long",
     "Minister": "Minister",
     "MinisterConnection": "MinisterConnection",
@@ -19714,6 +20822,12 @@ type AggregateMinistry {
 
 type AggregateVote {
   count: Int!
+}
+
+enum BALLOT {
+  YEA
+  NAY
+  ABSTAIN
 }
 
 type BatchPayload {
@@ -19932,6 +21046,8 @@ input GovernmentWhereUniqueInput {
   id: ID
   country: String
 }
+
+scalar Json
 
 scalar Long
 
@@ -20519,6 +21635,8 @@ type PageInfo {
 type Vote {
   id: ID!
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   minister: Minister
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -20534,6 +21652,8 @@ type VoteConnection {
 
 input VoteCreateInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   minister: MinisterCreateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -20546,6 +21666,8 @@ input VoteCreateManyWithoutMinisterInput {
 
 input VoteCreateWithoutMinisterInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -20560,6 +21682,10 @@ enum VoteOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  ballot_ASC
+  ballot_DESC
+  lawInfo_ASC
+  lawInfo_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -20573,6 +21699,8 @@ enum VoteOrderByInput {
 type VotePreviousValues {
   id: ID!
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -20608,6 +21736,10 @@ input VoteScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  ballot: BALLOT
+  ballot_not: BALLOT
+  ballot_in: [BALLOT!]
+  ballot_not_in: [BALLOT!]
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -20665,6 +21797,8 @@ input VoteSubscriptionWhereInput {
 
 input VoteUpdateInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   minister: MinisterUpdateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -20672,12 +21806,16 @@ input VoteUpdateInput {
 
 input VoteUpdateManyDataInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
 
 input VoteUpdateManyMutationInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -20701,6 +21839,8 @@ input VoteUpdateManyWithWhereNestedInput {
 
 input VoteUpdateWithoutMinisterDataInput {
   name: String
+  ballot: BALLOT
+  lawInfo: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -20745,6 +21885,10 @@ input VoteWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  ballot: BALLOT
+  ballot_not: BALLOT
+  ballot_in: [BALLOT!]
+  ballot_not_in: [BALLOT!]
   minister: MinisterWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
