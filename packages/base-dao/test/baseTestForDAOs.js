@@ -38,9 +38,6 @@ function runGenericDAOTests({
   dataType = 'string',
   testsToSkip = [],
   expectEqual = (expectedEntity, actualEntity, value) => {
-    if (dataType === 'date') {
-      value = new Date(value);
-    }
     expect(expectedEntity).toHaveProperty(fieldName, value);
   }
 }) {
