@@ -26,11 +26,11 @@ describe('sequelizeDataProvider', () => {
    | Lazaros  |   | Natassas |           |         | Vasileia    |
    +----------+   +----------+   +-------+-----+   +-------------+
        |               |         |Vote3        |
-       |               |         | Raise taxes |
-       |               |         | Nay         |
-   +---+--------+      |         +-------------+
-   |Vote1       |      |
-   | Build walls|  +---+--------+
+       |               |         | Raise taxes |  +--------------+
+       |               |         | Nay         |  |Vote4         |
+   +---+--------+      |         +-------------+  | Make war     |
+   |Vote1       |      |                          | Abstain      |
+   | Build walls|  +---+--------+                 +--------------+
    | Yea        |  |Vote2       |
    +------------+  | Build walls|
                    | Nay        |
@@ -72,6 +72,9 @@ describe('sequelizeDataProvider', () => {
   let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
+  let vote4;
+  const voteName4 = `Make war${randomNumber}`;
+  const voteBallot4 = 'ABSTAIN';
 
   beforeAll(async () => {
     console.info('random seed', randomNumber);
@@ -151,6 +154,10 @@ describe('sequelizeDataProvider', () => {
         }
       }
     });
+    vote4 = await sequelizeDataProvider.createEntity('Vote', {
+      name: voteName4,
+      ballot: voteBallot4
+    });
   });
 
   test('getEntity', async () => {
@@ -162,6 +169,26 @@ describe('sequelizeDataProvider', () => {
     const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName1 } });
     expect(fetchedGovernments).toHaveLength(1);
     expect(fetchedGovernments[0]).toMatchObject(government1);
+  });
+
+  describe('1x1', () => {
+    test('getAllEntities with nested filter for 1x1 relation', async () => {
+      const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+        where: { minister: { name: ministerName1 } },
+        first: 5
+      });
+      expect(fetchedMinistries).toHaveLength(1);
+      expect(fetchedMinistries[0]).toMatchObject(ministry1);
+    });
+
+    test('getAllEntities with nested filter for 1x1 null (non-existing) relation', async () => {
+      const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+        where: { minister: null, name: ministryName3 },
+        first: 5
+      });
+      expect(fetchedMinistries).toHaveLength(1);
+      expect(fetchedMinistries[0]).toMatchObject(ministry3);
+    });
   });
 
   describe('1xn', () => {
@@ -363,6 +390,15 @@ describe('sequelizeDataProvider', () => {
         first: 5
       });
       expect(fetchedMinisters).toHaveLength(0);
+    });
+
+    test('getAllEntities for nxm null (non-existing) relation', async () => {
+      const fetchedVotes = await sequelizeDataProvider.getAllEntities('Vote', {
+        where: { minister: null, name_ends_with: `${randomNumber}` },
+        first: 5
+      });
+      expect(fetchedVotes).toHaveLength(1);
+      expect(fetchedVotes[0]).toMatchObject(vote4);
     });
   });
 

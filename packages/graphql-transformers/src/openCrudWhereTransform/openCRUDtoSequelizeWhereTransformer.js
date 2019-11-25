@@ -243,6 +243,12 @@ function handleRelation({
 }) {
   const relatedEntityName = getFieldType(openCrudSchema, entityName, associationAlias);
   const relatedEntityFilter = openCrudToSequelize({ where: whereValue }, relatedEntityName, [...pathWithinSchema, associationAlias], useColumnNames);
+  if (whereValue === null) {
+    // Build a condition which is only satisfied when the related entity is null
+    relatedEntityFilter.where = {
+      [`$${associationAlias}.id$`]: null
+    };
+  }
 
   if (transformAssociationToNested && !useColumnNames) {
     relatedEntityFilter.where = transformWhereToNested(relatedEntityName, pathWithinSchema, associationAlias, relatedEntityFilter);
