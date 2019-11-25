@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.3.0...@venncity/graphql-transformers@1.3.1) (2019-11-25)
+
+
+### Bug Fixes
+
+* handle entity:null filter correctly ([2943027](https://github.com/venn-city/graphql-clou/commit/29430274371dd9af70ef008566ca5179a1059534))
+
+
+
+
+
 # [1.3.0](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.2.0...@venncity/graphql-transformers@1.3.0) (2019-11-24)
 
 
