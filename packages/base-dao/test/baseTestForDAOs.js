@@ -29,18 +29,18 @@ const BASE_DAO_TEST_TYPES = {
  * @param expectWithEquality
  */
 function runGenericDAOTests({
-  entityName,
-  createAllDAOs,
-  createAdminAuthContext = createServiceAuthContext,
-  getDefaultEntityFunc,
-  pluralizationFunction = pluralize,
-  stringFieldName: fieldName,
-  dataType = 'string',
-  testsToSkip = [],
-  expectEqual = (expectedEntity, actualEntity, value) => {
-    expect(expectedEntity).toHaveProperty(fieldName, value);
-  }
-}) {
+                              entityName,
+                              createAllDAOs,
+                              createAdminAuthContext = createServiceAuthContext,
+                              getDefaultEntityFunc,
+                              pluralizationFunction = pluralize,
+                              stringFieldName: fieldName,
+                              dataType = 'string',
+                              testsToSkip = [],
+                              expectEqual = (expectedEntity, actualEntity, value) => {
+                                expect(expectedEntity).toHaveProperty(fieldName, value);
+                              }
+                            }) {
   const DAOName = `${entityName}DAO`;
   const entityNamePlural = pluralizationFunction(entityName);
 
@@ -260,7 +260,7 @@ function randomValuesByType(dataType) {
     case 'date':
       return [`${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`, `${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`];
     case 'dateonly':
-      return [`${momentRandom().format('YYYY-MM-DD')}`, `${momentRandom().format('YYYY-MM-DD')}`];
+      return [`${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`, `${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`];
     case 'string':
       return [Math.random().toString(), Math.random().toString()];
     case 'int':
