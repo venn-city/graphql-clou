@@ -32,13 +32,13 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
         runSchemaBasedHooks(entityInput, [jsonToString]);
       },
       afterFind: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
       },
       afterCreate: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
       },
       afterUpdate: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
       }
     }
   }
@@ -119,12 +119,12 @@ function formatFloat(fieldInSchema, v) {
   return v;
 }
 
-// function formatDate(fieldInSchema, v) {
-//   if (v && fieldInSchema.type === 'DateTime') {
-//     return _.isDate(v) ? v.toISOString() : new Date(v).toISOString();
-//   }
-//   return v;
-// }
+function formatDate(fieldInSchema, v) {
+  if (v && fieldInSchema.type === 'DateTime') {
+    return _.isDate(v) ? v.toISOString() : new Date(v).toISOString();
+  }
+  return v;
+}
 
 function convertNullToEmptyArray(fieldInSchema, v) {
   if (fieldInSchema.isList) {
