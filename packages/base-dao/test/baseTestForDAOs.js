@@ -1,8 +1,8 @@
 const pluralize = require('pluralize'); // eslint-disable-line import/no-extraneous-dependencies
 const momentRandom = require('moment-random'); // eslint-disable-line import/no-extraneous-dependencies
 const _ = require('lodash');
-const { getFunctionNamesForEntity } = require('./../src/baseDAO');
 const { getOpenCrudIntrospection, openCrudDataModel } = require('@venncity/opencrud-schema-provider');
+const { getFunctionNamesForEntity } = require('./../src/baseDAO');
 
 const BASE_DAO_TEST_TYPES = {
   CREATE: 'CREATE',
@@ -38,8 +38,8 @@ function runGenericDAOTests({
   dataType = 'string',
   testsToSkip = [],
   expectEqual = (expectedEntity, actualEntity, value) => {
-    if (dataType === 'date') {
-      value = new Date(value);
+    if (dataType === ('date' || 'dateonly')) {
+      value = new Date(value).toISOString();
     }
     expect(expectedEntity).toHaveProperty(fieldName, value);
   }
@@ -258,12 +258,12 @@ function randomValuesByType(dataType) {
     // Hardcoded values, e.g. enum.
     return [dataType[0], dataType[1]];
   }
-  const timeZoneSuffix = '';
+
   switch (dataType) {
     case 'date':
-      return [`${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`, `${momentRandom().format('YYYY-MM-DD')}${timeZoneSuffix}`];
+      return [`${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`, `${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`];
     case 'dateonly':
-      return [`${momentRandom().format('YYYY-MM-DD')}`, `${momentRandom().format('YYYY-MM-DD')}`];
+      return [`${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`, `${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`];
     case 'string':
       return [Math.random().toString(), Math.random().toString()];
     case 'int':
