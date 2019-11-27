@@ -33,6 +33,7 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
       },
       afterFind: entityInput => {
         runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+        console.info('BLAH', entityInput);
       },
       afterCreate: entityInput => {
         runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
@@ -73,10 +74,19 @@ Object.keys(sq).forEach(modelName => {
 sq.sequelize = sequelize;
 sq.Sequelize = Sequelize;
 
+function handleRelatedEntityArray(fieldValues, hooks) {
+  fieldValues.forEach(fieldValue => {
+    if (fieldValue instanceof Sequelize.Model) {
+      runSchemaBasedHooks(fieldValue, hooks);
+    }
+  });
+}
+
 function runSchemaBasedHooks(entityInput, hooks) {
   if (!entityInput) {
     return;
   }
+
   const entities = _.isArray(entityInput) ? entityInput : [entityInput];
   entities.forEach(entity => {
     if (!entity) {
@@ -85,13 +95,21 @@ function runSchemaBasedHooks(entityInput, hooks) {
     // eslint-disable-next-line no-underscore-dangle
     const entityName = entity._modelOptions.name.singular;
     const entityTypeInSchema = entityTypesSchema.find(entityType => entityType.name === entityName);
-    entity.dataValues = _.mapValues(entity.dataValues, (v, k) => {
-      const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === k);
-      let returnValue = v;
+    entity.dataValues = _.mapValues(entity.dataValues, (fieldValue, fieldName) => {
+      const fieldInSchema = entityTypeInSchema.fields.find(field => field.name === fieldName);
+
+      let returnValue = fieldValue;
+
       if (fieldInSchema) {
-        hooks.forEach(hook => {
-          returnValue = hook(fieldInSchema, returnValue);
-        });
+        if (Array.isArray(fieldValue)) {
+          handleRelatedEntityArray(fieldValue, hooks);
+        } else if (fieldValue instanceof Sequelize.Model) {
+          runSchemaBasedHooks(fieldValue, hooks);
+        } else {
+          hooks.forEach(hook => {
+            returnValue = hook(fieldInSchema, returnValue);
+          });
+        }
       }
       return returnValue;
     });

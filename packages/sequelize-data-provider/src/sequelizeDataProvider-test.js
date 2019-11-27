@@ -451,8 +451,8 @@ describe('sequelizeDataProvider', () => {
     const createdGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
     expect(createdGovernment).toMatchObject({
       name: createdGovernmentName,
-      createdAt: expect.any(Date),
-      updatedAt: expect.any(Date),
+      createdAt: createdGovernment.createdAt,
+      updatedAt: createdGovernment.updatedAt,
       deletedAt: null,
       deleted: null
     });
@@ -461,7 +461,7 @@ describe('sequelizeDataProvider', () => {
   test('updateEntity', async () => {
     const createdGovernmentName = hacker.phrase();
     const updatedGovernmentName = hacker.phrase();
-    await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
+    const createdGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
     const updatedGovernment = await sequelizeDataProvider.updateEntity(
       'Government',
       {
@@ -473,8 +473,8 @@ describe('sequelizeDataProvider', () => {
     );
     expect(updatedGovernment).toMatchObject({
       name: updatedGovernmentName,
-      createdAt: expect.any(Date),
-      updatedAt: expect.any(Date),
+      createdAt: createdGovernment.createdAt,
+      updatedAt: updatedGovernment.updatedAt,
       deletedAt: null,
       deleted: null
     });
@@ -517,8 +517,8 @@ describe('sequelizeDataProvider', () => {
     expect(ministryIds.sort()).toEqual([minsitry.id, minsitry2.id].sort());
     expect(updatedGovernmentWithMinistries).toMatchObject({
       name: updatedGovernmentName,
-      createdAt: expect.any(Date),
-      updatedAt: expect.any(Date),
+      createdAt: updatedGovernmentWithMinistries.createdAt,
+      updatedAt: updatedGovernmentWithMinistries.updatedAt,
       deletedAt: null,
       deleted: null
     });
@@ -568,8 +568,8 @@ describe('sequelizeDataProvider', () => {
     updatedGovernments.forEach(updatedGovernment => {
       expect(updatedGovernment).toMatchObject({
         name: updatedGovernmentName,
-        createdAt: expect.any(Date),
-        updatedAt: expect.any(Date),
+        createdAt: updatedGovernment.createdAt,
+        updatedAt: updatedGovernment.updatedAt,
         deletedAt: null,
         deleted: null
       });

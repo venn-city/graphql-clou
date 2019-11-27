@@ -38,7 +38,7 @@ function runGenericDAOTests({
   dataType = 'string',
   testsToSkip = [],
   expectEqual = (expectedEntity, actualEntity, value) => {
-    if (dataType === ('date' || 'dateonly')) {
+    if (dataType === 'date' || dataType === 'dateonly') {
       value = new Date(value).toISOString();
     }
     expect(expectedEntity).toHaveProperty(fieldName, value);
@@ -261,7 +261,7 @@ function randomValuesByType(dataType) {
 
   switch (dataType) {
     case 'date':
-      return [`${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`, `${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`];
+      return [`${momentRandom().format('YYYY-MM-DD[T]HH:mm:ss.sssZ')}`, `${momentRandom().format('YYYY-MM-DD[T]HH:mm:ss.sssZ')}`];
     case 'dateonly':
       return [`${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`, `${momentRandom().format('YYYY-MM-DD[T]00:00:00.000Z')}`];
     case 'string':
