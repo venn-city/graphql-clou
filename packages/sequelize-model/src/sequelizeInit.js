@@ -73,14 +73,6 @@ Object.keys(sq).forEach(modelName => {
 sq.sequelize = sequelize;
 sq.Sequelize = Sequelize;
 
-function handleRelatedEntityArray(fieldValues, hooks) {
-  fieldValues.forEach(fieldValue => {
-    if (fieldValue instanceof Sequelize.Model) {
-      runSchemaBasedHooks(fieldValue, hooks);
-    }
-  });
-}
-
 function runSchemaBasedHooks(entityInput, hooks) {
   if (!entityInput) {
     return;
@@ -112,6 +104,14 @@ function runSchemaBasedHooks(entityInput, hooks) {
       }
       return returnValue;
     });
+  });
+}
+
+function handleRelatedEntityArray(fieldValues, hooks) {
+  fieldValues.forEach(fieldValue => {
+    if (fieldValue instanceof Sequelize.Model) {
+      runSchemaBasedHooks(fieldValue, hooks);
+    }
   });
 }
 
