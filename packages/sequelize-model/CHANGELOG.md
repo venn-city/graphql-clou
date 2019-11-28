@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.8](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.7...@venncity/sequelize-model@1.1.8) (2019-11-28)
+
+
+### Bug Fixes
+
+* **sequelize-model:** recursive hooks on entity related fields ([0dd3fec](https://github.com/venn-city/graphql-clou/commit/0dd3fec54e78a14ac2a5059508bac9511bd1e80e))
+
+
+
+
+
 ## [1.1.7](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.6...@venncity/sequelize-model@1.1.7) (2019-11-28)
 
 **Note:** Version bump only for package @venncity/sequelize-model
