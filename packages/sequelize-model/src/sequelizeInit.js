@@ -33,7 +33,6 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
       },
       afterFind: entityInput => {
         runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
-        console.info('BLAH', entityInput);
       },
       afterCreate: entityInput => {
         runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
