@@ -138,26 +138,26 @@ function isListRelation(fieldInSchema) {
   return isTableBasedRelation || fieldInSchema.isList;
 }
 
-async function handleRelatedConnects(entityName, entityField, entity) {
+async function handleRelatedConnects(entityName, entityField, entityToCreate) {
   const listRelations = [];
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
   const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
   if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
-    const uniqueIdentifier = Object.keys(entity[entityField].connect)[0];
+    const uniqueIdentifier = Object.keys(entityToCreate[entityField].connect)[0];
     if (uniqueIdentifier === 'id') {
-      entity[camelCase(columnName)] = entity[entityField].connect.id;
+      entityToCreate[camelCase(columnName)] = entityToCreate[entityField].connect.id;
     } else {
       const relatedEntity = await model(fieldInSchema.type.name).findOne({
-        where: { ...entity[entityField].connect }
+        where: { ...entityToCreate[entityField].connect }
       });
-      entity[camelCase(columnName)] = relatedEntity.id;
+      entityToCreate[camelCase(columnName)] = relatedEntity.id;
     }
   }
   if (isListRelation(fieldInSchema)) {
     const relatedEntities = await model(fieldInSchema.type.name).findAll({
-      where: { [Op.or]: entity[entityField].connect }
+      where: { [Op.or]: entityToCreate[entityField].connect }
     });
     relatedEntities.forEach(relatedEntity => {
       listRelations.push({ relatedEntityField: upperFirst(entityField), relatedEntityId: relatedEntity.id });
