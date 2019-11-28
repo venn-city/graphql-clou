@@ -1,4 +1,4 @@
-const { hacker } = require('faker');
+const { hacker, random } = require('faker');
 const sq = require('./sequelizeInit');
 
 describe('sequelizeInit', () => {
@@ -30,5 +30,32 @@ describe('sequelizeInit', () => {
       budget: 88.2
     });
     expect(updatedEntity.dataValues).toHaveProperty('budget', 88.2);
+  });
+
+  test('sequelize should call schema hooks on related fields (nesting)', async () => {
+    const num1 = random.number();
+    const num2 = random.number();
+    const ministerName = hacker.phrase();
+    const vote1 = await sq.Vote.create({ name: `vote${num1}` });
+    const vote2 = await sq.Vote.create({ name: `vote${num2}` });
+    const createdMinister = await sq.Minister.create({ name: ministerName, budget: 1313 });
+
+    await createdMinister.addVotes([vote1.id, vote2.id]);
+    const fetchedMinister = await sq.Minister.findOne({
+      where: { id: createdMinister.id },
+      include: {
+        model: sq.Vote,
+        as: 'votes',
+        attributes: ['createdAt', 'updatedAt']
+      }
+    });
+
+    expect(fetchedMinister.dataValues.votes).toHaveLength(2);
+    const ministerVotes = fetchedMinister.dataValues.votes;
+
+    ministerVotes.forEach(v => {
+      expect(typeof v.dataValues.createdAt === 'string').toBeTruthy();
+      expect(typeof v.dataValues.updatedAt === 'string').toBeTruthy();
+    });
   });
 });

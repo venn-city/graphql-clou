@@ -32,13 +32,13 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
         runSchemaBasedHooks(entityInput, [jsonToString]);
       },
       afterFind: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
       },
       afterCreate: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
       },
       afterUpdate: entityInput => {
-        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray]);
+        runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
       }
     }
   }
@@ -77,6 +77,7 @@ function runSchemaBasedHooks(entityInput, hooks) {
   if (!entityInput) {
     return;
   }
+
   const entities = _.isArray(entityInput) ? entityInput : [entityInput];
   entities.forEach(entity => {
     if (!entity) {
@@ -85,16 +86,32 @@ function runSchemaBasedHooks(entityInput, hooks) {
     // eslint-disable-next-line no-underscore-dangle
     const entityName = entity._modelOptions.name.singular;
     const entityTypeInSchema = entityTypesSchema.find(entityType => entityType.name === entityName);
-    entity.dataValues = _.mapValues(entity.dataValues, (v, k) => {
-      const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === k);
-      let returnValue = v;
+    entity.dataValues = _.mapValues(entity.dataValues, (fieldValue, fieldName) => {
+      const fieldInSchema = entityTypeInSchema.fields.find(field => field.name === fieldName);
+
+      let returnValue = fieldValue;
+
       if (fieldInSchema) {
-        hooks.forEach(hook => {
-          returnValue = hook(fieldInSchema, returnValue);
-        });
+        if (Array.isArray(fieldValue)) {
+          handleRelatedEntityArray(fieldValue, hooks);
+        } else if (fieldValue instanceof Sequelize.Model) {
+          runSchemaBasedHooks(fieldValue, hooks);
+        } else {
+          hooks.forEach(hook => {
+            returnValue = hook(fieldInSchema, returnValue);
+          });
+        }
       }
       return returnValue;
     });
+  });
+}
+
+function handleRelatedEntityArray(fieldValues, hooks) {
+  fieldValues.forEach(fieldValue => {
+    if (fieldValue instanceof Sequelize.Model) {
+      runSchemaBasedHooks(fieldValue, hooks);
+    }
   });
 }
 
@@ -119,12 +136,12 @@ function formatFloat(fieldInSchema, v) {
   return v;
 }
 
-// function formatDate(fieldInSchema, v) {
-//   if (v && fieldInSchema.type === 'DateTime') {
-//     return _.isDate(v) ? v.toISOString() : new Date(v).toISOString();
-//   }
-//   return v;
-// }
+function formatDate(fieldInSchema, v) {
+  if (v && fieldInSchema.type === 'DateTime') {
+    return _.isDate(v) ? v.toISOString() : new Date(v).toISOString();
+  }
+  return v;
+}
 
 function convertNullToEmptyArray(fieldInSchema, v) {
   if (fieldInSchema.isList) {
