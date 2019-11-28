@@ -1,5 +1,5 @@
-const fs = require('fs');
 const _ = require('lodash');
+const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const cuid = require('cuid');
