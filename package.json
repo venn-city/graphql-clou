@@ -4,6 +4,12 @@
   "private": true,
   "author": "Venn Engineering",
   "description": "a mono-repo for sequelize-based graphql opencrud data-access packages",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "db_port": 5432
+  },
   "scripts": {
     "preinstall": "node ./scripts/verifyNodeVersion.js",
     "commit": "git-cz",
@@ -13,10 +19,10 @@
     "test:ci": "export JEST_JUNIT_OUTPUT=`pwd`/reports/junit/ && yarn exec-changed lerna exec --concurrency 1 'JEST_JUNIT_OUTPUT=$JEST_JUNIT_OUTPUT/\\$LERNA_PACKAGE_NAME-test-results.xml yarn test:ci'",
     "db:bootstrap:local": "docker-compose down && yarn db:start && yarn db:createSchema && yarn db:migrate",
     "db:bootstrap": "yarn db:createSchema && yarn db:migrate",
-    "db:createSchema": "wait-on -d 10000 tcp:5432 && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -c \"CREATE SCHEMA IF NOT EXISTS venn;\"",
-    "db:migrate": "wait-on tcp:5432 && NODE_ENV=test sequelize-cli db:migrate",
+    "db:createSchema": "wait-on -d 10000 tcp:$npm_package_config_db_port && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -p $npm_package_config_db_port -c \"CREATE SCHEMA IF NOT EXISTS venn;\"",
+    "db:migrate": "wait-on tcp:$npm_package_config_db_port && NODE_ENV=test sequelize-cli db:migrate",
     "db:seed": "NODE_ENV=test sequelize-cli db:seed:all",
-    "db:start": "docker-compose up -d"
+    "db:start": "DB_PORT=$npm_package_config_db_port docker-compose up -d"
   },
   "husky": {
     "hooks": {
@@ -30,11 +36,6 @@
     ]
   },
   "license": "ISC",
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "workspaces": [
     "packages/*"
   ],
@@ -48,6 +49,7 @@
     "lerna": "^3.18.3",
     "lint-staged": "^9.4.2",
     "typescript": "^3.6.4",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "dotenv": "^8.2.0"
   }
 }
