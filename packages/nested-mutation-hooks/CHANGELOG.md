@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.0.8...@venncity/nested-mutation-hooks@1.1.0) (2019-12-02)
+
+
+### Features
+
+* allow configuring the db_port ([f15cebd](https://github.com/venn-city/graphql-clou/commit/f15cebd047aa32aeab400a08c2ed82cff5b60b1c))
+
+
+
+
+
 ## [1.0.8](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.0.7...@venncity/nested-mutation-hooks@1.0.8) (2019-11-28)
 
 **Note:** Version bump only for package @venncity/nested-mutation-hooks
