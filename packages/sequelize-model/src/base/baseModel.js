@@ -8,7 +8,11 @@ const baseModel = {
   createdAt: Sequelize.DATE,
   updatedAt: Sequelize.DATE,
   deletedAt: Sequelize.DATE,
-  deleted: Sequelize.INTEGER
+  deleted: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  }
 };
 
 module.exports = {

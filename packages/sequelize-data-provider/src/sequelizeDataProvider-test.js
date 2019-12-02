@@ -454,7 +454,7 @@ describe('sequelizeDataProvider', () => {
       createdAt: createdGovernment.createdAt,
       updatedAt: createdGovernment.updatedAt,
       deletedAt: null,
-      deleted: null
+      deleted: 0
     });
   });
 
@@ -476,7 +476,7 @@ describe('sequelizeDataProvider', () => {
       createdAt: createdGovernment.createdAt,
       updatedAt: updatedGovernment.updatedAt,
       deletedAt: null,
-      deleted: null
+      deleted: 0
     });
   });
 
@@ -520,7 +520,7 @@ describe('sequelizeDataProvider', () => {
       createdAt: updatedGovernmentWithMinistries.createdAt,
       updatedAt: updatedGovernmentWithMinistries.updatedAt,
       deletedAt: null,
-      deleted: null
+      deleted: 0
     });
 
     // Update with connect.
@@ -571,7 +571,7 @@ describe('sequelizeDataProvider', () => {
         createdAt: updatedGovernment.createdAt,
         updatedAt: updatedGovernment.updatedAt,
         deletedAt: null,
-        deleted: null
+        deleted: 0
       });
     });
   });
