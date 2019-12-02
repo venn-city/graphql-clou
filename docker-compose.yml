@@ -1,14 +1,14 @@
-version: '3.2'
+version: "3.2"
 
 services:
   db:
-    image: 'kartoza/postgis:11.0-2.5'
-    env_file: '.env'
+    image: "kartoza/postgis:11.0-2.5"
+    env_file: ".env"
     environment:
-      POSTGRES_DB: '${DB_NAME}'
-      POSTGRES_PASS: '${DB_PASSWORD}'
-      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_PASS: "${DB_PASSWORD}"
+      POSTGRES_USER: "${DB_USER}"
     ports:
-    - "5432:5432"
+      - "${DB_PORT}:5432"
 networks:
   default:

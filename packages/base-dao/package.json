@@ -43,6 +43,7 @@
     "@venncity/eslint-config": "^1.0.11",
     "@venncity/event-pubsub": "^1.3.6",
     "@venncity/prettier-config-server": "^1.1.0",
+    "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.5.0",
