@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.4.0...@venncity/sequelize-data-provider@1.4.1) (2019-12-03)
+
+
+### Bug Fixes
+
+* **sequelize-model:** deleted field in entity non nullable and 0 by default ([bf6d6dd](https://github.com/venn-city/graphql-clou/commit/bf6d6dd4422e38deb0a314a69b0f4435072dad7b))
+
+
+
+
+
 # [1.4.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.3.3...@venncity/sequelize-data-provider@1.4.0) (2019-12-02)
 
 

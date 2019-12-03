@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.0...@venncity/sequelize-model@1.2.1) (2019-12-03)
+
+
+### Bug Fixes
+
+* **sequelize-model:** deleted field in entity non nullable and 0 by default ([bf6d6dd](https://github.com/venn-city/graphql-clou/commit/bf6d6dd4422e38deb0a314a69b0f4435072dad7b))
+* **sequelize-model sequelizeinit:** add deleted=0 field to every entity before running field hooks ([31eb8cf](https://github.com/venn-city/graphql-clou/commit/31eb8cfd10e4c086ace651a445ff847b636edf9b))
+
+
+
+
+
 # [1.2.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.1.8...@venncity/sequelize-model@1.2.0) (2019-12-02)
 
 
