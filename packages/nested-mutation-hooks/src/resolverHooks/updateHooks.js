@@ -173,7 +173,7 @@ async function nestedCreate({ context, childFieldToChange, entityName, parentEnt
   if (!childElementData) {
     delete childCreationData.create;
   }
-  const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.introspection);
+  const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
   return async entityId => {
     return childEntityCreateResolver(
       parentUpdateData,
@@ -197,7 +197,7 @@ async function nestedConnect({ context, childFieldToChange, entityName, parentEn
     const fetchedEntity = await context.dataProvider.getEntity(lowerFirst(getFieldName(parentEntityMetadata)), where);
     const ownerId = childData.id;
     delete parentUpdateData[fieldName];
-    const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.introspection);
+    const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
     const reverseReferenceData = { [getFieldName(reverseReferenceFieldMetadata)]: { connect: { id: fetchedEntity.id } } };
     const updateChildEntity = getChildEntityUpdateResolver(context, fieldType);
     await updateChildEntity(parentUpdateData, { data: reverseReferenceData, where: { id: ownerId } }, context);
@@ -260,7 +260,7 @@ async function nestedDisconnect({ context, entityName, childFieldToChange, paren
   } else {
     const ownerId = childElementData ? childElementData.id : await fetchChildEntityId(context.dataProvider, parentEntityMetadata, where, fieldName);
     delete parentUpdateData[fieldName];
-    const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.introspection);
+    const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
     const reverseReferenceData = { [getFieldName(reverseReferenceFieldMetadata)]: { disconnect: true } };
     const updateChildEntity = getChildEntityUpdateResolver(context, fieldType);
     await updateChildEntity(parentUpdateData, { data: reverseReferenceData, where: { id: ownerId } }, context);

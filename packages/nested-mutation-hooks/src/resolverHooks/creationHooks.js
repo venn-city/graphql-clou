@@ -88,7 +88,11 @@ async function nestedCreate({ context, entityName, childFieldToChangeMetadata, p
   if (!childElementData) {
     delete childCreationData.create;
   }
-  const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChangeMetadata, getFieldType(parentEntityMetadata), context.introspection);
+  const reverseReferenceFieldMetadata = getChildFieldOfType(
+    childFieldToChangeMetadata,
+    getFieldType(parentEntityMetadata),
+    context.openCrudIntrospection
+  );
   return async entityId => {
     return childEntityCreateResolver(
       parentCreationData,
@@ -114,7 +118,7 @@ async function nestedConnect({ context, entityName, childFieldToChangeMetadata, 
   }
   const ownerId = childData.id;
   delete parentCreationData[fieldName];
-  const reverseReferenceField = getChildFieldOfType(childFieldToChangeMetadata, getFieldType(parentEntityMetadata), context.introspection);
+  const reverseReferenceField = getChildFieldOfType(childFieldToChangeMetadata, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
   return async entityId => {
     const reverseReferenceData = { [getFieldName(reverseReferenceField)]: { connect: { id: entityId } } };
     return childEntityUpdateResolver(parentCreationData, { data: reverseReferenceData, where: { id: ownerId } }, context);

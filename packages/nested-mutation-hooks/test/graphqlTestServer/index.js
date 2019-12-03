@@ -2,7 +2,7 @@
 const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const { openCrudDataModel, openCrudSchemaGraphql, getOpenCrudIntrospection } = require('@venncity/opencrud-schema-provider');
-let { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
+const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
 
 const resolvers = require('./schema/resolvers');
 
@@ -24,12 +24,7 @@ function startApolloServer() {
     introspection: true,
     context: async req => {
       try {
-        return Object.assign({}, req, {
-          openCrudDataModel,
-          introspection: getOpenCrudIntrospection(),
-          resolvers,
-          dataProvider
-        });
+        return { ...req, openCrudDataModel, openCrudIntrospection: getOpenCrudIntrospection(), resolvers, dataProvider };
       } catch (e) {
         console.error('Failed building apollo context for request.', e);
         throw e;
