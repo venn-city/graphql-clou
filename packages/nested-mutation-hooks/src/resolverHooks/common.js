@@ -14,7 +14,7 @@ function getChildEntityDeleteResolver(context, fieldType) {
 }
 
 function detectChildFieldsToChange(context, resource, data) {
-  const introspection = context.introspection;
+  const introspection = context.openCrudIntrospection;
   const parentEntityMetadata = findTypeInIntrospection(introspection, resource);
   const childFieldsMetadata = getChildFields(parentEntityMetadata, introspection);
   const childFieldsToChangeMetadata = childFieldsMetadata.filter(childField => keys(data).includes(getFieldName(childField)));
