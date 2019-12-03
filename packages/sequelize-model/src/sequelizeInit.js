@@ -83,6 +83,11 @@ function runSchemaBasedHooks(entityInput, hooks) {
     if (!entity) {
       return;
     }
+
+    if (!entity.dataValues.deleted) {
+      entity.dataValues.deleted = 0;
+    }
+
     // eslint-disable-next-line no-underscore-dangle
     const entityName = entity._modelOptions.name.singular;
     const entityTypeInSchema = entityTypesSchema.find(entityType => entityType.name === entityName);

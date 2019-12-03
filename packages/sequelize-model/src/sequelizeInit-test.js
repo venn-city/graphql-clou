@@ -30,6 +30,7 @@ describe('sequelizeInit', () => {
       budget: 88.2
     });
     expect(updatedEntity.dataValues).toHaveProperty('budget', 88.2);
+    expect(updatedEntity.dataValues).toHaveProperty('deleted', 0);
   });
 
   test('sequelize should call schema hooks on related fields (nesting)', async () => {
