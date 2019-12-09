@@ -8,6 +8,12 @@
     "schema": "DB_SCHEMA"
   },
   "sequelize": {
-    "logging": "SQ_LOGGING"
+    "logging": "SQ_LOGGING",
+    "pool": {
+      "max": "POOL_MAX",
+      "min": "POOL_MIN",
+      "idle": "POOL_IDLE",
+      "acquire": "POOL_ACQUIRE"
+    }
   }
 }
