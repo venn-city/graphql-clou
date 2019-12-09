@@ -16,6 +16,7 @@ const schemaPath = config.has('sequelize.schemaPath')
 const loggingEnabled = config.get('sequelize.logging') === 'true';
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
+  pool: config.get('sequelize.pool'),
   port: config.has('db.port') ? config.get('db.port') : 5432,
   schema: config.get('db.schema'),
   dialect: config.get('sequelize.dialect'),
