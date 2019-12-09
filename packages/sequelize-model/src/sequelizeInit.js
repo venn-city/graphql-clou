@@ -16,7 +16,7 @@ const schemaPath = config.has('sequelize.schemaPath')
 const loggingEnabled = config.get('sequelize.logging') === 'true';
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
-  pool: config.get('sequelize.pool'),
+  pool: getPoolConfig(),
   port: config.has('db.port') ? config.get('db.port') : 5432,
   schema: config.get('db.schema'),
   dialect: config.get('sequelize.dialect'),
@@ -44,6 +44,13 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
     }
   }
 });
+
+function getPoolConfig() {
+  const poolConfig = config.get('sequelize.pool');
+  Object.entries(poolConfig).forEach(([key, value]) => {
+    poolConfig[key] = Number(value);
+  });
+}
 
 const readModelFiles = dir =>
   fs.readdirSync(dir).reduce((files, file) => {
