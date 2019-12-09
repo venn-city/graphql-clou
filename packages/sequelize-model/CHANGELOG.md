@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.3...@venncity/sequelize-model@1.2.4) (2019-12-09)
+
+
+### Bug Fixes
+
+* **sequelize-model:** forgot to return value (facepalm) ([b78503d](https://github.com/venn-city/graphql-clou/commit/b78503d52c9c7ff540a355614b21d34f88734beb))
+
+
+
+
+
 ## [1.2.3](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.2...@venncity/sequelize-model@1.2.3) (2019-12-09)
 
 
