@@ -50,6 +50,7 @@ function getPoolConfig() {
   Object.entries(poolConfig).forEach(([key, value]) => {
     poolConfig[key] = Number(value);
   });
+  return poolConfig;
 }
 
 const readModelFiles = dir =>
