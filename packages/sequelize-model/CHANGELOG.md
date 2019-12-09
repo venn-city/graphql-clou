@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.2...@venncity/sequelize-model@1.2.3) (2019-12-09)
+
+
+### Bug Fixes
+
+* **sequelize-model:** fix poolConfig fetching - normalize values to number ([b67f562](https://github.com/venn-city/graphql-clou/commit/b67f562e458394d815f1bbac21de02a0b945a60d))
+
+
+
+
+
 ## [1.2.2](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.1...@venncity/sequelize-model@1.2.2) (2019-12-09)
 
 **Note:** Version bump only for package @venncity/sequelize-model
