@@ -20,7 +20,7 @@ describe('sequelizeInit', () => {
     expect(votes).toHaveLength(0);
   });
 
-  test(   'sequelize should call schema hooks', async () => {
+  test('sequelize should call schema hooks', async () => {
     const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: 77.9 });
     const fetchedMinistry = await sq.Ministry.findOne({
       where: {
