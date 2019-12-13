@@ -1,5 +1,6 @@
 const { hacker, random } = require('faker');
-const sq = require('./sequelizeInit');
+const models = require('../../../test/model');
+const sq = require('./sequelizeInit').init(models);
 
 describe('sequelizeInit', () => {
   test('sequelize should be initialized properly with models for all test schema entities', async () => {
@@ -19,7 +20,7 @@ describe('sequelizeInit', () => {
     expect(votes).toHaveLength(0);
   });
 
-  test('sequelize should call schema hooks', async () => {
+  test(   'sequelize should call schema hooks', async () => {
     const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: 77.9 });
     const fetchedMinistry = await sq.Ministry.findOne({
       where: {

@@ -6,10 +6,13 @@ const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 const { isScalar, isObject, isList, getField, getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudSchema } = opencrudSchemaProvider;
 const { isEmptyArray, transformWithSymbols } = require('@venncity/clou-utils');
-const { sq } = require('@venncity/sequelize-model');
+const sequelizeModel = require('@venncity/sequelize-model');
 const { buildConditionSubquery } = require('./manyRelationConditionSubquery');
 const sequelizeConsts = require('./sequelizeConsts');
 const { containsEveryOrNone } = require('./../resultLimiter/resultLimiter');
+const models = require('./../../../../test/model');
+
+const sq = sequelizeModel.sq.init(models);
 
 const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
 

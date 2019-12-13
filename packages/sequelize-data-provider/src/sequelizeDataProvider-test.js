@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 const { hacker, random } = require('faker');
 const { omit } = require('lodash');
+const sequelizeModel = require('@venncity/sequelize-model');
 const sequelizeDataProvider = require('./sequelizeDataProvider');
+const models = require('./../../../test/model');
+
+const sq = sequelizeModel.sq.init(models);
 
 describe('sequelizeDataProvider', () => {
   /**
