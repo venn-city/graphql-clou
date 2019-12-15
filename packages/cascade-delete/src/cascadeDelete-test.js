@@ -2,12 +2,11 @@ const { hacker } = require('faker');
 const sinon = require('sinon');
 const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');
 const { sq } = require('@venncity/sequelize-model');
-const { cascadeDelete } = require('./cascadeDelete');
 const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
+const { cascadeDelete } = require('./cascadeDelete');
 const models = require('./../../../test/model');
 
 sq.init(models);
-
 
 describe('cascade delete', () => {
   let context;
