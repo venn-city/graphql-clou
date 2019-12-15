@@ -1,10 +1,7 @@
 const { upperFirst, omit } = require('lodash');
 const paths = require('deepdash/paths');
-const sequelizeModel = require('@venncity/sequelize-model');
+const { sq } = require('@venncity/sequelize-model');
 const { BELONGS_TO_MANY } = require('./../openCrudWhereTransform/sequelizeConsts').RELATION_TYPES;
-const models = require('./../../../../test/model');
-
-const sq = sequelizeModel.sq.init(models);
 
 function shouldLimitInFetch(args) {
   return args && !containsEveryOrNone(args.where);

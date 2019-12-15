@@ -1,4 +1,8 @@
+const { sq } = require('@venncity/sequelize-model');
 const { shouldLimitInFetch, limitAfterFetch, omitLimitArgsIfRequired } = require('./resultLimiter');
+const models = require('./../../../../test/model');
+
+sq.init(models);
 
 describe('resultLimiter', () => {
   test('shouldLimitInFetch', () => {
