@@ -1,6 +1,9 @@
-const { sq } = require('@venncity/sequelize-model');
+const sequelizeModel = require('@venncity/sequelize-model');
 const { Op } = require('sequelize');
 const { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
+const models = require('./../../../../test/model');
+
+const sq = sequelizeModel.sq.init(models);
 
 describe('openCRUDtoSequelizeWhereTransformer', () => {
   describe('openCrudToSequelize should transform graphql openCRUD { where, first, skip, orderBy } to sequelize', () => {

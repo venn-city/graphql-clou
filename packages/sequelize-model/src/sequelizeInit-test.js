@@ -1,5 +1,6 @@
 const { hacker, random } = require('faker');
-const sq = require('./sequelizeInit');
+const models = require('../../../test/model');
+const sq = require('./sequelizeInit').init(models);
 
 describe('sequelizeInit', () => {
   test('sequelize should be initialized properly with models for all test schema entities', async () => {

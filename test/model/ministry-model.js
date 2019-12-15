@@ -1,4 +1,4 @@
-const { baseModel } = require('./../../src/base/baseModel');
+const { baseModel } = require('@venncity/sequelize-model');
 
 module.exports = (sequelize, DataTypes) => {
   const ministry = sequelize.define(
