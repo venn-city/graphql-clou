@@ -1,6 +1,6 @@
 {
   "name": "@venncity/cascade-delete",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "dependencies": {
     "@venncity/nested-config": "^1.2.6",
     "@venncity/opencrud-schema-provider": "^1.4.0",
-    "@venncity/sequelize-data-provider": "^1.5.0",
+    "@venncity/sequelize-data-provider": "^1.5.1",
     "async": "^3.1.0",
     "lodash": "^4.17.15",
     "pluralize": "^8.0.0",
