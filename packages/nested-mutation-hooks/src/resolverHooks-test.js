@@ -2,12 +2,16 @@ const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-dat
 const { createTestClient } = require('apollo-server-testing/dist/index');
 const { hacker } = require('faker');
 const sinon = require('sinon').createSandbox();
+const { sq } = require('@venncity/sequelize-model');
 const resolvers = require('./../test/graphqlTestServer/schema/resolvers');
+const models = require('./../../../test/model');
 
 const mutationSpies = createMutationSpies();
 const { startApolloServer } = require('./../test/graphqlTestServer/');
 
 const { mutate } = createTestClient(startApolloServer());
+
+sq.init(models);
 
 describe('Nested mutations', () => {
   afterEach(() => {
