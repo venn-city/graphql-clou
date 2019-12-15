@@ -8,6 +8,10 @@ const mutationSpies = createMutationSpies();
 const { startApolloServer } = require('./../test/graphqlTestServer/');
 
 const { mutate } = createTestClient(startApolloServer());
+const { sq } = require('@venncity/sequelize-model');
+const models = require('./../../../test/model');
+
+sq.init(models);
 
 describe('Nested mutations', () => {
   afterEach(() => {
