@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.4...@venncity/sequelize-model@1.3.0) (2019-12-15)
+
+
+### Features
+
+* sq model static require instead of dynamic ([3889ed5](https://github.com/venn-city/graphql-clou/commit/3889ed524ff79134056f775958eae8ceb4399394))
+
+
+
+
+
 ## [1.2.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.2.3...@venncity/sequelize-model@1.2.4) (2019-12-09)
 
 

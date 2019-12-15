@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.4.4...@venncity/sequelize-data-provider@1.5.0) (2019-12-15)
+
+
+### Features
+
+* sq model static require instead of dynamic ([3889ed5](https://github.com/venn-city/graphql-clou/commit/3889ed524ff79134056f775958eae8ceb4399394))
+
+
+
+
+
 ## [1.4.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.4.3...@venncity/sequelize-data-provider@1.4.4) (2019-12-09)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider

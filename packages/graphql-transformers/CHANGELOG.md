@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.3.8...@venncity/graphql-transformers@1.4.0) (2019-12-15)
+
+
+### Features
+
+* sq model static require instead of dynamic ([3889ed5](https://github.com/venn-city/graphql-clou/commit/3889ed524ff79134056f775958eae8ceb4399394))
+
+
+
+
+
 ## [1.3.8](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.3.7...@venncity/graphql-transformers@1.3.8) (2019-12-09)
 
 **Note:** Version bump only for package @venncity/graphql-transformers
