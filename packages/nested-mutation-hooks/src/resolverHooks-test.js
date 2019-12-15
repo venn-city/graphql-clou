@@ -3,13 +3,12 @@ const { createTestClient } = require('apollo-server-testing/dist/index');
 const { hacker } = require('faker');
 const sinon = require('sinon').createSandbox();
 const resolvers = require('./../test/graphqlTestServer/schema/resolvers');
-
+const { sq } = require('@venncity/sequelize-model');
+const models = require('./../../../test/model');
 const mutationSpies = createMutationSpies();
 const { startApolloServer } = require('./../test/graphqlTestServer/');
 
 const { mutate } = createTestClient(startApolloServer());
-const { sq } = require('@venncity/sequelize-model');
-const models = require('./../../../test/model');
 
 sq.init(models);
 
