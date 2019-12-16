@@ -1,6 +1,5 @@
-const { replace, cloneDeep } = require('lodash');
-const pluralize = require('pluralize');
-const { getOpenCrudIntrospection } = require('@venncity/opencrud-schema-provider');
+const { replace, cloneDeep, lowerFirst } = require('lodash');
+const { getOpenCrudIntrospection, introspectionUtils } = require('@venncity/opencrud-schema-provider');
 
 const openCrudIntrospection = getOpenCrudIntrospection();
 
@@ -11,7 +10,8 @@ function transformComputedFieldsWhereArguments({ originalWhere, whereInputName, 
       transformedWhere = replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context);
     }
     const whereInputObjectFields = getWhereInputObjectFields(whereInputName);
-    replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, context);
+    const entityType = getEntityTypeFromWhereInput(whereInputName);
+    replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context);
   }
   return transformedWhere;
 }
@@ -61,17 +61,18 @@ function replaceBooleanOperators(transformedWhere, whereInputName, computedWhere
 
 function convertWhereArgumentToFieldName(objectFieldName) {
   const listFieldWhereModifiers = /(_none$|_some$|_every$)/;
-  return pluralize.singular(replace(objectFieldName, listFieldWhereModifiers, ''));
+  return replace(objectFieldName, listFieldWhereModifiers, '');
 }
 
-function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, context) {
+function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context) {
   whereInputObjectFields.forEach(whereInputObjectField => {
     const objectFieldInWhere = whereInputObjectField.name;
     if (transformedWhere[objectFieldInWhere]) {
       const objectFieldNameWherePart = transformedWhere[objectFieldInWhere];
       const fieldName = convertWhereArgumentToFieldName(objectFieldInWhere);
       if (isInputObject(whereInputObjectField)) {
-        const nestedObjectDAO = context.DAOs[`${fieldName}DAO`];
+        const childField = introspectionUtils.getChildFields(entityType, openCrudIntrospection).find(field => field.name === fieldName);
+        const nestedObjectDAO = context.DAOs[`${lowerFirst(introspectionUtils.getFieldType(childField))}DAO`];
         transformedWhere[objectFieldInWhere] = transformComputedFieldsWhereArguments({
           originalWhere: objectFieldNameWherePart,
           whereInputName: whereInputObjectField.type.name,
@@ -90,6 +91,10 @@ function isInputObject(inputField) {
 
 function getWhereInputObjectFields(whereInputName) {
   return openCrudIntrospection.types.find(type => type.name === whereInputName).inputFields.filter(inputField => isInputObject(inputField));
+}
+
+function getEntityTypeFromWhereInput(whereInputName) {
+  return introspectionUtils.findTypeInIntrospection(openCrudIntrospection, whereInputName.replace('WhereInput', ''));
 }
 
 module.exports = {
