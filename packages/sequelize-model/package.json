@@ -23,7 +23,7 @@
     ]
   },
   "dependencies": {
-    "@venncity/nested-config": "^1.2.6",
+    "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.0",
     "cuid": "^2.1.6",
     "lodash": "^4.17.15",
