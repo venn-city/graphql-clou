@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.4.3...@venncity/graphql-transformers@1.4.4) (2019-12-16)
+
+
+### Bug Fixes
+
+* remove sq model init from base test for dao ([02efc23](https://github.com/venn-city/graphql-clou/commit/02efc234acb420788d0564eaa20920159f789f88))
+
+
+
+
+
 ## [1.4.3](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.4.2...@venncity/graphql-transformers@1.4.3) (2019-12-16)
 
 
