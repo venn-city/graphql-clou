@@ -2,11 +2,7 @@ const pluralize = require('pluralize'); // eslint-disable-line import/no-extrane
 const momentRandom = require('moment-random'); // eslint-disable-line import/no-extraneous-dependencies
 const _ = require('lodash');
 const { getOpenCrudIntrospection, openCrudDataModel } = require('@venncity/opencrud-schema-provider');
-const { sq } = require('@venncity/sequelize-model');
 const { getFunctionNamesForEntity } = require('./../src/baseDAO');
-const models = require('./../../../test/model');
-
-sq.init(models);
 
 const BASE_DAO_TEST_TYPES = {
   CREATE: 'CREATE',

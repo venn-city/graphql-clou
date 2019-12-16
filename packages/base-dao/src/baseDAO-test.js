@@ -1,6 +1,10 @@
 const { hacker } = require('faker');
+const { sq } = require('@venncity/sequelize-model');
 const { runGenericDAOTests, createServiceAuthContext } = require('./../test/baseTestForDAOs');
 const createAllDAOs = require('./../test/DAOs');
+const models = require('./../../../test/model');
+
+sq.init(models);
 
 function buildTestObject() {
   return {
