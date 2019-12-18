@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const { forOwn } = require('lodash');
+const pg = require('pg');
 const DataTypes = require('sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
 const { hookDefinitions } = require('./hooks/hooks');
@@ -14,6 +15,7 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
   port: config.has('db.port') ? config.get('db.port') : 5432,
   schema: config.get('db.schema'),
   dialect: config.get('sequelize.dialect'),
+  dialectModule: pg,
   logging: loggingEnabled || undefined,
   dialectOptions: {
     useUTC: true
