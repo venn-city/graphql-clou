@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.5.5...@venncity/sequelize-data-provider@1.6.0) (2019-12-19)
+
+
+### Features
+
+* fix nested _none and _every 1xn relation transform ([7f90f62](https://github.com/venn-city/graphql-clou/commit/7f90f62caa80e3e590ba4e871819736c136c09e7)), closes [venn-city/sequelize#v5](https://github.com/venn-city/sequelize/issues/v5)
+
+
+
+
+
 ## [1.5.5](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.5.4...@venncity/sequelize-data-provider@1.5.5) (2019-12-18)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider

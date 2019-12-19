@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/venn-city/graphql-clou/compare/@venncity/cascade-delete@1.1.10...@venncity/cascade-delete@1.2.0) (2019-12-19)
+
+
+### Features
+
+* fix nested _none and _every 1xn relation transform ([7f90f62](https://github.com/venn-city/graphql-clou/commit/7f90f62caa80e3e590ba4e871819736c136c09e7)), closes [venn-city/sequelize#v5](https://github.com/venn-city/sequelize/issues/v5)
+
+
+
+
+
 ## [1.1.10](https://github.com/venn-city/graphql-clou/compare/@venncity/cascade-delete@1.1.9...@venncity/cascade-delete@1.1.10) (2019-12-18)
 
 **Note:** Version bump only for package @venncity/cascade-delete

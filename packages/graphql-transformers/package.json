@@ -1,6 +1,6 @@
 {
   "name": "@venncity/graphql-transformers",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "@venncity/clou-utils": "^1.2.1",
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.1",
-    "@venncity/sequelize-model": "^1.3.2",
+    "@venncity/sequelize-model": "^1.4.0",
     "deepdash": "^4.2.17",
     "lodash": "^4.17.15",
     "pluralize": "^8.0.0",
