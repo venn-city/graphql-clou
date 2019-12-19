@@ -28,7 +28,7 @@
     "cuid": "^2.1.6",
     "lodash": "^4.17.15",
     "pg": "^7.12.1",
-    "sequelize": "^5.21.2"
+    "sequelize": "venn-city/sequelize#v5"
   },
   "devDependencies": {
     "@venncity/eslint-config": "^1.0.11",

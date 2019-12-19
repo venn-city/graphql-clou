@@ -30,7 +30,7 @@
     "deepdash": "^4.2.17",
     "lodash": "^4.17.15",
     "pluralize": "^8.0.0",
-    "sequelize": "^5.21.2"
+    "sequelize": "venn-city/sequelize#v5"
   },
   "devDependencies": {
     "@venncity/eslint-config": "^1.0.11",
