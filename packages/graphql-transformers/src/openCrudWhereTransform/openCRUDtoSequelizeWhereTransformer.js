@@ -199,7 +199,7 @@ function handleManyRelationEvery(whereArg, whereValue, entityName, pathWithinSch
     transformAssociationToNested: false,
     useColumnNames: true
   });
-  const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter, true);
+  const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter, true, pathWithinSchema);
   const whereElement = {
     id: {
       [Op.ne]: {
@@ -221,7 +221,7 @@ function handleManyRelationNone(whereArg, whereValue, entityName, pathWithinSche
     transformAssociationToNested: false,
     useColumnNames: true
   });
-  const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter);
+  const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter, false, pathWithinSchema);
   const whereElement = {
     id: {
       [Op.ne]: {
