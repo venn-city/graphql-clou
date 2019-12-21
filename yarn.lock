@@ -7223,7 +7223,7 @@ modify-values@^1.0.0:
 
 moment-random@^1.0.5:
   version "1.0.5"
-  resolved "https://registry.yarnpkg.com/moment-random/-/moment-random-1.0.5.tgz#d885382cf715cc18018a403e3aefda7177cdc3d6"
+  resolved "https://registry.npmjs.org/moment-random/-/moment-random-1.0.5.tgz#d885382cf715cc18018a403e3aefda7177cdc3d6"
   integrity sha512-zToKMGkYQyjTaDSKOUvnOTgSEr7f9wEDe1EuJ6Q3bxu09FSWninC0Ba9HLyWa3kzi/wVcWc0tMrI+gioXkw1ag==
 
 moment-timezone@^0.5.21:
