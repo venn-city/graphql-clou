@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.4.0...@venncity/sequelize-model@1.4.1) (2019-12-23)
+
+
+### Bug Fixes
+
+* **sequelize-model:** fix float formatting ([1f5e57f](https://github.com/venn-city/graphql-clou/commit/1f5e57f344ad7055a865895b258e8ce9e3eebf35))
+
+
+
+
+
 # [1.4.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.3.2...@venncity/sequelize-model@1.4.0) (2019-12-19)
 
 
