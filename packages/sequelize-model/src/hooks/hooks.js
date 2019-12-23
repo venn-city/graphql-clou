@@ -85,7 +85,7 @@ function stringToJson(fieldInSchema, v) {
 }
 
 function formatFloat(fieldInSchema, v) {
-  if (fieldInSchema.type === 'Float') {
+  if (fieldInSchema.type === 'Float' && v) {
     return Number(v);
   }
   return v;

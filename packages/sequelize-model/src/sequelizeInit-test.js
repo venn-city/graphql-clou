@@ -34,6 +34,11 @@ describe('sequelizeInit', () => {
     expect(updatedEntity.dataValues).toHaveProperty('deleted', 0);
   });
 
+  test('sequelize should not format a float of null', async () => {
+    const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: null });
+    expect(createdMinistry.dataValues).toHaveProperty('budget', null);
+  });
+
   test('sequelize should call schema hooks on related fields (nesting)', async () => {
     const num1 = random.number();
     const num2 = random.number();
