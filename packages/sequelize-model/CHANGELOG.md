@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.4.1...@venncity/sequelize-model@1.4.2) (2019-12-24)
+
+
+### Bug Fixes
+
+* **sequelize-model:** pg.native bug fix ([c087456](https://github.com/venn-city/graphql-clou/commit/c087456ff9013645589415b45f27441392434141))
+
+
+
+
+
 ## [1.4.1](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.4.0...@venncity/sequelize-model@1.4.1) (2019-12-23)
 
 
