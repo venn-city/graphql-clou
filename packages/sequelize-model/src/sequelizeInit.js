@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const { forOwn } = require('lodash');
 const pg = require('pg');
 
-delete pg.native;
+delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
 
 const DataTypes = require('sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
