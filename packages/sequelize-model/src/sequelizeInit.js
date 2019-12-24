@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 const { forOwn } = require('lodash');
 const pg = require('pg');
+
+delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
+
 const DataTypes = require('sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
 const { hookDefinitions } = require('./hooks/hooks');
@@ -17,6 +20,7 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
   dialect: config.get('sequelize.dialect'),
   dialectModule: pg,
   logging: loggingEnabled || undefined,
+  native: undefined,
   dialectOptions: {
     useUTC: true
   },
