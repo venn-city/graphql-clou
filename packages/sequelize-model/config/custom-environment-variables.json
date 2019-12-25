@@ -15,5 +15,8 @@
       "idle": "POOL_IDLE",
       "acquire": "POOL_ACQUIRE"
     }
+  },
+  "xray": {
+    "enabled": "XRAY_ENABLED"
   }
 }

@@ -1,12 +1,15 @@
+const xray = require('aws-xray-sdk');
 const Sequelize = require('sequelize');
 const { forOwn } = require('lodash');
-const pg = require('pg');
-
-delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
-
 const DataTypes = require('sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
+let pg = require('pg');
 const { hookDefinitions } = require('./hooks/hooks');
+
+delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
+if (config.get('xray.enabled').toString() === 'true') {
+  pg = xray.capturePostgres(pg);
+}
 
 const sq = {};
 
