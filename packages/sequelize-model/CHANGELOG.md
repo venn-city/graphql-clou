@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.4.2...@venncity/sequelize-model@1.5.0) (2019-12-25)
+
+
+### Features
+
+* **sequelize-model:** trace pg(sql) with xray ([fe1be94](https://github.com/venn-city/graphql-clou/commit/fe1be9474d0f72126ba3b0ef2557510f1d8dbde7))
+
+
+
+
+
 ## [1.4.2](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.4.1...@venncity/sequelize-model@1.4.2) (2019-12-24)
 
 
