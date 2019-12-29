@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.5.0...@venncity/sequelize-model@1.5.1) (2019-12-29)
+
+
+### Bug Fixes
+
+* **sequelize-model:** use aws xray cls in seqeulize ([bf7ac70](https://github.com/venn-city/graphql-clou/commit/bf7ac7057583cc28373fddfcd3edb1c26325c141))
+
+
+
+
+
 # [1.5.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.4.2...@venncity/sequelize-model@1.5.0) (2019-12-25)
 
 
