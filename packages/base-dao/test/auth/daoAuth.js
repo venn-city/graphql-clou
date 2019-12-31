@@ -1,7 +1,9 @@
 const {
   errors: { ForbiddenError }
 } = require('@venncity/errors');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { initAuth, hasPermissionForAllFields, supportedActions, filterUnauthorizedFields } = require('@venncity/auth');
+
 const { READ, UPDATE } = supportedActions;
 
 async function buildAuth(context, hooks) {
@@ -39,7 +41,9 @@ function hasPermission(auth, action, authDataFromDB, context, authTypeName) {
 async function verifyCanUpdate({ where, auth, data, context, hooks, authTypeName, dataProvider, entityName }) {
   const entitiesToUpdate = await dataProvider.getAllEntities(entityName, { where });
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const fetchedEntity of entitiesToUpdate) {
+    // eslint-disable-next-line no-await-in-loop
     const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
     // Row level.
     verifyHasPermission(auth, UPDATE, authDataFromDB, context, authTypeName);
