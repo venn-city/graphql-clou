@@ -1,0 +1,56 @@
+directive @unique on FIELD_DEFINITION | FIELD
+directive @pgTable(name: String) on FIELD_DEFINITION | FIELD | OBJECT
+directive @pgColumn(name: String) on FIELD_DEFINITION | FIELD
+directive @default(value: ANY) on FIELD_DEFINITION | FIELD
+directive @pgRelation(column: String) on FIELD_DEFINITION | FIELD
+directive @relationTable on FIELD_DEFINITION | FIELD
+directive @relation(link: String, name: String) on FIELD_DEFINITION | FIELD
+directive @vnCascade(direct: OPERATION, inverse: OPERATION) on FIELD_DEFINITION | FIELD
+
+union ANY = String | Int
+
+enum OPERATION {
+  DELETE
+  DISCONNECT
+  DISCONNECT_DELETE
+}
+
+type Survey @pgTable(name:"surveys") {
+  id:                     ID!                     @unique
+  name:                   String                  @pgColumn(name: "name") @unique
+  title:                  String                  @pgColumn(name: "title")
+  description:            String                  @pgColumn(name: "description")
+  enabled:                Boolean                 @pgColumn(name: "enabled")
+  isAnonymous:            Boolean                 @pgColumn(name: "is_anonymous")
+  questions:              [SurveyQuestion]
+  hoodId:                 String                  @pgColumn(name: "hood_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type SurveyQuestion @pgTable(name:"survey_questions") {
+  id:                     ID!                     @unique
+  text:                   String                  @pgColumn(name: "text")
+  options:                Json                    @pgColumn(name: "options")
+  addCommentField:        Boolean                 @pgColumn(name: "add_comment_field")
+  responses:              [SurveyQuestionResponse]
+  survey:                 Survey!                 @pgRelation(column: "survey_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type SurveyQuestionResponse @pgTable(name:"survey_question_responses") {
+  id:                     ID!                     @unique
+  value:                  String                  @pgColumn(name: "value")
+  comment:                String                  @pgColumn(name: "comment")
+  question:               SurveyQuestion!         @pgRelation(column: "survey_question_id")
+  responderId:            String                  @pgColumn(name: "responder_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
