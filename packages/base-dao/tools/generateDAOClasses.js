@@ -27,43 +27,43 @@ function generateDAOClass(entityName) {
     }
   
     ${entityNameLowerFirstLetter}(context: any, where: openCrudSchema.Query${entityNameUpperFirstLetter}Args['where']): Promise<null | openCrudSchema.Query['${entityNameLowerFirstLetter}']> {
-      return this.baseDAO.entitiy(context, where);
+      return this.baseDAO.${entityNameLowerFirstLetter}(context, where);
     }
   
     ${entityNameLowerFirstLetter}ById(context: any, id: openCrudSchema.Scalars['ID']): Promise<null | openCrudSchema.Query['${entityNameLowerFirstLetter}']> {
-      return this.baseDAO.entitiyById(context, id);
+      return this.baseDAO.${entityNameLowerFirstLetter}ById(context, id);
     }
   
     ${entitiesNameLowerFirstLetter}(context: any, args: openCrudSchema.Query${entitiesNameUpperFirstLetter}Args): Promise<openCrudSchema.Query['${entitiesNameLowerFirstLetter}']> {
-      return this.baseDAO.entities(context, args);
+      return this.baseDAO.${entitiesNameLowerFirstLetter}(context, args);
     }
   
     ${entitiesNameLowerFirstLetter}ByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['${entitiesNameLowerFirstLetter}']> {
-      return this.baseDAO.entitiesByIds(context, ids);
+      return this.baseDAO.${entitiesNameLowerFirstLetter}ByIds(context, ids);
     }
   
     create${entityNameUpperFirstLetter}(context: any, data: openCrudSchema.MutationCreate${entityNameUpperFirstLetter}Args['data']): Promise<openCrudSchema.Mutation['create${entityNameUpperFirstLetter}']> {
-      return this.baseDAO.createEntity(context, data);
+      return this.baseDAO.create${entityNameUpperFirstLetter}(context, data);
     }
   
     update${entityNameUpperFirstLetter}(context: any, args: openCrudSchema.MutationUpdate${entityNameUpperFirstLetter}Args): Promise<null | openCrudSchema.Mutation['update${entityNameUpperFirstLetter}']> {
-      return this.baseDAO.updateEntity(context, args);
+      return this.baseDAO.update${entityNameUpperFirstLetter}(context, args);
     }
   
     updateMany${entitiesNameUpperFirstLetter}(context: any, args: openCrudSchema.MutationUpdateMany${entitiesNameUpperFirstLetter}Args): Promise<openCrudSchema.Mutation['updateMany${entitiesNameUpperFirstLetter}']> {
-      return this.baseDAO.updateManyEntities(context, args);
+      return this.baseDAO.updateMany${entitiesNameUpperFirstLetter}(context, args);
     }
   
     delete${entityNameUpperFirstLetter}(context: any, where: openCrudSchema.MutationDelete${entityNameUpperFirstLetter}Args['where']): Promise<null | openCrudSchema.Mutation['delete${entityNameUpperFirstLetter}']> {
-      return this.baseDAO.deleteEntity(context, where);
+      return this.baseDAO.delete${entityNameUpperFirstLetter}(context, where);
     }
   
     deleteMany${entitiesNameUpperFirstLetter}(context: any, where: openCrudSchema.MutationDeleteMany${entitiesNameUpperFirstLetter}Args['where']): Promise<openCrudSchema.Mutation['deleteMany${entitiesNameUpperFirstLetter}']> {
-      return this.baseDAO.deleteManyEntities(context, where);
+      return this.baseDAO.deleteMany${entitiesNameUpperFirstLetter}(context, where);
     }
   
     ${entityNameLowerFirstLetter}Connection(parent: any, args: openCrudSchema.Query${entitiesNameUpperFirstLetter}ConnectionArgs, context: any): Promise<openCrudSchema.Query['${entitiesNameLowerFirstLetter}Connection']> {
-      return this.baseDAO.entitiesConnection(parent, args, context);
+      return this.baseDAO.${entityNameLowerFirstLetter}Connection(parent, args, context);
     }
   }`);
 }
