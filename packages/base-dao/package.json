@@ -12,6 +12,9 @@
     "lint:ci": "eslint . --ext .js,.ts --format junit -o $LINT_JUNIT_OUTPUT",
     "generate-opencrud-schema": "node ./scripts/generateOpenCRUDSchema.js"
   },
+  "bin": {
+    "generate-dao-schema": "./bin/generateDAOSchemaCli.js"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -43,7 +46,8 @@
     "moment-random": "^1.0.5",
     "pluralize": "^8.0.0",
     "prisma-generate-schema": "^1.34.10",
-    "sequelize": "venn-city/sequelize#v5"
+    "sequelize": "venn-city/sequelize#v5",
+    "yargs": "^15.0.2"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.149",
