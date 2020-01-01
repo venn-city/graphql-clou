@@ -1,0 +1,1476 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateDAOSchema generate files should be match to snapshots 1`] = `
+"import * as openCrudSchema from './openCrudSchema';
+
+export default class SurveyDAO {
+  static readonly ENTITY_NAME = 'survey';
+
+  private readonly baseDAO: any;
+
+  constructor(baseDAO: any) {
+    this.baseDAO = baseDAO;
+  }
+
+  survey(context: any, where: openCrudSchema.QuerySurveyArgs['where']): Promise<openCrudSchema.Query['survey']> {
+    return this.baseDAO.survey(context, where);
+  }
+
+  surveyById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['survey']> {
+    return this.baseDAO.surveyById(context, id);
+  }
+
+  surveys(context: any, args: openCrudSchema.QuerySurveysArgs): Promise<openCrudSchema.Query['surveys']> {
+    return this.baseDAO.surveys(context, args);
+  }
+
+  surveysByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveys']> {
+    return this.baseDAO.surveysByIds(context, ids);
+  }
+
+  createSurvey(context: any, data: openCrudSchema.MutationCreateSurveyArgs['data']): Promise<openCrudSchema.Mutation['createSurvey']> {
+    return this.baseDAO.createSurvey(context, data);
+  }
+
+  updateSurvey(context: any, args: openCrudSchema.MutationUpdateSurveyArgs): Promise<openCrudSchema.Mutation['updateSurvey']> {
+    return this.baseDAO.updateSurvey(context, args);
+  }
+
+  updateManySurveys(context: any, args: openCrudSchema.MutationUpdateManySurveysArgs): Promise<openCrudSchema.Mutation['updateManySurveys']> {
+    return this.baseDAO.updateManySurveys(context, args);
+  }
+
+  deleteSurvey(context: any, where: openCrudSchema.MutationDeleteSurveyArgs['where']): Promise<openCrudSchema.Mutation['deleteSurvey']> {
+    return this.baseDAO.deleteSurvey(context, where);
+  }
+
+  deleteManySurveys(context: any, where: openCrudSchema.MutationDeleteManySurveysArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveys']> {
+    return this.baseDAO.deleteManySurveys(context, where);
+  }
+
+  surveyConnection(parent: any, args: openCrudSchema.QuerySurveysConnectionArgs, context: any): Promise<openCrudSchema.Query['surveysConnection']> {
+    return this.baseDAO.surveyConnection(parent, args, context);
+  }
+}
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 2`] = `
+"import * as openCrudSchema from './openCrudSchema';
+
+export default class SurveyQuestionDAO {
+  static readonly ENTITY_NAME = 'surveyQuestion';
+
+  private readonly baseDAO: any;
+
+  constructor(baseDAO: any) {
+    this.baseDAO = baseDAO;
+  }
+
+  surveyQuestion(context: any, where: openCrudSchema.QuerySurveyQuestionArgs['where']): Promise<openCrudSchema.Query['surveyQuestion']> {
+    return this.baseDAO.surveyQuestion(context, where);
+  }
+
+  surveyQuestionById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['surveyQuestion']> {
+    return this.baseDAO.surveyQuestionById(context, id);
+  }
+
+  surveyQuestions(context: any, args: openCrudSchema.QuerySurveyQuestionsArgs): Promise<openCrudSchema.Query['surveyQuestions']> {
+    return this.baseDAO.surveyQuestions(context, args);
+  }
+
+  surveyQuestionsByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveyQuestions']> {
+    return this.baseDAO.surveyQuestionsByIds(context, ids);
+  }
+
+  createSurveyQuestion(context: any, data: openCrudSchema.MutationCreateSurveyQuestionArgs['data']): Promise<openCrudSchema.Mutation['createSurveyQuestion']> {
+    return this.baseDAO.createSurveyQuestion(context, data);
+  }
+
+  updateSurveyQuestion(context: any, args: openCrudSchema.MutationUpdateSurveyQuestionArgs): Promise<openCrudSchema.Mutation['updateSurveyQuestion']> {
+    return this.baseDAO.updateSurveyQuestion(context, args);
+  }
+
+  updateManySurveyQuestions(context: any, args: openCrudSchema.MutationUpdateManySurveyQuestionsArgs): Promise<openCrudSchema.Mutation['updateManySurveyQuestions']> {
+    return this.baseDAO.updateManySurveyQuestions(context, args);
+  }
+
+  deleteSurveyQuestion(context: any, where: openCrudSchema.MutationDeleteSurveyQuestionArgs['where']): Promise<openCrudSchema.Mutation['deleteSurveyQuestion']> {
+    return this.baseDAO.deleteSurveyQuestion(context, where);
+  }
+
+  deleteManySurveyQuestions(context: any, where: openCrudSchema.MutationDeleteManySurveyQuestionsArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveyQuestions']> {
+    return this.baseDAO.deleteManySurveyQuestions(context, where);
+  }
+
+  surveyQuestionConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionsConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionsConnection']> {
+    return this.baseDAO.surveyQuestionConnection(parent, args, context);
+  }
+}
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 3`] = `
+"import * as openCrudSchema from './openCrudSchema';
+
+export default class SurveyQuestionResponseDAO {
+  static readonly ENTITY_NAME = 'surveyQuestionResponse';
+
+  private readonly baseDAO: any;
+
+  constructor(baseDAO: any) {
+    this.baseDAO = baseDAO;
+  }
+
+  surveyQuestionResponse(context: any, where: openCrudSchema.QuerySurveyQuestionResponseArgs['where']): Promise<openCrudSchema.Query['surveyQuestionResponse']> {
+    return this.baseDAO.surveyQuestionResponse(context, where);
+  }
+
+  surveyQuestionResponseById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['surveyQuestionResponse']> {
+    return this.baseDAO.surveyQuestionResponseById(context, id);
+  }
+
+  surveyQuestionResponses(context: any, args: openCrudSchema.QuerySurveyQuestionResponsesArgs): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
+    return this.baseDAO.surveyQuestionResponses(context, args);
+  }
+
+  surveyQuestionResponsesByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
+    return this.baseDAO.surveyQuestionResponsesByIds(context, ids);
+  }
+
+  createSurveyQuestionResponse(context: any, data: openCrudSchema.MutationCreateSurveyQuestionResponseArgs['data']): Promise<openCrudSchema.Mutation['createSurveyQuestionResponse']> {
+    return this.baseDAO.createSurveyQuestionResponse(context, data);
+  }
+
+  updateSurveyQuestionResponse(context: any, args: openCrudSchema.MutationUpdateSurveyQuestionResponseArgs): Promise<openCrudSchema.Mutation['updateSurveyQuestionResponse']> {
+    return this.baseDAO.updateSurveyQuestionResponse(context, args);
+  }
+
+  updateManySurveyQuestionResponses(context: any, args: openCrudSchema.MutationUpdateManySurveyQuestionResponsesArgs): Promise<openCrudSchema.Mutation['updateManySurveyQuestionResponses']> {
+    return this.baseDAO.updateManySurveyQuestionResponses(context, args);
+  }
+
+  deleteSurveyQuestionResponse(context: any, where: openCrudSchema.MutationDeleteSurveyQuestionResponseArgs['where']): Promise<openCrudSchema.Mutation['deleteSurveyQuestionResponse']> {
+    return this.baseDAO.deleteSurveyQuestionResponse(context, where);
+  }
+
+  deleteManySurveyQuestionResponses(context: any, where: openCrudSchema.MutationDeleteManySurveyQuestionResponsesArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveyQuestionResponses']> {
+    return this.baseDAO.deleteManySurveyQuestionResponses(context, where);
+  }
+
+  surveyQuestionResponseConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
+    return this.baseDAO.surveyQuestionResponseConnection(parent, args, context);
+  }
+}
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 4`] = `
+"export * from './openCrudSchema';
+export { default as SurveyDAO } from './SurveyDAO';
+export { default as SurveyQuestionDAO } from './SurveyQuestionDAO';
+export { default as SurveyQuestionResponseDAO } from './SurveyQuestionResponseDAO';
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 5`] = `
+"export type Maybe<T> = T | null;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  DateTime: any,
+  Json: any,
+  Long: any,
+};
+
+export type AggregateSurvey = {
+   __typename?: 'AggregateSurvey',
+  count: Scalars['Int'],
+};
+
+export type AggregateSurveyQuestion = {
+   __typename?: 'AggregateSurveyQuestion',
+  count: Scalars['Int'],
+};
+
+export type AggregateSurveyQuestionResponse = {
+   __typename?: 'AggregateSurveyQuestionResponse',
+  count: Scalars['Int'],
+};
+
+export type BatchPayload = {
+   __typename?: 'BatchPayload',
+  count: Scalars['Long'],
+};
+
+
+
+
+export type Mutation = {
+   __typename?: 'Mutation',
+  createSurvey: Survey,
+  updateSurvey?: Maybe<Survey>,
+  updateManySurveys: BatchPayload,
+  upsertSurvey: Survey,
+  deleteSurvey?: Maybe<Survey>,
+  deleteManySurveys: BatchPayload,
+  createSurveyQuestion: SurveyQuestion,
+  updateSurveyQuestion?: Maybe<SurveyQuestion>,
+  updateManySurveyQuestions: BatchPayload,
+  upsertSurveyQuestion: SurveyQuestion,
+  deleteSurveyQuestion?: Maybe<SurveyQuestion>,
+  deleteManySurveyQuestions: BatchPayload,
+  createSurveyQuestionResponse: SurveyQuestionResponse,
+  updateSurveyQuestionResponse?: Maybe<SurveyQuestionResponse>,
+  updateManySurveyQuestionResponses: BatchPayload,
+  upsertSurveyQuestionResponse: SurveyQuestionResponse,
+  deleteSurveyQuestionResponse?: Maybe<SurveyQuestionResponse>,
+  deleteManySurveyQuestionResponses: BatchPayload,
+};
+
+
+export type MutationCreateSurveyArgs = {
+  data: SurveyCreateInput
+};
+
+
+export type MutationUpdateSurveyArgs = {
+  data: SurveyUpdateInput,
+  where: SurveyWhereUniqueInput
+};
+
+
+export type MutationUpdateManySurveysArgs = {
+  data: SurveyUpdateManyMutationInput,
+  where?: Maybe<SurveyWhereInput>
+};
+
+
+export type MutationUpsertSurveyArgs = {
+  where: SurveyWhereUniqueInput,
+  create: SurveyCreateInput,
+  update: SurveyUpdateInput
+};
+
+
+export type MutationDeleteSurveyArgs = {
+  where: SurveyWhereUniqueInput
+};
+
+
+export type MutationDeleteManySurveysArgs = {
+  where?: Maybe<SurveyWhereInput>
+};
+
+
+export type MutationCreateSurveyQuestionArgs = {
+  data: SurveyQuestionCreateInput
+};
+
+
+export type MutationUpdateSurveyQuestionArgs = {
+  data: SurveyQuestionUpdateInput,
+  where: SurveyQuestionWhereUniqueInput
+};
+
+
+export type MutationUpdateManySurveyQuestionsArgs = {
+  data: SurveyQuestionUpdateManyMutationInput,
+  where?: Maybe<SurveyQuestionWhereInput>
+};
+
+
+export type MutationUpsertSurveyQuestionArgs = {
+  where: SurveyQuestionWhereUniqueInput,
+  create: SurveyQuestionCreateInput,
+  update: SurveyQuestionUpdateInput
+};
+
+
+export type MutationDeleteSurveyQuestionArgs = {
+  where: SurveyQuestionWhereUniqueInput
+};
+
+
+export type MutationDeleteManySurveyQuestionsArgs = {
+  where?: Maybe<SurveyQuestionWhereInput>
+};
+
+
+export type MutationCreateSurveyQuestionResponseArgs = {
+  data: SurveyQuestionResponseCreateInput
+};
+
+
+export type MutationUpdateSurveyQuestionResponseArgs = {
+  data: SurveyQuestionResponseUpdateInput,
+  where: SurveyQuestionResponseWhereUniqueInput
+};
+
+
+export type MutationUpdateManySurveyQuestionResponsesArgs = {
+  data: SurveyQuestionResponseUpdateManyMutationInput,
+  where?: Maybe<SurveyQuestionResponseWhereInput>
+};
+
+
+export type MutationUpsertSurveyQuestionResponseArgs = {
+  where: SurveyQuestionResponseWhereUniqueInput,
+  create: SurveyQuestionResponseCreateInput,
+  update: SurveyQuestionResponseUpdateInput
+};
+
+
+export type MutationDeleteSurveyQuestionResponseArgs = {
+  where: SurveyQuestionResponseWhereUniqueInput
+};
+
+
+export type MutationDeleteManySurveyQuestionResponsesArgs = {
+  where?: Maybe<SurveyQuestionResponseWhereInput>
+};
+
+export enum MutationType {
+  Created = 'CREATED',
+  Updated = 'UPDATED',
+  Deleted = 'DELETED'
+}
+
+export type Node = {
+  id: Scalars['ID'],
+};
+
+export type PageInfo = {
+   __typename?: 'PageInfo',
+  hasNextPage: Scalars['Boolean'],
+  hasPreviousPage: Scalars['Boolean'],
+  startCursor?: Maybe<Scalars['String']>,
+  endCursor?: Maybe<Scalars['String']>,
+};
+
+export type Query = {
+   __typename?: 'Query',
+  survey?: Maybe<Survey>,
+  surveys: Array<Maybe<Survey>>,
+  surveysConnection: SurveyConnection,
+  surveyQuestion?: Maybe<SurveyQuestion>,
+  surveyQuestions: Array<Maybe<SurveyQuestion>>,
+  surveyQuestionsConnection: SurveyQuestionConnection,
+  surveyQuestionResponse?: Maybe<SurveyQuestionResponse>,
+  surveyQuestionResponses: Array<Maybe<SurveyQuestionResponse>>,
+  surveyQuestionResponsesConnection: SurveyQuestionResponseConnection,
+  node?: Maybe<Node>,
+};
+
+
+export type QuerySurveyArgs = {
+  where: SurveyWhereUniqueInput
+};
+
+
+export type QuerySurveysArgs = {
+  where?: Maybe<SurveyWhereInput>,
+  orderBy?: Maybe<SurveyOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QuerySurveysConnectionArgs = {
+  where?: Maybe<SurveyWhereInput>,
+  orderBy?: Maybe<SurveyOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QuerySurveyQuestionArgs = {
+  where: SurveyQuestionWhereUniqueInput
+};
+
+
+export type QuerySurveyQuestionsArgs = {
+  where?: Maybe<SurveyQuestionWhereInput>,
+  orderBy?: Maybe<SurveyQuestionOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QuerySurveyQuestionsConnectionArgs = {
+  where?: Maybe<SurveyQuestionWhereInput>,
+  orderBy?: Maybe<SurveyQuestionOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QuerySurveyQuestionResponseArgs = {
+  where: SurveyQuestionResponseWhereUniqueInput
+};
+
+
+export type QuerySurveyQuestionResponsesArgs = {
+  where?: Maybe<SurveyQuestionResponseWhereInput>,
+  orderBy?: Maybe<SurveyQuestionResponseOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QuerySurveyQuestionResponsesConnectionArgs = {
+  where?: Maybe<SurveyQuestionResponseWhereInput>,
+  orderBy?: Maybe<SurveyQuestionResponseOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID']
+};
+
+export type Subscription = {
+   __typename?: 'Subscription',
+  survey?: Maybe<SurveySubscriptionPayload>,
+  surveyQuestion?: Maybe<SurveyQuestionSubscriptionPayload>,
+  surveyQuestionResponse?: Maybe<SurveyQuestionResponseSubscriptionPayload>,
+};
+
+
+export type SubscriptionSurveyArgs = {
+  where?: Maybe<SurveySubscriptionWhereInput>
+};
+
+
+export type SubscriptionSurveyQuestionArgs = {
+  where?: Maybe<SurveyQuestionSubscriptionWhereInput>
+};
+
+
+export type SubscriptionSurveyQuestionResponseArgs = {
+  where?: Maybe<SurveyQuestionResponseSubscriptionWhereInput>
+};
+
+export type Survey = {
+   __typename?: 'Survey',
+  id: Scalars['ID'],
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  questions?: Maybe<Array<SurveyQuestion>>,
+  hoodId?: Maybe<Scalars['String']>,
+  createdAt: Scalars['DateTime'],
+  updatedAt: Scalars['DateTime'],
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted: Scalars['Int'],
+};
+
+
+export type SurveyQuestionsArgs = {
+  where?: Maybe<SurveyQuestionWhereInput>,
+  orderBy?: Maybe<SurveyQuestionOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+export type SurveyConnection = {
+   __typename?: 'SurveyConnection',
+  pageInfo: PageInfo,
+  edges: Array<Maybe<SurveyEdge>>,
+  aggregate: AggregateSurvey,
+};
+
+export type SurveyCreateInput = {
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  questions?: Maybe<SurveyQuestionCreateManyWithoutSurveyInput>,
+  hoodId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyCreateOneWithoutQuestionsInput = {
+  create?: Maybe<SurveyCreateWithoutQuestionsInput>,
+  connect?: Maybe<SurveyWhereUniqueInput>,
+};
+
+export type SurveyCreateWithoutQuestionsInput = {
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  hoodId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyEdge = {
+   __typename?: 'SurveyEdge',
+  node: Survey,
+  cursor: Scalars['String'],
+};
+
+export enum SurveyOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  DescriptionAsc = 'description_ASC',
+  DescriptionDesc = 'description_DESC',
+  EnabledAsc = 'enabled_ASC',
+  EnabledDesc = 'enabled_DESC',
+  IsAnonymousAsc = 'isAnonymous_ASC',
+  IsAnonymousDesc = 'isAnonymous_DESC',
+  HoodIdAsc = 'hoodId_ASC',
+  HoodIdDesc = 'hoodId_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  DeletedAtAsc = 'deletedAt_ASC',
+  DeletedAtDesc = 'deletedAt_DESC',
+  DeletedAsc = 'deleted_ASC',
+  DeletedDesc = 'deleted_DESC'
+}
+
+export type SurveyPreviousValues = {
+   __typename?: 'SurveyPreviousValues',
+  id: Scalars['ID'],
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  hoodId?: Maybe<Scalars['String']>,
+  createdAt: Scalars['DateTime'],
+  updatedAt: Scalars['DateTime'],
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted: Scalars['Int'],
+};
+
+export type SurveyQuestion = {
+   __typename?: 'SurveyQuestion',
+  id: Scalars['ID'],
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  responses?: Maybe<Array<SurveyQuestionResponse>>,
+  survey: Survey,
+  createdAt: Scalars['DateTime'],
+  updatedAt: Scalars['DateTime'],
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted: Scalars['Int'],
+};
+
+
+export type SurveyQuestionResponsesArgs = {
+  where?: Maybe<SurveyQuestionResponseWhereInput>,
+  orderBy?: Maybe<SurveyQuestionResponseOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+export type SurveyQuestionConnection = {
+   __typename?: 'SurveyQuestionConnection',
+  pageInfo: PageInfo,
+  edges: Array<Maybe<SurveyQuestionEdge>>,
+  aggregate: AggregateSurveyQuestion,
+};
+
+export type SurveyQuestionCreateInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  responses?: Maybe<SurveyQuestionResponseCreateManyWithoutQuestionInput>,
+  survey: SurveyCreateOneWithoutQuestionsInput,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionCreateManyWithoutSurveyInput = {
+  create?: Maybe<Array<SurveyQuestionCreateWithoutSurveyInput>>,
+  connect?: Maybe<Array<SurveyQuestionWhereUniqueInput>>,
+};
+
+export type SurveyQuestionCreateOneWithoutResponsesInput = {
+  create?: Maybe<SurveyQuestionCreateWithoutResponsesInput>,
+  connect?: Maybe<SurveyQuestionWhereUniqueInput>,
+};
+
+export type SurveyQuestionCreateWithoutResponsesInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  survey: SurveyCreateOneWithoutQuestionsInput,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionCreateWithoutSurveyInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  responses?: Maybe<SurveyQuestionResponseCreateManyWithoutQuestionInput>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionEdge = {
+   __typename?: 'SurveyQuestionEdge',
+  node: SurveyQuestion,
+  cursor: Scalars['String'],
+};
+
+export enum SurveyQuestionOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  TextAsc = 'text_ASC',
+  TextDesc = 'text_DESC',
+  OptionsAsc = 'options_ASC',
+  OptionsDesc = 'options_DESC',
+  AddCommentFieldAsc = 'addCommentField_ASC',
+  AddCommentFieldDesc = 'addCommentField_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  DeletedAtAsc = 'deletedAt_ASC',
+  DeletedAtDesc = 'deletedAt_DESC',
+  DeletedAsc = 'deleted_ASC',
+  DeletedDesc = 'deleted_DESC'
+}
+
+export type SurveyQuestionPreviousValues = {
+   __typename?: 'SurveyQuestionPreviousValues',
+  id: Scalars['ID'],
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  createdAt: Scalars['DateTime'],
+  updatedAt: Scalars['DateTime'],
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted: Scalars['Int'],
+};
+
+export type SurveyQuestionResponse = {
+   __typename?: 'SurveyQuestionResponse',
+  id: Scalars['ID'],
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  question: SurveyQuestion,
+  responderId?: Maybe<Scalars['String']>,
+  createdAt: Scalars['DateTime'],
+  updatedAt: Scalars['DateTime'],
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted: Scalars['Int'],
+};
+
+export type SurveyQuestionResponseConnection = {
+   __typename?: 'SurveyQuestionResponseConnection',
+  pageInfo: PageInfo,
+  edges: Array<Maybe<SurveyQuestionResponseEdge>>,
+  aggregate: AggregateSurveyQuestionResponse,
+};
+
+export type SurveyQuestionResponseCreateInput = {
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  question: SurveyQuestionCreateOneWithoutResponsesInput,
+  responderId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionResponseCreateManyWithoutQuestionInput = {
+  create?: Maybe<Array<SurveyQuestionResponseCreateWithoutQuestionInput>>,
+  connect?: Maybe<Array<SurveyQuestionResponseWhereUniqueInput>>,
+};
+
+export type SurveyQuestionResponseCreateWithoutQuestionInput = {
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  responderId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionResponseEdge = {
+   __typename?: 'SurveyQuestionResponseEdge',
+  node: SurveyQuestionResponse,
+  cursor: Scalars['String'],
+};
+
+export enum SurveyQuestionResponseOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC',
+  CommentAsc = 'comment_ASC',
+  CommentDesc = 'comment_DESC',
+  ResponderIdAsc = 'responderId_ASC',
+  ResponderIdDesc = 'responderId_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  DeletedAtAsc = 'deletedAt_ASC',
+  DeletedAtDesc = 'deletedAt_DESC',
+  DeletedAsc = 'deleted_ASC',
+  DeletedDesc = 'deleted_DESC'
+}
+
+export type SurveyQuestionResponsePreviousValues = {
+   __typename?: 'SurveyQuestionResponsePreviousValues',
+  id: Scalars['ID'],
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  responderId?: Maybe<Scalars['String']>,
+  createdAt: Scalars['DateTime'],
+  updatedAt: Scalars['DateTime'],
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted: Scalars['Int'],
+};
+
+export type SurveyQuestionResponseScalarWhereInput = {
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  value?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  comment_not?: Maybe<Scalars['String']>,
+  comment_in?: Maybe<Array<Scalars['String']>>,
+  comment_not_in?: Maybe<Array<Scalars['String']>>,
+  comment_lt?: Maybe<Scalars['String']>,
+  comment_lte?: Maybe<Scalars['String']>,
+  comment_gt?: Maybe<Scalars['String']>,
+  comment_gte?: Maybe<Scalars['String']>,
+  comment_contains?: Maybe<Scalars['String']>,
+  comment_not_contains?: Maybe<Scalars['String']>,
+  comment_starts_with?: Maybe<Scalars['String']>,
+  comment_not_starts_with?: Maybe<Scalars['String']>,
+  comment_ends_with?: Maybe<Scalars['String']>,
+  comment_not_ends_with?: Maybe<Scalars['String']>,
+  responderId?: Maybe<Scalars['String']>,
+  responderId_not?: Maybe<Scalars['String']>,
+  responderId_in?: Maybe<Array<Scalars['String']>>,
+  responderId_not_in?: Maybe<Array<Scalars['String']>>,
+  responderId_lt?: Maybe<Scalars['String']>,
+  responderId_lte?: Maybe<Scalars['String']>,
+  responderId_gt?: Maybe<Scalars['String']>,
+  responderId_gte?: Maybe<Scalars['String']>,
+  responderId_contains?: Maybe<Scalars['String']>,
+  responderId_not_contains?: Maybe<Scalars['String']>,
+  responderId_starts_with?: Maybe<Scalars['String']>,
+  responderId_not_starts_with?: Maybe<Scalars['String']>,
+  responderId_ends_with?: Maybe<Scalars['String']>,
+  responderId_not_ends_with?: Maybe<Scalars['String']>,
+  createdAt?: Maybe<Scalars['DateTime']>,
+  createdAt_not?: Maybe<Scalars['DateTime']>,
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_lt?: Maybe<Scalars['DateTime']>,
+  createdAt_lte?: Maybe<Scalars['DateTime']>,
+  createdAt_gt?: Maybe<Scalars['DateTime']>,
+  createdAt_gte?: Maybe<Scalars['DateTime']>,
+  updatedAt?: Maybe<Scalars['DateTime']>,
+  updatedAt_not?: Maybe<Scalars['DateTime']>,
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_lt?: Maybe<Scalars['DateTime']>,
+  updatedAt_lte?: Maybe<Scalars['DateTime']>,
+  updatedAt_gt?: Maybe<Scalars['DateTime']>,
+  updatedAt_gte?: Maybe<Scalars['DateTime']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deletedAt_not?: Maybe<Scalars['DateTime']>,
+  deletedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_lt?: Maybe<Scalars['DateTime']>,
+  deletedAt_lte?: Maybe<Scalars['DateTime']>,
+  deletedAt_gt?: Maybe<Scalars['DateTime']>,
+  deletedAt_gte?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+  deleted_not?: Maybe<Scalars['Int']>,
+  deleted_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_not_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_lt?: Maybe<Scalars['Int']>,
+  deleted_lte?: Maybe<Scalars['Int']>,
+  deleted_gt?: Maybe<Scalars['Int']>,
+  deleted_gte?: Maybe<Scalars['Int']>,
+  AND?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
+  OR?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
+  NOT?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
+};
+
+export type SurveyQuestionResponseSubscriptionPayload = {
+   __typename?: 'SurveyQuestionResponseSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<SurveyQuestionResponse>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+  previousValues?: Maybe<SurveyQuestionResponsePreviousValues>,
+};
+
+export type SurveyQuestionResponseSubscriptionWhereInput = {
+  mutation_in?: Maybe<Array<MutationType>>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+  node?: Maybe<SurveyQuestionResponseWhereInput>,
+  AND?: Maybe<Array<SurveyQuestionResponseSubscriptionWhereInput>>,
+  OR?: Maybe<Array<SurveyQuestionResponseSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<SurveyQuestionResponseSubscriptionWhereInput>>,
+};
+
+export type SurveyQuestionResponseUpdateInput = {
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  question?: Maybe<SurveyQuestionUpdateOneRequiredWithoutResponsesInput>,
+  responderId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionResponseUpdateManyDataInput = {
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  responderId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionResponseUpdateManyMutationInput = {
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  responderId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionResponseUpdateManyWithoutQuestionInput = {
+  create?: Maybe<Array<SurveyQuestionResponseCreateWithoutQuestionInput>>,
+  delete?: Maybe<Array<SurveyQuestionResponseWhereUniqueInput>>,
+  connect?: Maybe<Array<SurveyQuestionResponseWhereUniqueInput>>,
+  set?: Maybe<Array<SurveyQuestionResponseWhereUniqueInput>>,
+  disconnect?: Maybe<Array<SurveyQuestionResponseWhereUniqueInput>>,
+  update?: Maybe<Array<SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput>>,
+  upsert?: Maybe<Array<SurveyQuestionResponseUpsertWithWhereUniqueWithoutQuestionInput>>,
+  deleteMany?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
+  updateMany?: Maybe<Array<SurveyQuestionResponseUpdateManyWithWhereNestedInput>>,
+};
+
+export type SurveyQuestionResponseUpdateManyWithWhereNestedInput = {
+  where: SurveyQuestionResponseScalarWhereInput,
+  data: SurveyQuestionResponseUpdateManyDataInput,
+};
+
+export type SurveyQuestionResponseUpdateWithoutQuestionDataInput = {
+  value?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  responderId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput = {
+  where: SurveyQuestionResponseWhereUniqueInput,
+  data: SurveyQuestionResponseUpdateWithoutQuestionDataInput,
+};
+
+export type SurveyQuestionResponseUpsertWithWhereUniqueWithoutQuestionInput = {
+  where: SurveyQuestionResponseWhereUniqueInput,
+  update: SurveyQuestionResponseUpdateWithoutQuestionDataInput,
+  create: SurveyQuestionResponseCreateWithoutQuestionInput,
+};
+
+export type SurveyQuestionResponseWhereInput = {
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  value?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  comment?: Maybe<Scalars['String']>,
+  comment_not?: Maybe<Scalars['String']>,
+  comment_in?: Maybe<Array<Scalars['String']>>,
+  comment_not_in?: Maybe<Array<Scalars['String']>>,
+  comment_lt?: Maybe<Scalars['String']>,
+  comment_lte?: Maybe<Scalars['String']>,
+  comment_gt?: Maybe<Scalars['String']>,
+  comment_gte?: Maybe<Scalars['String']>,
+  comment_contains?: Maybe<Scalars['String']>,
+  comment_not_contains?: Maybe<Scalars['String']>,
+  comment_starts_with?: Maybe<Scalars['String']>,
+  comment_not_starts_with?: Maybe<Scalars['String']>,
+  comment_ends_with?: Maybe<Scalars['String']>,
+  comment_not_ends_with?: Maybe<Scalars['String']>,
+  question?: Maybe<SurveyQuestionWhereInput>,
+  responderId?: Maybe<Scalars['String']>,
+  responderId_not?: Maybe<Scalars['String']>,
+  responderId_in?: Maybe<Array<Scalars['String']>>,
+  responderId_not_in?: Maybe<Array<Scalars['String']>>,
+  responderId_lt?: Maybe<Scalars['String']>,
+  responderId_lte?: Maybe<Scalars['String']>,
+  responderId_gt?: Maybe<Scalars['String']>,
+  responderId_gte?: Maybe<Scalars['String']>,
+  responderId_contains?: Maybe<Scalars['String']>,
+  responderId_not_contains?: Maybe<Scalars['String']>,
+  responderId_starts_with?: Maybe<Scalars['String']>,
+  responderId_not_starts_with?: Maybe<Scalars['String']>,
+  responderId_ends_with?: Maybe<Scalars['String']>,
+  responderId_not_ends_with?: Maybe<Scalars['String']>,
+  createdAt?: Maybe<Scalars['DateTime']>,
+  createdAt_not?: Maybe<Scalars['DateTime']>,
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_lt?: Maybe<Scalars['DateTime']>,
+  createdAt_lte?: Maybe<Scalars['DateTime']>,
+  createdAt_gt?: Maybe<Scalars['DateTime']>,
+  createdAt_gte?: Maybe<Scalars['DateTime']>,
+  updatedAt?: Maybe<Scalars['DateTime']>,
+  updatedAt_not?: Maybe<Scalars['DateTime']>,
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_lt?: Maybe<Scalars['DateTime']>,
+  updatedAt_lte?: Maybe<Scalars['DateTime']>,
+  updatedAt_gt?: Maybe<Scalars['DateTime']>,
+  updatedAt_gte?: Maybe<Scalars['DateTime']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deletedAt_not?: Maybe<Scalars['DateTime']>,
+  deletedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_lt?: Maybe<Scalars['DateTime']>,
+  deletedAt_lte?: Maybe<Scalars['DateTime']>,
+  deletedAt_gt?: Maybe<Scalars['DateTime']>,
+  deletedAt_gte?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+  deleted_not?: Maybe<Scalars['Int']>,
+  deleted_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_not_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_lt?: Maybe<Scalars['Int']>,
+  deleted_lte?: Maybe<Scalars['Int']>,
+  deleted_gt?: Maybe<Scalars['Int']>,
+  deleted_gte?: Maybe<Scalars['Int']>,
+  AND?: Maybe<Array<SurveyQuestionResponseWhereInput>>,
+  OR?: Maybe<Array<SurveyQuestionResponseWhereInput>>,
+  NOT?: Maybe<Array<SurveyQuestionResponseWhereInput>>,
+};
+
+export type SurveyQuestionResponseWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type SurveyQuestionScalarWhereInput = {
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  text?: Maybe<Scalars['String']>,
+  text_not?: Maybe<Scalars['String']>,
+  text_in?: Maybe<Array<Scalars['String']>>,
+  text_not_in?: Maybe<Array<Scalars['String']>>,
+  text_lt?: Maybe<Scalars['String']>,
+  text_lte?: Maybe<Scalars['String']>,
+  text_gt?: Maybe<Scalars['String']>,
+  text_gte?: Maybe<Scalars['String']>,
+  text_contains?: Maybe<Scalars['String']>,
+  text_not_contains?: Maybe<Scalars['String']>,
+  text_starts_with?: Maybe<Scalars['String']>,
+  text_not_starts_with?: Maybe<Scalars['String']>,
+  text_ends_with?: Maybe<Scalars['String']>,
+  text_not_ends_with?: Maybe<Scalars['String']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  addCommentField_not?: Maybe<Scalars['Boolean']>,
+  createdAt?: Maybe<Scalars['DateTime']>,
+  createdAt_not?: Maybe<Scalars['DateTime']>,
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_lt?: Maybe<Scalars['DateTime']>,
+  createdAt_lte?: Maybe<Scalars['DateTime']>,
+  createdAt_gt?: Maybe<Scalars['DateTime']>,
+  createdAt_gte?: Maybe<Scalars['DateTime']>,
+  updatedAt?: Maybe<Scalars['DateTime']>,
+  updatedAt_not?: Maybe<Scalars['DateTime']>,
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_lt?: Maybe<Scalars['DateTime']>,
+  updatedAt_lte?: Maybe<Scalars['DateTime']>,
+  updatedAt_gt?: Maybe<Scalars['DateTime']>,
+  updatedAt_gte?: Maybe<Scalars['DateTime']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deletedAt_not?: Maybe<Scalars['DateTime']>,
+  deletedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_lt?: Maybe<Scalars['DateTime']>,
+  deletedAt_lte?: Maybe<Scalars['DateTime']>,
+  deletedAt_gt?: Maybe<Scalars['DateTime']>,
+  deletedAt_gte?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+  deleted_not?: Maybe<Scalars['Int']>,
+  deleted_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_not_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_lt?: Maybe<Scalars['Int']>,
+  deleted_lte?: Maybe<Scalars['Int']>,
+  deleted_gt?: Maybe<Scalars['Int']>,
+  deleted_gte?: Maybe<Scalars['Int']>,
+  AND?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
+  OR?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
+  NOT?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
+};
+
+export type SurveyQuestionSubscriptionPayload = {
+   __typename?: 'SurveyQuestionSubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<SurveyQuestion>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+  previousValues?: Maybe<SurveyQuestionPreviousValues>,
+};
+
+export type SurveyQuestionSubscriptionWhereInput = {
+  mutation_in?: Maybe<Array<MutationType>>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+  node?: Maybe<SurveyQuestionWhereInput>,
+  AND?: Maybe<Array<SurveyQuestionSubscriptionWhereInput>>,
+  OR?: Maybe<Array<SurveyQuestionSubscriptionWhereInput>>,
+  NOT?: Maybe<Array<SurveyQuestionSubscriptionWhereInput>>,
+};
+
+export type SurveyQuestionUpdateInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  responses?: Maybe<SurveyQuestionResponseUpdateManyWithoutQuestionInput>,
+  survey?: Maybe<SurveyUpdateOneRequiredWithoutQuestionsInput>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionUpdateManyDataInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionUpdateManyMutationInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionUpdateManyWithoutSurveyInput = {
+  create?: Maybe<Array<SurveyQuestionCreateWithoutSurveyInput>>,
+  delete?: Maybe<Array<SurveyQuestionWhereUniqueInput>>,
+  connect?: Maybe<Array<SurveyQuestionWhereUniqueInput>>,
+  set?: Maybe<Array<SurveyQuestionWhereUniqueInput>>,
+  disconnect?: Maybe<Array<SurveyQuestionWhereUniqueInput>>,
+  update?: Maybe<Array<SurveyQuestionUpdateWithWhereUniqueWithoutSurveyInput>>,
+  upsert?: Maybe<Array<SurveyQuestionUpsertWithWhereUniqueWithoutSurveyInput>>,
+  deleteMany?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
+  updateMany?: Maybe<Array<SurveyQuestionUpdateManyWithWhereNestedInput>>,
+};
+
+export type SurveyQuestionUpdateManyWithWhereNestedInput = {
+  where: SurveyQuestionScalarWhereInput,
+  data: SurveyQuestionUpdateManyDataInput,
+};
+
+export type SurveyQuestionUpdateOneRequiredWithoutResponsesInput = {
+  create?: Maybe<SurveyQuestionCreateWithoutResponsesInput>,
+  update?: Maybe<SurveyQuestionUpdateWithoutResponsesDataInput>,
+  upsert?: Maybe<SurveyQuestionUpsertWithoutResponsesInput>,
+  connect?: Maybe<SurveyQuestionWhereUniqueInput>,
+};
+
+export type SurveyQuestionUpdateWithoutResponsesDataInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  survey?: Maybe<SurveyUpdateOneRequiredWithoutQuestionsInput>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionUpdateWithoutSurveyDataInput = {
+  text?: Maybe<Scalars['String']>,
+  options?: Maybe<Scalars['Json']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  responses?: Maybe<SurveyQuestionResponseUpdateManyWithoutQuestionInput>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyQuestionUpdateWithWhereUniqueWithoutSurveyInput = {
+  where: SurveyQuestionWhereUniqueInput,
+  data: SurveyQuestionUpdateWithoutSurveyDataInput,
+};
+
+export type SurveyQuestionUpsertWithoutResponsesInput = {
+  update: SurveyQuestionUpdateWithoutResponsesDataInput,
+  create: SurveyQuestionCreateWithoutResponsesInput,
+};
+
+export type SurveyQuestionUpsertWithWhereUniqueWithoutSurveyInput = {
+  where: SurveyQuestionWhereUniqueInput,
+  update: SurveyQuestionUpdateWithoutSurveyDataInput,
+  create: SurveyQuestionCreateWithoutSurveyInput,
+};
+
+export type SurveyQuestionWhereInput = {
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  text?: Maybe<Scalars['String']>,
+  text_not?: Maybe<Scalars['String']>,
+  text_in?: Maybe<Array<Scalars['String']>>,
+  text_not_in?: Maybe<Array<Scalars['String']>>,
+  text_lt?: Maybe<Scalars['String']>,
+  text_lte?: Maybe<Scalars['String']>,
+  text_gt?: Maybe<Scalars['String']>,
+  text_gte?: Maybe<Scalars['String']>,
+  text_contains?: Maybe<Scalars['String']>,
+  text_not_contains?: Maybe<Scalars['String']>,
+  text_starts_with?: Maybe<Scalars['String']>,
+  text_not_starts_with?: Maybe<Scalars['String']>,
+  text_ends_with?: Maybe<Scalars['String']>,
+  text_not_ends_with?: Maybe<Scalars['String']>,
+  addCommentField?: Maybe<Scalars['Boolean']>,
+  addCommentField_not?: Maybe<Scalars['Boolean']>,
+  responses_every?: Maybe<SurveyQuestionResponseWhereInput>,
+  responses_some?: Maybe<SurveyQuestionResponseWhereInput>,
+  responses_none?: Maybe<SurveyQuestionResponseWhereInput>,
+  survey?: Maybe<SurveyWhereInput>,
+  createdAt?: Maybe<Scalars['DateTime']>,
+  createdAt_not?: Maybe<Scalars['DateTime']>,
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_lt?: Maybe<Scalars['DateTime']>,
+  createdAt_lte?: Maybe<Scalars['DateTime']>,
+  createdAt_gt?: Maybe<Scalars['DateTime']>,
+  createdAt_gte?: Maybe<Scalars['DateTime']>,
+  updatedAt?: Maybe<Scalars['DateTime']>,
+  updatedAt_not?: Maybe<Scalars['DateTime']>,
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_lt?: Maybe<Scalars['DateTime']>,
+  updatedAt_lte?: Maybe<Scalars['DateTime']>,
+  updatedAt_gt?: Maybe<Scalars['DateTime']>,
+  updatedAt_gte?: Maybe<Scalars['DateTime']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deletedAt_not?: Maybe<Scalars['DateTime']>,
+  deletedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_lt?: Maybe<Scalars['DateTime']>,
+  deletedAt_lte?: Maybe<Scalars['DateTime']>,
+  deletedAt_gt?: Maybe<Scalars['DateTime']>,
+  deletedAt_gte?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+  deleted_not?: Maybe<Scalars['Int']>,
+  deleted_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_not_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_lt?: Maybe<Scalars['Int']>,
+  deleted_lte?: Maybe<Scalars['Int']>,
+  deleted_gt?: Maybe<Scalars['Int']>,
+  deleted_gte?: Maybe<Scalars['Int']>,
+  AND?: Maybe<Array<SurveyQuestionWhereInput>>,
+  OR?: Maybe<Array<SurveyQuestionWhereInput>>,
+  NOT?: Maybe<Array<SurveyQuestionWhereInput>>,
+};
+
+export type SurveyQuestionWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+};
+
+export type SurveySubscriptionPayload = {
+   __typename?: 'SurveySubscriptionPayload',
+  mutation: MutationType,
+  node?: Maybe<Survey>,
+  updatedFields?: Maybe<Array<Scalars['String']>>,
+  previousValues?: Maybe<SurveyPreviousValues>,
+};
+
+export type SurveySubscriptionWhereInput = {
+  mutation_in?: Maybe<Array<MutationType>>,
+  updatedFields_contains?: Maybe<Scalars['String']>,
+  updatedFields_contains_every?: Maybe<Array<Scalars['String']>>,
+  updatedFields_contains_some?: Maybe<Array<Scalars['String']>>,
+  node?: Maybe<SurveyWhereInput>,
+  AND?: Maybe<Array<SurveySubscriptionWhereInput>>,
+  OR?: Maybe<Array<SurveySubscriptionWhereInput>>,
+  NOT?: Maybe<Array<SurveySubscriptionWhereInput>>,
+};
+
+export type SurveyUpdateInput = {
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  questions?: Maybe<SurveyQuestionUpdateManyWithoutSurveyInput>,
+  hoodId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyUpdateManyMutationInput = {
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  hoodId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyUpdateOneRequiredWithoutQuestionsInput = {
+  create?: Maybe<SurveyCreateWithoutQuestionsInput>,
+  update?: Maybe<SurveyUpdateWithoutQuestionsDataInput>,
+  upsert?: Maybe<SurveyUpsertWithoutQuestionsInput>,
+  connect?: Maybe<SurveyWhereUniqueInput>,
+};
+
+export type SurveyUpdateWithoutQuestionsDataInput = {
+  name?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  hoodId?: Maybe<Scalars['String']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+};
+
+export type SurveyUpsertWithoutQuestionsInput = {
+  update: SurveyUpdateWithoutQuestionsDataInput,
+  create: SurveyCreateWithoutQuestionsInput,
+};
+
+export type SurveyWhereInput = {
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  name?: Maybe<Scalars['String']>,
+  name_not?: Maybe<Scalars['String']>,
+  name_in?: Maybe<Array<Scalars['String']>>,
+  name_not_in?: Maybe<Array<Scalars['String']>>,
+  name_lt?: Maybe<Scalars['String']>,
+  name_lte?: Maybe<Scalars['String']>,
+  name_gt?: Maybe<Scalars['String']>,
+  name_gte?: Maybe<Scalars['String']>,
+  name_contains?: Maybe<Scalars['String']>,
+  name_not_contains?: Maybe<Scalars['String']>,
+  name_starts_with?: Maybe<Scalars['String']>,
+  name_not_starts_with?: Maybe<Scalars['String']>,
+  name_ends_with?: Maybe<Scalars['String']>,
+  name_not_ends_with?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  title_not?: Maybe<Scalars['String']>,
+  title_in?: Maybe<Array<Scalars['String']>>,
+  title_not_in?: Maybe<Array<Scalars['String']>>,
+  title_lt?: Maybe<Scalars['String']>,
+  title_lte?: Maybe<Scalars['String']>,
+  title_gt?: Maybe<Scalars['String']>,
+  title_gte?: Maybe<Scalars['String']>,
+  title_contains?: Maybe<Scalars['String']>,
+  title_not_contains?: Maybe<Scalars['String']>,
+  title_starts_with?: Maybe<Scalars['String']>,
+  title_not_starts_with?: Maybe<Scalars['String']>,
+  title_ends_with?: Maybe<Scalars['String']>,
+  title_not_ends_with?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+  description_not?: Maybe<Scalars['String']>,
+  description_in?: Maybe<Array<Scalars['String']>>,
+  description_not_in?: Maybe<Array<Scalars['String']>>,
+  description_lt?: Maybe<Scalars['String']>,
+  description_lte?: Maybe<Scalars['String']>,
+  description_gt?: Maybe<Scalars['String']>,
+  description_gte?: Maybe<Scalars['String']>,
+  description_contains?: Maybe<Scalars['String']>,
+  description_not_contains?: Maybe<Scalars['String']>,
+  description_starts_with?: Maybe<Scalars['String']>,
+  description_not_starts_with?: Maybe<Scalars['String']>,
+  description_ends_with?: Maybe<Scalars['String']>,
+  description_not_ends_with?: Maybe<Scalars['String']>,
+  enabled?: Maybe<Scalars['Boolean']>,
+  enabled_not?: Maybe<Scalars['Boolean']>,
+  isAnonymous?: Maybe<Scalars['Boolean']>,
+  isAnonymous_not?: Maybe<Scalars['Boolean']>,
+  questions_every?: Maybe<SurveyQuestionWhereInput>,
+  questions_some?: Maybe<SurveyQuestionWhereInput>,
+  questions_none?: Maybe<SurveyQuestionWhereInput>,
+  hoodId?: Maybe<Scalars['String']>,
+  hoodId_not?: Maybe<Scalars['String']>,
+  hoodId_in?: Maybe<Array<Scalars['String']>>,
+  hoodId_not_in?: Maybe<Array<Scalars['String']>>,
+  hoodId_lt?: Maybe<Scalars['String']>,
+  hoodId_lte?: Maybe<Scalars['String']>,
+  hoodId_gt?: Maybe<Scalars['String']>,
+  hoodId_gte?: Maybe<Scalars['String']>,
+  hoodId_contains?: Maybe<Scalars['String']>,
+  hoodId_not_contains?: Maybe<Scalars['String']>,
+  hoodId_starts_with?: Maybe<Scalars['String']>,
+  hoodId_not_starts_with?: Maybe<Scalars['String']>,
+  hoodId_ends_with?: Maybe<Scalars['String']>,
+  hoodId_not_ends_with?: Maybe<Scalars['String']>,
+  createdAt?: Maybe<Scalars['DateTime']>,
+  createdAt_not?: Maybe<Scalars['DateTime']>,
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_lt?: Maybe<Scalars['DateTime']>,
+  createdAt_lte?: Maybe<Scalars['DateTime']>,
+  createdAt_gt?: Maybe<Scalars['DateTime']>,
+  createdAt_gte?: Maybe<Scalars['DateTime']>,
+  updatedAt?: Maybe<Scalars['DateTime']>,
+  updatedAt_not?: Maybe<Scalars['DateTime']>,
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_lt?: Maybe<Scalars['DateTime']>,
+  updatedAt_lte?: Maybe<Scalars['DateTime']>,
+  updatedAt_gt?: Maybe<Scalars['DateTime']>,
+  updatedAt_gte?: Maybe<Scalars['DateTime']>,
+  deletedAt?: Maybe<Scalars['DateTime']>,
+  deletedAt_not?: Maybe<Scalars['DateTime']>,
+  deletedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  deletedAt_lt?: Maybe<Scalars['DateTime']>,
+  deletedAt_lte?: Maybe<Scalars['DateTime']>,
+  deletedAt_gt?: Maybe<Scalars['DateTime']>,
+  deletedAt_gte?: Maybe<Scalars['DateTime']>,
+  deleted?: Maybe<Scalars['Int']>,
+  deleted_not?: Maybe<Scalars['Int']>,
+  deleted_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_not_in?: Maybe<Array<Scalars['Int']>>,
+  deleted_lt?: Maybe<Scalars['Int']>,
+  deleted_lte?: Maybe<Scalars['Int']>,
+  deleted_gt?: Maybe<Scalars['Int']>,
+  deleted_gte?: Maybe<Scalars['Int']>,
+  AND?: Maybe<Array<SurveyWhereInput>>,
+  OR?: Maybe<Array<SurveyWhereInput>>,
+  NOT?: Maybe<Array<SurveyWhereInput>>,
+};
+
+export type SurveyWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>,
+  name?: Maybe<Scalars['String']>,
+};
+"
+`;

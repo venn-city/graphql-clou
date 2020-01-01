@@ -11,6 +11,7 @@
     "db_port": 5432
   },
   "scripts": {
+    "lint": "echo",
     "preinstall": "node ./scripts/verifyNodeVersion.js",
     "commit": "git-cz",
     "exec-changed": "./scripts/executeOnChanged.js",

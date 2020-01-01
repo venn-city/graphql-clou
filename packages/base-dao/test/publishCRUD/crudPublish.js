@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const eventPubSub = require('@venncity/event-pubsub');
 const _ = require('lodash');
 
