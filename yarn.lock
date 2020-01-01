@@ -1690,6 +1690,13 @@
   dependencies:
     aws-sdk "^2.493.0"
 
+"@venncity/aws-ssm@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@venncity/aws-ssm/-/aws-ssm-1.3.2.tgz#4b601bb2d5c6035cf5fc78f9c50182ff853695cb"
+  integrity sha512-8/BJqwsCOS7uk+yUOxy//TPY/Swx9gPdJk+NCms7GeoTUVC8j5/xtmJGQQ2NFtWFqHk3uTm2mYIm/Ayzq4HBgQ==
+  dependencies:
+    aws-sdk "^2.493.0"
+
 "@venncity/base-lambda@1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@venncity/base-lambda/-/base-lambda-1.1.3.tgz#4d4bbc8151c6a6fc85265e41aa0efd55b9fdfd0d"
