@@ -6,7 +6,9 @@ const cwd = path.resolve(__dirname);
 
 describe('generateDAOSchema', () => {
   test('generate files should be match to snapshots', async () => {
-    await generateDAOSchema('./fixtures/datamodel.graphql', 'generated', {
+    await generateDAOSchema({
+      dataModelPath: './fixtures/datamodel.graphql',
+      generatedFolderPath: 'generated',
       cwd
     });
     const fileNames = fs.readdirSync(path.resolve(cwd, './generated'));

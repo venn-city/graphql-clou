@@ -4,13 +4,11 @@ const generateDAOClasses = require('./generateDAOClasses');
 const generateOpenCrudSchema = require('./generateOpenCrudSchema');
 const generateIndex = require('./generateIndex');
 
-async function generateDAOSchema(dataModelPath, generatedFolderPath, { cwd = process.cwd() } = {}) {
-  if (!dataModelPath) {
-    throw new Error('dataModelPath is required');
-  }
-  if (!generatedFolderPath) {
-    throw new Error('generatedFolderPath is required');
-  }
+async function generateDAOSchema({
+  dataModelPath = 'src/schema/datamodel.graphql',
+  generatedFolderPath = 'src/schema/generated',
+  cwd = process.cwd()
+} = {}) {
   const absoluteGeneratedFolderPath = path.resolve(cwd, generatedFolderPath);
   const absoluteDataModelPath = path.resolve(cwd, dataModelPath);
   const dataModel = fs.readFileSync(absoluteDataModelPath, 'utf8');
