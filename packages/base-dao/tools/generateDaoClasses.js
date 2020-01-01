@@ -5,7 +5,7 @@ const ejs = require('ejs');
 const path = require('path');
 
 function generateDaoClass(entityName) {
-  return ejs.renderFile(path.resolve(__dirname, 'templates/DaoClass.ejs'), {
+  return ejs.renderFile(path.resolve(__dirname, 'templates/daoClass.ejs'), {
     entityNameLowerFirstLetter: lowerFirst(entityName),
     entityNameUpperFirstLetter: upperFirst(entityName),
     entitiesNameLowerFirstLetter: lowerFirst(pluralize(entityName)),
