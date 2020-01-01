@@ -1,10 +1,6 @@
 const crypto = require('crypto');
 const { isEmpty, isArray, every, isUndefined, get } = require('lodash');
 const config = require('@venncity/nested-config')(__dirname);
-const { getParameterFromSSM } = require('@venncity/aws-ssm');
-
-const stage = config.get('service.stage');
-const encryptionKeyPath = `/${stage}/utils/encryption/ENCRYPTION_KEY`;
 
 const encryptionAlgorithm = config.get('encryption.algorithm');
 const inputEncoding = config.get('encryption.inputEncoding');
@@ -38,24 +34,22 @@ function isFalse(valueToCheck) {
   return !isTrue(valueToCheck);
 }
 
-async function encrypt(data) {
-  const encryptionKey = await getParameterFromSSM(encryptionKeyPath);
+function encrypt(data, encryptionKey) {
   const iv = crypto.randomBytes(IV_LENGTH);
-  const cipher = crypto.createCipheriv(encryptionAlgorithm, Buffer.from(JSON.parse(encryptionKey)), iv);
+  const cipher = crypto.createCipheriv(encryptionAlgorithm, Buffer.from(encryptionKey), iv);
   let encryptedData = cipher.update(data, inputEncoding, outputEncoding);
   encryptedData += cipher.final(outputEncoding);
   const authTag = cipher.getAuthTag();
   return `${iv.toString(outputEncoding)}${encryptedData}${authTag.toString(outputEncoding)}`;
 }
 
-async function decrypt(data) {
-  const encryptionKey = await getParameterFromSSM(encryptionKeyPath);
+function decrypt(data, encryptionKey) {
   const dataBuffer = Buffer.from(data, outputEncoding);
   const dataLength = dataBuffer.length;
   const iv = dataBuffer.slice(0, IV_LENGTH);
   const encryptedData = dataBuffer.slice(IV_LENGTH, dataLength - IV_LENGTH);
   const authTag = dataBuffer.slice(dataLength - IV_LENGTH, dataLength);
-  const decipher = crypto.createDecipheriv(encryptionAlgorithm, Buffer.from(JSON.parse(encryptionKey)), iv);
+  const decipher = crypto.createDecipheriv(encryptionAlgorithm, Buffer.from(encryptionKey), iv);
   decipher.setAuthTag(authTag);
   const decrypted = decipher.update(encryptedData, outputEncoding, inputEncoding);
   return decrypted;
