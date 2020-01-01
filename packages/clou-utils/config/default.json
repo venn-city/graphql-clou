@@ -4,5 +4,7 @@
     "inputEncoding": "utf8",
     "outputEncoding":  "hex"
   },
-  "stage": "test"
+  "service" : {
+    "stage": "test"
+  }
 }

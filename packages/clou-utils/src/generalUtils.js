@@ -3,7 +3,7 @@ const { isEmpty, isArray, every, isUndefined, get } = require('lodash');
 const config = require('@venncity/nested-config')(__dirname);
 const { getParameterFromSSM } = require('@venncity/aws-ssm');
 
-const stage = config.get('stage');
+const stage = config.get('service.stage');
 const encryptionKeyPath = `/${stage}/utils/encryption/ENCRYPTION_KEY`;
 
 const encryptionAlgorithm = config.get('encryption.algorithm');
