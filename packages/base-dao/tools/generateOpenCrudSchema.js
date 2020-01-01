@@ -3,7 +3,7 @@ const { plugin } = require('@graphql-codegen/typescript');
 const { codegen } = require('@graphql-codegen/core');
 const { printSchema, parse } = require('graphql');
 
-async function generateOpenCrudSchema(dataModel) {
+function generateOpenCrudSchema(dataModel) {
   const openCRUDSchema = prismaGenerateSchema.generateCRUDSchema(dataModel, 'postgres');
 
   return codegen({
