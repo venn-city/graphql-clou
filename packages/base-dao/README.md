@@ -32,11 +32,7 @@ Example of usage (assume that Survey entity exists)
 ```ts
 import { SurveyDAO } from '../../generated';
 
-const surveyDAO = new SurveyDAO({
-    hooks,
-    daoAuth,
-    publishCrudEvent
-});
+const surveyDAO = new SurveyDAO(baseDAO);
 ...
 const createdSurvey = await surveyDAO.createSurvey(...);
 ```
