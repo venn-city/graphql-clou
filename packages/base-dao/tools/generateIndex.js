@@ -1,13 +1,10 @@
-const { upperFirst } = require('lodash');
-const dedent = require('dedent');
+const ejs = require('ejs');
+const path = require('path');
 
-function generateIndex(daoClassNames = []) {
-  const index = daoClassNames.reduce((prev, className) => {
-    const classNameUpperFirstLetter = upperFirst(className);
-    return `${prev}
-    export { default as ${classNameUpperFirstLetter}DAO } from './${className}';`;
-  }, `export * from './openCrudSchema';`);
-  return dedent(index);
+function generateIndex(daoClassNames) {
+  return ejs.renderFile(path.resolve(__dirname, 'templates/index.ejs'), {
+    daoClassNames
+  });
 }
 
 module.exports = generateIndex;

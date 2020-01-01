@@ -1,12 +1,12 @@
 const path = require('path');
 const fs = require('fs-extra');
-const generateDAOSchema = require('./generateDAOSchema');
+const generateDaoSchema = require('./generateDaoSchema');
 
 const cwd = path.resolve(__dirname);
 
 describe('generateDAOSchema', () => {
   test('generate files should be match to snapshots', async () => {
-    await generateDAOSchema({
+    await generateDaoSchema({
       dataModelPath: './fixtures/datamodel.graphql',
       generatedFolderPath: 'generated',
       cwd

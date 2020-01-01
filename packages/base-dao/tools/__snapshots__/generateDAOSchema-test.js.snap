@@ -1,13 +1,179 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generateDAOSchema generate files should be match to snapshots 1`] = `
-"export * from './openCrudSchema';
-export { default as SurveyDAO } from './survey';
-export { default as SurveyQuestionDAO } from './surveyQuestion';
-export { default as SurveyQuestionResponseDAO } from './surveyQuestionResponse';"
+"import * as openCrudSchema from './openCrudSchema';
+
+export default class SurveyDAO {
+  static ENTITY_NAME = 'survey';
+
+  private readonly baseDAO: any;
+
+  constructor(baseDAO: any) {
+    this.baseDAO = baseDAO;
+  }
+
+  survey(context: any, where: openCrudSchema.QuerySurveyArgs['where']): Promise<openCrudSchema.Query['survey']> {
+    return this.baseDAO.survey(context, where);
+  }
+
+  surveyById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['survey']> {
+    return this.baseDAO.surveyById(context, id);
+  }
+
+  surveys(context: any, args: openCrudSchema.QuerySurveysArgs): Promise<openCrudSchema.Query['surveys']> {
+    return this.baseDAO.surveys(context, args);
+  }
+
+  surveysByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveys']> {
+    return this.baseDAO.surveysByIds(context, ids);
+  }
+
+  createSurvey(context: any, data: openCrudSchema.MutationCreateSurveyArgs['data']): Promise<openCrudSchema.Mutation['createSurvey']> {
+    return this.baseDAO.createSurvey(context, data);
+  }
+
+  updateSurvey(context: any, args: openCrudSchema.MutationUpdateSurveyArgs): Promise<openCrudSchema.Mutation['updateSurvey']> {
+    return this.baseDAO.updateSurvey(context, args);
+  }
+
+  updateManySurveys(context: any, args: openCrudSchema.MutationUpdateManySurveysArgs): Promise<openCrudSchema.Mutation['updateManySurveys']> {
+    return this.baseDAO.updateManySurveys(context, args);
+  }
+
+  deleteSurvey(context: any, where: openCrudSchema.MutationDeleteSurveyArgs['where']): Promise<openCrudSchema.Mutation['deleteSurvey']> {
+    return this.baseDAO.deleteSurvey(context, where);
+  }
+
+  deleteManySurveys(context: any, where: openCrudSchema.MutationDeleteManySurveysArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveys']> {
+    return this.baseDAO.deleteManySurveys(context, where);
+  }
+
+  surveyConnection(parent: any, args: openCrudSchema.QuerySurveysConnectionArgs, context: any): Promise<openCrudSchema.Query['surveysConnection']> {
+    return this.baseDAO.surveyConnection(parent, args, context);
+  }
+}
+"
 `;
 
 exports[`generateDAOSchema generate files should be match to snapshots 2`] = `
+"import * as openCrudSchema from './openCrudSchema';
+
+export default class SurveyQuestionDAO {
+  static ENTITY_NAME = 'surveyQuestion';
+
+  private readonly baseDAO: any;
+
+  constructor(baseDAO: any) {
+    this.baseDAO = baseDAO;
+  }
+
+  surveyQuestion(context: any, where: openCrudSchema.QuerySurveyQuestionArgs['where']): Promise<openCrudSchema.Query['surveyQuestion']> {
+    return this.baseDAO.surveyQuestion(context, where);
+  }
+
+  surveyQuestionById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['surveyQuestion']> {
+    return this.baseDAO.surveyQuestionById(context, id);
+  }
+
+  surveyQuestions(context: any, args: openCrudSchema.QuerySurveyQuestionsArgs): Promise<openCrudSchema.Query['surveyQuestions']> {
+    return this.baseDAO.surveyQuestions(context, args);
+  }
+
+  surveyQuestionsByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveyQuestions']> {
+    return this.baseDAO.surveyQuestionsByIds(context, ids);
+  }
+
+  createSurveyQuestion(context: any, data: openCrudSchema.MutationCreateSurveyQuestionArgs['data']): Promise<openCrudSchema.Mutation['createSurveyQuestion']> {
+    return this.baseDAO.createSurveyQuestion(context, data);
+  }
+
+  updateSurveyQuestion(context: any, args: openCrudSchema.MutationUpdateSurveyQuestionArgs): Promise<openCrudSchema.Mutation['updateSurveyQuestion']> {
+    return this.baseDAO.updateSurveyQuestion(context, args);
+  }
+
+  updateManySurveyQuestions(context: any, args: openCrudSchema.MutationUpdateManySurveyQuestionsArgs): Promise<openCrudSchema.Mutation['updateManySurveyQuestions']> {
+    return this.baseDAO.updateManySurveyQuestions(context, args);
+  }
+
+  deleteSurveyQuestion(context: any, where: openCrudSchema.MutationDeleteSurveyQuestionArgs['where']): Promise<openCrudSchema.Mutation['deleteSurveyQuestion']> {
+    return this.baseDAO.deleteSurveyQuestion(context, where);
+  }
+
+  deleteManySurveyQuestions(context: any, where: openCrudSchema.MutationDeleteManySurveyQuestionsArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveyQuestions']> {
+    return this.baseDAO.deleteManySurveyQuestions(context, where);
+  }
+
+  surveyQuestionConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionsConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionsConnection']> {
+    return this.baseDAO.surveyQuestionConnection(parent, args, context);
+  }
+}
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 3`] = `
+"import * as openCrudSchema from './openCrudSchema';
+
+export default class SurveyQuestionResponseDAO {
+  static ENTITY_NAME = 'surveyQuestionResponse';
+
+  private readonly baseDAO: any;
+
+  constructor(baseDAO: any) {
+    this.baseDAO = baseDAO;
+  }
+
+  surveyQuestionResponse(context: any, where: openCrudSchema.QuerySurveyQuestionResponseArgs['where']): Promise<openCrudSchema.Query['surveyQuestionResponse']> {
+    return this.baseDAO.surveyQuestionResponse(context, where);
+  }
+
+  surveyQuestionResponseById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['surveyQuestionResponse']> {
+    return this.baseDAO.surveyQuestionResponseById(context, id);
+  }
+
+  surveyQuestionResponses(context: any, args: openCrudSchema.QuerySurveyQuestionResponsesArgs): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
+    return this.baseDAO.surveyQuestionResponses(context, args);
+  }
+
+  surveyQuestionResponsesByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
+    return this.baseDAO.surveyQuestionResponsesByIds(context, ids);
+  }
+
+  createSurveyQuestionResponse(context: any, data: openCrudSchema.MutationCreateSurveyQuestionResponseArgs['data']): Promise<openCrudSchema.Mutation['createSurveyQuestionResponse']> {
+    return this.baseDAO.createSurveyQuestionResponse(context, data);
+  }
+
+  updateSurveyQuestionResponse(context: any, args: openCrudSchema.MutationUpdateSurveyQuestionResponseArgs): Promise<openCrudSchema.Mutation['updateSurveyQuestionResponse']> {
+    return this.baseDAO.updateSurveyQuestionResponse(context, args);
+  }
+
+  updateManySurveyQuestionResponses(context: any, args: openCrudSchema.MutationUpdateManySurveyQuestionResponsesArgs): Promise<openCrudSchema.Mutation['updateManySurveyQuestionResponses']> {
+    return this.baseDAO.updateManySurveyQuestionResponses(context, args);
+  }
+
+  deleteSurveyQuestionResponse(context: any, where: openCrudSchema.MutationDeleteSurveyQuestionResponseArgs['where']): Promise<openCrudSchema.Mutation['deleteSurveyQuestionResponse']> {
+    return this.baseDAO.deleteSurveyQuestionResponse(context, where);
+  }
+
+  deleteManySurveyQuestionResponses(context: any, where: openCrudSchema.MutationDeleteManySurveyQuestionResponsesArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveyQuestionResponses']> {
+    return this.baseDAO.deleteManySurveyQuestionResponses(context, where);
+  }
+
+  surveyQuestionResponseConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
+    return this.baseDAO.surveyQuestionResponseConnection(parent, args, context);
+  }
+}
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 4`] = `
+"export * from './openCrudSchema';
+export { default as SurveyDAO } from './SurveyDAO';
+export { default as SurveyQuestionDAO } from './SurveyQuestionDAO';
+export { default as SurveyQuestionResponseDAO } from './SurveyQuestionResponseDAO';
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 5`] = `
 "export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -1307,181 +1473,4 @@ export type SurveyWhereUniqueInput = {
   name?: Maybe<Scalars['String']>,
 };
 "
-`;
-
-exports[`generateDAOSchema generate files should be match to snapshots 3`] = `
-"import { createEntityDAO } from '@venncity/base-dao';
-import * as openCrudSchema from './openCrudSchema';
-
-export default class SurveyDAO {
-  private readonly baseDAO: any;
-
-  constructor({ hooks, daoAuth, publishCrudEvent }: { hooks: any; daoAuth: any; publishCrudEvent: any }) {
-    const baseDAO = createEntityDAO({
-      entityName: 'survey',
-      hooks,
-      daoAuth,
-      publishCrudEvent
-    });
-    this.baseDAO = baseDAO;
-  }
-
-  survey(context: any, where: openCrudSchema.QuerySurveyArgs['where']): Promise<openCrudSchema.Query['survey']> {
-    return this.baseDAO.survey(context, where);
-  }
-
-  surveyById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['survey']> {
-    return this.baseDAO.surveyById(context, id);
-  }
-
-  surveys(context: any, args: openCrudSchema.QuerySurveysArgs): Promise<openCrudSchema.Query['surveys']> {
-    return this.baseDAO.surveys(context, args);
-  }
-
-  surveysByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveys']> {
-    return this.baseDAO.surveysByIds(context, ids);
-  }
-
-  createSurvey(context: any, data: openCrudSchema.MutationCreateSurveyArgs['data']): Promise<openCrudSchema.Mutation['createSurvey']> {
-    return this.baseDAO.createSurvey(context, data);
-  }
-
-  updateSurvey(context: any, args: openCrudSchema.MutationUpdateSurveyArgs): Promise<openCrudSchema.Mutation['updateSurvey']> {
-    return this.baseDAO.updateSurvey(context, args);
-  }
-
-  updateManySurveys(context: any, args: openCrudSchema.MutationUpdateManySurveysArgs): Promise<openCrudSchema.Mutation['updateManySurveys']> {
-    return this.baseDAO.updateManySurveys(context, args);
-  }
-
-  deleteSurvey(context: any, where: openCrudSchema.MutationDeleteSurveyArgs['where']): Promise<openCrudSchema.Mutation['deleteSurvey']> {
-    return this.baseDAO.deleteSurvey(context, where);
-  }
-
-  deleteManySurveys(context: any, where: openCrudSchema.MutationDeleteManySurveysArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveys']> {
-    return this.baseDAO.deleteManySurveys(context, where);
-  }
-
-  surveyConnection(parent: any, args: openCrudSchema.QuerySurveysConnectionArgs, context: any): Promise<openCrudSchema.Query['surveysConnection']> {
-    return this.baseDAO.surveyConnection(parent, args, context);
-  }
-}"
-`;
-
-exports[`generateDAOSchema generate files should be match to snapshots 4`] = `
-"import { createEntityDAO } from '@venncity/base-dao';
-import * as openCrudSchema from './openCrudSchema';
-
-export default class SurveyQuestionDAO {
-  private readonly baseDAO: any;
-
-  constructor({ hooks, daoAuth, publishCrudEvent }: { hooks: any; daoAuth: any; publishCrudEvent: any }) {
-    const baseDAO = createEntityDAO({
-      entityName: 'surveyQuestion',
-      hooks,
-      daoAuth,
-      publishCrudEvent
-    });
-    this.baseDAO = baseDAO;
-  }
-
-  surveyQuestion(context: any, where: openCrudSchema.QuerySurveyQuestionArgs['where']): Promise<openCrudSchema.Query['surveyQuestion']> {
-    return this.baseDAO.surveyQuestion(context, where);
-  }
-
-  surveyQuestionById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['surveyQuestion']> {
-    return this.baseDAO.surveyQuestionById(context, id);
-  }
-
-  surveyQuestions(context: any, args: openCrudSchema.QuerySurveyQuestionsArgs): Promise<openCrudSchema.Query['surveyQuestions']> {
-    return this.baseDAO.surveyQuestions(context, args);
-  }
-
-  surveyQuestionsByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveyQuestions']> {
-    return this.baseDAO.surveyQuestionsByIds(context, ids);
-  }
-
-  createSurveyQuestion(context: any, data: openCrudSchema.MutationCreateSurveyQuestionArgs['data']): Promise<openCrudSchema.Mutation['createSurveyQuestion']> {
-    return this.baseDAO.createSurveyQuestion(context, data);
-  }
-
-  updateSurveyQuestion(context: any, args: openCrudSchema.MutationUpdateSurveyQuestionArgs): Promise<openCrudSchema.Mutation['updateSurveyQuestion']> {
-    return this.baseDAO.updateSurveyQuestion(context, args);
-  }
-
-  updateManySurveyQuestions(context: any, args: openCrudSchema.MutationUpdateManySurveyQuestionsArgs): Promise<openCrudSchema.Mutation['updateManySurveyQuestions']> {
-    return this.baseDAO.updateManySurveyQuestions(context, args);
-  }
-
-  deleteSurveyQuestion(context: any, where: openCrudSchema.MutationDeleteSurveyQuestionArgs['where']): Promise<openCrudSchema.Mutation['deleteSurveyQuestion']> {
-    return this.baseDAO.deleteSurveyQuestion(context, where);
-  }
-
-  deleteManySurveyQuestions(context: any, where: openCrudSchema.MutationDeleteManySurveyQuestionsArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveyQuestions']> {
-    return this.baseDAO.deleteManySurveyQuestions(context, where);
-  }
-
-  surveyQuestionConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionsConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionsConnection']> {
-    return this.baseDAO.surveyQuestionConnection(parent, args, context);
-  }
-}"
-`;
-
-exports[`generateDAOSchema generate files should be match to snapshots 5`] = `
-"import { createEntityDAO } from '@venncity/base-dao';
-import * as openCrudSchema from './openCrudSchema';
-
-export default class SurveyQuestionResponseDAO {
-  private readonly baseDAO: any;
-
-  constructor({ hooks, daoAuth, publishCrudEvent }: { hooks: any; daoAuth: any; publishCrudEvent: any }) {
-    const baseDAO = createEntityDAO({
-      entityName: 'surveyQuestionResponse',
-      hooks,
-      daoAuth,
-      publishCrudEvent
-    });
-    this.baseDAO = baseDAO;
-  }
-
-  surveyQuestionResponse(context: any, where: openCrudSchema.QuerySurveyQuestionResponseArgs['where']): Promise<openCrudSchema.Query['surveyQuestionResponse']> {
-    return this.baseDAO.surveyQuestionResponse(context, where);
-  }
-
-  surveyQuestionResponseById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['surveyQuestionResponse']> {
-    return this.baseDAO.surveyQuestionResponseById(context, id);
-  }
-
-  surveyQuestionResponses(context: any, args: openCrudSchema.QuerySurveyQuestionResponsesArgs): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
-    return this.baseDAO.surveyQuestionResponses(context, args);
-  }
-
-  surveyQuestionResponsesByIds(context: any, ids: openCrudSchema.Scalars['ID'][]): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
-    return this.baseDAO.surveyQuestionResponsesByIds(context, ids);
-  }
-
-  createSurveyQuestionResponse(context: any, data: openCrudSchema.MutationCreateSurveyQuestionResponseArgs['data']): Promise<openCrudSchema.Mutation['createSurveyQuestionResponse']> {
-    return this.baseDAO.createSurveyQuestionResponse(context, data);
-  }
-
-  updateSurveyQuestionResponse(context: any, args: openCrudSchema.MutationUpdateSurveyQuestionResponseArgs): Promise<openCrudSchema.Mutation['updateSurveyQuestionResponse']> {
-    return this.baseDAO.updateSurveyQuestionResponse(context, args);
-  }
-
-  updateManySurveyQuestionResponses(context: any, args: openCrudSchema.MutationUpdateManySurveyQuestionResponsesArgs): Promise<openCrudSchema.Mutation['updateManySurveyQuestionResponses']> {
-    return this.baseDAO.updateManySurveyQuestionResponses(context, args);
-  }
-
-  deleteSurveyQuestionResponse(context: any, where: openCrudSchema.MutationDeleteSurveyQuestionResponseArgs['where']): Promise<openCrudSchema.Mutation['deleteSurveyQuestionResponse']> {
-    return this.baseDAO.deleteSurveyQuestionResponse(context, where);
-  }
-
-  deleteManySurveyQuestionResponses(context: any, where: openCrudSchema.MutationDeleteManySurveyQuestionResponsesArgs['where']): Promise<openCrudSchema.Mutation['deleteManySurveyQuestionResponses']> {
-    return this.baseDAO.deleteManySurveyQuestionResponses(context, where);
-  }
-
-  surveyQuestionResponseConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
-    return this.baseDAO.surveyQuestionResponseConnection(parent, args, context);
-  }
-}"
 `;

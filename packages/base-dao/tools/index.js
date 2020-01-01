@@ -1,5 +1,5 @@
-const generateDAOSchema = require('./generateDAOSchema');
+const generateDaoSchema = require('./generateDaoSchema');
 
 module.exports = {
-  generateDAOSchema
+  generateDaoSchema
 };

@@ -1,0 +1,4 @@
+export * from './openCrudSchema';
+<% daoClassNames.forEach(function(daoClassName){ -%>
+export { default as <%= daoClassName %> } from './<%= daoClassName %>';
+<% }) -%>
