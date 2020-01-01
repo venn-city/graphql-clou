@@ -26,11 +26,11 @@ function generateDAOClass(entityName) {
       this.baseDAO = baseDAO;
     }
   
-    ${entityNameLowerFirstLetter}(context: any, where: openCrudSchema.Query${entityNameUpperFirstLetter}Args['where']): Promise<null | openCrudSchema.Query['${entityNameLowerFirstLetter}']> {
+    ${entityNameLowerFirstLetter}(context: any, where: openCrudSchema.Query${entityNameUpperFirstLetter}Args['where']): Promise<openCrudSchema.Query['${entityNameLowerFirstLetter}']> {
       return this.baseDAO.${entityNameLowerFirstLetter}(context, where);
     }
   
-    ${entityNameLowerFirstLetter}ById(context: any, id: openCrudSchema.Scalars['ID']): Promise<null | openCrudSchema.Query['${entityNameLowerFirstLetter}']> {
+    ${entityNameLowerFirstLetter}ById(context: any, id: openCrudSchema.Scalars['ID']): Promise<openCrudSchema.Query['${entityNameLowerFirstLetter}']> {
       return this.baseDAO.${entityNameLowerFirstLetter}ById(context, id);
     }
   
@@ -46,7 +46,7 @@ function generateDAOClass(entityName) {
       return this.baseDAO.create${entityNameUpperFirstLetter}(context, data);
     }
   
-    update${entityNameUpperFirstLetter}(context: any, args: openCrudSchema.MutationUpdate${entityNameUpperFirstLetter}Args): Promise<null | openCrudSchema.Mutation['update${entityNameUpperFirstLetter}']> {
+    update${entityNameUpperFirstLetter}(context: any, args: openCrudSchema.MutationUpdate${entityNameUpperFirstLetter}Args): Promise<openCrudSchema.Mutation['update${entityNameUpperFirstLetter}']> {
       return this.baseDAO.update${entityNameUpperFirstLetter}(context, args);
     }
   
@@ -54,7 +54,7 @@ function generateDAOClass(entityName) {
       return this.baseDAO.updateMany${entitiesNameUpperFirstLetter}(context, args);
     }
   
-    delete${entityNameUpperFirstLetter}(context: any, where: openCrudSchema.MutationDelete${entityNameUpperFirstLetter}Args['where']): Promise<null | openCrudSchema.Mutation['delete${entityNameUpperFirstLetter}']> {
+    delete${entityNameUpperFirstLetter}(context: any, where: openCrudSchema.MutationDelete${entityNameUpperFirstLetter}Args['where']): Promise<openCrudSchema.Mutation['delete${entityNameUpperFirstLetter}']> {
       return this.baseDAO.delete${entityNameUpperFirstLetter}(context, where);
     }
   
