@@ -4,7 +4,7 @@ exports[`generateDAOSchema generate files should be match to snapshots 1`] = `
 "import * as openCrudSchema from './openCrudSchema';
 
 export default class SurveyDAO {
-  static ENTITY_NAME = 'survey';
+  static readonly ENTITY_NAME = 'survey';
 
   private readonly baseDAO: any;
 
@@ -59,7 +59,7 @@ exports[`generateDAOSchema generate files should be match to snapshots 2`] = `
 "import * as openCrudSchema from './openCrudSchema';
 
 export default class SurveyQuestionDAO {
-  static ENTITY_NAME = 'surveyQuestion';
+  static readonly ENTITY_NAME = 'surveyQuestion';
 
   private readonly baseDAO: any;
 
@@ -114,7 +114,7 @@ exports[`generateDAOSchema generate files should be match to snapshots 3`] = `
 "import * as openCrudSchema from './openCrudSchema';
 
 export default class SurveyQuestionResponseDAO {
-  static ENTITY_NAME = 'surveyQuestionResponse';
+  static readonly ENTITY_NAME = 'surveyQuestionResponse';
 
   private readonly baseDAO: any;
 

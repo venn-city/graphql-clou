@@ -1,7 +1,7 @@
 import * as openCrudSchema from './openCrudSchema';
 
 export default class <%= entityNameUpperFirstLetter %>DAO {
-  static ENTITY_NAME = '<%= entityNameLowerFirstLetter %>';
+  static readonly ENTITY_NAME = '<%= entityNameLowerFirstLetter %>';
 
   private readonly baseDAO: any;
 
