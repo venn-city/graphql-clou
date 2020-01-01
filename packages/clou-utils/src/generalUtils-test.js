@@ -27,16 +27,16 @@ describe('utils', () => {
       expect(utils.generateRandomString(5)).toHaveLength(5);
     });
   });
-  test('decrypt should return original value', () => {
+  test('decrypt should return original value', async () => {
     const originalData = utils.generateRandomInteger(10).toString();
-    const encryptedData = utils.encrypt(originalData);
-    const decryptedData = utils.decrypt(encryptedData);
+    const encryptedData = await utils.encrypt(originalData);
+    const decryptedData = await utils.decrypt(encryptedData);
     expect(decryptedData).toEqual(originalData);
   });
-  test('encrypt output should not be the same input', () => {
+  test('encrypt output should not be the same input', async () => {
     const originalData = utils.generateRandomString(20);
-    const encryptedData = utils.encrypt(originalData);
-    const encryptedDataSecond = utils.encrypt(originalData);
+    const encryptedData = await utils.encrypt(originalData);
+    const encryptedDataSecond = await utils.encrypt(originalData);
     expect(encryptedData).not.toEqual(encryptedDataSecond);
   });
 
