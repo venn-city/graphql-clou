@@ -13,7 +13,7 @@
     "generate-opencrud-schema": "node ./scripts/generateOpenCRUDSchema.js"
   },
   "bin": {
-    "generate-dao-schema": "./bin/generateDAOSchemaCli.js"
+    "generate-dao-schema": "./bin/generateDaoSchemaCli.js"
   },
   "husky": {
     "hooks": {
