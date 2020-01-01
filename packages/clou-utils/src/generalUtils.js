@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const { isEmpty, isArray, every, isUndefined, get } = require('lodash');
 const config = require('@venncity/nested-config')(__dirname);
 
-const encryptionKey = Buffer.from(JSON.parse(config.get('encryption.key')));
 const encryptionAlgorithm = config.get('encryption.algorithm');
 const inputEncoding = config.get('encryption.inputEncoding');
 const outputEncoding = config.get('encryption.outputEncoding');
@@ -35,7 +34,7 @@ function isFalse(valueToCheck) {
   return !isTrue(valueToCheck);
 }
 
-function encrypt(data) {
+function encrypt(data, encryptionKey) {
   const iv = crypto.randomBytes(IV_LENGTH);
   const cipher = crypto.createCipheriv(encryptionAlgorithm, Buffer.from(encryptionKey), iv);
   let encryptedData = cipher.update(data, inputEncoding, outputEncoding);
@@ -44,7 +43,7 @@ function encrypt(data) {
   return `${iv.toString(outputEncoding)}${encryptedData}${authTag.toString(outputEncoding)}`;
 }
 
-function decrypt(data) {
+function decrypt(data, encryptionKey) {
   const dataBuffer = Buffer.from(data, outputEncoding);
   const dataLength = dataBuffer.length;
   const iv = dataBuffer.slice(0, IV_LENGTH);

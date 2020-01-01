@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const utils = require('./generalUtils');
 
 describe('utils', () => {
@@ -27,19 +28,21 @@ describe('utils', () => {
       expect(utils.generateRandomString(5)).toHaveLength(5);
     });
   });
-  test('decrypt should return original value', () => {
-    const originalData = utils.generateRandomInteger(10).toString();
-    const encryptedData = utils.encrypt(originalData);
-    const decryptedData = utils.decrypt(encryptedData);
-    expect(decryptedData).toEqual(originalData);
+  describe('Encrypt/Decrypt', () => {
+    const key = crypto.randomBytes(32);
+    test('decrypt should return original value', () => {
+      const originalData = utils.generateRandomInteger(10).toString();
+      const encryptedData = utils.encrypt(originalData, key);
+      const decryptedData = utils.decrypt(encryptedData, key);
+      expect(decryptedData).toEqual(originalData);
+    });
+    test('encrypt output should not be the same input', () => {
+      const originalData = utils.generateRandomString(20);
+      const encryptedData = utils.encrypt(originalData, key);
+      const encryptedDataSecond = utils.encrypt(originalData, key);
+      expect(encryptedData).not.toEqual(encryptedDataSecond);
+    });
   });
-  test('encrypt output should not be the same input', () => {
-    const originalData = utils.generateRandomString(20);
-    const encryptedData = utils.encrypt(originalData);
-    const encryptedDataSecond = utils.encrypt(originalData);
-    expect(encryptedData).not.toEqual(encryptedDataSecond);
-  });
-
   describe('extractWhereFromFederationReference', () => {
     test('should succesfully delete the __typename key from the given object', () => {
       const reference = {

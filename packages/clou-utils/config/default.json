@@ -2,7 +2,6 @@
   "encryption" :{
     "algorithm": "aes-256-gcm",
     "inputEncoding": "utf8",
-    "outputEncoding":  "hex",
-    "key": "[109,222,210,53,239,58,28,172,79,35,200,88,235,138,81,100,4,140,42,96,186,184,134,14,158,247,116,197,238,167,60,57]"
+    "outputEncoding":  "hex"
   }
 }

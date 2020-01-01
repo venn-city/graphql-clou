@@ -17,6 +17,7 @@
     "exec-changed": "./scripts/executeOnChanged.js",
     "bootstrap": "lerna bootstrap",
     "new:package": "hygen package new",
+    "lint": "npx eslint --fix",
     "test:ci": "export JEST_JUNIT_OUTPUT=`pwd`/reports/junit/ && yarn exec-changed lerna exec --concurrency 1 'JEST_JUNIT_OUTPUT=$JEST_JUNIT_OUTPUT/\\$LERNA_PACKAGE_NAME-test-results.xml yarn test:ci'",
     "db:bootstrap:local": "docker-compose down && yarn db:start && yarn db:createSchema && yarn db:migrate",
     "db:bootstrap": "yarn db:createSchema && yarn db:migrate",
