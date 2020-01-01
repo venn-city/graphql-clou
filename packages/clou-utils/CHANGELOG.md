@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/venn-city/graphql-clou/compare/@venncity/clou-utils@1.2.1...@venncity/clou-utils@2.0.0) (2020-01-01)
+
+
+### Bug Fixes
+
+* **clou-utils:** get encryption key from ssm ([e145299](https://github.com/venn-city/graphql-clou/commit/e145299fbc9066498205ea8fab6bb0d89ed44197))
+* **clou-utils:** pass encryptionKey as parameter ([8ead158](https://github.com/venn-city/graphql-clou/commit/8ead1588b2b7c58533b070fdb21340fb49d0899d))
+
+
+### BREAKING CHANGES
+
+* **clou-utils:** extract it from ssm instead of keeping it in default config
+
+
+
+
+
 ## [1.2.1](https://github.com/venn-city/graphql-clou/compare/@venncity/clou-utils@1.2.0...@venncity/clou-utils@1.2.1) (2019-12-16)
 
 
