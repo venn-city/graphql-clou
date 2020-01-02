@@ -30,8 +30,26 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
   },
   define: {
     hooks: hookDefinitions
-  }
+  },
+  retry: getRetryConfig()
 });
+
+function getRetryConfig() {
+  return {
+    // config according to retry-as-promised (https://github.com/mickhansen/retry-as-promised)
+    max: 4,
+    timeout: 10000,
+    match: [Sequelize.ConnectionError],
+    backoffBase: 12, // ms
+    backoffExponent: 2,
+    report: (message, conf) => {
+      if (conf.$current > 1) {
+        console.warn('Retrying sequelize operation', message, 'attempt:', conf.$current);
+      }
+    },
+    name: 'sq-connection-error-retry'
+  };
+}
 
 function getPoolConfig() {
   const poolConfig = config.get('sequelize.pool');
