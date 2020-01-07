@@ -18,29 +18,33 @@ function generateOpenCrudSchemaTypes(dataModel) {
 
 function generateSchema(dataModel) {
   const sdl = parseInternalTypes(dataModel, 'postgres');
-  const missigFields = {};
 
-  sdl.types.forEach(({ isEnum, fields, name: entityName }) => {
+  const missigFieldsByEntities = sdl.types.reduce((prevFiledsByEntities, { isEnum, fields, name: entityName }) => {
     if (isEnum) {
-      return;
+      return prevFiledsByEntities;
     }
-    missigFields[entityName] = [];
-    fields.forEach(({ relatedField, isRequired, isList, name: filedName }) => {
-      if (relatedField === null || isList) {
-        return;
-      }
-      missigFields[entityName].push({
-        name: `${filedName}Id`,
-        isRequired
-      });
-    });
-  });
+    return {
+      ...prevFiledsByEntities,
+      [entityName]: fields.reduce((prevFields, { relatedField, isRequired, isList, name: filedName }) => {
+        if (relatedField === null || isList) {
+          return prevFields;
+        }
+        return [
+          ...prevFields,
+          {
+            name: `${filedName}Id`,
+            isRequired
+          }
+        ];
+      }, [])
+    };
+  }, {});
 
   const schema = generateCRUDSchemaFromInternalISDL(sdl, 'postgres');
 
-  Object.keys(missigFields).forEach(entityName => {
-    const missigFieldsByEntity = missigFields[entityName];
-    const fields = schema.getType('SurveyQuestion').getFields();
+  Object.keys(missigFieldsByEntities).forEach(entityName => {
+    const missigFieldsByEntity = missigFieldsByEntities[entityName];
+    const fields = schema.getType(entityName).getFields();
 
     missigFieldsByEntity.forEach(({ name, isRequired }) => {
       fields[name] = {
