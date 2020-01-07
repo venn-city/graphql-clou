@@ -52,8 +52,8 @@ export default class SurveyDAO {
     return this.entityDAO.deleteManySurveys(context, where);
   }
 
-  surveyConnection(parent: any, args: openCrudSchema.QuerySurveysConnectionArgs, context: any): Promise<openCrudSchema.Query['surveysConnection']> {
-    return this.entityDAO.surveyConnection(parent, args, context);
+  surveysConnection(parent: any, args: openCrudSchema.QuerySurveysConnectionArgs, context: any): Promise<openCrudSchema.Query['surveysConnection']> {
+    return this.entityDAO.surveysConnection(parent, args, context);
   }
 }
 "
@@ -111,8 +111,8 @@ export default class SurveyQuestionDAO {
     return this.entityDAO.deleteManySurveyQuestions(context, where);
   }
 
-  surveyQuestionConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionsConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionsConnection']> {
-    return this.entityDAO.surveyQuestionConnection(parent, args, context);
+  surveyQuestionsConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionsConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionsConnection']> {
+    return this.entityDAO.surveyQuestionsConnection(parent, args, context);
   }
 }
 "
@@ -170,8 +170,8 @@ export default class SurveyQuestionResponseDAO {
     return this.entityDAO.deleteManySurveyQuestionResponses(context, where);
   }
 
-  surveyQuestionResponseConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
-    return this.entityDAO.surveyQuestionResponseConnection(parent, args, context);
+  surveyQuestionResponsesConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
+    return this.entityDAO.surveyQuestionResponsesConnection(parent, args, context);
   }
 }
 "
