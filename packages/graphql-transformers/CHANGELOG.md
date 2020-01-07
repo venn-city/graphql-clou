@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.7](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.5.6...@venncity/graphql-transformers@1.5.7) (2020-01-07)
+
+
+### Bug Fixes
+
+* **graphql-transformer:** limit results in memory as db-limit drops results ([96b403d](https://github.com/venn-city/graphql-clou/commit/96b403d054a74aa064c4bf359d3529037bae4d37))
+
+
+
+
+
 ## [1.5.6](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.5.5...@venncity/graphql-transformers@1.5.6) (2020-01-02)
 
 **Note:** Version bump only for package @venncity/graphql-transformers

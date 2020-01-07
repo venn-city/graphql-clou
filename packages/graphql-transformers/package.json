@@ -1,6 +1,6 @@
 {
   "name": "@venncity/graphql-transformers",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
