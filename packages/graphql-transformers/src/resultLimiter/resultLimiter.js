@@ -3,8 +3,10 @@ const paths = require('deepdash/paths');
 const { sq } = require('@venncity/sequelize-model');
 const { BELONGS_TO_MANY } = require('./../openCrudWhereTransform/sequelizeConsts').RELATION_TYPES;
 
+// eslint-disable-next-line no-unused-vars
 function shouldLimitInFetch(args) {
-  return args && !containsEveryOrNone(args.where);
+  // TODO: temp solution, as in-db search drops results.
+  return false; // args && !containsEveryOrNone(args.where);
 }
 
 function containsEveryOrNone(where) {
