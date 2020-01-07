@@ -607,6 +607,7 @@ export type SurveyQuestion = {
   deletedAt?: Maybe<Scalars['DateTime']>,
   deleted: Scalars['Int'],
   surveyId: Scalars['ID'],
+  questionId: Scalars['ID'],
 };
 
 
@@ -687,9 +688,7 @@ export enum SurveyQuestionOrderByInput {
   DeletedAtAsc = 'deletedAt_ASC',
   DeletedAtDesc = 'deletedAt_DESC',
   DeletedAsc = 'deleted_ASC',
-  DeletedDesc = 'deleted_DESC',
-  SurveyIdAsc = 'surveyId_ASC',
-  SurveyIdDesc = 'surveyId_DESC'
+  DeletedDesc = 'deleted_DESC'
 }
 
 export type SurveyQuestionPreviousValues = {
@@ -702,7 +701,6 @@ export type SurveyQuestionPreviousValues = {
   updatedAt: Scalars['DateTime'],
   deletedAt?: Maybe<Scalars['DateTime']>,
   deleted: Scalars['Int'],
-  surveyId: Scalars['ID'],
 };
 
 export type SurveyQuestionResponse = {
@@ -716,7 +714,6 @@ export type SurveyQuestionResponse = {
   updatedAt: Scalars['DateTime'],
   deletedAt?: Maybe<Scalars['DateTime']>,
   deleted: Scalars['Int'],
-  questionId: Scalars['ID'],
 };
 
 export type SurveyQuestionResponseConnection = {
@@ -770,9 +767,7 @@ export enum SurveyQuestionResponseOrderByInput {
   DeletedAtAsc = 'deletedAt_ASC',
   DeletedAtDesc = 'deletedAt_DESC',
   DeletedAsc = 'deleted_ASC',
-  DeletedDesc = 'deleted_DESC',
-  QuestionIdAsc = 'questionId_ASC',
-  QuestionIdDesc = 'questionId_DESC'
+  DeletedDesc = 'deleted_DESC'
 }
 
 export type SurveyQuestionResponsePreviousValues = {
@@ -785,7 +780,6 @@ export type SurveyQuestionResponsePreviousValues = {
   updatedAt: Scalars['DateTime'],
   deletedAt?: Maybe<Scalars['DateTime']>,
   deleted: Scalars['Int'],
-  questionId: Scalars['ID'],
 };
 
 export type SurveyQuestionResponseScalarWhereInput = {
@@ -877,20 +871,6 @@ export type SurveyQuestionResponseScalarWhereInput = {
   deleted_lte?: Maybe<Scalars['Int']>,
   deleted_gt?: Maybe<Scalars['Int']>,
   deleted_gte?: Maybe<Scalars['Int']>,
-  questionId?: Maybe<Scalars['ID']>,
-  questionId_not?: Maybe<Scalars['ID']>,
-  questionId_in?: Maybe<Array<Scalars['ID']>>,
-  questionId_not_in?: Maybe<Array<Scalars['ID']>>,
-  questionId_lt?: Maybe<Scalars['ID']>,
-  questionId_lte?: Maybe<Scalars['ID']>,
-  questionId_gt?: Maybe<Scalars['ID']>,
-  questionId_gte?: Maybe<Scalars['ID']>,
-  questionId_contains?: Maybe<Scalars['ID']>,
-  questionId_not_contains?: Maybe<Scalars['ID']>,
-  questionId_starts_with?: Maybe<Scalars['ID']>,
-  questionId_not_starts_with?: Maybe<Scalars['ID']>,
-  questionId_ends_with?: Maybe<Scalars['ID']>,
-  questionId_not_ends_with?: Maybe<Scalars['ID']>,
   AND?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
   OR?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
   NOT?: Maybe<Array<SurveyQuestionResponseScalarWhereInput>>,
@@ -1066,20 +1046,6 @@ export type SurveyQuestionResponseWhereInput = {
   deleted_lte?: Maybe<Scalars['Int']>,
   deleted_gt?: Maybe<Scalars['Int']>,
   deleted_gte?: Maybe<Scalars['Int']>,
-  questionId?: Maybe<Scalars['ID']>,
-  questionId_not?: Maybe<Scalars['ID']>,
-  questionId_in?: Maybe<Array<Scalars['ID']>>,
-  questionId_not_in?: Maybe<Array<Scalars['ID']>>,
-  questionId_lt?: Maybe<Scalars['ID']>,
-  questionId_lte?: Maybe<Scalars['ID']>,
-  questionId_gt?: Maybe<Scalars['ID']>,
-  questionId_gte?: Maybe<Scalars['ID']>,
-  questionId_contains?: Maybe<Scalars['ID']>,
-  questionId_not_contains?: Maybe<Scalars['ID']>,
-  questionId_starts_with?: Maybe<Scalars['ID']>,
-  questionId_not_starts_with?: Maybe<Scalars['ID']>,
-  questionId_ends_with?: Maybe<Scalars['ID']>,
-  questionId_not_ends_with?: Maybe<Scalars['ID']>,
   AND?: Maybe<Array<SurveyQuestionResponseWhereInput>>,
   OR?: Maybe<Array<SurveyQuestionResponseWhereInput>>,
   NOT?: Maybe<Array<SurveyQuestionResponseWhereInput>>,
@@ -1152,20 +1118,6 @@ export type SurveyQuestionScalarWhereInput = {
   deleted_lte?: Maybe<Scalars['Int']>,
   deleted_gt?: Maybe<Scalars['Int']>,
   deleted_gte?: Maybe<Scalars['Int']>,
-  surveyId?: Maybe<Scalars['ID']>,
-  surveyId_not?: Maybe<Scalars['ID']>,
-  surveyId_in?: Maybe<Array<Scalars['ID']>>,
-  surveyId_not_in?: Maybe<Array<Scalars['ID']>>,
-  surveyId_lt?: Maybe<Scalars['ID']>,
-  surveyId_lte?: Maybe<Scalars['ID']>,
-  surveyId_gt?: Maybe<Scalars['ID']>,
-  surveyId_gte?: Maybe<Scalars['ID']>,
-  surveyId_contains?: Maybe<Scalars['ID']>,
-  surveyId_not_contains?: Maybe<Scalars['ID']>,
-  surveyId_starts_with?: Maybe<Scalars['ID']>,
-  surveyId_not_starts_with?: Maybe<Scalars['ID']>,
-  surveyId_ends_with?: Maybe<Scalars['ID']>,
-  surveyId_not_ends_with?: Maybe<Scalars['ID']>,
   AND?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
   OR?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
   NOT?: Maybe<Array<SurveyQuestionScalarWhereInput>>,
@@ -1341,20 +1293,6 @@ export type SurveyQuestionWhereInput = {
   deleted_lte?: Maybe<Scalars['Int']>,
   deleted_gt?: Maybe<Scalars['Int']>,
   deleted_gte?: Maybe<Scalars['Int']>,
-  surveyId?: Maybe<Scalars['ID']>,
-  surveyId_not?: Maybe<Scalars['ID']>,
-  surveyId_in?: Maybe<Array<Scalars['ID']>>,
-  surveyId_not_in?: Maybe<Array<Scalars['ID']>>,
-  surveyId_lt?: Maybe<Scalars['ID']>,
-  surveyId_lte?: Maybe<Scalars['ID']>,
-  surveyId_gt?: Maybe<Scalars['ID']>,
-  surveyId_gte?: Maybe<Scalars['ID']>,
-  surveyId_contains?: Maybe<Scalars['ID']>,
-  surveyId_not_contains?: Maybe<Scalars['ID']>,
-  surveyId_starts_with?: Maybe<Scalars['ID']>,
-  surveyId_not_starts_with?: Maybe<Scalars['ID']>,
-  surveyId_ends_with?: Maybe<Scalars['ID']>,
-  surveyId_not_ends_with?: Maybe<Scalars['ID']>,
   AND?: Maybe<Array<SurveyQuestionWhereInput>>,
   OR?: Maybe<Array<SurveyQuestionWhereInput>>,
   NOT?: Maybe<Array<SurveyQuestionWhereInput>>,

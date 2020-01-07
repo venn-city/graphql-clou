@@ -45,7 +45,6 @@
     "lodash": "^4.17.15",
     "moment-random": "^1.0.5",
     "pluralize": "^8.0.0",
-    "prisma-datamodel": "^1.34.10",
     "prisma-generate-schema": "^1.34.10",
     "sequelize": "venn-city/sequelize#v5",
     "yargs": "^15.0.2"
