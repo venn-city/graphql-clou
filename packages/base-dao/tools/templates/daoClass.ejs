@@ -49,7 +49,7 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
     return this.entityDAO.deleteMany<%= entitiesNameUpperFirstLetter %>(context, where);
   }
 
-  <%= entityNameLowerFirstLetter %>Connection(parent: any, args: openCrudSchema.Query<%= entitiesNameUpperFirstLetter %>ConnectionArgs, context: any): Promise<openCrudSchema.Query['<%= entitiesNameLowerFirstLetter %>Connection']> {
-    return this.entityDAO.<%= entityNameLowerFirstLetter %>Connection(parent, args, context);
+  <%= entitiesNameLowerFirstLetter %>Connection(parent: any, args: openCrudSchema.Query<%= entitiesNameUpperFirstLetter %>ConnectionArgs, context: any): Promise<openCrudSchema.Query['<%= entitiesNameLowerFirstLetter %>Connection']> {
+    return this.entityDAO.<%= entitiesNameLowerFirstLetter %>Connection(parent, args, context);
   }
 }
