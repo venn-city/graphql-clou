@@ -9,7 +9,7 @@ const { isEmptyArray, transformWithSymbols } = require('@venncity/clou-utils');
 const { sq } = require('@venncity/sequelize-model');
 const { buildConditionSubquery } = require('./manyRelationConditionSubquery');
 const sequelizeConsts = require('./sequelizeConsts');
-const { containsEveryOrNone } = require('./../resultLimiter/resultLimiter');
+const { shouldLimitInFetch } = require('./../resultLimiter/resultLimiter');
 
 const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
 
@@ -47,7 +47,7 @@ function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWi
       include: sqIncludeElements,
       order: orderBy && [orderBy.split('_')]
     };
-    if (!containsEveryOrNone(where)) {
+    if (shouldLimitInFetch({ where })) {
       sqFilter.limit = first;
       sqFilter.offset = skip;
     }
