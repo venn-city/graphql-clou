@@ -18,37 +18,21 @@ function generateOpenCrudSchemaTypes(dataModel) {
 
 function generateSchema(dataModel) {
   const sdl = parseInternalTypes(dataModel, 'postgres');
-
-  const missigFieldsByEntities = sdl.types.reduce((prevFiledsByEntities, { isEnum, fields, name: entityName }) => {
-    if (isEnum) {
-      return prevFiledsByEntities;
-    }
-    return {
-      ...prevFiledsByEntities,
-      [entityName]: fields.reduce((prevFields, { relatedField, isRequired, isList, name: filedName }) => {
-        if (relatedField === null || isList) {
-          return prevFields;
-        }
-        return [
-          ...prevFields,
-          {
-            name: `${filedName}Id`,
-            isRequired
-          }
-        ];
-      }, [])
-    };
-  }, {});
-
   const schema = generateCRUDSchemaFromInternalISDL(sdl, 'postgres');
 
-  Object.keys(missigFieldsByEntities).forEach(entityName => {
-    const missigFieldsByEntity = missigFieldsByEntities[entityName];
-    const fields = schema.getType(entityName).getFields();
+  sdl.types.forEach(({ isEnum, fields, name: entityName }) => {
+    if (isEnum) {
+      return;
+    }
+    const schemaFileds = schema.getType(entityName).getFields();
 
-    missigFieldsByEntity.forEach(({ name, isRequired }) => {
-      fields[name] = {
-        name,
+    fields.forEach(({ relatedField, isRequired, isList, name: filedName }) => {
+      if (relatedField === null || isList) {
+        return;
+      }
+      // add additional id filed
+      schemaFileds[`${filedName}Id`] = {
+        name: `${filedName}Id`,
         args: [],
         type: isRequired ? new GraphQLNonNull(GraphQLID) : GraphQLID
       };
