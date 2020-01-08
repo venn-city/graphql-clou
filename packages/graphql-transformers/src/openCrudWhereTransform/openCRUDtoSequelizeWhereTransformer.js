@@ -50,6 +50,12 @@ function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWi
     if (shouldLimitInFetch({ where })) {
       sqFilter.limit = first;
       sqFilter.offset = skip;
+      sqFilter.attributes = {
+        // Relies on https://github.com/venn-city/sequelize/commit/83b768a4fb78f28d5d1769a4d2f4394e2b7e10d9
+        // Needed so that limit on the root level of the query works as expected,
+        // as without it, joins tables of 1xn or nxm generate multiple (duplicate rows) which throws off the expected limit.
+        include: [Sequelize.fn('DISTINCT', Sequelize.col(`${entityName}.id`)), 'id']
+      };
     }
     if (whereResult) {
       sqFilter = {
@@ -258,7 +264,12 @@ function handleRelation({
   const includeElement = {
     model: targetModel,
     as: associationAlias,
-    required
+    required,
+    // Do not select anything from the joined entities.
+    // This is required as otherwise limit doesn't work correctly on 1xn, nxm joins when query is ran with limit.
+    // On the other hand, we can do it here, as this code is designed to run from within graphql resolvers,
+    // where each resolver only needs to fetch its own entity, and joined entities will be later joined from the child resolvers.
+    attributes: []
   };
   correctManyRelationJoin(associationInfo, transformAssociationToNested, includeElement);
   return { includeElement, targetModel, relatedEntityFilter };

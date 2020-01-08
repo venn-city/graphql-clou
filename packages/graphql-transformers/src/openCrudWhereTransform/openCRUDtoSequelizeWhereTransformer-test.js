@@ -10,8 +10,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
     test('should transform first to "limit" and skip to "offset"', () => {
       const sqFilter = openCrudToSequelize({ where: { name: 'mu' }, first: 15, skip: 7 }, 'Government', ['Government']);
       expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ name: 'mu' }] });
-      // expect(sqFilter).toHaveProperty('limit', 15);
-      // expect(sqFilter).toHaveProperty('offset', 7);
+      expect(sqFilter).toHaveProperty('limit', 15);
+      expect(sqFilter).toHaveProperty('offset', 7);
     });
 
     test('should transform orderBy to order', () => {
@@ -134,7 +134,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
           {
             model: sq.Ministry,
             as: 'ministries',
-            required: false
+            required: false,
+            attributes: []
           }
         ]);
       });
@@ -215,7 +216,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
               model: sq.Minister,
               as: 'minister',
               required: false,
-              include: []
+              include: [],
+              attributes: []
             }
           ]);
         });
@@ -238,7 +240,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
               model: sq.Ministry,
               as: 'ministry',
               required: false,
-              include: []
+              include: [],
+              attributes: []
             }
           ]);
         });
@@ -262,7 +265,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
               as: 'minister',
               required: false,
               duplicating: false,
-              include: []
+              include: [],
+              attributes: []
             }
           ]);
         });
@@ -288,7 +292,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
               as: 'ministries',
               required: false,
               duplicating: false,
-              include: []
+              include: [],
+              attributes: []
             }
           ]);
         });
@@ -314,7 +319,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             {
               model: sq.Ministry,
               as: 'ministries',
-              required: false
+              required: false,
+              attributes: []
             }
           ]);
         });
@@ -340,7 +346,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             {
               model: sq.Ministry,
               as: 'ministries',
-              required: false
+              required: false,
+              attributes: []
             }
           ]);
         });
@@ -366,7 +373,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
               as: 'votes',
               required: false,
               duplicating: false,
-              include: []
+              include: [],
+              attributes: []
             }
           ]);
         });
@@ -394,7 +402,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             {
               model: sq.Vote,
               as: 'votes',
-              required: false
+              required: false,
+              attributes: []
             }
           ]);
         });
@@ -422,7 +431,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             {
               model: sq.Vote,
               as: 'votes',
-              required: false
+              required: false,
+              attributes: []
             }
           ]);
         });
