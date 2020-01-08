@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.4.11...@venncity/base-dao@1.5.0) (2020-01-08)
+
+
+### Features
+
+* **base-dao:** add missing id fields ([4407006](https://github.com/venn-city/graphql-clou/commit/440700686e562e3590abe20d135017a0a68648f1))
+
+
+
+
+
 ## [1.4.11](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.4.10...@venncity/base-dao@1.4.11) (2020-01-07)
 
 **Note:** Version bump only for package @venncity/base-dao
