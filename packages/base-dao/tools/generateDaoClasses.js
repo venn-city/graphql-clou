@@ -1,6 +1,6 @@
 const { lowerFirst, upperFirst } = require('lodash');
 const pluralize = require('pluralize');
-const prismaGenerateSchema = require('prisma-generate-schema');
+const { parseInternalTypes } = require('prisma-generate-schema');
 const ejs = require('ejs');
 const path = require('path');
 
@@ -14,7 +14,7 @@ function generateDaoClass(entityName) {
 }
 
 async function generateDaoClasses(dataModel) {
-  const { types } = prismaGenerateSchema.parseInternalTypes(dataModel, 'postgres');
+  const { types } = parseInternalTypes(dataModel, 'postgres');
   const daoClasses = {};
 
   // eslint-disable-next-line no-plusplus

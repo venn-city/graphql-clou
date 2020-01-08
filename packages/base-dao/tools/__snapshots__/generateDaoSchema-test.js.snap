@@ -606,6 +606,7 @@ export type SurveyQuestion = {
   updatedAt: Scalars['DateTime'],
   deletedAt?: Maybe<Scalars['DateTime']>,
   deleted: Scalars['Int'],
+  surveyId: Scalars['ID'],
 };
 
 
@@ -712,6 +713,7 @@ export type SurveyQuestionResponse = {
   updatedAt: Scalars['DateTime'],
   deletedAt?: Maybe<Scalars['DateTime']>,
   deleted: Scalars['Int'],
+  questionId: Scalars['ID'],
 };
 
 export type SurveyQuestionResponseConnection = {
