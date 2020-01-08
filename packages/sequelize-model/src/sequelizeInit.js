@@ -3,18 +3,17 @@ const Sequelize = require('sequelize');
 const { forOwn } = require('lodash');
 const DataTypes = require('sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
+const { isTrue } = require('@venncity/clou-utils');
 let pg = require('pg');
 const { hookDefinitions } = require('./hooks/hooks');
 
 delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
-if (config.get('xray.enabled').toString() === 'true') {
+if (isTrue(config.get('xray.enabled'))) {
   Sequelize.useCLS(xray.getNamespace());
   pg = xray.capturePostgres(pg);
 }
 
 const sq = {};
-
-const loggingEnabled = config.get('sequelize.logging') === 'true';
 
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
@@ -23,7 +22,12 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
   schema: config.get('db.schema'),
   dialect: config.get('sequelize.dialect'),
   dialectModule: pg,
-  logging: loggingEnabled || undefined,
+  logging: (query, metadata) => {
+    if (isTrue(config.get('sequelize.logging'))) {
+      console.info(query);
+      console.debug(metadata);
+    }
+  },
   native: undefined,
   dialectOptions: {
     useUTC: true
