@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-model",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -23,9 +23,9 @@
     ]
   },
   "dependencies": {
-    "@venncity/nested-config": "^2.0.0",
-    "@venncity/opencrud-schema-provider": "^1.4.1",
     "@venncity/clou-utils": "^2.0.0",
+    "@venncity/nested-config": "^2.0.0",
+    "@venncity/opencrud-schema-provider": "^1.4.2",
     "aws-xray-sdk": "^2.5.0",
     "cuid": "^2.1.6",
     "lodash": "^4.17.15",

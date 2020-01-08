@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.3](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.5.2...@venncity/sequelize-model@1.5.3) (2020-01-08)
+
+
+### Bug Fixes
+
+* **sequelize-model:** fix logging function ([9102180](https://github.com/venn-city/graphql-clou/commit/910218091e2b9e926ecd4348aeae548e6794748e))
+
+
+
+
+
 ## [1.5.2](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.5.1...@venncity/sequelize-model@1.5.2) (2020-01-02)
 
 
