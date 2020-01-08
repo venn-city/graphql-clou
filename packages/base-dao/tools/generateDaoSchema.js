@@ -21,7 +21,7 @@ async function generateDAOSchema({
     const daoClassText = daoClasses[daoClassName];
     fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, `${daoClassName}.ts`), daoClassText, 'utf8');
   });
-  fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'openCrudSchema.d.ts'), openCrudSchemaTypes, 'utf8');
+  fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'openCrudSchema.ts'), openCrudSchemaTypes, 'utf8');
   fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'index.ts'), index, 'utf8');
 }
 
