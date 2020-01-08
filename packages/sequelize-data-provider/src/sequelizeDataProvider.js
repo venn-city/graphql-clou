@@ -1,4 +1,4 @@
-const { upperFirst, map, camelCase, isObject } = require('lodash');
+const { upperFirst, map, camelCase, isObject, omit } = require('lodash');
 const Sequelize = require('sequelize');
 
 const util = require('util');
@@ -77,7 +77,7 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
   }
   const originalEntity = await model(entityName).findOne({
     where: { id: originalEntityId },
-    include
+    include: omit(include, ['attributes'])
   });
   let relatedEntities = originalEntity ? originalEntity[relationFieldName] : [];
   relatedEntities = limitAfterFetch(args, relatedEntities);

@@ -11,8 +11,8 @@ describe('resultLimiter', () => {
     expect(shouldLimitInFetch({ where: { b_none: 'b' } })).toBeFalsy();
     expect(shouldLimitInFetch()).toBeFalsy();
 
-    // expect(shouldLimitInFetch({ where: { none: 'n' } })).toBeTruthy();
-    // expect(shouldLimitInFetch({ where: { a: 'a' } })).toBeTruthy();
+    expect(shouldLimitInFetch({ where: { none: 'n' } })).toBeTruthy();
+    expect(shouldLimitInFetch({ where: { a: 'a' } })).toBeTruthy();
   });
 
   test('limitAfterFetch', () => {

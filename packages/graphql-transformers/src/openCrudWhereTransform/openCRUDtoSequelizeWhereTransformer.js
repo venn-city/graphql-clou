@@ -50,6 +50,9 @@ function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWi
     if (shouldLimitInFetch({ where })) {
       sqFilter.limit = first;
       sqFilter.offset = skip;
+      sqFilter.attributes = {
+        include: [Sequelize.fn('DISTINCT', Sequelize.col(`${entityName}.id`)), 'id']
+      };
     }
     if (whereResult) {
       sqFilter = {
@@ -258,7 +261,8 @@ function handleRelation({
   const includeElement = {
     model: targetModel,
     as: associationAlias,
-    required
+    required,
+    attributes: []
   };
   correctManyRelationJoin(associationInfo, transformAssociationToNested, includeElement);
   return { includeElement, targetModel, relatedEntityFilter };

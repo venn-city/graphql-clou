@@ -290,7 +290,6 @@ describe('sequelizeDataProvider', () => {
       expect(fetchedMinistries).toHaveLength(3);
     });
 
-    // Breaks as the government table name is lower case and not upperFirst in this case.
     test('getAllEntities with nested _none filter for 1xn relation, inside 1x1', async () => {
       const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
         where: { government: { ministries_none: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } },
