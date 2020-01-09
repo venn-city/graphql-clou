@@ -160,7 +160,9 @@ describe('sequelizeDataProvider', () => {
     });
     vote4 = await sequelizeDataProvider.createEntity('Vote', {
       name: voteName4,
-      ballot: voteBallot4
+      ballot: voteBallot4,
+      lawInfo: { a: 'b' },
+      lawInfoJson: { x: 'y' }
     });
   });
 

@@ -5193,6 +5193,18 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "lawInfoJson_ASC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfoJson_DESC",
+        },
+        Object {
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "createdAt_ASC",
         },
         Object {
@@ -5295,6 +5307,18 @@ Object {
           "description": "",
           "isDeprecated": false,
           "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfoJson",
           "type": Object {
             "kind": "SCALAR",
             "name": "Json",
@@ -7518,6 +7542,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "lawInfoJson",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -8238,6 +8272,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfoJson",
           "type": Object {
             "kind": "SCALAR",
             "name": "Json",
@@ -9208,6 +9252,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfoJson",
           "type": Object {
             "kind": "SCALAR",
             "name": "Json",
@@ -11267,6 +11321,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "lawInfoJson",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "minister",
           "type": Object {
             "kind": "INPUT_OBJECT",
@@ -11411,6 +11475,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfoJson",
           "type": Object {
             "kind": "SCALAR",
             "name": "Json",
@@ -11643,6 +11717,16 @@ Object {
           "defaultValue": null,
           "description": "",
           "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "lawInfoJson",
           "type": Object {
             "kind": "SCALAR",
             "name": "Json",
@@ -13018,6 +13102,18 @@ Object {
           "description": "",
           "isDeprecated": false,
           "name": "lawInfo",
+          "type": Object {
+            "kind": "SCALAR",
+            "name": "Json",
+            "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "lawInfoJson",
           "type": Object {
             "kind": "SCALAR",
             "name": "Json",
@@ -14464,6 +14560,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "law_info_json",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "law_info_json",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "lawInfoJson",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "Json",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
                       "directives": Array [
@@ -15383,6 +15505,32 @@ Object {
                 "isUnique": false,
                 "isUpdatedAt": false,
                 "name": "lawInfo",
+                "relatedField": null,
+                "relationName": null,
+                "type": "Json",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "law_info_json",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "law_info_json",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "lawInfoJson",
                 "relatedField": null,
                 "relationName": null,
                 "type": "Json",
@@ -16739,6 +16887,32 @@ Object {
                           Object {
                             "associatedSequence": null,
                             "comments": Array [],
+                            "databaseName": "law_info_json",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "law_info_json",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": false,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "lawInfoJson",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "Json",
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
                             "databaseName": null,
                             "defaultValue": null,
                             "directives": Array [
@@ -17410,6 +17584,32 @@ Object {
           "isUnique": false,
           "isUpdatedAt": false,
           "name": "lawInfo",
+          "relatedField": null,
+          "relationName": null,
+          "type": "Json",
+        },
+        Object {
+          "associatedSequence": null,
+          "comments": Array [],
+          "databaseName": "law_info_json",
+          "defaultValue": null,
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "name": "law_info_json",
+              },
+              "name": "pgColumn",
+            },
+          ],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": false,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "lawInfoJson",
           "relatedField": null,
           "relationName": null,
           "type": "Json",
@@ -18633,6 +18833,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "law_info_json",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "law_info_json",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": false,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "lawInfoJson",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "Json",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": null,
                       "defaultValue": null,
                       "directives": Array [
@@ -19615,6 +19841,32 @@ Object {
                 "isUnique": false,
                 "isUpdatedAt": false,
                 "name": "lawInfo",
+                "relatedField": null,
+                "relationName": null,
+                "type": "Json",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "law_info_json",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "law_info_json",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": false,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "lawInfoJson",
                 "relatedField": null,
                 "relationName": null,
                 "type": "Json",
@@ -21637,6 +21889,7 @@ type Vote {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   minister: Minister
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -21654,6 +21907,7 @@ input VoteCreateInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   minister: MinisterCreateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -21668,6 +21922,7 @@ input VoteCreateWithoutMinisterInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -21686,6 +21941,8 @@ enum VoteOrderByInput {
   ballot_DESC
   lawInfo_ASC
   lawInfo_DESC
+  lawInfoJson_ASC
+  lawInfoJson_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -21701,6 +21958,7 @@ type VotePreviousValues {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -21799,6 +22057,7 @@ input VoteUpdateInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   minister: MinisterUpdateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -21808,6 +22067,7 @@ input VoteUpdateManyDataInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -21816,6 +22076,7 @@ input VoteUpdateManyMutationInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -21841,6 +22102,7 @@ input VoteUpdateWithoutMinisterDataInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }

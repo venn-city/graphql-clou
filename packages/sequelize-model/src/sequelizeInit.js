@@ -13,6 +13,7 @@ if (isTrue(config.get('xray.enabled'))) {
   pg = xray.capturePostgres(pg);
 }
 
+const enableLogging = isTrue(config.get('sequelize.logging'));
 const sq = {};
 
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
@@ -23,7 +24,7 @@ const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), co
   dialect: config.get('sequelize.dialect'),
   dialectModule: pg,
   logging: (query, metadata) => {
-    if (isTrue(config.get('sequelize.logging'))) {
+    if (enableLogging) {
       console.info(query);
       console.debug(metadata);
     }
