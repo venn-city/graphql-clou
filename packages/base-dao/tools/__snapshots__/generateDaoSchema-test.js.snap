@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateDAOSchema generate files should be match to snapshots 1`] = `
+exports[`generateDaoSchema generate files should be match to snapshots 1`] = `
 "import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
 
@@ -59,7 +59,7 @@ export default class SurveyDAO {
 "
 `;
 
-exports[`generateDAOSchema generate files should be match to snapshots 2`] = `
+exports[`generateDaoSchema generate files should be match to snapshots 2`] = `
 "import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
 
@@ -118,7 +118,7 @@ export default class SurveyQuestionDAO {
 "
 `;
 
-exports[`generateDAOSchema generate files should be match to snapshots 3`] = `
+exports[`generateDaoSchema generate files should be match to snapshots 3`] = `
 "import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
 
@@ -177,7 +177,7 @@ export default class SurveyQuestionResponseDAO {
 "
 `;
 
-exports[`generateDAOSchema generate files should be match to snapshots 4`] = `
+exports[`generateDaoSchema generate files should be match to snapshots 4`] = `
 "export * from './openCrudSchema';
 export { default as SurveyDAO } from './SurveyDAO';
 export { default as SurveyQuestionDAO } from './SurveyQuestionDAO';
@@ -185,7 +185,7 @@ export { default as SurveyQuestionResponseDAO } from './SurveyQuestionResponseDA
 "
 `;
 
-exports[`generateDAOSchema generate files should be match to snapshots 5`] = `
+exports[`generateDaoSchema generate files should be match to snapshots 5`] = `
 "type AggregateSurvey {
   count: Int!
 }
@@ -1229,7 +1229,7 @@ input SurveyWhereUniqueInput {
 "
 `;
 
-exports[`generateDAOSchema generate files should be match to snapshots 6`] = `
+exports[`generateDaoSchema generate files should be match to snapshots 6`] = `
 "export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
