@@ -4,9 +4,8 @@ const generateDaoSchema = require('./generateDaoSchema');
 
 const cwd = path.resolve(__dirname);
 
-describe('generateDAOSchema', () => {
+describe('generateDaoSchema', () => {
   beforeAll(async () => {
-    fs.removeSync(path.resolve(cwd, './generated'));
     await generateDaoSchema({
       dataModelPath: './fixtures/datamodel.graphql',
       generatedFolderPath: 'generated',
