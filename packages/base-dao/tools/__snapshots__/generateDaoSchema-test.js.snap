@@ -186,6 +186,1050 @@ export { default as SurveyQuestionResponseDAO } from './SurveyQuestionResponseDA
 `;
 
 exports[`generateDAOSchema generate files should be match to snapshots 5`] = `
+"type AggregateSurvey {
+  count: Int!
+}
+
+type AggregateSurveyQuestion {
+  count: Int!
+}
+
+type AggregateSurveyQuestionResponse {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+scalar Json
+
+scalar Long
+
+type Mutation {
+  createSurvey(data: SurveyCreateInput!): Survey!
+  updateSurvey(data: SurveyUpdateInput!, where: SurveyWhereUniqueInput!): Survey
+  updateManySurveys(data: SurveyUpdateManyMutationInput!, where: SurveyWhereInput): BatchPayload!
+  upsertSurvey(where: SurveyWhereUniqueInput!, create: SurveyCreateInput!, update: SurveyUpdateInput!): Survey!
+  deleteSurvey(where: SurveyWhereUniqueInput!): Survey
+  deleteManySurveys(where: SurveyWhereInput): BatchPayload!
+  createSurveyQuestion(data: SurveyQuestionCreateInput!): SurveyQuestion!
+  updateSurveyQuestion(data: SurveyQuestionUpdateInput!, where: SurveyQuestionWhereUniqueInput!): SurveyQuestion
+  updateManySurveyQuestions(data: SurveyQuestionUpdateManyMutationInput!, where: SurveyQuestionWhereInput): BatchPayload!
+  upsertSurveyQuestion(where: SurveyQuestionWhereUniqueInput!, create: SurveyQuestionCreateInput!, update: SurveyQuestionUpdateInput!): SurveyQuestion!
+  deleteSurveyQuestion(where: SurveyQuestionWhereUniqueInput!): SurveyQuestion
+  deleteManySurveyQuestions(where: SurveyQuestionWhereInput): BatchPayload!
+  createSurveyQuestionResponse(data: SurveyQuestionResponseCreateInput!): SurveyQuestionResponse!
+  updateSurveyQuestionResponse(data: SurveyQuestionResponseUpdateInput!, where: SurveyQuestionResponseWhereUniqueInput!): SurveyQuestionResponse
+  updateManySurveyQuestionResponses(data: SurveyQuestionResponseUpdateManyMutationInput!, where: SurveyQuestionResponseWhereInput): BatchPayload!
+  upsertSurveyQuestionResponse(where: SurveyQuestionResponseWhereUniqueInput!, create: SurveyQuestionResponseCreateInput!, update: SurveyQuestionResponseUpdateInput!): SurveyQuestionResponse!
+  deleteSurveyQuestionResponse(where: SurveyQuestionResponseWhereUniqueInput!): SurveyQuestionResponse
+  deleteManySurveyQuestionResponses(where: SurveyQuestionResponseWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  survey(where: SurveyWhereUniqueInput!): Survey
+  surveys(where: SurveyWhereInput, orderBy: SurveyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Survey]!
+  surveysConnection(where: SurveyWhereInput, orderBy: SurveyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SurveyConnection!
+  surveyQuestion(where: SurveyQuestionWhereUniqueInput!): SurveyQuestion
+  surveyQuestions(where: SurveyQuestionWhereInput, orderBy: SurveyQuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestion]!
+  surveyQuestionsConnection(where: SurveyQuestionWhereInput, orderBy: SurveyQuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SurveyQuestionConnection!
+  surveyQuestionResponse(where: SurveyQuestionResponseWhereUniqueInput!): SurveyQuestionResponse
+  surveyQuestionResponses(where: SurveyQuestionResponseWhereInput, orderBy: SurveyQuestionResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestionResponse]!
+  surveyQuestionResponsesConnection(where: SurveyQuestionResponseWhereInput, orderBy: SurveyQuestionResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SurveyQuestionResponseConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  survey(where: SurveySubscriptionWhereInput): SurveySubscriptionPayload
+  surveyQuestion(where: SurveyQuestionSubscriptionWhereInput): SurveyQuestionSubscriptionPayload
+  surveyQuestionResponse(where: SurveyQuestionResponseSubscriptionWhereInput): SurveyQuestionResponseSubscriptionPayload
+}
+
+type Survey {
+  id: ID!
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  questions(where: SurveyQuestionWhereInput, orderBy: SurveyQuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestion!]
+  hoodId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+type SurveyConnection {
+  pageInfo: PageInfo!
+  edges: [SurveyEdge]!
+  aggregate: AggregateSurvey!
+}
+
+input SurveyCreateInput {
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  questions: SurveyQuestionCreateManyWithoutSurveyInput
+  hoodId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyCreateOneWithoutQuestionsInput {
+  create: SurveyCreateWithoutQuestionsInput
+  connect: SurveyWhereUniqueInput
+}
+
+input SurveyCreateWithoutQuestionsInput {
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  hoodId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+type SurveyEdge {
+  node: Survey!
+  cursor: String!
+}
+
+enum SurveyOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  enabled_ASC
+  enabled_DESC
+  isAnonymous_ASC
+  isAnonymous_DESC
+  hoodId_ASC
+  hoodId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deleted_ASC
+  deleted_DESC
+}
+
+type SurveyPreviousValues {
+  id: ID!
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  hoodId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+type SurveyQuestion {
+  id: ID!
+  text: String
+  options: Json
+  addCommentField: Boolean
+  responses(where: SurveyQuestionResponseWhereInput, orderBy: SurveyQuestionResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestionResponse!]
+  survey: Survey!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+type SurveyQuestionConnection {
+  pageInfo: PageInfo!
+  edges: [SurveyQuestionEdge]!
+  aggregate: AggregateSurveyQuestion!
+}
+
+input SurveyQuestionCreateInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  responses: SurveyQuestionResponseCreateManyWithoutQuestionInput
+  survey: SurveyCreateOneWithoutQuestionsInput!
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionCreateManyWithoutSurveyInput {
+  create: [SurveyQuestionCreateWithoutSurveyInput!]
+  connect: [SurveyQuestionWhereUniqueInput!]
+}
+
+input SurveyQuestionCreateOneWithoutResponsesInput {
+  create: SurveyQuestionCreateWithoutResponsesInput
+  connect: SurveyQuestionWhereUniqueInput
+}
+
+input SurveyQuestionCreateWithoutResponsesInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  survey: SurveyCreateOneWithoutQuestionsInput!
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionCreateWithoutSurveyInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  responses: SurveyQuestionResponseCreateManyWithoutQuestionInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+type SurveyQuestionEdge {
+  node: SurveyQuestion!
+  cursor: String!
+}
+
+enum SurveyQuestionOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  options_ASC
+  options_DESC
+  addCommentField_ASC
+  addCommentField_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deleted_ASC
+  deleted_DESC
+}
+
+type SurveyQuestionPreviousValues {
+  id: ID!
+  text: String
+  options: Json
+  addCommentField: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+type SurveyQuestionResponse {
+  id: ID!
+  value: String
+  comment: String
+  question: SurveyQuestion!
+  responderId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+type SurveyQuestionResponseConnection {
+  pageInfo: PageInfo!
+  edges: [SurveyQuestionResponseEdge]!
+  aggregate: AggregateSurveyQuestionResponse!
+}
+
+input SurveyQuestionResponseCreateInput {
+  value: String
+  comment: String
+  question: SurveyQuestionCreateOneWithoutResponsesInput!
+  responderId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionResponseCreateManyWithoutQuestionInput {
+  create: [SurveyQuestionResponseCreateWithoutQuestionInput!]
+  connect: [SurveyQuestionResponseWhereUniqueInput!]
+}
+
+input SurveyQuestionResponseCreateWithoutQuestionInput {
+  value: String
+  comment: String
+  responderId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+type SurveyQuestionResponseEdge {
+  node: SurveyQuestionResponse!
+  cursor: String!
+}
+
+enum SurveyQuestionResponseOrderByInput {
+  id_ASC
+  id_DESC
+  value_ASC
+  value_DESC
+  comment_ASC
+  comment_DESC
+  responderId_ASC
+  responderId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deleted_ASC
+  deleted_DESC
+}
+
+type SurveyQuestionResponsePreviousValues {
+  id: ID!
+  value: String
+  comment: String
+  responderId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+input SurveyQuestionResponseScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  comment: String
+  comment_not: String
+  comment_in: [String!]
+  comment_not_in: [String!]
+  comment_lt: String
+  comment_lte: String
+  comment_gt: String
+  comment_gte: String
+  comment_contains: String
+  comment_not_contains: String
+  comment_starts_with: String
+  comment_not_starts_with: String
+  comment_ends_with: String
+  comment_not_ends_with: String
+  responderId: String
+  responderId_not: String
+  responderId_in: [String!]
+  responderId_not_in: [String!]
+  responderId_lt: String
+  responderId_lte: String
+  responderId_gt: String
+  responderId_gte: String
+  responderId_contains: String
+  responderId_not_contains: String
+  responderId_starts_with: String
+  responderId_not_starts_with: String
+  responderId_ends_with: String
+  responderId_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [SurveyQuestionResponseScalarWhereInput!]
+  OR: [SurveyQuestionResponseScalarWhereInput!]
+  NOT: [SurveyQuestionResponseScalarWhereInput!]
+}
+
+type SurveyQuestionResponseSubscriptionPayload {
+  mutation: MutationType!
+  node: SurveyQuestionResponse
+  updatedFields: [String!]
+  previousValues: SurveyQuestionResponsePreviousValues
+}
+
+input SurveyQuestionResponseSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SurveyQuestionResponseWhereInput
+  AND: [SurveyQuestionResponseSubscriptionWhereInput!]
+  OR: [SurveyQuestionResponseSubscriptionWhereInput!]
+  NOT: [SurveyQuestionResponseSubscriptionWhereInput!]
+}
+
+input SurveyQuestionResponseUpdateInput {
+  value: String
+  comment: String
+  question: SurveyQuestionUpdateOneRequiredWithoutResponsesInput
+  responderId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionResponseUpdateManyDataInput {
+  value: String
+  comment: String
+  responderId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionResponseUpdateManyMutationInput {
+  value: String
+  comment: String
+  responderId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionResponseUpdateManyWithoutQuestionInput {
+  create: [SurveyQuestionResponseCreateWithoutQuestionInput!]
+  delete: [SurveyQuestionResponseWhereUniqueInput!]
+  connect: [SurveyQuestionResponseWhereUniqueInput!]
+  set: [SurveyQuestionResponseWhereUniqueInput!]
+  disconnect: [SurveyQuestionResponseWhereUniqueInput!]
+  update: [SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput!]
+  upsert: [SurveyQuestionResponseUpsertWithWhereUniqueWithoutQuestionInput!]
+  deleteMany: [SurveyQuestionResponseScalarWhereInput!]
+  updateMany: [SurveyQuestionResponseUpdateManyWithWhereNestedInput!]
+}
+
+input SurveyQuestionResponseUpdateManyWithWhereNestedInput {
+  where: SurveyQuestionResponseScalarWhereInput!
+  data: SurveyQuestionResponseUpdateManyDataInput!
+}
+
+input SurveyQuestionResponseUpdateWithoutQuestionDataInput {
+  value: String
+  comment: String
+  responderId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput {
+  where: SurveyQuestionResponseWhereUniqueInput!
+  data: SurveyQuestionResponseUpdateWithoutQuestionDataInput!
+}
+
+input SurveyQuestionResponseUpsertWithWhereUniqueWithoutQuestionInput {
+  where: SurveyQuestionResponseWhereUniqueInput!
+  update: SurveyQuestionResponseUpdateWithoutQuestionDataInput!
+  create: SurveyQuestionResponseCreateWithoutQuestionInput!
+}
+
+input SurveyQuestionResponseWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  comment: String
+  comment_not: String
+  comment_in: [String!]
+  comment_not_in: [String!]
+  comment_lt: String
+  comment_lte: String
+  comment_gt: String
+  comment_gte: String
+  comment_contains: String
+  comment_not_contains: String
+  comment_starts_with: String
+  comment_not_starts_with: String
+  comment_ends_with: String
+  comment_not_ends_with: String
+  question: SurveyQuestionWhereInput
+  responderId: String
+  responderId_not: String
+  responderId_in: [String!]
+  responderId_not_in: [String!]
+  responderId_lt: String
+  responderId_lte: String
+  responderId_gt: String
+  responderId_gte: String
+  responderId_contains: String
+  responderId_not_contains: String
+  responderId_starts_with: String
+  responderId_not_starts_with: String
+  responderId_ends_with: String
+  responderId_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [SurveyQuestionResponseWhereInput!]
+  OR: [SurveyQuestionResponseWhereInput!]
+  NOT: [SurveyQuestionResponseWhereInput!]
+}
+
+input SurveyQuestionResponseWhereUniqueInput {
+  id: ID
+}
+
+input SurveyQuestionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  addCommentField: Boolean
+  addCommentField_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [SurveyQuestionScalarWhereInput!]
+  OR: [SurveyQuestionScalarWhereInput!]
+  NOT: [SurveyQuestionScalarWhereInput!]
+}
+
+type SurveyQuestionSubscriptionPayload {
+  mutation: MutationType!
+  node: SurveyQuestion
+  updatedFields: [String!]
+  previousValues: SurveyQuestionPreviousValues
+}
+
+input SurveyQuestionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SurveyQuestionWhereInput
+  AND: [SurveyQuestionSubscriptionWhereInput!]
+  OR: [SurveyQuestionSubscriptionWhereInput!]
+  NOT: [SurveyQuestionSubscriptionWhereInput!]
+}
+
+input SurveyQuestionUpdateInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  responses: SurveyQuestionResponseUpdateManyWithoutQuestionInput
+  survey: SurveyUpdateOneRequiredWithoutQuestionsInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionUpdateManyDataInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionUpdateManyMutationInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionUpdateManyWithoutSurveyInput {
+  create: [SurveyQuestionCreateWithoutSurveyInput!]
+  delete: [SurveyQuestionWhereUniqueInput!]
+  connect: [SurveyQuestionWhereUniqueInput!]
+  set: [SurveyQuestionWhereUniqueInput!]
+  disconnect: [SurveyQuestionWhereUniqueInput!]
+  update: [SurveyQuestionUpdateWithWhereUniqueWithoutSurveyInput!]
+  upsert: [SurveyQuestionUpsertWithWhereUniqueWithoutSurveyInput!]
+  deleteMany: [SurveyQuestionScalarWhereInput!]
+  updateMany: [SurveyQuestionUpdateManyWithWhereNestedInput!]
+}
+
+input SurveyQuestionUpdateManyWithWhereNestedInput {
+  where: SurveyQuestionScalarWhereInput!
+  data: SurveyQuestionUpdateManyDataInput!
+}
+
+input SurveyQuestionUpdateOneRequiredWithoutResponsesInput {
+  create: SurveyQuestionCreateWithoutResponsesInput
+  update: SurveyQuestionUpdateWithoutResponsesDataInput
+  upsert: SurveyQuestionUpsertWithoutResponsesInput
+  connect: SurveyQuestionWhereUniqueInput
+}
+
+input SurveyQuestionUpdateWithoutResponsesDataInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  survey: SurveyUpdateOneRequiredWithoutQuestionsInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionUpdateWithoutSurveyDataInput {
+  text: String
+  options: Json
+  addCommentField: Boolean
+  responses: SurveyQuestionResponseUpdateManyWithoutQuestionInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyQuestionUpdateWithWhereUniqueWithoutSurveyInput {
+  where: SurveyQuestionWhereUniqueInput!
+  data: SurveyQuestionUpdateWithoutSurveyDataInput!
+}
+
+input SurveyQuestionUpsertWithoutResponsesInput {
+  update: SurveyQuestionUpdateWithoutResponsesDataInput!
+  create: SurveyQuestionCreateWithoutResponsesInput!
+}
+
+input SurveyQuestionUpsertWithWhereUniqueWithoutSurveyInput {
+  where: SurveyQuestionWhereUniqueInput!
+  update: SurveyQuestionUpdateWithoutSurveyDataInput!
+  create: SurveyQuestionCreateWithoutSurveyInput!
+}
+
+input SurveyQuestionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  addCommentField: Boolean
+  addCommentField_not: Boolean
+  responses_every: SurveyQuestionResponseWhereInput
+  responses_some: SurveyQuestionResponseWhereInput
+  responses_none: SurveyQuestionResponseWhereInput
+  survey: SurveyWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [SurveyQuestionWhereInput!]
+  OR: [SurveyQuestionWhereInput!]
+  NOT: [SurveyQuestionWhereInput!]
+}
+
+input SurveyQuestionWhereUniqueInput {
+  id: ID
+}
+
+type SurveySubscriptionPayload {
+  mutation: MutationType!
+  node: Survey
+  updatedFields: [String!]
+  previousValues: SurveyPreviousValues
+}
+
+input SurveySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SurveyWhereInput
+  AND: [SurveySubscriptionWhereInput!]
+  OR: [SurveySubscriptionWhereInput!]
+  NOT: [SurveySubscriptionWhereInput!]
+}
+
+input SurveyUpdateInput {
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  questions: SurveyQuestionUpdateManyWithoutSurveyInput
+  hoodId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyUpdateManyMutationInput {
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  hoodId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyUpdateOneRequiredWithoutQuestionsInput {
+  create: SurveyCreateWithoutQuestionsInput
+  update: SurveyUpdateWithoutQuestionsDataInput
+  upsert: SurveyUpsertWithoutQuestionsInput
+  connect: SurveyWhereUniqueInput
+}
+
+input SurveyUpdateWithoutQuestionsDataInput {
+  name: String
+  title: String
+  description: String
+  enabled: Boolean
+  isAnonymous: Boolean
+  hoodId: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input SurveyUpsertWithoutQuestionsInput {
+  update: SurveyUpdateWithoutQuestionsDataInput!
+  create: SurveyCreateWithoutQuestionsInput!
+}
+
+input SurveyWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  enabled: Boolean
+  enabled_not: Boolean
+  isAnonymous: Boolean
+  isAnonymous_not: Boolean
+  questions_every: SurveyQuestionWhereInput
+  questions_some: SurveyQuestionWhereInput
+  questions_none: SurveyQuestionWhereInput
+  hoodId: String
+  hoodId_not: String
+  hoodId_in: [String!]
+  hoodId_not_in: [String!]
+  hoodId_lt: String
+  hoodId_lte: String
+  hoodId_gt: String
+  hoodId_gte: String
+  hoodId_contains: String
+  hoodId_not_contains: String
+  hoodId_starts_with: String
+  hoodId_not_starts_with: String
+  hoodId_ends_with: String
+  hoodId_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [SurveyWhereInput!]
+  OR: [SurveyWhereInput!]
+  NOT: [SurveyWhereInput!]
+}
+
+input SurveyWhereUniqueInput {
+  id: ID
+  name: String
+}
+"
+`;
+
+exports[`generateDAOSchema generate files should be match to snapshots 6`] = `
 "export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
