@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('@venncity/sequelize');
 const { trimEnd, lowerFirst } = require('lodash');
 const sequelizeConsts = require('./sequelizeConsts');
 

@@ -1960,9 +1960,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>= 8", "@types/node@>=6":
-  version "13.1.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.4.tgz#4cfd90175a200ee9b02bd6b1cd19bc349741607e"
-  integrity sha512-Lue/mlp2egZJoHXZr4LndxDAd7i/7SQYhV0EjWfb/a4/OZ6tuVwMCVPiwkU5nsEipxEf7hmkSU7Em5VQ8P5NGA==
+  version "13.1.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.5.tgz#4d5efc52a1d3e45d13e5ec9f911cbc5b089ccaec"
+  integrity sha512-wupvfmtbqRJzjCm1H2diy7wo31Gn1OzvqoxCfQuKM9eSecogzP0WTlrjdq7cf7jgSO2ZX6hxwgRPR8Wt7FA22g==
 
 "@types/node@^10.1.0":
   version "10.17.13"
@@ -2226,12 +2226,33 @@
   resolved "https://registry.yarnpkg.com/@venncity/prettier-config-server/-/prettier-config-server-1.1.3.tgz#9750516a9b6f3d5de91e838ee4793cb05304f1a6"
   integrity sha512-7KfhIgg0NF505SBT6+mGKlQJLh+4IE6L0EFxBqHW/nK7ULReUEwd+7MPA0cwkHZgQA0nC8EgububHRmXLvQURg==
 
-"@venncity/schema-consts@^3.11.2", "@venncity/schema-consts@^3.12.3":
-  version "3.12.3"
-  resolved "https://registry.yarnpkg.com/@venncity/schema-consts/-/schema-consts-3.12.3.tgz#d29429b6e414314d515f180f6663b2285f5350a5"
-  integrity sha512-DQHD48xTbykzDSsMcFhVVOToZYNAEG0C+aIZeFt/rDE4otQL/JjEq7bWKQy1hrqb1DqHhMmfvBP68elPLpq1tQ==
+"@venncity/schema-consts@^3.11.2", "@venncity/schema-consts@^3.13.0":
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/@venncity/schema-consts/-/schema-consts-3.13.0.tgz#1f89913fd1f2e62d5958bfdb323cd5f251dc2512"
+  integrity sha512-erFg1EI0Brnq+uUwzSY6AbyqH/MwUhSkmzWRpR1NMEzP4R7xekt3kMG4THYEIVOr1myCACdJN5hDsyRkN1eBgw==
   dependencies:
     graphql "^14.5.8"
+
+"@venncity/sequelize@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@venncity/sequelize/-/sequelize-1.0.0.tgz#1f041de6625744f80f04d398cd07b8820c4b8320"
+  integrity sha512-+/z57nYJLD3IjfQQr1SsQYnyoFQeS3rQ0+4pSV3kp387XKVvSvm1s8viFgPidZAGxleRn9IUBzdiw8iX3fM0UQ==
+  dependencies:
+    bluebird "^3.5.0"
+    cls-bluebird "^2.1.0"
+    debug "^4.1.1"
+    dottie "^2.0.0"
+    inflection "1.12.0"
+    lodash "^4.17.15"
+    moment "^2.24.0"
+    moment-timezone "^0.5.21"
+    retry-as-promised "^3.2.0"
+    semver "^6.3.0"
+    sequelize-pool "^2.3.0"
+    toposort-class "^1.0.1"
+    uuid "^3.3.3"
+    validator "^10.11.0"
+    wkx "^0.4.8"
 
 "@venncity/serverless-apigwy-binary@^1.0.0":
   version "1.0.0"
@@ -2241,12 +2262,12 @@
     bluebird "^3.5.0"
 
 "@venncity/test-helper@^4.0.1":
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@venncity/test-helper/-/test-helper-4.1.3.tgz#771fb09edb048a3b6855920f716bf6628e57729d"
-  integrity sha512-eEpEGJG1W8+NXipF/1UbRYuYFAXe4ZSxWcr11b3qXUcyFvF02dlMoFtmak0GGsbMK2zg+NXYK0c2zpHb3gNiFw==
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@venncity/test-helper/-/test-helper-4.1.4.tgz#ac089a46efa93a041b8db617f87d25a938f7da5a"
+  integrity sha512-7J5w5gsU9H1JcxSR//4rW3KcynKhE5D2ZlLPg+8b4YXSU/SZahqI/3j8yVQEKd5gzxXdl7nd6g0qfUXkCo7QdA==
   dependencies:
     "@venncity/data-clients" "^2.4.1"
-    "@venncity/schema-consts" "^3.12.3"
+    "@venncity/schema-consts" "^3.13.0"
     faker "^4.1.0"
     lodash "^4.17.14"
     moment "^2.24.0"
@@ -5594,9 +5615,9 @@ growly@^1.3.0:
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
 handlebars@^4.1.2, handlebars@^4.4.0:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
-  integrity sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.6.0.tgz#33af6c3eda930d7a924f5d8f1c6d8edc3180512e"
+  integrity sha512-i1ZUP7Qp2JdkMaFon2a+b0m5geE8Z4ZTLaGkgrObkEd+OkUKyRbRWw4KxuFCoHfdETSY1yf9/574eVoNSiK7pw==
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
@@ -9603,26 +9624,6 @@ sequelize-pool@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-2.3.0.tgz#64f1fe8744228172c474f530604b6133be64993d"
   integrity sha512-Ibz08vnXvkZ8LJTiUOxRcj1Ckdn7qafNZ2t59jYHMX1VIebTAOYefWdRYFt6z6+hy52WGthAHAoLc9hvk3onqA==
-
-sequelize@venn-city/sequelize#v5:
-  version "0.0.0-development"
-  resolved "https://codeload.github.com/venn-city/sequelize/tar.gz/83b768a4fb78f28d5d1769a4d2f4394e2b7e10d9"
-  dependencies:
-    bluebird "^3.5.0"
-    cls-bluebird "^2.1.0"
-    debug "^4.1.1"
-    dottie "^2.0.0"
-    inflection "1.12.0"
-    lodash "^4.17.15"
-    moment "^2.24.0"
-    moment-timezone "^0.5.21"
-    retry-as-promised "^3.2.0"
-    semver "^6.3.0"
-    sequelize-pool "^2.3.0"
-    toposort-class "^1.0.1"
-    uuid "^3.3.3"
-    validator "^10.11.0"
-    wkx "^0.4.8"
 
 serve-static@1.14.1:
   version "1.14.1"

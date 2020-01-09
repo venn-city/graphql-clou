@@ -26,11 +26,11 @@
     "@venncity/clou-utils": "^2.0.0",
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.3",
+    "@venncity/sequelize": "1.0.0",
     "aws-xray-sdk": "^2.5.0",
     "cuid": "^2.1.6",
     "lodash": "^4.17.15",
-    "pg": "^7.12.1",
-    "sequelize": "venn-city/sequelize#v5"
+    "pg": "^7.12.1"
   },
   "devDependencies": {
     "@venncity/eslint-config": "^1.0.11",
