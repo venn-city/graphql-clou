@@ -1,6 +1,6 @@
 {
   "name": "@venncity/base-dao",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
