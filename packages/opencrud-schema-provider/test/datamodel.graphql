@@ -61,7 +61,8 @@ type Vote @pgTable(name: "votes") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
   ballot:                 BALLOT                  @pgColumn(name: "ballot")
-  lawInfo:                Json                    @pgColumn(name: "law_info")
+  lawInfo:                Json                    @pgColumn(name: "law_info") # this field si mapped to a text column
+  lawInfoJson:            Json                    @pgColumn(name: "law_info_json")
   minister:               Minister                @relation(link: TABLE, name:"MinisterVotesRelation") @vnCascade(direct: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")

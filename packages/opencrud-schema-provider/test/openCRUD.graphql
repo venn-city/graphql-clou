@@ -877,6 +877,7 @@ type Vote {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   minister: Minister
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -894,6 +895,7 @@ input VoteCreateInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   minister: MinisterCreateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -908,6 +910,7 @@ input VoteCreateWithoutMinisterInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -926,6 +929,8 @@ enum VoteOrderByInput {
   ballot_DESC
   lawInfo_ASC
   lawInfo_DESC
+  lawInfoJson_ASC
+  lawInfoJson_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -941,6 +946,7 @@ type VotePreviousValues {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -1039,6 +1045,7 @@ input VoteUpdateInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   minister: MinisterUpdateOneWithoutVotesInput
   deletedAt: DateTime
   deleted: Int
@@ -1048,6 +1055,7 @@ input VoteUpdateManyDataInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -1056,6 +1064,7 @@ input VoteUpdateManyMutationInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }
@@ -1081,6 +1090,7 @@ input VoteUpdateWithoutMinisterDataInput {
   name: String
   ballot: BALLOT
   lawInfo: Json
+  lawInfoJson: Json
   deletedAt: DateTime
   deleted: Int
 }

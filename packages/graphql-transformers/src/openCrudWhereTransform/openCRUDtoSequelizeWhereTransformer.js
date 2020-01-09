@@ -50,12 +50,7 @@ function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWi
     if (shouldLimitInFetch({ where })) {
       sqFilter.limit = first;
       sqFilter.offset = skip;
-      sqFilter.attributes = {
-        // Relies on https://github.com/venn-city/sequelize/commit/83b768a4fb78f28d5d1769a4d2f4394e2b7e10d9
-        // Needed so that limit on the root level of the query works as expected,
-        // as without it, joins tables of 1xn or nxm generate multiple (duplicate rows) which throws off the expected limit.
-        include: [Sequelize.fn('DISTINCT', Sequelize.col(`${entityName}.id`)), 'id']
-      };
+      addSelectAttributes(sqFilter, entityName);
     }
     if (whereResult) {
       sqFilter = {
@@ -295,6 +290,28 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
       return fieldName;
     } // TODO: also handle: entity: null - e.g. parentEntity { childEntity: null}
   })(relatedEntityFilter.where);
+}
+
+function addSelectAttributes(sqFilter, entityName) {
+  const includeAttributes = [];
+  const excludeAttributes = [];
+  const rawAttributes = sq[entityName].rawAttributes;
+  Object.keys(rawAttributes).forEach(rawAttrKey => {
+    const attribute = rawAttributes[rawAttrKey];
+    if (attribute.type.toString() === 'JSON') {
+      // Need to transform JSON fields to text so that the distinct operator won't fail, as it can't compare json fields.
+      includeAttributes.push([Sequelize.literal(`"${entityName}"."${attribute.field}" #>> '{}'`), attribute.fieldName]);
+      excludeAttributes.push(attribute.fieldName);
+    }
+  });
+
+  sqFilter.attributes = {
+    // Relies on https://github.com/venn-city/sequelize/commit/83b768a4fb78f28d5d1769a4d2f4394e2b7e10d9
+    // Needed so that limit on the root level of the query works as expected,
+    // as without it, joins tables of 1xn or nxm generate multiple (duplicate rows) which throws off the expected limit.
+    include: [[Sequelize.fn('DISTINCT', Sequelize.col(`${entityName}.id`)), 'id'], ...includeAttributes],
+    exclude: [...excludeAttributes]
+  };
 }
 
 function pushNotEmpty(array, other) {

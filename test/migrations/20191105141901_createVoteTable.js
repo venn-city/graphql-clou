@@ -17,6 +17,9 @@ module.exports = {
         law_info: {
           type: Sequelize.STRING
         },
+        law_info_json: {
+          type: Sequelize.JSON
+        },
         created_at: {
           allowNull: false,
           type: Sequelize.DATE
