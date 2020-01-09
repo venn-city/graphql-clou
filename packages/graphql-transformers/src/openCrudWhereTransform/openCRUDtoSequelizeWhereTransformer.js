@@ -1,5 +1,5 @@
 const { drop, endsWith, isNil, isEmpty, isArray, map, flatMap, isString } = require('lodash');
-const Sequelize = require('sequelize');
+const Sequelize = require('@venncity/sequelize');
 require('@venncity/nested-config')(__dirname);
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 

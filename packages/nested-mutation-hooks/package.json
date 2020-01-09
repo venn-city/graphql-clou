@@ -28,10 +28,10 @@
     "@venncity/opencrud-schema-provider": "^1.4.3",
     "@venncity/sequelize-data-provider": "^1.6.9",
     "@venncity/sequelize-model": "^1.5.4",
+    "@venncity/sequelize": "1.0.0",
     "async": "^3.1.0",
     "lodash": "^4.17.15",
-    "pluralize": "^8.0.0",
-    "sequelize": "venn-city/sequelize#v5"
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@venncity/eslint-config": "^1.0.11",

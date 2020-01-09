@@ -1,5 +1,5 @@
 const sequelizeModel = require('@venncity/sequelize-model');
-const { Op } = require('sequelize');
+const { Op } = require('@venncity/sequelize');
 const { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
 const models = require('./../../../../test/model');
 

@@ -27,10 +27,10 @@
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.3",
     "@venncity/sequelize-model": "^1.5.4",
+    "@venncity/sequelize": "1.0.0",
     "deepdash": "^4.2.17",
     "lodash": "^4.17.15",
-    "pluralize": "^8.0.0",
-    "sequelize": "venn-city/sequelize#v5"
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@venncity/eslint-config": "^1.0.11",

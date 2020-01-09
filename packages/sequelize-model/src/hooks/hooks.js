@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('@venncity/sequelize');
 const cuid = require('cuid');
 const _ = require('lodash');
 const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');

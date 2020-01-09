@@ -8,4 +8,4 @@ const checkNodeVersion = version => {
     );
   }
 };
-checkNodeVersion(10);
+checkNodeVersion(12);

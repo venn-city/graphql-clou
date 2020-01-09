@@ -1,7 +1,7 @@
 const xray = require('aws-xray-sdk');
-const Sequelize = require('sequelize');
+const Sequelize = require('@venncity/sequelize');
 const { forOwn } = require('lodash');
-const DataTypes = require('sequelize/lib/data-types');
+const DataTypes = require('@venncity/sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
 const { isTrue } = require('@venncity/clou-utils');
 let pg = require('pg');

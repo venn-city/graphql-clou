@@ -1,5 +1,5 @@
 const { upperFirst, map, camelCase, isObject, omit } = require('lodash');
-const Sequelize = require('sequelize');
+const Sequelize = require('@venncity/sequelize');
 
 const util = require('util');
 const async = require('async');
