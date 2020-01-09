@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.9](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.8...@venncity/sequelize-data-provider@1.6.9) (2020-01-09)
+
+
+### Bug Fixes
+
+* **graphql-transformers:** convert json fields to text in selects so distinct op will not fail comparing them ([a2e2c24](https://github.com/venn-city/graphql-clou/commit/a2e2c2400c4ae41531d456aea840004264257d23))
+
+
+
+
+
 ## [1.6.8](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.7...@venncity/sequelize-data-provider@1.6.8) (2020-01-08)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://github.com/venn-city/graphql-clou/compare/@venncity/opencrud-schema-provider@1.4.2...@venncity/opencrud-schema-provider@1.4.3) (2020-01-09)
+
+
+### Bug Fixes
+
+* **graphql-transformers:** convert json fields to text in selects so distinct op will not fail comparing them ([a2e2c24](https://github.com/venn-city/graphql-clou/commit/a2e2c2400c4ae41531d456aea840004264257d23))
+
+
+
+
+
 ## [1.4.2](https://github.com/venn-city/graphql-clou/compare/@venncity/opencrud-schema-provider@1.4.1...@venncity/opencrud-schema-provider@1.4.2) (2020-01-08)
 
 **Note:** Version bump only for package @venncity/opencrud-schema-provider
