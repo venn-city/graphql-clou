@@ -291,13 +291,27 @@ describe('sequelizeDataProvider', () => {
       });
       expect(fetchedMinistries).toHaveLength(3);
     });
-
     test('getAllEntities with nested _none filter for 1xn relation, inside 1x1', async () => {
       const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
         where: { government: { ministries_none: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } },
         first: 5
       });
       expect(fetchedMinistries).toHaveLength(0);
+    });
+    test('getAllEntities with orderBy arg', async () => {
+      const fetchedMinistriesDESC = await sequelizeDataProvider.getAllEntities('Ministry', {
+        where: { government: { ministries_some: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } },
+        orderBy: 'id_DESC'
+      });
+      expect(fetchedMinistriesDESC).toHaveLength(3);
+
+      // default order is id_ASC
+      const fetchedMinistriedDefaultOrderBy = await sequelizeDataProvider.getAllEntities('Ministry', {
+        where: { government: { ministries_some: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } }
+      });
+      expect(fetchedMinistriedDefaultOrderBy).toHaveLength(3);
+
+      expect(fetchedMinistriesDESC.reverse()).toEqual(fetchedMinistriedDefaultOrderBy);
     });
   });
 

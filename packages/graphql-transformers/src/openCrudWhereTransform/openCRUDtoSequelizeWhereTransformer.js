@@ -18,7 +18,7 @@ const AND = 'AND';
 const OR = 'OR';
 const NOT = 'NOT';
 
-function openCrudToSequelize({ where, first, skip, orderBy }, entityName, pathWithinSchema = [entityName], useColumnNames = false) {
+function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityName, pathWithinSchema = [entityName], useColumnNames = false) {
   try {
     const sqWhereElements = [];
     const sqIncludeElements = [];
