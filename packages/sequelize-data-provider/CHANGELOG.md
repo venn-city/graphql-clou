@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.11](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.10...@venncity/sequelize-data-provider@1.6.11) (2020-01-12)
+
+
+### Bug Fixes
+
+* **sequelize-data-provider:** orderBy id_ASC default ([72f12b5](https://github.com/venn-city/graphql-clou/commit/72f12b5622917c07bad18b87795635127e02a5a0))
+
+
+
+
+
 ## [1.6.10](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.9...@venncity/sequelize-data-provider@1.6.10) (2020-01-09)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider
