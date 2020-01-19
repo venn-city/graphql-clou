@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.12](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.11...@venncity/sequelize-data-provider@1.6.12) (2020-01-19)
+
+**Note:** Version bump only for package @venncity/sequelize-data-provider
+
+
+
+
+
 ## [1.6.11](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.10...@venncity/sequelize-data-provider@1.6.11) (2020-01-12)
 
 

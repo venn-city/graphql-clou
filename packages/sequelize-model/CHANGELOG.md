@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.5.5...@venncity/sequelize-model@1.6.0) (2020-01-19)
+
+
+### Features
+
+* Add common column definitions to base-model ([66e004e](https://github.com/venn-city/graphql-clou/commit/66e004e995b3c9220d1ea5f95b15571051dc3b7e))
+
+
+
+
+
 ## [1.5.5](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.5.4...@venncity/sequelize-model@1.5.5) (2020-01-09)
 
 **Note:** Version bump only for package @venncity/sequelize-model
