@@ -97,6 +97,8 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     },
     // e.g units
     [GET_ALL_ENTITIES_FUNCTION_NAME]: async (context, args = {}, info = { fieldName: GET_ALL_ENTITIES_FUNCTION_NAME }) => {
+      const { skipPagination } = args;
+      delete args.skipPagination;
       const auth = await buildAuth(context, hooks);
       const whereInputName = getQueryWhereInputName(context, info.fieldName);
       const transformedArgs = {
@@ -108,7 +110,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
           context
         })
       };
-      enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME);
+      enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME, skipPagination);
 
       const fetchedEntities = await dataProvider.getAllEntities(entityName, transformedArgs);
       const entitiesThatUserCanAccess = [];

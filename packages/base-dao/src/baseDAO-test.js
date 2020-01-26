@@ -38,4 +38,13 @@ describe('generic tests', () => {
     const governmentsConnectionResult = await governmentDAO.governmentsConnection(null, { where: { id: 'x' } }, serviceContext);
     expect(governmentsConnectionResult.aggregate).toHaveProperty('count', 0);
   });
+  test('fetch all governments', async () => {
+    const firstGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+    const secondGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+    const fetchedAllGovernments = await governmentDAO.governments(serviceContext, { skipPagination: true });
+    expect(fetchedAllGovernments.length).toBeGreaterThanOrEqual(2);
+    const fetchedGovernmentsIds = fetchedAllGovernments.map(gov => gov.id);
+    expect(fetchedGovernmentsIds).toContain(firstGovernment.id);
+    expect(fetchedGovernmentsIds).toContain(secondGovernment.id);
+  });
 });
