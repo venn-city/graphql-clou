@@ -2183,10 +2183,10 @@
     aws-sdk "^2.398.0"
     config "^3.0.1"
 
-"@venncity/graphql-pagination-enforce@^1.1.0":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@venncity/graphql-pagination-enforce/-/graphql-pagination-enforce-1.1.7.tgz#e1b69420ea6a4c88523aff13e2ee210cec534688"
-  integrity sha512-VHr0tfNVMEjLo6jR5kdmv4WTTPvvpvB3LNNwpXTyWSJEZPgWTaqutVrgQmS/8sKVNvwrl/fVbYpMns/xSJZGEA==
+"@venncity/graphql-pagination-enforce@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@venncity/graphql-pagination-enforce/-/graphql-pagination-enforce-1.2.0.tgz#0596606da7a46bc4e23100de6f0e7b4c176d72cc"
+  integrity sha512-zNjmOJiJYFrLQpH5ySpomV8jbDZj88DwE/gwve5Rl83dBKZaYGDXZsRHypl/LHSY1p27/3Ze3tT/jAcOMcX+rw==
   dependencies:
     "@venncity/errors" "^1.6.1"
     "@venncity/nested-config" "^2.0.4"
