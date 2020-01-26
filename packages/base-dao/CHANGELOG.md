@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.5.8...@venncity/base-dao@1.6.0) (2020-01-26)
+
+
+### Bug Fixes
+
+* **base-dao:** bumped graphql-pagination-enforce version ([392e0f6](https://github.com/venn-city/graphql-clou/commit/392e0f6012f26785d8f920a841368ff28b80dc5f))
+* **base-dao:** rename test ([c2c202d](https://github.com/venn-city/graphql-clou/commit/c2c202dbddbbe7b7622406f11b43301fa65c07ef))
+
+
+### Features
+
+* **base-dao:** handle skipping pagination ([c2777ad](https://github.com/venn-city/graphql-clou/commit/c2777adb13ffd1fa5edad6c6000032bf7a4d433b))
+
+
+
+
+
 ## [1.5.8](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.5.7...@venncity/base-dao@1.5.8) (2020-01-21)
 
 **Note:** Version bump only for package @venncity/base-dao
