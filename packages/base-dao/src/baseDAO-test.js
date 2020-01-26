@@ -38,7 +38,7 @@ describe('generic tests', () => {
     const governmentsConnectionResult = await governmentDAO.governmentsConnection(null, { where: { id: 'x' } }, serviceContext);
     expect(governmentsConnectionResult.aggregate).toHaveProperty('count', 0);
   });
-  test('fetch all governments', async () => {
+  test('fetch all governments without pagination', async () => {
     const firstGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
     const secondGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
     const fetchedAllGovernments = await governmentDAO.governments(serviceContext, { skipPagination: true });
