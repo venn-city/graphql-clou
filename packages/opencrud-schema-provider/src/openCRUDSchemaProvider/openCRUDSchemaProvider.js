@@ -26,8 +26,13 @@ const openCrudSchema = makeExecutableSchema({
 });
 
 function getOpenCrudIntrospection() {
+  const openCrudIntrospection = graphqlSync(openCrudSchema, introspectionQuery);
+  if (openCrudIntrospection.errors) {
+    console.error('Failed getting open crud introspection. Errors: ', openCrudIntrospection.errors);
+    throw new Error(`Failed getting open crud introspection. Errors: ${JSON.stringify(openCrudIntrospection.errors)}`);
+  }
   // eslint-disable-next-line no-underscore-dangle
-  return graphqlSync(openCrudSchema, introspectionQuery).data.__schema;
+  return openCrudIntrospection.data.__schema;
 }
 
 module.exports = {
