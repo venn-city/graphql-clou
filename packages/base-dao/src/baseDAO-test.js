@@ -47,4 +47,9 @@ describe('generic tests', () => {
     expect(fetchedGovernmentsIds).toContain(firstGovernment.id);
     expect(fetchedGovernmentsIds).toContain(secondGovernment.id);
   });
+  test('create government with name field even if not provided', async () => {
+    const governmentCreated = await governmentDAO.createGovernment(serviceContext, { country: 'DE' });
+    const governmentFetched = await governmentDAO.government(serviceContext, { id: governmentCreated.id });
+    expect(governmentFetched).toHaveProperty('name', 'random_government');
+  });
 });

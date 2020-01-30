@@ -147,6 +147,9 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
         ? hooks.authFunctions.transformEntityForCreate(entityToCreate)
         : entityToCreate;
       verifyHasPermission(auth, CREATE, entityForCreatePermissionCheck, context, authTypeName);
+      if (_.has(hooks, 'preCreate')) {
+        entityToCreate = await hooks.preCreate(entityToCreate);
+      }
       entityToCreate = await hooks.preSave(entityToCreate, entityToCreate, context);
       let creationResult = await dataProvider.createEntity(entityName, entityToCreate);
       creationResult = await hooks.postFetch(creationResult);
