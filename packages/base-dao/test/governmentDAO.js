@@ -19,6 +19,11 @@ function createGovernmentDAO() {
   };
 }
 
+async function preCreate(governement) {
+  governement.name = governement.name || 'random_government';
+  return governement;
+}
+
 async function preSave(government) {
   return government;
 }
@@ -34,6 +39,7 @@ const hooks = {
   preSave,
   postFetch,
   preDelete,
+  preCreate,
   authFunctions: {
     buildAuthContext,
     getAuthDataFromDB
