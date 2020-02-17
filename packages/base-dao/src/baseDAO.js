@@ -314,14 +314,15 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     },
     [ENTITIES_CONNECTION]: async (parent, args = {}, context, info = { fieldName: ENTITIES_CONNECTION }) => {
       const whereInputName = getQueryWhereInputName(context, info.fieldName);
+      const transformedWhere = await transformComputedFieldsWhereArguments({
+        originalWhere: args.where,
+        whereInputName,
+        computedWhereArgumentsTransformation,
+        context
+      });
       const transformedArgs = {
         ...args,
-        where: transformComputedFieldsWhereArguments({
-          originalWhere: args.where,
-          whereInputName,
-          computedWhereArgumentsTransformation,
-          context
-        })
+        where: transformedWhere
       };
       return dataProvider.getEntitiesConnection(entityName, transformedArgs);
     },
