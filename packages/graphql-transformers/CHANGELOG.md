@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.13](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.5.12...@venncity/graphql-transformers@1.5.13) (2020-02-17)
+
+**Note:** Version bump only for package @venncity/graphql-transformers
+
+
+
+
+
 ## [1.5.12](https://github.com/venn-city/graphql-clou/compare/@venncity/graphql-transformers@1.5.11...@venncity/graphql-transformers@1.5.12) (2020-01-19)
 
 **Note:** Version bump only for package @venncity/graphql-transformers
