@@ -34,7 +34,7 @@ function cloneIfRequired(initialCall, originalWhere) {
 
 async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context) {
   await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
-  await forEach(computedWhereArgumentsTransformation, async originalWhereArgumentName => {
+  await forEach(Object.keys(computedWhereArgumentsTransformation), async originalWhereArgumentName => {
     const transformationFunction = computedWhereArgumentsTransformation[originalWhereArgumentName];
     const originalWhereValue = transformedWhere[originalWhereArgumentName];
     if (originalWhereValue !== undefined) {
