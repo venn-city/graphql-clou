@@ -28,6 +28,36 @@ describe('computedFieldsWhereTransformation', () => {
     });
   });
 
+  test('transformComputedFieldsWhereArguments should transform computed fields where clause with boolean operators in top level', () => {
+    const originalWhere = {
+      extendedFieldFoo: 'bar'
+    };
+    const computedWhereArgumentsTransformation = {
+      extendedFieldFoo: fooValue => {
+        return { OR: [{ extendedFieldFooTwo: fooValue }] };
+      },
+      extendedFieldFooTwo: fooValue => {
+        return { name_not: fooValue };
+      }
+    };
+    const context = {
+      DAOs: {
+        ministryDAO: {
+          computedWhereArgumentsTransformation
+        }
+      }
+    };
+    const transformedWhere = transformComputedFieldsWhereArguments({
+      originalWhere,
+      whereInputName: 'GovernmentWhereInput',
+      computedWhereArgumentsTransformation,
+      context
+    });
+    expect(transformedWhere).toEqual({
+      OR: [{ name_not: 'bar' }]
+    });
+  });
+
   test('transformComputedFieldsWhereArguments should transform computed fields where clause with related entities', () => {
     const originalWhere = {
       extendedFieldFoo: 'bar',

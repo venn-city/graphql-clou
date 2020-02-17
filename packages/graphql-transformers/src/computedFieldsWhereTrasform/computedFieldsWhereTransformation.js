@@ -8,6 +8,7 @@ function transformComputedFieldsWhereArguments({ originalWhere, whereInputName, 
   if (originalWhere) {
     if (computedWhereArgumentsTransformation) {
       transformedWhere = replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context);
+      replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
     }
     const whereInputObjectFields = getWhereInputObjectFields(whereInputName);
     const entityType = getEntityTypeFromWhereInput(whereInputName);
