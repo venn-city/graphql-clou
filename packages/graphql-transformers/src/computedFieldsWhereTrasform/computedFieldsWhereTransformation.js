@@ -1,18 +1,25 @@
 const { replace, cloneDeep, lowerFirst } = require('lodash');
+const { forEach, map } = require('async');
 const { getOpenCrudIntrospection, introspectionUtils } = require('@venncity/opencrud-schema-provider');
 
 const openCrudIntrospection = getOpenCrudIntrospection();
 
-function transformComputedFieldsWhereArguments({ originalWhere, whereInputName, computedWhereArgumentsTransformation, context, initialCall = true }) {
+async function transformComputedFieldsWhereArguments({
+  originalWhere,
+  whereInputName,
+  computedWhereArgumentsTransformation,
+  context,
+  initialCall = true
+}) {
   let transformedWhere = cloneIfRequired(initialCall, originalWhere);
   if (originalWhere) {
     if (computedWhereArgumentsTransformation) {
-      transformedWhere = replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context);
-      replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
+      transformedWhere = await replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context);
+      await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
     }
     const whereInputObjectFields = getWhereInputObjectFields(whereInputName);
     const entityType = getEntityTypeFromWhereInput(whereInputName);
-    replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context);
+    await replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context);
   }
   return transformedWhere;
 }
@@ -25,13 +32,13 @@ function cloneIfRequired(initialCall, originalWhere) {
   return initialCall ? cloneDeep(originalWhere) : originalWhere;
 }
 
-function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context) {
-  replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
-  Object.keys(computedWhereArgumentsTransformation).forEach(originalWhereArgumentName => {
+async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context) {
+  await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
+  await forEach(computedWhereArgumentsTransformation, async originalWhereArgumentName => {
     const transformationFunction = computedWhereArgumentsTransformation[originalWhereArgumentName];
     const originalWhereValue = transformedWhere[originalWhereArgumentName];
     if (originalWhereValue !== undefined) {
-      const transformedWhereArgument = transformationFunction(originalWhereValue);
+      const transformedWhereArgument = await transformationFunction(originalWhereValue);
       delete transformedWhere[originalWhereArgumentName];
       transformedWhere = {
         ...transformedWhere,
@@ -42,12 +49,12 @@ function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transf
   return transformedWhere;
 }
 
-function replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context) {
+async function replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context) {
   const booleanOperators = ['AND', 'OR', 'NOT'];
-  booleanOperators.forEach(operator => {
+  await forEach(booleanOperators, async operator => {
     if (transformedWhere[operator]) {
-      transformedWhere[operator] = transformedWhere[operator].map(whereElementWithinBooleanOperator => {
-        const transformedWhereArg = transformComputedFieldsWhereArguments({
+      transformedWhere[operator] = await map(transformedWhere[operator], async whereElementWithinBooleanOperator => {
+        const transformedWhereArg = await transformComputedFieldsWhereArguments({
           originalWhere: whereElementWithinBooleanOperator,
           whereInputName,
           computedWhereArgumentsTransformation,
@@ -65,8 +72,8 @@ function convertWhereArgumentToFieldName(objectFieldName) {
   return replace(objectFieldName, listFieldWhereModifiers, '');
 }
 
-function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context) {
-  whereInputObjectFields.forEach(whereInputObjectField => {
+async function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context) {
+  await forEach(whereInputObjectFields, async whereInputObjectField => {
     const objectFieldInWhere = whereInputObjectField.name;
     if (transformedWhere[objectFieldInWhere]) {
       const objectFieldNameWherePart = transformedWhere[objectFieldInWhere];
@@ -74,7 +81,7 @@ function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere
       if (isInputObject(whereInputObjectField)) {
         const childField = introspectionUtils.getChildFields(entityType, openCrudIntrospection).find(field => field.name === fieldName);
         const nestedObjectDAO = context.DAOs[`${lowerFirst(introspectionUtils.getFieldType(childField))}DAO`];
-        transformedWhere[objectFieldInWhere] = transformComputedFieldsWhereArguments({
+        transformedWhere[objectFieldInWhere] = await transformComputedFieldsWhereArguments({
           originalWhere: objectFieldNameWherePart,
           whereInputName: whereInputObjectField.type.name,
           computedWhereArgumentsTransformation: nestedObjectDAO.computedWhereArgumentsTransformation,
