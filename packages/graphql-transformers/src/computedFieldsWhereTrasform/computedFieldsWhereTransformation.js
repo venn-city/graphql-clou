@@ -1,5 +1,5 @@
-const { replace, cloneDeep, lowerFirst } = require('lodash');
-const { forEach, map } = require('async');
+const { replace, cloneDeep, lowerFirst, isEmpty } = require('lodash');
+const { forEach, map, reduce } = require('async');
 const { getOpenCrudIntrospection, introspectionUtils } = require('@venncity/opencrud-schema-provider');
 
 const openCrudIntrospection = getOpenCrudIntrospection();
@@ -34,19 +34,36 @@ function cloneIfRequired(initialCall, originalWhere) {
 
 async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context) {
   await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
-  await forEach(Object.keys(computedWhereArgumentsTransformation), async originalWhereArgumentName => {
+
+  const transformedWhereList = await reduce(Object.keys(transformedWhere), [{}], async (memo, originalWhereArgumentName) => {
     const transformationFunction = computedWhereArgumentsTransformation[originalWhereArgumentName];
     const originalWhereValue = transformedWhere[originalWhereArgumentName];
-    if (originalWhereValue !== undefined) {
+    // computed field
+    if (transformationFunction) {
+      if (originalWhereValue === undefined) {
+        return memo;
+      }
       const transformedWhereArgument = await transformationFunction(originalWhereValue);
-      delete transformedWhere[originalWhereArgumentName];
-      transformedWhere = {
-        ...transformedWhere,
-        ...transformedWhereArgument
-      };
+      return [...memo, transformedWhereArgument];
     }
+    // regular field
+    return [
+      {
+        ...memo[0],
+        [originalWhereArgumentName]: originalWhereValue
+      },
+      ...memo.slice(1)
+    ];
   });
-  return transformedWhere;
+  // remove first value in case of empty object (there are no regular fields)
+  const filteredTransformedWhereList = transformedWhereList.filter(value => !isEmpty(value));
+  // there is only one condition
+  if (filteredTransformedWhereList.length === 1) {
+    return filteredTransformedWhereList[0];
+  }
+  return {
+    AND: filteredTransformedWhereList
+  };
 }
 
 async function replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context) {

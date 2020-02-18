@@ -87,11 +87,15 @@ describe('computedFieldsWhereTransformation', () => {
       computedWhereArgumentsTransformation,
       context
     });
-    expect(transformedWhere).toEqual({
-      name_not: 'bar',
-      ministries_some: {
-        name_starts_with: 'baz'
-      }
+    expect(transformedWhere).toMatchObject({
+      AND: [
+        {
+          ministries_some: {
+            name_starts_with: 'baz'
+          }
+        },
+        { name_not: 'bar' }
+      ]
     });
   });
 });
