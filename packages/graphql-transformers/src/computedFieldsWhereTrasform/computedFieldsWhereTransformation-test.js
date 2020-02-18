@@ -3,7 +3,8 @@ const { transformComputedFieldsWhereArguments } = require('./computedFieldsWhere
 describe('computedFieldsWhereTransformation', () => {
   test('transformComputedFieldsWhereArguments should transform simple computed fields where clause', async () => {
     const originalWhere = {
-      extendedFieldFoo: 'bar'
+      extendedFieldFoo: 'bar',
+      regularField: 'regularFieldValue'
     };
     const computedWhereArgumentsTransformation = {
       extendedFieldFoo: extendedFieldFoo => {
@@ -24,7 +25,14 @@ describe('computedFieldsWhereTransformation', () => {
       context
     });
     expect(transformedWhere).toEqual({
-      name_not: 'bar'
+      AND: [
+        {
+          regularField: 'regularFieldValue'
+        },
+        {
+          name_not: 'bar'
+        }
+      ]
     });
   });
 
@@ -87,11 +95,15 @@ describe('computedFieldsWhereTransformation', () => {
       computedWhereArgumentsTransformation,
       context
     });
-    expect(transformedWhere).toEqual({
-      name_not: 'bar',
-      ministries_some: {
-        name_starts_with: 'baz'
-      }
+    expect(transformedWhere).toMatchObject({
+      AND: [
+        {
+          ministries_some: {
+            name_starts_with: 'baz'
+          }
+        },
+        { name_not: 'bar' }
+      ]
     });
   });
 });
