@@ -89,7 +89,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
         return fetchedEntity;
       }
       const whereInputName = getQueryWhereInputName(context, info.fieldName);
-      const transformedWhere = transformComputedFieldsWhereArguments({
+      const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
         computedWhereArgumentsTransformation,
@@ -107,14 +107,15 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       delete args.skipPagination;
       const auth = await buildAuth(context, hooks);
       const whereInputName = getQueryWhereInputName(context, info.fieldName);
+      const transformedWhere = await transformComputedFieldsWhereArguments({
+        originalWhere: args.where,
+        whereInputName,
+        computedWhereArgumentsTransformation,
+        context
+      });
       const transformedArgs = {
         ...args,
-        where: transformComputedFieldsWhereArguments({
-          originalWhere: args.where,
-          whereInputName,
-          computedWhereArgumentsTransformation,
-          context
-        })
+        where: transformedWhere
       };
       enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME, skipPagination);
 
@@ -173,7 +174,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     [UPDATE_ENTITY_FUNCTION_NAME]: async (context, { data, where }, info = { fieldName: UPDATE_ENTITY_FUNCTION_NAME }) => {
       const auth = await buildAuth(context, hooks);
       const whereInputName = getMutationWhereInputName(context, info.fieldName);
-      const transformedWhere = transformComputedFieldsWhereArguments({
+      const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
         computedWhereArgumentsTransformation,
@@ -207,7 +208,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     [UPDATE_MANY_ENTITIES_FUNCTION_NAME]: async (context, { data, where }, info = { fieldName: UPDATE_MANY_ENTITIES_FUNCTION_NAME }) => {
       const auth = await buildAuth(context, hooks);
       const whereInputName = getMutationWhereInputName(context, info.fieldName);
-      const transformedWhere = transformComputedFieldsWhereArguments({
+      const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
         computedWhereArgumentsTransformation,
@@ -246,7 +247,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     [DELETE_ENTITY_FUNCTION_NAME]: async (context, where, info = { fieldName: DELETE_ENTITY_FUNCTION_NAME }) => {
       const auth = await buildAuth(context, hooks);
       const whereInputName = getMutationWhereInputName(context, info.fieldName);
-      const transformedWhere = transformComputedFieldsWhereArguments({
+      const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
         computedWhereArgumentsTransformation,
@@ -281,7 +282,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     [DELETE_MANY_ENTITIES_FUNCTION_NAME]: async (context, where, info = { fieldName: DELETE_MANY_ENTITIES_FUNCTION_NAME }) => {
       const auth = await buildAuth(context, hooks);
       const whereInputName = getMutationWhereInputName(context, info.fieldName);
-      const transformedWhere = transformComputedFieldsWhereArguments({
+      const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
         computedWhereArgumentsTransformation,
@@ -313,14 +314,15 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     },
     [ENTITIES_CONNECTION]: async (parent, args = {}, context, info = { fieldName: ENTITIES_CONNECTION }) => {
       const whereInputName = getQueryWhereInputName(context, info.fieldName);
+      const transformedWhere = await transformComputedFieldsWhereArguments({
+        originalWhere: args.where,
+        whereInputName,
+        computedWhereArgumentsTransformation,
+        context
+      });
       const transformedArgs = {
         ...args,
-        where: transformComputedFieldsWhereArguments({
-          originalWhere: args.where,
-          whereInputName,
-          computedWhereArgumentsTransformation,
-          context
-        })
+        where: transformedWhere
       };
       return dataProvider.getEntitiesConnection(entityName, transformedArgs);
     },

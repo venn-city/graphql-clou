@@ -1,7 +1,7 @@
 const { transformComputedFieldsWhereArguments } = require('./computedFieldsWhereTransformation');
 
 describe('computedFieldsWhereTransformation', () => {
-  test('transformComputedFieldsWhereArguments should transform simple computed fields where clause', () => {
+  test('transformComputedFieldsWhereArguments should transform simple computed fields where clause', async () => {
     const originalWhere = {
       extendedFieldFoo: 'bar'
     };
@@ -17,7 +17,7 @@ describe('computedFieldsWhereTransformation', () => {
         }
       }
     };
-    const transformedWhere = transformComputedFieldsWhereArguments({
+    const transformedWhere = await transformComputedFieldsWhereArguments({
       originalWhere,
       whereInputName: 'GovernmentWhereInput',
       computedWhereArgumentsTransformation,
@@ -28,7 +28,7 @@ describe('computedFieldsWhereTransformation', () => {
     });
   });
 
-  test('transformComputedFieldsWhereArguments should transform computed fields where clause with boolean operators in top level', () => {
+  test('transformComputedFieldsWhereArguments should transform computed fields where clause with boolean operators in top level', async () => {
     const originalWhere = {
       extendedFieldFoo: 'bar'
     };
@@ -47,7 +47,7 @@ describe('computedFieldsWhereTransformation', () => {
         }
       }
     };
-    const transformedWhere = transformComputedFieldsWhereArguments({
+    const transformedWhere = await transformComputedFieldsWhereArguments({
       originalWhere,
       whereInputName: 'GovernmentWhereInput',
       computedWhereArgumentsTransformation,
@@ -58,7 +58,7 @@ describe('computedFieldsWhereTransformation', () => {
     });
   });
 
-  test('transformComputedFieldsWhereArguments should transform computed fields where clause with related entities', () => {
+  test('transformComputedFieldsWhereArguments should transform computed fields where clause with related entities', async () => {
     const originalWhere = {
       extendedFieldFoo: 'bar',
       ministries_some: {
@@ -81,7 +81,7 @@ describe('computedFieldsWhereTransformation', () => {
         }
       }
     };
-    const transformedWhere = transformComputedFieldsWhereArguments({
+    const transformedWhere = await transformComputedFieldsWhereArguments({
       originalWhere,
       whereInputName: 'GovernmentWhereInput',
       computedWhereArgumentsTransformation,
