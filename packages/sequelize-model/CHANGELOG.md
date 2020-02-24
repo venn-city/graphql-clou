@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.6.0...@venncity/sequelize-model@1.7.0) (2020-02-24)
+
+
+### Features
+
+* **sequelize-model:** use CLS even if xray is not enabled ([feb2dd4](https://github.com/venn-city/graphql-clou/commit/feb2dd49dbd5698f315a8fd867557c6764a3d856))
+
+
+
+
+
 # [1.6.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.5.5...@venncity/sequelize-model@1.6.0) (2020-01-19)
 
 
