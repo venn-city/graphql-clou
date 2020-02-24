@@ -28,6 +28,7 @@
     "@venncity/opencrud-schema-provider": "^1.4.3",
     "@venncity/sequelize": "1.0.0",
     "aws-xray-sdk": "^2.5.0",
+    "cls-hooked": "^4.2.2",
     "cuid": "^2.1.6",
     "lodash": "^4.17.15",
     "pg": "^7.12.1"

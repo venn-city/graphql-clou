@@ -2,6 +2,8 @@ const { hacker, random } = require('faker');
 const models = require('../../../test/model');
 const sq = require('./sequelizeInit').init(models);
 
+const sequelize = sq.sequelize;
+
 describe('sequelizeInit', () => {
   test('sequelize should be initialized properly with models for all test schema entities', async () => {
     const governments = await sq.Government.findAll({ where: { id: 'x' } });
@@ -64,5 +66,36 @@ describe('sequelizeInit', () => {
       expect(typeof v.dataValues.createdAt === 'string').toBeTruthy();
       expect(typeof v.dataValues.updatedAt === 'string').toBeTruthy();
     });
+  });
+
+  test('sequelize should support block transactions using cls namespace without using transaction explicitly', async () => {
+    const originalBudget = 80;
+    const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: originalBudget });
+
+    let errorMessage;
+
+    try {
+      await sequelize.transaction(async () => {
+        const newBudget = 88.2;
+        const fetchedMinistry = await sq.Ministry.findOne({
+          where: {
+            id: createdMinistry.id
+          }
+        });
+        await fetchedMinistry.update({ budget: newBudget });
+        const ministryDuringTransaction = await sq.Ministry.findOne({ where: { id: createdMinistry.id } });
+
+        expect(ministryDuringTransaction.dataValues).toHaveProperty('budget', newBudget);
+
+        throw new Error('Some error that occurred during a transaction');
+      });
+    } catch (e) {
+      errorMessage = e.message;
+    }
+
+    expect(errorMessage).toEqual('Some error that occurred during a transaction');
+
+    const ministryAfterTransaction = await sq.Ministry.findOne({ where: { id: createdMinistry.id } });
+    expect(ministryAfterTransaction.dataValues).toHaveProperty('budget', originalBudget);
   });
 });
