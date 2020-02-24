@@ -69,7 +69,7 @@ describe('sequelizeInit', () => {
   });
 
   test('sequelize should support block transactions using cls namespace without using transaction explicitly', async () => {
-    const originalBudget = 77.9;
+    const originalBudget = 80;
     const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: originalBudget });
 
     let errorMessage;
