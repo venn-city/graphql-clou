@@ -1,6 +1,7 @@
 const xray = require('aws-xray-sdk');
 const Sequelize = require('@venncity/sequelize');
 const { forOwn } = require('lodash');
+const cls = require('cls-hooked');
 const DataTypes = require('@venncity/sequelize/lib/data-types');
 const config = require('@venncity/nested-config')(__dirname);
 const { isTrue } = require('@venncity/clou-utils');
@@ -11,6 +12,9 @@ delete pg.native; // A module of pg.native is being required even though native:
 if (isTrue(config.get('xray.enabled'))) {
   Sequelize.useCLS(xray.getNamespace());
   pg = xray.capturePostgres(pg);
+} else {
+  const namespace = cls.createNamespace(config.get('clsNamespace.name'));
+  Sequelize.useCLS(namespace);
 }
 
 const enableLogging = isTrue(config.get('sequelize.logging'));
