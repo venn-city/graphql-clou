@@ -19,5 +19,8 @@
   },
   "xray": {
     "enabled": false
+  },
+  "clsNamespace": {
+    "name": "sequelizeModelNamespace"
   }
 }
