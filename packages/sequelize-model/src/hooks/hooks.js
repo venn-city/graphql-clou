@@ -13,13 +13,13 @@ const hookDefinitions = {
     runSchemaBasedHooks(entityInput, [jsonToString]);
   },
   afterFind: entityInput => {
-    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate, normalizeToLowerCase]);
   },
   afterCreate: entityInput => {
-    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate, normalizeToLowerCase]);
   },
   afterUpdate: entityInput => {
-    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate, normalizeToLowerCase]);
   }
 };
 
@@ -68,6 +68,16 @@ function handleRelatedEntityArray(fieldValues, hooks) {
       runSchemaBasedHooks(fieldValue, hooks);
     }
   });
+}
+
+function normalizeToLowerCase(fieldInSchema, v) {
+  const fieldNamesToNormaize = ['email'];
+  const currentFieldName = fieldInSchema.name;
+
+  if (fieldNamesToNormaize.includes(currentFieldName) && _.isString(v)) {
+    return v.toLowerCase();
+  }
+  return v;
 }
 
 function jsonToString(fieldInSchema, v) {
