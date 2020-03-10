@@ -3,16 +3,19 @@ const path = require('path');
 const generateDaoClasses = require('./generateDaoClasses');
 const generateOpenCrudSchemaTypes = require('./generateOpenCrudSchemaTypes');
 const generateOpenCrudSchemaGraphql = require('./generateOpenCrudSchemaGraphql');
+const generateWhiteListOpenCrudSchemaGraphql = require('./generateWhiteListOpenCrudSchemaGraphql');
 const generateIndex = require('./generateIndex');
 
 async function generateDaoSchema({
   dataModelPath = 'src/schema/datamodel.graphql',
+  whiteListPath = 'src/schema/whitelist.graphql',
   generatedFolderPath = 'src/schema/generated',
   cleanFolder = true,
   cwd = process.cwd()
 } = {}) {
   const absoluteGeneratedFolderPath = path.resolve(cwd, generatedFolderPath);
   const absoluteDataModelPath = path.resolve(cwd, dataModelPath);
+  const absoluteWhiteListPath = path.resolve(cwd, whiteListPath);
   const dataModel = fs.readFileSync(absoluteDataModelPath, 'utf8');
   const daoClasses = await generateDaoClasses(dataModel);
   const openCrudSchemaTypes = await generateOpenCrudSchemaTypes(dataModel);
@@ -29,6 +32,8 @@ async function generateDaoSchema({
   });
   fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'openCrudSchema.ts'), openCrudSchemaTypes, 'utf8');
   fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'openCrudSchema.graphql'), openCrudSchemaGraphql, 'utf8');
+  const whiteListOpenCrudSchemaGraphql = await generateWhiteListOpenCrudSchemaGraphql(absoluteWhiteListPath);
+  fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'whiteListOpenCrudSchema.ts'), whiteListOpenCrudSchemaGraphql, 'utf8');
   fs.writeFileSync(path.resolve(absoluteGeneratedFolderPath, 'index.ts'), index, 'utf8');
 }
 
