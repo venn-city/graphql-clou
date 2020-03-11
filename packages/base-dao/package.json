@@ -43,6 +43,7 @@
     "ejs": "^3.0.1",
     "fs-extra": "^8.1.0",
     "graphql": "^14.5.8",
+    "graphql-import": "^0.7.1",
     "lodash": "^4.17.15",
     "moment-random": "^1.0.5",
     "pluralize": "^8.0.0",

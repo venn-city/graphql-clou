@@ -2,4 +2,9 @@
 const { argv } = require('yargs');
 const { generateDaoSchema } = require('../tools/');
 
-generateDaoSchema({ dataModelPath: argv.dataModelPath, generatedFolderPath: argv.generatedFolderPath, cleanFolder: argv.cleanFolder });
+generateDaoSchema({
+  dataModelPath: argv.dataModelPath,
+  whiteListPath: argv.whiteListPath,
+  generatedFolderPath: argv.generatedFolderPath,
+  cleanFolder: argv.cleanFolder
+});

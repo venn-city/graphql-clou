@@ -8,6 +8,7 @@ describe('generateDaoSchema', () => {
   beforeAll(async () => {
     await generateDaoSchema({
       dataModelPath: './fixtures/datamodel.graphql',
+      whiteListPath: './fixtures/whitelist.graphql',
       generatedFolderPath: 'generated',
       cwd
     });
