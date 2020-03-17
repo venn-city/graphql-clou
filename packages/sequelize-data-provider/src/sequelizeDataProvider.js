@@ -1,6 +1,11 @@
 const { upperFirst, map, camelCase, isObject, omit } = require('lodash');
 const Sequelize = require('@venncity/sequelize');
-
+const {
+  errors: {
+    ClientDataValidationError,
+    SUPPORTED_LOG_LEVELS: { WARN }
+  }
+} = require('@venncity/errors');
 const util = require('util');
 const async = require('async');
 const { openCrudToSequelize, resultLimiter } = require('@venncity/graphql-transformers');
@@ -146,13 +151,20 @@ async function handleRelatedConnects(entityName, entityField, entityToCreate) {
   if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
     const uniqueIdentifier = Object.keys(entityToCreate[entityField].connect)[0];
-    if (uniqueIdentifier === 'id') {
-      entityToCreate[camelCase(columnName)] = entityToCreate[entityField].connect.id;
+    if (uniqueIdentifier) {
+      if (uniqueIdentifier === 'id') {
+        entityToCreate[camelCase(columnName)] = entityToCreate[entityField].connect.id;
+      } else {
+        const relatedEntity = await model(fieldInSchema.type.name).findOne({
+          where: { ...entityToCreate[entityField].connect }
+        });
+        entityToCreate[camelCase(columnName)] = relatedEntity.id;
+      }
     } else {
-      const relatedEntity = await model(fieldInSchema.type.name).findOne({
-        where: { ...entityToCreate[entityField].connect }
+      throw new ClientDataValidationError({
+        logLevel: WARN,
+        message: `Invalid argument in ${entityField} parameter`
       });
-      entityToCreate[camelCase(columnName)] = relatedEntity.id;
     }
   }
   if (isListRelation(fieldInSchema)) {

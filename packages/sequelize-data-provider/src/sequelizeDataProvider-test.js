@@ -477,6 +477,13 @@ describe('sequelizeDataProvider', () => {
     });
   });
 
+  test('createEntity should fail if join parameter is not valid', async () => {
+    const createdMinistryName = hacker.phrase();
+    await expect(sequelizeDataProvider.createEntity('Ministry', { name: createdMinistryName, government: { connect: {} } })).rejects.toThrowError(
+      'Invalid argument in government parameter'
+    );
+  });
+
   test('updateEntity', async () => {
     const createdGovernmentName = hacker.phrase();
     const updatedGovernmentName = hacker.phrase();
@@ -497,6 +504,17 @@ describe('sequelizeDataProvider', () => {
       deletedAt: null,
       deleted: 0
     });
+  });
+
+  test('updateEntity should fail if join parameter is not valid', async () => {
+    const createdMinistryName = hacker.phrase();
+    const ministryBudget = 10 + randomNumber;
+
+    const createdMinistry = await sequelizeDataProvider.createEntity('Ministry', { name: createdMinistryName, budget: ministryBudget });
+
+    await expect(sequelizeDataProvider.updateEntity('Ministry', { government: { connect: {} } }, { id: createdMinistry.id })).rejects.toThrowError(
+      'Invalid argument in government parameter'
+    );
   });
 
   test('updateEntity which does not exist', async () => {

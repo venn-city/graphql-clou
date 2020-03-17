@@ -2164,6 +2164,14 @@
     joi "^14.3.1"
     verror "^1.10.0"
 
+"@venncity/errors@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@venncity/errors/-/errors-1.6.2.tgz#26a4f916e72b7958cf83fdbabe724d33425ae1e9"
+  integrity sha512-UDoC0Ix0mlA237qyEffQ921Yb3547uJ68XF/KmwghTEtpiZVzI/2BeTctsRGDI0aikRPhLqz46w7nup2VEvN9Q==
+  dependencies:
+    joi "^14.3.1"
+    verror "^1.10.0"
+
 "@venncity/eslint-config@^1.0.11":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@venncity/eslint-config/-/eslint-config-1.4.2.tgz#5be64e0990f13d59035b4cc8644ac0a895757128"
