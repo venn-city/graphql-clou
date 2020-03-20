@@ -359,8 +359,29 @@ function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize
   };
 }
 
+function transformJoinedEntityWhere(parent, args, entityName) {
+  const originalWhere = args.where;
+
+  const transformedArgs = {
+    ...args,
+    where: {
+      ...originalWhere,
+      [entityName]: {
+        id: parent.id
+      }
+    }
+  };
+
+  if (!args.first && !args.last) {
+    transformedArgs.skipPagination = true;
+  }
+
+  return transformedArgs;
+}
+
 module.exports = {
   createEntityDAO: createDAO,
   getFunctionNamesForEntity,
+  transformJoinedEntityWhere,
   CRUD_TOPIC_OPERATION_NAMES
 };

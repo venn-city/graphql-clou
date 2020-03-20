@@ -1,5 +1,6 @@
-const { hacker } = require('faker');
+const { hacker, random } = require('faker');
 const { sq } = require('@venncity/sequelize-model');
+const { transformJoinedEntityWhere } = require('./baseDAO');
 const { runGenericDAOTests, createServiceAuthContext } = require('./../test/baseTestForDAOs');
 const createAllDAOs = require('./../test/DAOs');
 const models = require('./../../../test/model');
@@ -51,5 +52,27 @@ describe('generic tests', () => {
     const governmentCreated = await governmentDAO.createGovernment(serviceContext, { country: 'DE' });
     const governmentFetched = await governmentDAO.government(serviceContext, { id: governmentCreated.id });
     expect(governmentFetched).toHaveProperty('name', 'random_government');
+  });
+});
+describe('transformJoinedEntityWhere', () => {
+  test('Should transform the given args to fetch all entities that are connected to the given parent', () => {
+    const parent = { id: random.alphaNumeric(10) };
+    const args = { where: { x: 'y' }, orderBy: 'createdAt_ASC' };
+    const parentEntityName = random.alphaNumeric(10);
+
+    const expectedTransformedArgs = { ...args, where: { ...args.where, [parentEntityName]: { id: parent.id } }, skipPagination: true };
+
+    const transformedArgs = transformJoinedEntityWhere(parent, args, parentEntityName);
+    expect(transformedArgs).toEqual(expectedTransformedArgs);
+  });
+  test('Should transform the given args to fetch entities that are connected to the given parent without skipPagination when first or last arguments are given', () => {
+    const parent = { id: random.alphaNumeric(10) };
+    const args = { where: { x: 'y' }, orderBy: 'createdAt_ASC', first: 10 };
+    const parentEntityName = random.alphaNumeric(10);
+
+    const expectedTransformedArgs = { ...args, where: { ...args.where, [parentEntityName]: { id: parent.id } } };
+
+    const transformedArgs = transformJoinedEntityWhere(parent, args, parentEntityName);
+    expect(transformedArgs).toEqual(expectedTransformedArgs);
   });
 });
