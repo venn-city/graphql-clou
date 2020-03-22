@@ -359,24 +359,14 @@ function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize
   };
 }
 
-function transformJoinedEntityWhere(parent, args, entityName) {
-  const originalWhere = args.where;
-
-  const transformedArgs = {
+function transformJoinedEntityWhere(args, entityIds) {
+  return {
     ...args,
     where: {
-      ...originalWhere,
-      [entityName]: {
-        id: parent.id
-      }
-    }
+      id_in: entityIds
+    },
+    skipPagination: true
   };
-
-  if (!args.first && !args.last) {
-    transformedArgs.skipPagination = true;
-  }
-
-  return transformedArgs;
 }
 
 module.exports = {

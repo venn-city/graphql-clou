@@ -56,23 +56,13 @@ describe('generic tests', () => {
 });
 describe('transformJoinedEntityWhere', () => {
   test('Should transform the given args to fetch all entities that are connected to the given parent', () => {
-    const parent = { id: random.alphaNumeric(10) };
-    const args = { where: { x: 'y' }, orderBy: 'createdAt_ASC' };
-    const parentEntityName = random.alphaNumeric(10);
+    const args = { orderBy: 'createdAt_ASC' };
 
-    const expectedTransformedArgs = { ...args, where: { ...args.where, [parentEntityName]: { id: parent.id } }, skipPagination: true };
+    const entityId = random.alphaNumeric(10);
 
-    const transformedArgs = transformJoinedEntityWhere(parent, args, parentEntityName);
-    expect(transformedArgs).toEqual(expectedTransformedArgs);
-  });
-  test('Should transform the given args to fetch entities that are connected to the given parent without skipPagination when first or last arguments are given', () => {
-    const parent = { id: random.alphaNumeric(10) };
-    const args = { where: { x: 'y' }, orderBy: 'createdAt_ASC', first: 10 };
-    const parentEntityName = random.alphaNumeric(10);
+    const expectedTransformedArgs = { ...args, where: { id_in: [entityId] }, skipPagination: true };
 
-    const expectedTransformedArgs = { ...args, where: { ...args.where, [parentEntityName]: { id: parent.id } } };
-
-    const transformedArgs = transformJoinedEntityWhere(parent, args, parentEntityName);
+    const transformedArgs = transformJoinedEntityWhere(args, [entityId]);
     expect(transformedArgs).toEqual(expectedTransformedArgs);
   });
 });
