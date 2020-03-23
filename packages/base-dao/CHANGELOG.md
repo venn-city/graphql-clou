@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.6.7...@venncity/base-dao@1.7.0) (2020-03-23)
+
+
+### Features
+
+* **base-dao:** add where transformation function on joined entites ([fbce265](https://github.com/venn-city/graphql-clou/commit/fbce26565557e103f908e55b0dfe57f1c6c759ee))
+
+
+
+
+
 ## [1.6.7](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.6.6...@venncity/base-dao@1.6.7) (2020-03-17)
 
 **Note:** Version bump only for package @venncity/base-dao
