@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.7.0...@venncity/base-dao@1.7.1) (2020-03-23)
+
+
+### Bug Fixes
+
+* **base-dao:** export basedao functions that werent exported to index ([3a1a6e3](https://github.com/venn-city/graphql-clou/commit/3a1a6e3559e4fb1a0f7416203624c2acd2f11137))
+
+
+
+
+
 # [1.7.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.6.7...@venncity/base-dao@1.7.0) (2020-03-23)
 
 
