@@ -359,8 +359,19 @@ function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize
   };
 }
 
+function transformJoinedEntityWhere(args, entityIds) {
+  return {
+    ...args,
+    where: {
+      id_in: entityIds
+    },
+    skipPagination: true
+  };
+}
+
 module.exports = {
   createEntityDAO: createDAO,
   getFunctionNamesForEntity,
+  transformJoinedEntityWhere,
   CRUD_TOPIC_OPERATION_NAMES
 };

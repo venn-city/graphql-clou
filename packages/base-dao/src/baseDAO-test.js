@@ -1,5 +1,6 @@
-const { hacker } = require('faker');
+const { hacker, random } = require('faker');
 const { sq } = require('@venncity/sequelize-model');
+const { transformJoinedEntityWhere } = require('./baseDAO');
 const { runGenericDAOTests, createServiceAuthContext } = require('./../test/baseTestForDAOs');
 const createAllDAOs = require('./../test/DAOs');
 const models = require('./../../../test/model');
@@ -51,5 +52,17 @@ describe('generic tests', () => {
     const governmentCreated = await governmentDAO.createGovernment(serviceContext, { country: 'DE' });
     const governmentFetched = await governmentDAO.government(serviceContext, { id: governmentCreated.id });
     expect(governmentFetched).toHaveProperty('name', 'random_government');
+  });
+});
+describe('transformJoinedEntityWhere', () => {
+  test('Should transform the given args to fetch all entities that are connected to the given parent', () => {
+    const args = { orderBy: 'createdAt_ASC' };
+
+    const entityId = random.alphaNumeric(10);
+
+    const expectedTransformedArgs = { ...args, where: { id_in: [entityId] }, skipPagination: true };
+
+    const transformedArgs = transformJoinedEntityWhere(args, [entityId]);
+    expect(transformedArgs).toEqual(expectedTransformedArgs);
   });
 });
