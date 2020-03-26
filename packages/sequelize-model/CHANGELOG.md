@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.7.0...@venncity/sequelize-model@1.7.1) (2020-03-26)
+
+**Note:** Version bump only for package @venncity/sequelize-model
+
+
+
+
+
 # [1.7.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.6.0...@venncity/sequelize-model@1.7.0) (2020-02-24)
 
 
