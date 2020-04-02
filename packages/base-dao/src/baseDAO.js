@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
 const DataLoader = require('dataloader');
 const _ = require('lodash');
 const util = require('util');
@@ -82,13 +83,13 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       const fetchedEntity = await getEntityById(context, where, hooks);
       return fetchedEntity;
     },
-    [GET_ENTITY]: async (context, where, info = { fieldName: GET_ENTITY }) => {
+    [GET_ENTITY]: async (context, where, info) => {
       let fetchedEntity;
       if (isFetchingEntityById(where)) {
         fetchedEntity = await getEntityById(context, where.id, hooks);
         return fetchedEntity;
       }
-      const whereInputName = getQueryWhereInputName(context, info.fieldName);
+      const whereInputName = getQueryWhereInputName(context, GET_ENTITY);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
@@ -102,11 +103,11 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       return entityWithOnlyAuthorizedFields;
     },
     // e.g units
-    [GET_ALL_ENTITIES_FUNCTION_NAME]: async (context, args = {}, info = { fieldName: GET_ALL_ENTITIES_FUNCTION_NAME }) => {
+    [GET_ALL_ENTITIES_FUNCTION_NAME]: async (context, args = {}, info) => {
       const { skipPagination } = args;
       delete args.skipPagination;
       const auth = await buildAuth(context, hooks);
-      const whereInputName = getQueryWhereInputName(context, info.fieldName);
+      const whereInputName = getQueryWhereInputName(context, GET_ALL_ENTITIES_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: args.where,
         whereInputName,
@@ -171,9 +172,9 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       return creationResult;
     },
     // e.g updateUnit
-    [UPDATE_ENTITY_FUNCTION_NAME]: async (context, { data, where }, info = { fieldName: UPDATE_ENTITY_FUNCTION_NAME }) => {
+    [UPDATE_ENTITY_FUNCTION_NAME]: async (context, { data, where }, info) => {
       const auth = await buildAuth(context, hooks);
-      const whereInputName = getMutationWhereInputName(context, info.fieldName);
+      const whereInputName = getMutationWhereInputName(context, UPDATE_ENTITY_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
@@ -205,9 +206,9 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       return updatedEntity;
     },
     // e.g updateManyUnits
-    [UPDATE_MANY_ENTITIES_FUNCTION_NAME]: async (context, { data, where }, info = { fieldName: UPDATE_MANY_ENTITIES_FUNCTION_NAME }) => {
+    [UPDATE_MANY_ENTITIES_FUNCTION_NAME]: async (context, { data, where }, info) => {
       const auth = await buildAuth(context, hooks);
-      const whereInputName = getMutationWhereInputName(context, info.fieldName);
+      const whereInputName = getMutationWhereInputName(context, UPDATE_MANY_ENTITIES_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
@@ -244,9 +245,9 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       return { count: updatedEntities.length };
     },
     // e.g deleteUnit
-    [DELETE_ENTITY_FUNCTION_NAME]: async (context, where, info = { fieldName: DELETE_ENTITY_FUNCTION_NAME }) => {
+    [DELETE_ENTITY_FUNCTION_NAME]: async (context, where, info) => {
       const auth = await buildAuth(context, hooks);
-      const whereInputName = getMutationWhereInputName(context, info.fieldName);
+      const whereInputName = getMutationWhereInputName(context, DELETE_ENTITY_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
@@ -279,9 +280,9 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       return deletedEntity;
     },
     // e.g deleteManyUnits
-    [DELETE_MANY_ENTITIES_FUNCTION_NAME]: async (context, where, info = { fieldName: DELETE_MANY_ENTITIES_FUNCTION_NAME }) => {
+    [DELETE_MANY_ENTITIES_FUNCTION_NAME]: async (context, where, info) => {
       const auth = await buildAuth(context, hooks);
-      const whereInputName = getMutationWhereInputName(context, info.fieldName);
+      const whereInputName = getMutationWhereInputName(context, DELETE_MANY_ENTITIES_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: where,
         whereInputName,
@@ -312,8 +313,8 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       }
       return { count: deleteEntities.length };
     },
-    [ENTITIES_CONNECTION]: async (parent, args = {}, context, info = { fieldName: ENTITIES_CONNECTION }) => {
-      const whereInputName = getQueryWhereInputName(context, info.fieldName);
+    [ENTITIES_CONNECTION]: async (parent, args = {}, context, info) => {
+      const whereInputName = getQueryWhereInputName(context, ENTITIES_CONNECTION);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: args.where,
         whereInputName,
