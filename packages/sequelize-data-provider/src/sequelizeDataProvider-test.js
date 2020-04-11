@@ -166,6 +166,10 @@ describe('sequelizeDataProvider', () => {
     });
   });
 
+  afterAll(async () => {
+    sequelizeModel.sq.sequelize.close();
+  });
+
   test('getEntity', async () => {
     const fetchedGovernment = await sequelizeDataProvider.getEntity('Government', { name: governmentName1 });
     expect(fetchedGovernment).toMatchObject(government1);
@@ -175,6 +179,58 @@ describe('sequelizeDataProvider', () => {
     const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', { where: { name: governmentName1 } });
     expect(fetchedGovernments).toHaveLength(1);
     expect(fetchedGovernments[0]).toMatchObject(government1);
+  });
+
+  describe.skip('Failing tests', () => {
+    test('1xn_every => 1x1 => nxm_some', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_every: { minister: { votes_some: { name: voteName1 } } }, name: governmentName1 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
+    });
+
+    test('1xn_none => 1x1 => nxm_some', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: { ministries_none: { minister: { votes_some: { name: voteName1 } } }, name: governmentName2 },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government2);
+    });
+
+    test('nxm_none => nxm_some', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: {
+          lobbyists_none: {
+            governments_some: {
+              name: governmentName1
+            }
+          },
+          name: governmentName1
+        },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
+    });
+
+    test('nxm_every => nxm_some', async () => {
+      const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+        where: {
+          lobbyists_every: {
+            governments_some: {
+              name: governmentName1
+            }
+          },
+          name: governmentName1
+        },
+        first: 5
+      });
+      expect(fetchedGovernments).toHaveLength(1);
+      expect(fetchedGovernments[0]).toMatchObject(government1);
+    });
   });
 
   describe('1x1', () => {

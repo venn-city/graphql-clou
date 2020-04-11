@@ -51,6 +51,7 @@ type Government @pgTable(name: "governments") {
   name:                   String                  @pgColumn(name: "name")
   country:                String                  @unique @pgColumn(name: "country_code")
   ministries:             [Ministry]              @pgRelation @vnCascade(direct: DISCONNECT_DELETE, inverse: DISCONNECT)
+  lobbyists:              [Lobbyist]              @relation(link: TABLE, name: "GovernmentLobbyistRelation")
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
   deletedAt:              DateTime                @pgColumn(name: "deleted_at")
@@ -61,9 +62,9 @@ type Vote @pgTable(name: "votes") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name")
   ballot:                 BALLOT                  @pgColumn(name: "ballot")
-  lawInfo:                Json                    @pgColumn(name: "law_info") # this field si mapped to a text column
+  lawInfo:                Json                    @pgColumn(name: "law_info") # this field is mapped to a text column
   lawInfoJson:            Json                    @pgColumn(name: "law_info_json")
-  minister:               Minister                @relation(link: TABLE, name:"MinisterVotesRelation") @vnCascade(direct: DISCONNECT)
+  minister:               Minister                @relation(link: TABLE, name: "MinisterVotesRelation") @vnCascade(direct: DISCONNECT)
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
   deletedAt:              DateTime                @pgColumn(name: "deleted_at")
@@ -73,6 +74,25 @@ type Vote @pgTable(name: "votes") {
 type MinisterVotesRelation @relationTable @pgTable(name: "ministers_votes_join_table") {
   minister:               Minister!               @pgColumn(name: "minister_id")
   vote:                   Vote!                   @pgColumn(name: "vote_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type GovernmentLobbyistRelation @relationTable @pgTable(name: "government_lobbyist_join_table") {
+  minister:               Minister!               @pgColumn(name: "government_id")
+  vote:                   Vote!                   @pgColumn(name: "lobbyist_id")
+  createdAt:              DateTime!               @pgColumn(name: "created_at")
+  updatedAt:              DateTime!               @pgColumn(name: "updated_at")
+  deletedAt:              DateTime                @pgColumn(name: "deleted_at")
+  deleted:                Int!                    @default(value: 0)
+}
+
+type Lobbyist @pgTable(name: "lobbyists") {
+  id:                     ID!                     @unique
+  name:                   String                  @pgColumn(name: "name")
+  governments:            [Government]            @relation(link: TABLE, name: "GovernmentLobbyistRelation")
   createdAt:              DateTime!               @pgColumn(name: "created_at")
   updatedAt:              DateTime!               @pgColumn(name: "updated_at")
   deletedAt:              DateTime                @pgColumn(name: "deleted_at")

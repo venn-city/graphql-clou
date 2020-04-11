@@ -10,9 +10,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true }
   );
-  government.associate = ({ Government, Ministry }) => {
+  government.associate = ({ Government, Ministry, Lobbyist }) => {
     Government.hasMany(Ministry, {
       as: 'ministries'
+    });
+    Government.belongsToMany(Lobbyist, {
+      as: 'lobbyists',
+      through: 'government_lobbyist_join_table',
+      foreignKey: 'lobbyist_id',
+      otherKey: 'government_id'
     });
   };
   return government;

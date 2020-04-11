@@ -2,6 +2,10 @@ type AggregateGovernment {
   count: Int!
 }
 
+type AggregateLobbyist {
+  count: Int!
+}
+
 type AggregateMinister {
   count: Int!
 }
@@ -31,6 +35,7 @@ type Government {
   name: String
   country: String
   ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry!]
+  lobbyists(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lobbyist!]
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -47,8 +52,14 @@ input GovernmentCreateInput {
   name: String
   country: String
   ministries: MinistryCreateManyWithoutGovernmentInput
+  lobbyists: LobbyistCreateManyWithoutGovernmentsInput
   deletedAt: DateTime
   deleted: Int
+}
+
+input GovernmentCreateManyWithoutLobbyistsInput {
+  create: [GovernmentCreateWithoutLobbyistsInput!]
+  connect: [GovernmentWhereUniqueInput!]
 }
 
 input GovernmentCreateOneWithoutMinistriesInput {
@@ -56,9 +67,18 @@ input GovernmentCreateOneWithoutMinistriesInput {
   connect: GovernmentWhereUniqueInput
 }
 
+input GovernmentCreateWithoutLobbyistsInput {
+  name: String
+  country: String
+  ministries: MinistryCreateManyWithoutGovernmentInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
 input GovernmentCreateWithoutMinistriesInput {
   name: String
   country: String
+  lobbyists: LobbyistCreateManyWithoutGovernmentsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -95,6 +115,86 @@ type GovernmentPreviousValues {
   deleted: Int!
 }
 
+input GovernmentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  country: String
+  country_not: String
+  country_in: [String!]
+  country_not_in: [String!]
+  country_lt: String
+  country_lte: String
+  country_gt: String
+  country_gte: String
+  country_contains: String
+  country_not_contains: String
+  country_starts_with: String
+  country_not_starts_with: String
+  country_ends_with: String
+  country_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [GovernmentScalarWhereInput!]
+  OR: [GovernmentScalarWhereInput!]
+  NOT: [GovernmentScalarWhereInput!]
+}
+
 type GovernmentSubscriptionPayload {
   mutation: MutationType!
   node: Government
@@ -117,6 +217,14 @@ input GovernmentUpdateInput {
   name: String
   country: String
   ministries: MinistryUpdateManyWithoutGovernmentInput
+  lobbyists: LobbyistUpdateManyWithoutGovernmentsInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input GovernmentUpdateManyDataInput {
+  name: String
+  country: String
   deletedAt: DateTime
   deleted: Int
 }
@@ -128,6 +236,23 @@ input GovernmentUpdateManyMutationInput {
   deleted: Int
 }
 
+input GovernmentUpdateManyWithoutLobbyistsInput {
+  create: [GovernmentCreateWithoutLobbyistsInput!]
+  delete: [GovernmentWhereUniqueInput!]
+  connect: [GovernmentWhereUniqueInput!]
+  set: [GovernmentWhereUniqueInput!]
+  disconnect: [GovernmentWhereUniqueInput!]
+  update: [GovernmentUpdateWithWhereUniqueWithoutLobbyistsInput!]
+  upsert: [GovernmentUpsertWithWhereUniqueWithoutLobbyistsInput!]
+  deleteMany: [GovernmentScalarWhereInput!]
+  updateMany: [GovernmentUpdateManyWithWhereNestedInput!]
+}
+
+input GovernmentUpdateManyWithWhereNestedInput {
+  where: GovernmentScalarWhereInput!
+  data: GovernmentUpdateManyDataInput!
+}
+
 input GovernmentUpdateOneWithoutMinistriesInput {
   create: GovernmentCreateWithoutMinistriesInput
   update: GovernmentUpdateWithoutMinistriesDataInput
@@ -137,16 +262,36 @@ input GovernmentUpdateOneWithoutMinistriesInput {
   connect: GovernmentWhereUniqueInput
 }
 
+input GovernmentUpdateWithoutLobbyistsDataInput {
+  name: String
+  country: String
+  ministries: MinistryUpdateManyWithoutGovernmentInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
 input GovernmentUpdateWithoutMinistriesDataInput {
   name: String
   country: String
+  lobbyists: LobbyistUpdateManyWithoutGovernmentsInput
   deletedAt: DateTime
   deleted: Int
+}
+
+input GovernmentUpdateWithWhereUniqueWithoutLobbyistsInput {
+  where: GovernmentWhereUniqueInput!
+  data: GovernmentUpdateWithoutLobbyistsDataInput!
 }
 
 input GovernmentUpsertWithoutMinistriesInput {
   update: GovernmentUpdateWithoutMinistriesDataInput!
   create: GovernmentCreateWithoutMinistriesInput!
+}
+
+input GovernmentUpsertWithWhereUniqueWithoutLobbyistsInput {
+  where: GovernmentWhereUniqueInput!
+  update: GovernmentUpdateWithoutLobbyistsDataInput!
+  create: GovernmentCreateWithoutLobbyistsInput!
 }
 
 input GovernmentWhereInput {
@@ -195,6 +340,9 @@ input GovernmentWhereInput {
   ministries_every: MinistryWhereInput
   ministries_some: MinistryWhereInput
   ministries_none: MinistryWhereInput
+  lobbyists_every: LobbyistWhereInput
+  lobbyists_some: LobbyistWhereInput
+  lobbyists_none: LobbyistWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -238,6 +386,279 @@ input GovernmentWhereUniqueInput {
 }
 
 scalar Json
+
+type Lobbyist {
+  id: ID!
+  name: String
+  governments(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Government!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+type LobbyistConnection {
+  pageInfo: PageInfo!
+  edges: [LobbyistEdge]!
+  aggregate: AggregateLobbyist!
+}
+
+input LobbyistCreateInput {
+  name: String
+  governments: GovernmentCreateManyWithoutLobbyistsInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input LobbyistCreateManyWithoutGovernmentsInput {
+  create: [LobbyistCreateWithoutGovernmentsInput!]
+  connect: [LobbyistWhereUniqueInput!]
+}
+
+input LobbyistCreateWithoutGovernmentsInput {
+  name: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+type LobbyistEdge {
+  node: Lobbyist!
+  cursor: String!
+}
+
+enum LobbyistOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deleted_ASC
+  deleted_DESC
+}
+
+type LobbyistPreviousValues {
+  id: ID!
+  name: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  deleted: Int!
+}
+
+input LobbyistScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [LobbyistScalarWhereInput!]
+  OR: [LobbyistScalarWhereInput!]
+  NOT: [LobbyistScalarWhereInput!]
+}
+
+type LobbyistSubscriptionPayload {
+  mutation: MutationType!
+  node: Lobbyist
+  updatedFields: [String!]
+  previousValues: LobbyistPreviousValues
+}
+
+input LobbyistSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LobbyistWhereInput
+  AND: [LobbyistSubscriptionWhereInput!]
+  OR: [LobbyistSubscriptionWhereInput!]
+  NOT: [LobbyistSubscriptionWhereInput!]
+}
+
+input LobbyistUpdateInput {
+  name: String
+  governments: GovernmentUpdateManyWithoutLobbyistsInput
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input LobbyistUpdateManyDataInput {
+  name: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input LobbyistUpdateManyMutationInput {
+  name: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input LobbyistUpdateManyWithoutGovernmentsInput {
+  create: [LobbyistCreateWithoutGovernmentsInput!]
+  delete: [LobbyistWhereUniqueInput!]
+  connect: [LobbyistWhereUniqueInput!]
+  set: [LobbyistWhereUniqueInput!]
+  disconnect: [LobbyistWhereUniqueInput!]
+  update: [LobbyistUpdateWithWhereUniqueWithoutGovernmentsInput!]
+  upsert: [LobbyistUpsertWithWhereUniqueWithoutGovernmentsInput!]
+  deleteMany: [LobbyistScalarWhereInput!]
+  updateMany: [LobbyistUpdateManyWithWhereNestedInput!]
+}
+
+input LobbyistUpdateManyWithWhereNestedInput {
+  where: LobbyistScalarWhereInput!
+  data: LobbyistUpdateManyDataInput!
+}
+
+input LobbyistUpdateWithoutGovernmentsDataInput {
+  name: String
+  deletedAt: DateTime
+  deleted: Int
+}
+
+input LobbyistUpdateWithWhereUniqueWithoutGovernmentsInput {
+  where: LobbyistWhereUniqueInput!
+  data: LobbyistUpdateWithoutGovernmentsDataInput!
+}
+
+input LobbyistUpsertWithWhereUniqueWithoutGovernmentsInput {
+  where: LobbyistWhereUniqueInput!
+  update: LobbyistUpdateWithoutGovernmentsDataInput!
+  create: LobbyistCreateWithoutGovernmentsInput!
+}
+
+input LobbyistWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  governments_every: GovernmentWhereInput
+  governments_some: GovernmentWhereInput
+  governments_none: GovernmentWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  deletedAt: DateTime
+  deletedAt_not: DateTime
+  deletedAt_in: [DateTime!]
+  deletedAt_not_in: [DateTime!]
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deleted: Int
+  deleted_not: Int
+  deleted_in: [Int!]
+  deleted_not_in: [Int!]
+  deleted_lt: Int
+  deleted_lte: Int
+  deleted_gt: Int
+  deleted_gte: Int
+  AND: [LobbyistWhereInput!]
+  OR: [LobbyistWhereInput!]
+  NOT: [LobbyistWhereInput!]
+}
+
+input LobbyistWhereUniqueInput {
+  id: ID
+}
 
 scalar Long
 
@@ -812,6 +1233,12 @@ type Mutation {
   upsertGovernment(where: GovernmentWhereUniqueInput!, create: GovernmentCreateInput!, update: GovernmentUpdateInput!): Government!
   deleteGovernment(where: GovernmentWhereUniqueInput!): Government
   deleteManyGovernments(where: GovernmentWhereInput): BatchPayload!
+  createLobbyist(data: LobbyistCreateInput!): Lobbyist!
+  updateLobbyist(data: LobbyistUpdateInput!, where: LobbyistWhereUniqueInput!): Lobbyist
+  updateManyLobbyists(data: LobbyistUpdateManyMutationInput!, where: LobbyistWhereInput): BatchPayload!
+  upsertLobbyist(where: LobbyistWhereUniqueInput!, create: LobbyistCreateInput!, update: LobbyistUpdateInput!): Lobbyist!
+  deleteLobbyist(where: LobbyistWhereUniqueInput!): Lobbyist
+  deleteManyLobbyists(where: LobbyistWhereInput): BatchPayload!
   createMinister(data: MinisterCreateInput!): Minister!
   updateMinister(data: MinisterUpdateInput!, where: MinisterWhereUniqueInput!): Minister
   updateManyMinisters(data: MinisterUpdateManyMutationInput!, where: MinisterWhereInput): BatchPayload!
@@ -853,6 +1280,9 @@ type Query {
   government(where: GovernmentWhereUniqueInput!): Government
   governments(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Government]!
   governmentsConnection(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GovernmentConnection!
+  lobbyist(where: LobbyistWhereUniqueInput!): Lobbyist
+  lobbyists(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lobbyist]!
+  lobbyistsConnection(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LobbyistConnection!
   minister(where: MinisterWhereUniqueInput!): Minister
   ministers(where: MinisterWhereInput, orderBy: MinisterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Minister]!
   ministersConnection(where: MinisterWhereInput, orderBy: MinisterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MinisterConnection!
@@ -867,6 +1297,7 @@ type Query {
 
 type Subscription {
   government(where: GovernmentSubscriptionWhereInput): GovernmentSubscriptionPayload
+  lobbyist(where: LobbyistSubscriptionWhereInput): LobbyistSubscriptionPayload
   minister(where: MinisterSubscriptionWhereInput): MinisterSubscriptionPayload
   ministry(where: MinistrySubscriptionWhereInput): MinistrySubscriptionPayload
   vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
