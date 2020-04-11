@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.2.19...@venncity/nested-mutation-hooks@1.3.0) (2020-04-11)
+
+
+### Features
+
+* **nested-mutation-hooks:** add start:local script to start a local testing server ([0a9479d](https://github.com/venn-city/graphql-clou/commit/0a9479d239013ba78fc86903c67b213b81783678))
+
+
+
+
+
 ## [1.2.19](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.2.18...@venncity/nested-mutation-hooks@1.2.19) (2020-03-26)
 
 **Note:** Version bump only for package @venncity/nested-mutation-hooks
