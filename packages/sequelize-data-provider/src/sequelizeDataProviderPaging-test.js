@@ -163,6 +163,10 @@ describe('sequelizeDataProvider paging tests', () => {
     });
   });
 
+  afterAll(async () => {
+    sequelizeModel.sq.sequelize.close();
+  });
+
   test('getAllEntities with nested _some filter for 1xn relation, with limit', async () => {
     for (let i = 0; i < 20; i += 1) {
       // eslint-disable-next-line no-await-in-loop
