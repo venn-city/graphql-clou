@@ -2241,6 +2241,21 @@
   dependencies:
     graphql "^14.5.8"
 
+"@venncity/sequelize-model@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@venncity/sequelize-model/-/sequelize-model-1.7.3.tgz#8f741f027168b89448fbf1f304968c84d362dd11"
+  integrity sha512-mZP/AncFbEnny9+intFxHWz7d74EU0+wr9tfaUrkfSDMw+QPoCUPKzMn0jtb/8IhTsQBrHZM8kqtS7WjkPamRw==
+  dependencies:
+    "@venncity/clou-utils" "^2.0.0"
+    "@venncity/nested-config" "^2.0.0"
+    "@venncity/opencrud-schema-provider" "^1.4.4"
+    "@venncity/sequelize" "1.0.0"
+    aws-xray-sdk "^2.5.0-experimental.1"
+    cls-hooked "^4.2.2"
+    cuid "^2.1.6"
+    lodash "^4.17.15"
+    pg "^7.12.1"
+
 "@venncity/sequelize@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@venncity/sequelize/-/sequelize-1.0.0.tgz#1f041de6625744f80f04d398cd07b8820c4b8320"
