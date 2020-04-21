@@ -1,6 +1,6 @@
 # Graphql Clou
 
-a mono-repo for sequelize-based graphql opencrud data-access packages
+A mono-repo for sequelize-based graphql opencrud data-access packages
 
 ## Packages:
 
