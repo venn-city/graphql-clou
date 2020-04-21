@@ -3013,7 +3013,7 @@ aws-xray-sdk-postgres@^2.5.0:
   dependencies:
     "@types/pg" "*"
 
-aws-xray-sdk@^2.5.0:
+aws-xray-sdk@^2.5.0-experimental.1:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/aws-xray-sdk/-/aws-xray-sdk-2.5.0.tgz#92ed839eae6ffa314353de8f5e78b272ac3f7e17"
   integrity sha512-KBTF9QUq0zu24t+gFh3VATYDNx295VzZUUjpZ1OmIEbcs3Zqmox5L6VAqjCgGfJeLaCUAWPLkduxau3LuDpqcw==
