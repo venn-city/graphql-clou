@@ -181,14 +181,14 @@ describe('sequelizeDataProvider', () => {
     expect(fetchedGovernments[0]).toMatchObject(government1);
   });
 
-  describe.skip('Failing tests', () => {
+  describe('Failing tests', () => {
     test('1xn_every => 1x1 => nxm_some', async () => {
       const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
-        where: { ministries_every: { minister: { votes_some: { name: voteName1 } } }, name: governmentName1 },
+        where: { ministries_every: { minister: { votes_some: { name: voteName1 } } }, name_ends_with: `${randomNumber}` },
         first: 5
       });
       expect(fetchedGovernments).toHaveLength(1);
-      expect(fetchedGovernments[0]).toMatchObject(government1);
+      expect(fetchedGovernments[0]).toMatchObject(government2);
     });
 
     test('1xn_none => 1x1 => nxm_some', async () => {
