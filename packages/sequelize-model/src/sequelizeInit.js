@@ -1,4 +1,3 @@
-const xray = require('aws-xray-sdk');
 const Sequelize = require('@venncity/sequelize');
 const { forOwn } = require('lodash');
 const cls = require('cls-hooked');
@@ -9,7 +8,10 @@ let pg = require('pg');
 const { hookDefinitions } = require('./hooks/hooks');
 
 delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
-if (isTrue(config.get('xray.enabled'))) {
+
+if (isTrue(config.get('xray.enabled')) && !!process.env.IS_TEST) {
+  // eslint-disable-next-line global-require
+  const xray = require('aws-xray-sdk');
   Sequelize.useCLS(xray.getNamespace());
   pg = xray.capturePostgres(pg);
 } else {
