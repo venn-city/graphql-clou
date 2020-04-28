@@ -4,11 +4,11 @@
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest IS_TEST=true",
+    "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "npm run test -- --watchAll",
     "lint": "npx eslint --fix src",
-    "test:ci": "jest IS_TEST=true --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
+    "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
     "lint:ci": "npx eslint src --format junit -o $LINT_JUNIT_OUTPUT"
   },
   "husky": {
