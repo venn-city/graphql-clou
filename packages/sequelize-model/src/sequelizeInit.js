@@ -9,14 +9,16 @@ const { hookDefinitions } = require('./hooks/hooks');
 
 delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
 
-if (isTrue(config.get('xray.enabled')) && !!process.env.IS_TEST) {
-  // eslint-disable-next-line global-require
-  const xray = require('aws-xray-sdk');
-  Sequelize.useCLS(xray.getNamespace());
-  pg = xray.capturePostgres(pg);
-} else {
-  const namespace = cls.createNamespace(config.get('clsNamespace.name'));
-  Sequelize.useCLS(namespace);
+if (process.env.IS_TEST) {
+  if (isTrue(config.get('xray.enabled'))) {
+    // eslint-disable-next-line global-require
+    const xray = require('aws-xray-sdk');
+    Sequelize.useCLS(xray.getNamespace());
+    pg = xray.capturePostgres(pg);
+  } else {
+    const namespace = cls.createNamespace(config.get('clsNamespace.name'));
+    Sequelize.useCLS(namespace);
+  }
 }
 
 const enableLogging = isTrue(config.get('sequelize.logging'));
