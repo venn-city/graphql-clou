@@ -1,3 +1,4 @@
+process.env.CLS_ENABLED = true;
 const { hacker, random } = require('faker');
 const models = require('../../../test/model');
 const sq = require('./sequelizeInit').init(models);
