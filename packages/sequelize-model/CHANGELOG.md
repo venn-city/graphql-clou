@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.7.5...@venncity/sequelize-model@1.8.0) (2020-04-29)
+
+
+### Features
+
+* **sequelize-model:** allow overriding SQ_RETRY_TIMEOUT ([ba089d5](https://github.com/venn-city/graphql-clou/commit/ba089d532419a548fd1a1cc4d63860d8a0bd4985))
+
+
+
+
+
 ## [1.7.5](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.7.4...@venncity/sequelize-model@1.7.5) (2020-04-29)
 
 **Note:** Version bump only for package @venncity/sequelize-model
