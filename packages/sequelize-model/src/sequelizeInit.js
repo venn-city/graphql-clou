@@ -51,7 +51,7 @@ function getRetryConfig() {
   return {
     // config according to retry-as-promised (https://github.com/mickhansen/retry-as-promised)
     max: 4,
-    timeout: 10000,
+    timeout: config.get('sequelize.retry.timeout'),
     match: [Sequelize.ConnectionError, 'Connection terminated unexpectedly'],
     backoffBase: 12, // ms
     backoffExponent: 2,

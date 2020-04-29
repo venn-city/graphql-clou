@@ -14,6 +14,9 @@
       "min": "POOL_MIN",
       "idle": "POOL_IDLE",
       "acquire": "POOL_ACQUIRE"
+    },
+    "retry": {
+      "timeout": "SQ_RETRY_TIMEOUT"
     }
   },
   "xray": {
