@@ -15,7 +15,7 @@ if (process.env.IS_TEST) {
     const xray = require('aws-xray-sdk');
     Sequelize.useCLS(xray.getNamespace());
     pg = xray.capturePostgres(pg);
-  } else {
+  } else if (process.env.CLS_ENABLED) {
     const namespace = cls.createNamespace(config.get('clsNamespace.name'));
     Sequelize.useCLS(namespace);
   }
