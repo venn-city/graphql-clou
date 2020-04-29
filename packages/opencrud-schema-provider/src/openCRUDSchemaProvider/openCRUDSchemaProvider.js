@@ -25,9 +25,13 @@ const openCrudSchema = makeExecutableSchema({
   }
 });
 
+let openCrudIntrospection;
 function getOpenCrudIntrospection() {
-  // eslint-disable-next-line no-underscore-dangle
-  return graphqlSync(openCrudSchema, introspectionQuery).data.__schema;
+  if (!openCrudIntrospection) {
+    // eslint-disable-next-line no-underscore-dangle
+    openCrudIntrospection = graphqlSync(openCrudSchema, introspectionQuery).data.__schema;
+  }
+  return openCrudIntrospection;
 }
 
 module.exports = {
