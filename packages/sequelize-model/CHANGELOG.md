@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.5](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.7.4...@venncity/sequelize-model@1.7.5) (2020-04-29)
+
+**Note:** Version bump only for package @venncity/sequelize-model
+
+
+
+
+
+## [1.7.4](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.7.3...@venncity/sequelize-model@1.7.4) (2020-04-28)
+
+
+### Bug Fixes
+
+* **sequelize model:** enable xray or createNamespace only outside of test runs ([1b660f8](https://github.com/venn-city/graphql-clou/commit/1b660f8a7ca6e25c826f9fe43fb6cda5b5a97b5b))
+
+
+
+
+
 ## [1.7.3](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.7.2...@venncity/sequelize-model@1.7.3) (2020-04-21)
 
 **Note:** Version bump only for package @venncity/sequelize-model
