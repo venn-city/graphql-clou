@@ -261,15 +261,6 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
     transformers: [
       {
         cond: value => {
-          return value instanceof Sequelize.Utils.Fn;
-        },
-        func: (value, key, transform) => {
-          value.args = transform(value.args, 'args');
-          return value;
-        }
-      },
-      {
-        cond: value => {
           return value instanceof Sequelize.Utils.Literal;
         },
         func: (value, key, transform) => {

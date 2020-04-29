@@ -181,7 +181,7 @@ describe('sequelizeDataProvider', () => {
     expect(fetchedGovernments[0]).toMatchObject(government1);
   });
 
-  describe('Failing tests', () => {
+  describe('Complex nested filters', () => {
     test('1xn_every => 1x1 => nxm_some', async () => {
       const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
         where: { ministries_every: { minister: { votes_some: { name: voteName1 } } }, name_ends_with: `${randomNumber}` },
