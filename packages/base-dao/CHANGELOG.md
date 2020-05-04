@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.7.8...@venncity/base-dao@1.8.0) (2020-05-04)
+
+
+### Features
+
+* **base-dao:** add portCreate hook to baseDao ([efb6d23](https://github.com/venn-city/graphql-clou/commit/efb6d232f1a75774c972b23b5c66053bf992aee3))
+
+
+
+
+
 ## [1.7.8](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.7.7...@venncity/base-dao@1.7.8) (2020-04-29)
 
 **Note:** Version bump only for package @venncity/base-dao
