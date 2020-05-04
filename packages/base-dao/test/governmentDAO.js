@@ -24,6 +24,10 @@ async function preCreate(governement) {
   return governement;
 }
 
+async function postCreate(entityToCreate, creationResult) {
+  return creationResult;
+}
+
 async function preSave(government) {
   return government;
 }
@@ -40,6 +44,7 @@ const hooks = {
   postFetch,
   preDelete,
   preCreate,
+  postCreate,
   authFunctions: {
     buildAuthContext,
     getAuthDataFromDB

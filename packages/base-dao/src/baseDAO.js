@@ -160,6 +160,9 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
 
       entityToCreate = await hooks.preSave(entityToCreate, entityToCreate, context);
       let creationResult = await dataProvider.createEntity(entityName, entityToCreate);
+      if (hooks.postCreate) {
+        creationResult = await hooks.postCreate(entityToCreate, creationResult);
+      }
       creationResult = await hooks.postFetch(creationResult);
 
       await publishCrudEvent({
