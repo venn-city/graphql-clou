@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-data-provider",
-  "version": "1.6.24",
+  "version": "1.6.25",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@venncity/errors": "^1.6.2",
-    "@venncity/graphql-transformers": "^1.5.22",
+    "@venncity/graphql-transformers": "^1.5.23",
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.5",
     "@venncity/sequelize": "1.0.0",
