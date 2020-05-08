@@ -14,7 +14,13 @@ async function transformComputedFieldsWhereArguments({
   let transformedWhere = cloneIfRequired(initialCall, originalWhere);
   if (originalWhere) {
     if (computedWhereArgumentsTransformation) {
-      transformedWhere = await replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context);
+      transformedWhere = await replaceTopLevelWhereFields(
+        computedWhereArgumentsTransformation,
+        transformedWhere,
+        whereInputName,
+        context,
+        originalWhere
+      );
       await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
     }
     const whereInputObjectFields = getWhereInputObjectFields(whereInputName);
@@ -32,7 +38,7 @@ function cloneIfRequired(initialCall, originalWhere) {
   return initialCall ? cloneDeep(originalWhere) : originalWhere;
 }
 
-async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context) {
+async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context, originalWhere) {
   await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
 
   const transformedWhereList = await reduce(Object.keys(transformedWhere), [{}], async (memo, originalWhereArgumentName) => {
@@ -43,7 +49,7 @@ async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, 
       if (originalWhereValue === undefined) {
         return memo;
       }
-      const transformedWhereArgument = await transformationFunction(originalWhereValue);
+      const transformedWhereArgument = await transformationFunction(originalWhereValue, originalWhere, context);
       return [...memo, transformedWhereArgument];
     }
     // regular field

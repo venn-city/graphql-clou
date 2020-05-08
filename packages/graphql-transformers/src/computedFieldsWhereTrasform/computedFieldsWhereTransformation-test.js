@@ -35,6 +35,39 @@ describe('computedFieldsWhereTransformation', () => {
       ]
     });
   });
+  test('transformComputedFieldsWhereArguments should pass the context and the original where to the transformation function', async () => {
+    const originalWhere = {
+      extendedFieldFoo: 'bar',
+      regularField: 'regularFieldValue'
+    };
+    const computedWhereArgumentsTransformation = {
+      extendedFieldFoo: (extendedFieldFoo, theOriginalWhere, context) => {
+        return { name: originalWhere.regularField, name_not: context.someKey };
+      }
+    };
+    const context = {
+      DAOs: {
+        ministryDAO: {
+          computedWhereArgumentsTransformation: {}
+        },
+        someKey: 'VALUE_FROM_CONTEXT'
+      }
+    };
+    const transformedWhere = await transformComputedFieldsWhereArguments({
+      originalWhere,
+      whereInputName: 'GovernmentWhereInput',
+      computedWhereArgumentsTransformation,
+      context
+    });
+    expect(transformedWhere).toEqual({
+      AND: [
+        {
+          regularField: 'regularFieldValue'
+        },
+        { name: originalWhere.regularField, name_not: context.someKey }
+      ]
+    });
+  });
 
   test('transformComputedFieldsWhereArguments should transform computed fields where clause with boolean operators in top level', async () => {
     const originalWhere = {
