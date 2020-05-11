@@ -162,11 +162,11 @@ function handleListField(whereArg, whereValue, entityName, pathWithinSchema) {
     sqIncludeElement = includeElement;
     sqWhereElement = whereElement;
   } else if (endsWith(whereArg, '_every')) {
-    const { includeElement, whereElement } = handleManyRelationEvery(whereArg, whereValue, entityName, pathWithinSchema);
+    const { includeElement, whereElement } = handleManyRelationEvery(whereArg, whereValue, entityName);
     sqIncludeElement = includeElement;
     sqWhereElement = whereElement;
   } else if (endsWith(whereArg, '_none')) {
-    const { includeElement, whereElement } = handleManyRelationNone(whereArg, whereValue, entityName, pathWithinSchema);
+    const { includeElement, whereElement } = handleManyRelationNone(whereArg, whereValue, entityName);
     sqIncludeElement = includeElement;
     sqWhereElement = whereElement;
   } else {
@@ -189,48 +189,26 @@ function handleManyRelationSome(whereArg, whereValue, entityName, pathWithinSche
   return { includeElement, whereElement: relatedEntityFilter.where };
 }
 
-function handleManyRelationEvery(whereArg, whereValue, entityName, pathWithinSchema) {
+function handleManyRelationEvery(whereArg, whereValue, entityName) {
   const associationAlias = whereArg.replace(new RegExp('_every'), '');
-  const { includeElement, relatedEntityFilter, targetModel } = handleRelation({
-    whereValue,
-    entityName,
-    associationAlias,
-    required: false,
-    pathWithinSchema,
-    transformAssociationToNested: false,
-    useColumnNames: true
-  });
-  const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter, true, pathWithinSchema);
-  const whereElement = {
-    id: {
-      [Op.ne]: {
-        [Op.all]: Sequelize.literal(negativeSubquery)
-      }
-    }
-  };
-  return { includeElement, whereElement };
+  const where = {};
+  where[`${associationAlias}_some`] = whereValue;
+  const targetModel = sq[entityName];
+  const filter = openCrudToSequelize({ where }, entityName);
+  const query = buildConditionSubquery(targetModel, filter, true);
+  const whereElement = { id: { [Op.notIn]: Sequelize.literal(`(${query})`) } };
+  return { includeElement: null, whereElement };
 }
 
-function handleManyRelationNone(whereArg, whereValue, entityName, pathWithinSchema) {
+function handleManyRelationNone(whereArg, whereValue, entityName) {
   const associationAlias = whereArg.replace(new RegExp('_none'), '');
-  const { includeElement, relatedEntityFilter, targetModel } = handleRelation({
-    whereValue,
-    entityName,
-    associationAlias,
-    required: false,
-    pathWithinSchema,
-    transformAssociationToNested: false,
-    useColumnNames: true
-  });
-  const negativeSubquery = buildConditionSubquery(targetModel, entityName, relatedEntityFilter, false, pathWithinSchema);
-  const whereElement = {
-    id: {
-      [Op.ne]: {
-        [Op.all]: Sequelize.literal(negativeSubquery)
-      }
-    }
-  };
-  return { includeElement, whereElement };
+  const where = {};
+  where[`${associationAlias}_some`] = whereValue;
+  const targetModel = sq[entityName];
+  const filter = openCrudToSequelize({ where }, entityName);
+  const query = buildConditionSubquery(targetModel, filter, false);
+  const whereElement = { id: { [Op.notIn]: Sequelize.literal(`(${query})`) } };
+  return { includeElement: null, whereElement };
 }
 
 function handleRelation({
@@ -280,6 +258,17 @@ function correctManyRelationJoin(associationInfo, transformAssociationToNested, 
 
 function transformWhereToNested(relatedEntityName, pathWithinSchema, associationAlias, relatedEntityFilter) {
   return transformWithSymbols.transformer({
+    transformers: [
+      {
+        cond: value => {
+          return value instanceof Sequelize.Utils.Literal;
+        },
+        func: (value, key, transform) => {
+          value.val = transform(value.val, 'val');
+          return value;
+        }
+      }
+    ],
     transformKey: (value, fieldName) => {
       if (isString(fieldName) && getField(openCrudSchema, relatedEntityName, fieldName)) {
         const pathWithoutRoot = drop(pathWithinSchema, 1);

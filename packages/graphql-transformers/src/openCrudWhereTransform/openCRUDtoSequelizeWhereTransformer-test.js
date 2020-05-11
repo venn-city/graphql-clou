@@ -115,12 +115,10 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
                   [Op.and]: [
                     {
                       id: {
-                        [Op.ne]: {
-                          [Op.all]: {
-                            val:
-                              'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE ((("Ministry"."name" = \'py\')) ' +
-                              'AND "Ministry"."government_id" = "Government"."id")'
-                          }
+                        [Op.notIn]: {
+                          val:
+                            '(SELECT "Government"."id" FROM "venn"."governments" AS "Government" LEFT OUTER JOIN "venn"."ministries" AS "ministries" ' +
+                            'ON "Government"."id" = "ministries"."government_id" WHERE (((("ministries"."name" = \'py\')))) ORDER BY "Government"."id" ASC)'
                         }
                       }
                     }
@@ -130,14 +128,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             }
           ]
         });
-        expect(sqFilter).toHaveProperty('include', [
-          {
-            model: sq.Ministry,
-            as: 'ministries',
-            required: false,
-            attributes: []
-          }
-        ]);
+        expect(sqFilter).toHaveProperty('include', []);
       });
     });
 
@@ -304,25 +295,16 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             [Op.and]: [
               {
                 id: {
-                  [Op.ne]: {
-                    [Op.all]: {
-                      val:
-                        'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE (NOT (("Ministry"."name" = \'ku\')) ' +
-                        'AND "Ministry"."government_id" = "Government"."id")'
-                    }
+                  [Op.notIn]: {
+                    val:
+                      '(SELECT "Government"."id" FROM "venn"."governments" AS "Government" LEFT OUTER JOIN "venn"."ministries" AS "ministries" ON ' +
+                      '"Government"."id" = "ministries"."government_id" WHERE (NOT ((("ministries"."name" = \'ku\')))) ORDER BY "Government"."id" ASC)'
                   }
                 }
               }
             ]
           });
-          expect(sqFilter).toHaveProperty('include', [
-            {
-              model: sq.Ministry,
-              as: 'ministries',
-              required: false,
-              attributes: []
-            }
-          ]);
+          expect(sqFilter).toHaveProperty('include', []);
         });
 
         test('"none" condition on "hasMany" many relation ', () => {
@@ -331,25 +313,16 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             [Op.and]: [
               {
                 id: {
-                  [Op.ne]: {
-                    [Op.all]: {
-                      val:
-                        'SELECT "government_id" FROM "venn"."ministries" AS "Ministry" WHERE ((("Ministry"."name" = \'ku\')) ' +
-                        'AND "Ministry"."government_id" = "Government"."id")'
-                    }
+                  [Op.notIn]: {
+                    val:
+                      '(SELECT "Government"."id" FROM "venn"."governments" AS "Government" LEFT OUTER JOIN "venn"."ministries" AS "ministries" ON ' +
+                      '"Government"."id" = "ministries"."government_id" WHERE (((("ministries"."name" = \'ku\')))) ORDER BY "Government"."id" ASC)'
                   }
                 }
               }
             ]
           });
-          expect(sqFilter).toHaveProperty('include', [
-            {
-              model: sq.Ministry,
-              as: 'ministries',
-              required: false,
-              attributes: []
-            }
-          ]);
+          expect(sqFilter).toHaveProperty('include', []);
         });
       });
 
@@ -385,27 +358,18 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             [Op.and]: [
               {
                 id: {
-                  [Op.ne]: {
-                    [Op.all]: {
-                      val:
-                        'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
-                        '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
-                        '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
-                        '"Minister"."id" = "votes->ministersvotes"."minister_id" AND NOT (("votes"."name" = \'ku\'))'
-                    }
+                  [Op.notIn]: {
+                    val:
+                      '(SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" LEFT OUTER JOIN ' +
+                      '( "venn"."ministers_votes_join_table" AS "votes->ministers_votes_join_table" INNER JOIN "venn"."votes" AS "votes" ON ' +
+                      '"votes"."id" = "votes->ministers_votes_join_table"."vote_id") ON "Minister"."id" = "votes->ministers_votes_join_table"."minister_id" ' +
+                      'WHERE (NOT ((("votes"."name" = \'ku\')))) ORDER BY "Minister"."id" ASC)'
                   }
                 }
               }
             ]
           });
-          expect(sqFilter).toHaveProperty('include', [
-            {
-              model: sq.Vote,
-              as: 'votes',
-              required: false,
-              attributes: []
-            }
-          ]);
+          expect(sqFilter).toHaveProperty('include', []);
         });
 
         test('"none" condition on "belongsToMany" many relation ', () => {
@@ -414,27 +378,19 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
             [Op.and]: [
               {
                 id: {
-                  [Op.ne]: {
-                    [Op.all]: {
-                      val:
-                        'SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" INNER JOIN ' +
-                        '( "venn"."ministers_votes_join_table" AS "votes->ministersvotes" INNER JOIN ' +
-                        '"venn"."votes" AS "votes" ON "votes"."id" = "votes->ministersvotes"."vote_id") ON ' +
-                        '"Minister"."id" = "votes->ministersvotes"."minister_id" AND (("votes"."name" = \'ku\'))'
-                    }
+                  [Op.notIn]: {
+                    val:
+                      '(SELECT "Minister"."id" FROM "venn"."ministers" AS "Minister" LEFT OUTER JOIN ' +
+                      '( "venn"."ministers_votes_join_table" AS "votes->ministers_votes_join_table" INNER JOIN "venn"."votes" AS "votes" ON ' +
+                      '"votes"."id" = "votes->ministers_votes_join_table"."vote_id") ON' +
+                      ' "Minister"."id" = "votes->ministers_votes_join_table"."minister_id" WHERE (((("votes"."name" = \'ku\')))) ' +
+                      'ORDER BY "Minister"."id" ASC)'
                   }
                 }
               }
             ]
           });
-          expect(sqFilter).toHaveProperty('include', [
-            {
-              model: sq.Vote,
-              as: 'votes',
-              required: false,
-              attributes: []
-            }
-          ]);
+          expect(sqFilter).toHaveProperty('include', []);
         });
       });
     });

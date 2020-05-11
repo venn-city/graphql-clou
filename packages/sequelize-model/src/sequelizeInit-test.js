@@ -6,6 +6,10 @@ const sq = require('./sequelizeInit').init(models);
 const sequelize = sq.sequelize;
 
 describe('sequelizeInit', () => {
+  afterAll(async () => {
+    await sq.sequelize.close();
+  });
+
   test('sequelize should be initialized properly with models for all test schema entities', async () => {
     const governments = await sq.Government.findAll({ where: { id: 'x' } });
     expect(governments).toHaveLength(0);
