@@ -17,12 +17,19 @@ function defaultTransformArray(array, key, transformFn) {
 }
 
 function transformer({
+  transformers = [],
   transformKey = (v, k) => k,
   transformValue = (v, k) => v,
   transformArray = defaultTransformArray,
   transformObject = defaultTransformObject
 }) {
   function transform(value, key) {
+    const tranformer = transformers.find(({ cond }) => {
+      return cond(value);
+    });
+    if (tranformer) {
+      return tranformer.func(value, key, transform);
+    }
     if (Array.isArray(value)) {
       return transformArray(value, key, transform);
     }

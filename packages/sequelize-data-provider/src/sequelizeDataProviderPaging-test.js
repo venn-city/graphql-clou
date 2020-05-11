@@ -39,8 +39,9 @@ describe('sequelizeDataProvider paging tests', () => {
                    | Nay        |
                    +------------+
    */
-
-  const randomNumber = random.number();
+  // Sometimes both testsuits generate the same random number and test data collide
+  // Adding 123 makes sure data is not intersecting between testsuites
+  const randomNumber = random.number() + 123;
 
   let government1;
   const governmentName1 = `9500BC${randomNumber}`;
