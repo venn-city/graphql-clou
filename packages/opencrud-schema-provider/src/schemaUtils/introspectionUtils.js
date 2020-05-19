@@ -60,17 +60,9 @@ function getFieldType(field) {
 
 function getTypeForField(field) {
   if (get(field, 'type.kind') === KINDS.LIST || get(field, 'type.kind') === KINDS.NON_NULL) {
-    return (
-      get(field, 'type.ofType.ofType.ofType.name')
-      || get(field, 'type.ofType.ofType.name')
-      || get(field, 'type.ofType.name')
-    );
+    return get(field, 'type.ofType.ofType.ofType.name') || get(field, 'type.ofType.ofType.name') || get(field, 'type.ofType.name');
   }
-  return (
-    get(field, 'type.name')
-  || get(field, 'type.ofType.name')
-  || get(field, 'type.ofType.ofType.name')
-  );
+  return get(field, 'type.name') || get(field, 'type.ofType.name') || get(field, 'type.ofType.ofType.name');
 }
 
 // e.g. firstName / member / leaseContracts / ...
