@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-const { upperFirst } = require('lodash');
+const { upperFirst, get } = require('lodash');
 
 const TYPE = '__Type';
 const FIELD = '__Field';
@@ -8,7 +8,8 @@ const KINDS = {
   SCALAR: 'SCALAR',
   ENUM: 'ENUM',
   LIST: 'LIST',
-  OBJECT: 'OBJECT'
+  OBJECT: 'OBJECT',
+  NON_NULL: 'NON_NULL'
 };
 
 function getQueryWhereInputName(context, fieldName) {
@@ -50,11 +51,26 @@ function getFieldType(field) {
     case TYPE:
       return field.name;
     case FIELD:
-      return (field.type.kind === KINDS.LIST && field.type.ofType.ofType.name) || field.type.name || (field.type.ofType && field.type.ofType.name);
+      return getTypeForField(field);
     default:
       /* istanbul ignore next */
       throwError(field);
   }
+}
+
+function getTypeForField(field) {
+  if (get(field, 'type.kind') === KINDS.LIST || get(field, 'type.kind') === KINDS.NON_NULL) {
+    return (
+      get(field, 'type.ofType.ofType.ofType.name')
+      || get(field, 'type.ofType.ofType.name')
+      || get(field, 'type.ofType.name')
+    );
+  }
+  return (
+    get(field, 'type.name')
+  || get(field, 'type.ofType.name')
+  || get(field, 'type.ofType.ofType.name')
+  );
 }
 
 // e.g. firstName / member / leaseContracts / ...
