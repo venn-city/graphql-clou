@@ -30,7 +30,7 @@ async function internalPublish(message, messageAttributes) {
     return;
   }
 
-  eventPubSub
+  await eventPubSub
     .publish({
       eventType: ENTITY_CRUD_TOPIC_NAME,
       message: JSON.stringify(message),
