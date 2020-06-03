@@ -1,4 +1,4 @@
-const { upperFirst, map, camelCase, isObject, omit } = require('lodash');
+const { upperFirst, map, camelCase, isObject } = require('lodash');
 const Sequelize = require('@venncity/sequelize');
 const {
   errors: {
@@ -8,13 +8,12 @@ const {
 } = require('@venncity/errors');
 const util = require('util');
 const async = require('async');
-const { openCrudToSequelize, resultLimiter } = require('@venncity/graphql-transformers');
+const { openCrudToSequelize } = require('@venncity/graphql-transformers');
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
 
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
-const { shouldLimitInFetch, limitAfterFetch, omitLimitArgsIfRequired } = resultLimiter;
 
 const Op = Sequelize.Op;
 const asyncEach = util.promisify(async.each);
@@ -26,10 +25,7 @@ async function getEntity(entityName, where) {
 }
 
 async function getAllEntities(entityName, args) {
-  let fetchedEntities = await getAllEntitiesSqObjects(args, entityName);
-  if (!shouldLimitInFetch(args)) {
-    fetchedEntities = limitAfterFetch(args, fetchedEntities);
-  }
+  const fetchedEntities = await getAllEntitiesSqObjects(args, entityName);
   return map(fetchedEntities, 'dataValues');
 }
 
@@ -66,26 +62,11 @@ async function getRelatedEntityIds(entityName, originalEntityId, relationEntityN
 }
 
 async function getRelatedEntities(entityName, originalEntityId, relationFieldName, args) {
-  const fieldType = getFieldType(schema, entityName, relationFieldName);
-  const argsAfterLimitFiltering = omitLimitArgsIfRequired(entityName, relationFieldName, args);
-  const sqFilter = args && openCrudToSequelize(argsAfterLimitFiltering, upperFirst(fieldType));
-  let include = {
-    model: model(fieldType),
-    as: relationFieldName,
-    required: true
-  };
-  if (sqFilter) {
-    include = {
-      ...include,
-      ...sqFilter
-    };
-  }
-  const originalEntity = await model(entityName).findOne({
-    where: { id: originalEntityId },
-    include: omit(include, ['attributes'])
-  });
-  let relatedEntities = originalEntity ? originalEntity[relationFieldName] : [];
-  relatedEntities = limitAfterFetch(args, relatedEntities);
+  const relatedEntityName = getFieldType(schema, entityName, relationFieldName);
+  const relatedEntityFilter = args && openCrudToSequelize(args, upperFirst(relatedEntityName));
+
+  const originalEntity = await model(entityName).findOne({ where: { id: originalEntityId } });
+  const relatedEntities = originalEntity ? await originalEntity[`get${upperFirst(relationFieldName)}`](relatedEntityFilter) : [];
 
   if (Array.isArray(relatedEntities)) {
     return relatedEntities.map(relatedEntity => relatedEntity.dataValues);

@@ -9,7 +9,6 @@ const { isEmptyArray, transformWithSymbols } = require('@venncity/clou-utils');
 const { sq } = require('@venncity/sequelize-model');
 const { buildConditionSubquery } = require('./manyRelationConditionSubquery');
 const sequelizeConsts = require('./sequelizeConsts');
-const { shouldLimitInFetch } = require('./../resultLimiter/resultLimiter');
 
 const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
 
@@ -45,13 +44,12 @@ function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityN
     }
     let sqFilter = {
       include: sqIncludeElements,
+      limit: first,
+      offset: skip,
       order: orderBy && [orderBy.split('_')]
     };
-    if (shouldLimitInFetch({ where })) {
-      sqFilter.limit = first;
-      sqFilter.offset = skip;
-      addSelectAttributes(sqFilter, entityName);
-    }
+    addSelectAttributes(sqFilter, entityName);
+
     if (whereResult) {
       sqFilter = {
         ...sqFilter,
@@ -260,7 +258,7 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
   return transformWithSymbols.transformer({
     transformers: [
       {
-        cond: value => {
+        cond: (value) => {
           return value instanceof Sequelize.Utils.Literal;
         },
         func: (value, key, transform) => {

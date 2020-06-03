@@ -514,7 +514,7 @@ describe('sequelizeDataProvider', () => {
   });
 
   test('getRelatedEntityIds with args for nXm relation', async () => {
-    const fetchedVoteIds = await sequelizeDataProvider.getRelatedEntityIds('Minister', minister1.id, 'votes', {
+    const fetchedVoteIds = await sequelizeDataProvider.getRelatedEntityIds('Minister', minister2.id, 'votes', {
       first: 1,
       orderBy: 'createdAt_ASC'
     });
