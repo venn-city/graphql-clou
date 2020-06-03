@@ -73,6 +73,10 @@ function getPoolConfig() {
 }
 
 function init(models) {
+  if (sq.initialized) {
+    console.log('Sequelize already initialized, skipping');
+    return sq;
+  }
   forOwn(models, (model, modelName) => {
     sq[modelName] = model(sequelize, DataTypes);
   });
@@ -81,6 +85,7 @@ function init(models) {
       sq[modelName].associate(sq);
     }
   });
+  sq.initialized = true;
   return sq;
 }
 

@@ -3,11 +3,21 @@ const { hacker, random } = require('faker');
 const models = require('../../../test/model');
 const sq = require('./sequelizeInit').init(models);
 
+const DUMMY_MODEL_FUNCTION = () => ({ associate: () => {} });
 const sequelize = sq.sequelize;
 
 describe('sequelizeInit', () => {
   afterAll(async () => {
     await sq.sequelize.close();
+  });
+
+  test('should only init the sequelize models once', () => {
+    expect(sq.initialized).toBeTruthy();
+
+    sq.init({
+      DummyModel: DUMMY_MODEL_FUNCTION
+    });
+    expect(sq).not.toHaveProperty('DummyModel');
   });
 
   test('sequelize should be initialized properly with models for all test schema entities', async () => {
