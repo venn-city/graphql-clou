@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const { random } = require('faker');
+const { uniq } = require('lodash');
 const sequelizeModel = require('@venncity/sequelize-model');
 const sequelizeDataProvider = require('./sequelizeDataProvider');
 const models = require('./../../../test/model');
@@ -168,6 +169,53 @@ describe('sequelizeDataProvider paging tests', () => {
     sequelizeModel.sq.sequelize.close();
   });
 
+  test('getAllEntities with nested _every and _none filters', async () => {
+    for (let i = 0; i < 5; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const createdGovernment = await sequelizeDataProvider.createEntity('Government', {
+        name: `${governmentName1}${i}`
+      });
+
+      const ministries = [];
+      for (let j = 0; j < 3; j += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        const createdMinistry = await sequelizeDataProvider.createEntity('Ministry', {
+          name: `${ministryName3}${j}`,
+          government: {
+            connect: {
+              id: createdGovernment.id
+            }
+          }
+        });
+        ministries.push(createdMinistry);
+      }
+    }
+
+    const fetchedGovernments = await sequelizeDataProvider.getAllEntities('Government', {
+      where: {
+        AND: [
+          {
+            ministries_every: { name_starts_with: ministryName3 }
+          },
+          {
+            lobbyists_none: {
+              governments_some: {
+                name_starts_with: 'f567oo'
+              }
+            }
+          },
+          {
+            name_starts_with: governmentName1
+          }
+        ]
+      },
+      first: 4,
+      skip: 1,
+      orderBy: 'createdAt_ASC'
+    });
+    expect(uniq(fetchedGovernments.map(g => g.id))).toHaveLength(4);
+  });
+
   test('getAllEntities with nested _some filter for 1xn relation, with limit', async () => {
     for (let i = 0; i < 20; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -196,5 +244,21 @@ describe('sequelizeDataProvider paging tests', () => {
       orderBy: 'createdAt_ASC'
     });
     expect(fetchedGovernments).toHaveLength(2);
+
+    const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+      where: {
+        government: {
+          lobbyists_none: {
+            governments_some: {
+              name: governmentName1
+            }
+          }
+        }
+      },
+      first: 10,
+      skip: 3,
+      orderBy: 'createdAt_ASC'
+    });
+    expect(fetchedMinistries).toHaveLength(10);
   });
 });
