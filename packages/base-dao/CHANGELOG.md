@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.8.8...@venncity/base-dao@1.9.0) (2020-06-08)
+
+
+### Features
+
+* Add ts ignore to base dao import to prevent implicit any error ([0d6a422](https://github.com/venn-city/graphql-clou/commit/0d6a4228d111d6e4741c9e8edc9ca29cba3d0991))
+
+
+
+
+
 ## [1.8.8](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.8.7...@venncity/base-dao@1.8.8) (2020-06-03)
 
 **Note:** Version bump only for package @venncity/base-dao
