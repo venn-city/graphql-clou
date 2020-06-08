@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generateDaoSchema generate files should be match to snapshots 1`] = `
-"import { createEntityDAO } from '@venncity/base-dao';
+"// @ts-ignore
+import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
 
 export default class SurveyDAO {
@@ -60,7 +61,8 @@ export default class SurveyDAO {
 `;
 
 exports[`generateDaoSchema generate files should be match to snapshots 2`] = `
-"import { createEntityDAO } from '@venncity/base-dao';
+"// @ts-ignore
+import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
 
 export default class SurveyQuestionDAO {
@@ -119,7 +121,8 @@ export default class SurveyQuestionDAO {
 `;
 
 exports[`generateDaoSchema generate files should be match to snapshots 3`] = `
-"import { createEntityDAO } from '@venncity/base-dao';
+"// @ts-ignore
+import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
 
 export default class SurveyQuestionResponseDAO {
