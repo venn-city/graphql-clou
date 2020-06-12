@@ -75,15 +75,25 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
 }
 
 async function createEntity(entityName, entityToCreate) {
-  const listRelations = [];
-  await asyncEach(Object.keys(entityToCreate), async entityField => {
-    if (isObject(entityToCreate[entityField]) && entityToCreate[entityField].connect) {
-      listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
-    }
-  });
+  const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate);
   const createdEntity = await model(entityName).create(entityToCreate);
   await associateRelations(listRelations, createdEntity);
   return createdEntity.dataValues;
+}
+
+async function createManyEntities(entityName, entitiesToCreate) {
+  const entitiesToCreateListRelations = await async.map(entitiesToCreate, async entityToCreate => {
+    const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate);
+    return listRelations;
+  });
+
+  const createdEntities = await model(entityName).bulkCreate(entitiesToCreate);
+  await async.eachOf(createdEntities, async (createdEntity, index) => {
+    const listRelations = entitiesToCreateListRelations[index];
+    await associateRelations(listRelations, createdEntity);
+  });
+
+  return createdEntities.map(createdEntity => createdEntity.dataValues);
 }
 
 async function updateEntity(entityName, data, where) {
@@ -232,6 +242,16 @@ async function getEntitiesConnection(entityName, args) {
   };
 }
 
+async function handleEntityRelationsPreCreate(entityName, entityToCreate) {
+  const listRelations = [];
+  await async.each(Object.keys(entityToCreate), async entityField => {
+    if (isObject(entityToCreate[entityField]) && entityToCreate[entityField].connect) {
+      listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
+    }
+  });
+  return listRelations;
+}
+
 function model(entityName) {
   return sq[entityName] || sq[upperFirst(entityName)];
 }
@@ -244,6 +264,7 @@ module.exports = {
   getRelatedEntityIds,
   getRelatedEntities,
   createEntity,
+  createManyEntities,
   updateEntity,
   updateManyEntities,
   deleteEntity,

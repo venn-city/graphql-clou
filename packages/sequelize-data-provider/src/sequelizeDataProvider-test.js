@@ -525,6 +525,69 @@ describe('sequelizeDataProvider', () => {
     });
   });
 
+  describe('Create many entities', () => {
+    test('simple', async () => {
+      const government1Name = hacker.phrase();
+      const government2Name = hacker.phrase();
+
+      const createdGovernments = await sequelizeDataProvider.createManyEntities('Government', [
+        {
+          name: government1Name
+        },
+        {
+          name: government2Name
+        }
+      ]);
+
+      expect(createdGovernments).toHaveLength(2);
+      expect(createdGovernments[0]).toHaveProperty('name', government1Name);
+      expect(createdGovernments[1]).toHaveProperty('name', government2Name);
+    });
+    test('with joined entities', async () => {
+      const government1Name = hacker.phrase();
+      const government2Name = hacker.phrase();
+      const ministry1Name = hacker.phrase();
+      const ministry2Name = hacker.phrase();
+      const ministry3Name = hacker.phrase();
+      const ministry4Name = hacker.phrase();
+      const minsitry1 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry1Name });
+      const minsitry2 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry2Name });
+      const minsitry3 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry3Name });
+      const minsitry4 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry4Name });
+
+      const createdGovernments = await sequelizeDataProvider.createManyEntities('Government', [
+        {
+          name: government1Name,
+          ministries: {
+            connect: [{ id: minsitry1.id }, { id: minsitry2.id }]
+          }
+        },
+        {
+          name: government2Name,
+          ministries: {
+            connect: [{ id: minsitry3.id }, { id: minsitry4.id }]
+          }
+        }
+      ]);
+
+      expect(createdGovernments).toHaveLength(2);
+      expect(createdGovernments[0]).toHaveProperty('name', government1Name);
+      expect(createdGovernments[1]).toHaveProperty('name', government2Name);
+
+      const government1Ministries = await sequelizeDataProvider.getRelatedEntities('Government', createdGovernments[0].id, 'ministries');
+      expect(government1Ministries).toHaveLength(2);
+      const government1MinistryNames = government1Ministries.map(ministry => ministry.name);
+      expect(government1MinistryNames).toContain(ministry1Name);
+      expect(government1MinistryNames).toContain(ministry2Name);
+
+      const government2Ministries = await sequelizeDataProvider.getRelatedEntities('Government', createdGovernments[1].id, 'ministries');
+      expect(government2Ministries).toHaveLength(2);
+      const government2MinistryNames = government2Ministries.map(ministry => ministry.name);
+      expect(government2MinistryNames).toContain(ministry3Name);
+      expect(government2MinistryNames).toContain(ministry4Name);
+    });
+  });
+
   test('createEntity', async () => {
     const createdGovernmentName = hacker.phrase();
     const createdGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
