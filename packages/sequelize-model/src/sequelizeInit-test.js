@@ -38,6 +38,15 @@ describe('sequelizeInit', () => {
   });
 
   test('sequelize should call schema hooks', async () => {
+    const createdMinistries = await sq.Ministry.bulkCreate([
+      { name: hacker.phrase(), budget: 100 },
+      { name: hacker.phrase(), budget: 200 }
+    ]);
+    createdMinistries.forEach(ministry => expect(ministry).toHaveProperty('id'));
+    const createdMinistriesBudgets = createdMinistries.map(ministry => ministry.budget);
+    expect(createdMinistriesBudgets).toContain(100);
+    expect(createdMinistriesBudgets).toContain(200);
+
     const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: 77.9 });
     const fetchedMinistry = await sq.Ministry.findOne({
       where: {
