@@ -3,6 +3,7 @@ const Sequelize = require('@venncity/sequelize');
 const {
   errors: {
     ClientDataValidationError,
+    ServerDataValidationError,
     SUPPORTED_LOG_LEVELS: { WARN }
   }
 } = require('@venncity/errors');
@@ -11,6 +12,8 @@ const async = require('async');
 const { openCrudToSequelize } = require('@venncity/graphql-transformers');
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+
+const CREATE_MANY = true;
 
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
@@ -83,7 +86,7 @@ async function createEntity(entityName, entityToCreate) {
 
 async function createManyEntities(entityName, entitiesToCreate) {
   const entitiesToCreateListRelations = await async.map(entitiesToCreate, async entityToCreate => {
-    const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate);
+    const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate, CREATE_MANY);
     return listRelations;
   });
 
@@ -242,11 +245,17 @@ async function getEntitiesConnection(entityName, args) {
   };
 }
 
-async function handleEntityRelationsPreCreate(entityName, entityToCreate) {
+async function handleEntityRelationsPreCreate(entityName, entityToCreate, isCreateMany = false) {
   const listRelations = [];
   await async.each(Object.keys(entityToCreate), async entityField => {
-    if (isObject(entityToCreate[entityField]) && entityToCreate[entityField].connect) {
-      listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
+    if (isObject(entityToCreate[entityField])) {
+      if (isCreateMany && entityToCreate[entityField].create) {
+        // In order to enable this need to verify that nested mutations work correctly with the bulk create scenario
+        throw new ServerDataValidationError({ message: 'Nested create of entities inside of createMany is not currently supported' });
+      }
+      if (entityToCreate[entityField].connect) {
+        listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
+      }
     }
   });
   return listRelations;

@@ -543,7 +543,7 @@ describe('sequelizeDataProvider', () => {
       expect(createdGovernments[0]).toHaveProperty('name', government1Name);
       expect(createdGovernments[1]).toHaveProperty('name', government2Name);
     });
-    test('with joined entities', async () => {
+    test('with nested connect', async () => {
       const government1Name = hacker.phrase();
       const government2Name = hacker.phrase();
       const ministry1Name = hacker.phrase();
@@ -585,6 +585,31 @@ describe('sequelizeDataProvider', () => {
       const government2MinistryNames = government2Ministries.map(ministry => ministry.name);
       expect(government2MinistryNames).toContain(ministry3Name);
       expect(government2MinistryNames).toContain(ministry4Name);
+    });
+    test('with nested create - should throw error until supported', async () => {
+      const government1Name = hacker.phrase();
+      const government2Name = hacker.phrase();
+      const ministry1Name = hacker.phrase();
+      const ministry2Name = hacker.phrase();
+      const ministry3Name = hacker.phrase();
+      const ministry4Name = hacker.phrase();
+
+      await expect(
+        sequelizeDataProvider.createManyEntities('Government', [
+          {
+            name: government1Name,
+            ministries: {
+              create: [{ name: ministry1Name }, { name: ministry2Name }]
+            }
+          },
+          {
+            name: government2Name,
+            ministries: {
+              create: [{ name: ministry3Name }, { name: ministry4Name }]
+            }
+          }
+        ])
+      ).rejects.toThrowError('Nested create of entities inside of createMany is not currently supported');
     });
   });
 
