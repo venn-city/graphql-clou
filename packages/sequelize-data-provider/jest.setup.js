@@ -4,7 +4,7 @@ process.env.IS_TEST = true;
 require('dotenv').config({ path: `${process.cwd()}/../../.env` });
 const sequelizeModel = require('@venncity/sequelize-model');
 
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 afterAll(async () => {
   await sequelizeModel.sq.sequelize.close();
