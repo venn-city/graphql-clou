@@ -398,9 +398,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
 
   describe('transformation errors', () => {
     test('general error', () => {
-      expect(() => openCrudToSequelize({ where: { i_made_up_this_field: 'ty' } })).toThrowError({
-        message: "Cannot read property 'getFields' of undefined"
-      });
+      expect(() => openCrudToSequelize({ where: { i_made_up_this_field: 'ty' } })).toThrowError();
     });
 
     test('field name error', () => {
