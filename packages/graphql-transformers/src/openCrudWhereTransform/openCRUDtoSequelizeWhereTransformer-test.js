@@ -414,5 +414,11 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
         message: 'Unsupported many-relation where conditions, {"ministries_boom":{"name":"ty"}}'
       });
     });
+
+    test('sequelize model not defined error', () => {
+      expect(() => openCrudToSequelize({ where: { ministries_boom: { name: 'ty' } } }, 'NON_EXISTENT_ENTITY')).toThrowError(
+        /No sequelize model defined for entity.*/
+      );
+    });
   });
 });
