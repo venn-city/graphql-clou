@@ -709,7 +709,7 @@ describe('sequelizeDataProvider', () => {
         deleted: 0
       });
 
-      // Update with connect.
+      // Update with disconnect.
       await sequelizeDataProvider.updateEntity(
         'Government',
         {
