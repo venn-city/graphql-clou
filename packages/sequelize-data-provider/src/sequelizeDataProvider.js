@@ -1,4 +1,5 @@
 const { upperFirst, map, camelCase, isObject } = require('lodash');
+const cuid = require('cuid');
 const Sequelize = require('@venncity/sequelize');
 const {
   errors: {
@@ -85,14 +86,18 @@ async function createEntity(entityName, entityToCreate) {
 }
 
 async function createManyEntities(entityName, entitiesToCreate) {
-  const entitiesToCreateListRelations = await async.map(entitiesToCreate, async entityToCreate => {
+  entitiesToCreate.forEach(entityToCreate => {
+    entityToCreate.id = cuid();
+  });
+  const entityIdToListRelations = {};
+  await async.each(entitiesToCreate, async entityToCreate => {
     const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate, CREATE_MANY);
-    return listRelations;
+    entityIdToListRelations[entityToCreate.id] = listRelations;
   });
 
   const createdEntities = await model(entityName).bulkCreate(entitiesToCreate);
-  await async.eachOf(createdEntities, async (createdEntity, index) => {
-    const listRelations = entitiesToCreateListRelations[index];
+  await async.eachOf(createdEntities, async createdEntity => {
+    const listRelations = entityIdToListRelations[createdEntity.id];
     await associateRelations(listRelations, createdEntity);
   });
 

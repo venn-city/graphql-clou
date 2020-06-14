@@ -11,7 +11,9 @@ const hookDefinitions = {
   },
   beforeBulkCreate: entities => {
     entities.forEach(entity => {
-      entity.id = cuid();
+      if (!entity.id) {
+        entity.id = cuid();
+      }
     });
   },
   beforeValidate: entityInput => {
