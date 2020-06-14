@@ -19,6 +19,13 @@ const NOT = 'NOT';
 
 function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityName, pathWithinSchema = [entityName], useColumnNames = false) {
   try {
+    if (!sq[entityName]) {
+      throw new Error(`No sequelize model defined for entity ${entityName}. Potential causes:
+        * Sequelize was not initialized (sq.init was not called)
+        * The sequelize model for ${entityName} was not defined correctly
+        * There is a package version clash and there are two versions of the @venncity/sequelize-model package
+      `);
+    }
     const sqWhereElements = [];
     const sqIncludeElements = [];
     let whereResult;
@@ -258,7 +265,7 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
   return transformWithSymbols.transformer({
     transformers: [
       {
-        cond: (value) => {
+        cond: value => {
           return value instanceof Sequelize.Utils.Literal;
         },
         func: (value, key, transform) => {

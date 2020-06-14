@@ -9,6 +9,13 @@ const hookDefinitions = {
   beforeCreate: entity => {
     entity.id = cuid();
   },
+  beforeBulkCreate: entities => {
+    entities.forEach(entity => {
+      if (!entity.id) {
+        entity.id = cuid();
+      }
+    });
+  },
   beforeValidate: entityInput => {
     runSchemaBasedHooks(entityInput, [jsonToString]);
   },

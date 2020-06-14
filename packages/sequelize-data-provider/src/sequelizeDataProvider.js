@@ -1,8 +1,10 @@
 const { upperFirst, map, camelCase, isObject } = require('lodash');
+const cuid = require('cuid');
 const Sequelize = require('@venncity/sequelize');
 const {
   errors: {
     ClientDataValidationError,
+    ServerDataValidationError,
     SUPPORTED_LOG_LEVELS: { WARN }
   }
 } = require('@venncity/errors');
@@ -11,6 +13,8 @@ const async = require('async');
 const { openCrudToSequelize } = require('@venncity/graphql-transformers');
 const { sq } = require('@venncity/sequelize-model');
 const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+
+const CREATE_MANY = true;
 
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudDataModel, openCrudSchema: schema } = opencrudSchemaProvider;
@@ -75,15 +79,29 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
 }
 
 async function createEntity(entityName, entityToCreate) {
-  const listRelations = [];
-  await asyncEach(Object.keys(entityToCreate), async entityField => {
-    if (isObject(entityToCreate[entityField]) && entityToCreate[entityField].connect) {
-      listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
-    }
-  });
+  const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate);
   const createdEntity = await model(entityName).create(entityToCreate);
   await associateRelations(listRelations, createdEntity);
   return createdEntity.dataValues;
+}
+
+async function createManyEntities(entityName, entitiesToCreate) {
+  entitiesToCreate.forEach(entityToCreate => {
+    entityToCreate.id = cuid();
+  });
+  const entityIdToListRelations = {};
+  await async.each(entitiesToCreate, async entityToCreate => {
+    const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate, CREATE_MANY);
+    entityIdToListRelations[entityToCreate.id] = listRelations;
+  });
+
+  const createdEntities = await model(entityName).bulkCreate(entitiesToCreate);
+  await async.eachOf(createdEntities, async createdEntity => {
+    const listRelations = entityIdToListRelations[createdEntity.id];
+    await associateRelations(listRelations, createdEntity);
+  });
+
+  return createdEntities.map(createdEntity => createdEntity.dataValues);
 }
 
 async function updateEntity(entityName, data, where) {
@@ -232,6 +250,22 @@ async function getEntitiesConnection(entityName, args) {
   };
 }
 
+async function handleEntityRelationsPreCreate(entityName, entityToCreate, isCreateMany = false) {
+  const listRelations = [];
+  await async.each(Object.keys(entityToCreate), async entityField => {
+    if (isObject(entityToCreate[entityField])) {
+      if (isCreateMany && entityToCreate[entityField].create) {
+        // In order to enable this need to verify that nested mutations work correctly with the bulk create scenario
+        throw new ServerDataValidationError({ message: 'Nested create of entities inside of createMany is not currently supported' });
+      }
+      if (entityToCreate[entityField].connect) {
+        listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
+      }
+    }
+  });
+  return listRelations;
+}
+
 function model(entityName) {
   return sq[entityName] || sq[upperFirst(entityName)];
 }
@@ -244,6 +278,7 @@ module.exports = {
   getRelatedEntityIds,
   getRelatedEntities,
   createEntity,
+  createManyEntities,
   updateEntity,
   updateManyEntities,
   deleteEntity,

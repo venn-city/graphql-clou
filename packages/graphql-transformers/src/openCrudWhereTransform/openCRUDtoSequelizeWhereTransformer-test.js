@@ -398,9 +398,7 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
 
   describe('transformation errors', () => {
     test('general error', () => {
-      expect(() => openCrudToSequelize({ where: { i_made_up_this_field: 'ty' } })).toThrowError({
-        message: "Cannot read property 'getFields' of undefined"
-      });
+      expect(() => openCrudToSequelize({ where: { i_made_up_this_field: 'ty' } })).toThrowError();
     });
 
     test('field name error', () => {
@@ -413,6 +411,12 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
       expect(() => openCrudToSequelize({ where: { ministries_boom: { name: 'ty' } } }, 'Government')).toThrowError({
         message: 'Unsupported many-relation where conditions, {"ministries_boom":{"name":"ty"}}'
       });
+    });
+
+    test('sequelize model not defined error', () => {
+      expect(() => openCrudToSequelize({ where: { ministries_boom: { name: 'ty' } } }, 'NON_EXISTENT_ENTITY')).toThrowError(
+        /No sequelize model defined for entity.*/
+      );
     });
   });
 });
