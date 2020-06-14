@@ -1,6 +1,6 @@
 {
   "name": "@venncity/base-dao",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -29,15 +29,15 @@
   "dependencies": {
     "@graphql-codegen/core": "^1.9.1",
     "@graphql-codegen/typescript": "^1.9.1",
-    "@venncity/cascade-delete": "^1.2.31",
+    "@venncity/cascade-delete": "^1.2.32",
     "@venncity/errors": "^1.5.1",
     "@venncity/graphql-pagination-enforce": "^1.2.0",
-    "@venncity/graphql-transformers": "^1.5.29",
+    "@venncity/graphql-transformers": "^1.5.30",
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.6",
     "@venncity/sequelize": "1.0.0",
-    "@venncity/sequelize-data-provider": "^1.6.31",
-    "@venncity/sequelize-model": "^1.8.5",
+    "@venncity/sequelize-data-provider": "^1.6.32",
+    "@venncity/sequelize-model": "^1.8.6",
     "async": "^3.1.0",
     "dataloader": "^1.4.0",
     "ejs": "^3.0.1",
