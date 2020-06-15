@@ -261,4 +261,40 @@ describe('sequelizeDataProvider paging tests', () => {
     });
     expect(fetchedMinistries).toHaveLength(10);
   });
+
+  test('getAllEntities with nested _some filter for nxm relation, with limit', async () => {
+    async function createVotesForMinister(ministerId) {
+      for (let i = 0; i < 5; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        await sequelizeDataProvider.createEntity('Vote', {
+          name: `${voteName1}${i}`,
+          ballot: voteBallot1,
+          minister: {
+            connect: {
+              id: ministerId
+            }
+          }
+        });
+      }
+    }
+
+    await createVotesForMinister(minister1.id);
+    await createVotesForMinister(minister2.id);
+
+    const fetchedMinisters = await sequelizeDataProvider.getAllEntities('Minister', {
+      where: {
+        AND: [
+          {
+            votes_some: { ballot: voteBallot1 }
+          },
+          {
+            name_in: [ministerName1, ministerName2]
+          }
+        ]
+      },
+      first: 2,
+      orderBy: 'createdAt_ASC'
+    });
+    expect(fetchedMinisters).toHaveLength(2);
+  });
 });

@@ -19,13 +19,7 @@ const NOT = 'NOT';
 
 function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityName, pathWithinSchema = [entityName], useColumnNames = false) {
   try {
-    if (!sq[entityName]) {
-      throw new Error(`No sequelize model defined for entity ${entityName}. Potential causes:
-        * Sequelize was not initialized (sq.init was not called)
-        * The sequelize model for ${entityName} was not defined correctly
-        * There is a package version clash and there are two versions of the @venncity/sequelize-model package
-      `);
-    }
+    validateSqInit(entityName);
     const sqWhereElements = [];
     const sqIncludeElements = [];
     let whereResult;
@@ -53,7 +47,8 @@ function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityN
       include: sqIncludeElements,
       limit: first,
       offset: skip,
-      order: orderBy && [orderBy.split('_')]
+      order: orderBy && [orderBy.split('_')],
+      includeIgnoreAttributes: false
     };
     addSelectAttributes(sqFilter, entityName);
 
@@ -317,6 +312,16 @@ function pushNotEmpty(array, other) {
     } else {
       array.push(other);
     }
+  }
+}
+
+function validateSqInit(entityName) {
+  if (!sq[entityName]) {
+    throw new Error(`No sequelize model defined for entity ${entityName}. Potential causes:
+      * Sequelize was not initialized (sq.init was not called)
+      * The sequelize model for ${entityName} was not defined correctly
+      * There is a package version clash and there are two versions of the @venncity/sequelize-model package
+    `);
   }
 }
 
