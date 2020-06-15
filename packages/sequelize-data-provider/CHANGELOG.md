@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.32...@venncity/sequelize-data-provider@1.7.0) (2020-06-15)
+
+
+### Features
+
+* **graphql-transformers:** dedup nXm pagination results ([#83](https://github.com/venn-city/graphql-clou/issues/83)) ([313967d](https://github.com/venn-city/graphql-clou/commit/313967d190898fadb504c7f62b54ba9e7f5e9b78))
+
+
+
+
+
 ## [1.6.32](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.6.31...@venncity/sequelize-data-provider@1.6.32) (2020-06-14)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider
