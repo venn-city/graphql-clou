@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.3](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.9.2...@venncity/base-dao@1.9.3) (2020-06-16)
+
+
+### Bug Fixes
+
+* **base-dao:** generate dao schema accept cleanFolder as boolean ([1d29452](https://github.com/venn-city/graphql-clou/commit/1d29452728ef040a4d810370570e4fa35bc2c6b1))
+
+
+
+
+
 ## [1.9.2](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.9.1...@venncity/base-dao@1.9.2) (2020-06-15)
 
 **Note:** Version bump only for package @venncity/base-dao
