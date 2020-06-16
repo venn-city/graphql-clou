@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-const { argv } = require('yargs');
+const yargs = require('yargs');
+
+yargs.boolean('cleanFolder');
+const { argv } = yargs;
 const { generateDaoSchema } = require('../tools/');
 
 generateDaoSchema({
