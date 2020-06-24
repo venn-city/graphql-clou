@@ -9,6 +9,7 @@ const { hookDefinitions } = require('./hooks/hooks');
 
 delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
 
+/* istanbul ignore next */
 if (process.env.IS_TEST !== 'true') {
   if (isTrue(config.get('xray.enabled'))) {
     // eslint-disable-next-line global-require
