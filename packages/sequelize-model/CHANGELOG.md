@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.7](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.8.6...@venncity/sequelize-model@1.8.7) (2020-06-24)
+
+
+### Bug Fixes
+
+* **sequelize-model:** fix enabling flag of sequelize xray ([#85](https://github.com/venn-city/graphql-clou/issues/85)) ([3b69d77](https://github.com/venn-city/graphql-clou/commit/3b69d775be0cd01b5e2c0de825b0d41a39d1ab08))
+
+
+
+
+
 ## [1.8.6](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-model@1.8.5...@venncity/sequelize-model@1.8.6) (2020-06-14)
 
 **Note:** Version bump only for package @venncity/sequelize-model

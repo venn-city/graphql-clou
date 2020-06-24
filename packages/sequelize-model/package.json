@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-model",
-  "version": "1.8.6",
+  "version": "1.8.7",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
