@@ -2,14 +2,19 @@
   "name": "@venncity/sequelize-model",
   "version": "1.8.7",
   "author": "Venn Engineering",
-  "main": "src/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "sideEffects": false,
   "scripts": {
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "rm -rf lib/cjs && tsc",
+    "build:esm": "rm -rf lib/esm && tsc -m esnext --outDir lib/esm",
     "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "npm run test -- --watchAll",
-    "lint": "npx eslint --fix src",
+    "lint": "eslint . --fix  --ext .js,.ts",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
-    "lint:ci": "npx eslint src --format junit -o $LINT_JUNIT_OUTPUT"
+    "lint:ci": "eslint . --format junit -o $LINT_JUNIT_OUTPUT"
   },
   "husky": {
     "hooks": {
@@ -34,7 +39,9 @@
     "pg": "^7.12.1"
   },
   "devDependencies": {
-    "@venncity/eslint-config": "^1.0.11",
+    "@types/jest": "^26.0.3",
+    "@venncity/eslint-config": "^3.0.1",
+    "@venncity/jest-config-server": "^3.3.4",
     "@venncity/prettier-config-server": "^1.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
@@ -48,6 +55,7 @@
     "jest-junit": "^9.0.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
-    "sequelize-cli": "^5.5.1"
+    "sequelize-cli": "^5.5.1",
+    "typescript": "^3.9.6"
   }
 }

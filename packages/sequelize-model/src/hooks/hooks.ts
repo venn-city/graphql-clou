@@ -1,11 +1,12 @@
-const Sequelize = require('@venncity/sequelize');
-const cuid = require('cuid');
-const _ = require('lodash');
-const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');
+import Sequelize from '@venncity/sequelize';
+import cuid from 'cuid';
+import _ from 'lodash';
+import { openCrudDataModel } from '@venncity/opencrud-schema-provider';
 
 const entityTypesSchema = openCrudDataModel.types;
 
-const hookDefinitions = {
+// eslint-disable-next-line import/prefer-default-export
+export const hookDefinitions = {
   beforeCreate: entity => {
     entity.id = cuid();
   },
@@ -111,7 +112,3 @@ function convertNullToEmptyArray(fieldInSchema, v) {
   }
   return v;
 }
-
-module.exports = {
-  hookDefinitions
-};

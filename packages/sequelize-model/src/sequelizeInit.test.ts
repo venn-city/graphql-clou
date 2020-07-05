@@ -1,11 +1,12 @@
-const Sequelize = require('@venncity/sequelize');
-const { forOwn } = require('lodash');
-const cls = require('cls-hooked');
-const DataTypes = require('@venncity/sequelize/lib/data-types');
-const config = require('@venncity/nested-config')(__dirname);
-const { isTrue } = require('@venncity/clou-utils');
+import Sequelize from '@venncity/sequelize';
+import { forOwn } from 'lodash';
+import cls from 'cls-hooked';
+import DataTypes from '@venncity/sequelize/lib/data-types';
+import { isTrue } from '@venncity/clou-utils';
+import { hookDefinitions } from './hooks/hooks';
+
 let pg = require('pg');
-const { hookDefinitions } = require('./hooks/hooks');
+const config = require('@venncity/nested-config')(__dirname);
 
 delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
 
@@ -23,7 +24,7 @@ if (process.env.IS_TEST !== 'true') {
 }
 
 const enableLogging = isTrue(config.get('sequelize.logging'));
-const sq = {};
+const sq: any = {};
 
 const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
@@ -94,4 +95,4 @@ sq.sequelize = sequelize;
 sq.Sequelize = Sequelize;
 sq.init = init;
 
-module.exports = sq;
+export default sq;

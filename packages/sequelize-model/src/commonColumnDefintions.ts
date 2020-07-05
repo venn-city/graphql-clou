@@ -1,4 +1,5 @@
-function getCommonDbColumnDefinitions(Sequelize) {
+// eslint-disable-next-line import/prefer-default-export
+export function getCommonDbColumnDefinitions(Sequelize) {
   return {
     id: {
       allowNull: false,
@@ -22,7 +23,3 @@ function getCommonDbColumnDefinitions(Sequelize) {
     }
   };
 }
-
-module.exports = {
-  getCommonDbColumnDefinitions
-};
