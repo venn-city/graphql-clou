@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-const { random } = require('faker');
-const { uniq } = require('lodash');
-const sequelizeModel = require('@venncity/sequelize-model');
-const sequelizeDataProvider = require('./sequelizeDataProvider');
-const models = require('./../../../test/model');
+import { random } from 'faker';
+import { uniq } from 'lodash';
+import sequelizeModel from '@venncity/sequelize-model';
+import sequelizeDataProvider from './sequelizeDataProvider';
+import models from '../../../test/model';
 
 sequelizeModel.sq.init(models);
 
