@@ -1,18 +1,18 @@
-const { upperFirst, map, camelCase, isObject } = require('lodash');
-const cuid = require('cuid');
-const Sequelize = require('@venncity/sequelize');
+import { upperFirst, map, camelCase, isObject } from 'lodash';
+import cuid from 'cuid';
+import Sequelize from '@venncity/sequelize';
+import { errors } from '@venncity/errors';
+import util from 'util';
+import async from 'async';
+import { openCrudToSequelize } from '@venncity/graphql-transformers';
+import { sq } from '@venncity/sequelize-model';
+import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
+
 const {
-  errors: {
-    ClientDataValidationError,
-    ServerDataValidationError,
-    SUPPORTED_LOG_LEVELS: { WARN }
-  }
-} = require('@venncity/errors');
-const util = require('util');
-const async = require('async');
-const { openCrudToSequelize } = require('@venncity/graphql-transformers');
-const { sq } = require('@venncity/sequelize-model');
-const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+  ClientDataValidationError,
+  ServerDataValidationError,
+  SUPPORTED_LOG_LEVELS: { WARN }
+} = errors;
 
 const CREATE_MANY = true;
 
@@ -270,7 +270,7 @@ function model(entityName) {
   return sq[entityName] || sq[upperFirst(entityName)];
 }
 
-module.exports = {
+export default {
   getEntity,
   getAllEntities,
   getRelatedEntityId,

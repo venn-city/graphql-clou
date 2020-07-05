@@ -1,8 +1,6 @@
-module.exports = {
-  setupFilesAfterEnv: ['./jest.setup.js'],
-  testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*)(-test).js?(x)'],
-  testEnvironment: 'node',
-  coverageReporters: ['json-summary', 'json', 'lcov', 'text', 'clover'],
-  coveragePathIgnorePatterns: ['src./test/.', '.jest.js'],
-  reporters: ['default', 'jest-junit']
-};
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { createJestConfig } = require('@venncity/jest-config-server');
+
+module.exports = createJestConfig({
+  setupFilesAfterEnv: ['./jest.setup.js']
+});
