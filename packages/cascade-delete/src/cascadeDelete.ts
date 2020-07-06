@@ -1,7 +1,6 @@
 import { upperFirst, lowerFirst, map, isEqual } from 'lodash';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 
-import util from 'util';
 import async from 'async';
 import pluralize from 'pluralize';
 import introspectionUtils from '@venncity/opencrud-schema-provider';
@@ -112,7 +111,7 @@ async function deleteMany(fieldType: string, idsToDelete: any[], context: any) {
   });
 }
 
-async function performDisconnect(entityName: string, entityId: any, entityIdToDisconnect: string, fieldToDisconnect: any, context: any) {
+async function performDisconnect(entityName: string, entityId: any, entityIdToDisconnect: any, fieldToDisconnect: any, context: any) {
   entityIdToDisconnect = entityIdToDisconnect.id || entityIdToDisconnect;
   entityId = entityId.id || entityId;
   const entityDAO = context.DAOs[`${lowerFirst(entityName)}DAO`];
@@ -137,7 +136,7 @@ function getReferencedFieldsToCascade(context: any, entityName: string) {
   const entityFields = context.openCrudDataModel.types.find((t: any) => t.name === upperFirst(entityName)).fields;
   return entityFields.filter((f: any) =>
     f.directives.find((d: any) => {
-      return _.isEqual(d.name, CASCADE_DIRECTIVE) && d.arguments.direct;
+      return isEqual(d.name, CASCADE_DIRECTIVE) && d.arguments.direct;
     })
   );
 }
