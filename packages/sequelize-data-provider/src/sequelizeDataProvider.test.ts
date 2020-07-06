@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { hacker, random } from 'faker';
 import { omit } from 'lodash';
-import sequelizeModel from '@venncity/sequelize-model';
+import { sq } from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
 import models from '../../../test/model';
 
-sequelizeModel.sq.init(models);
+sq.init(models);
 
 describe('sequelizeDataProvider', () => {
   /**
@@ -173,7 +173,7 @@ describe('sequelizeDataProvider', () => {
   });
 
   afterAll(async () => {
-    sequelizeModel.sq.sequelize.close();
+    sq.sequelize.close();
   });
 
   test('getEntity', async () => {
