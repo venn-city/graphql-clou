@@ -3,6 +3,7 @@ import { forOwn } from 'lodash';
 import cls from 'cls-hooked';
 import DataTypes from '@venncity/sequelize/lib/data-types';
 import { isTrue } from '@venncity/clou-utils';
+
 const config = require('@venncity/nested-config')(__dirname);
 
 let pg = require('pg');
