@@ -1,4 +1,4 @@
-/* eslint-disable import/first  */
+/* eslint-disable import/first */
 process.env.CLS_ENABLED = 'true';
 process.env.IS_TEST = 'false';
 
