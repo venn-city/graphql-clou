@@ -1,19 +1,21 @@
-const { get, keys } = require('lodash');
-const { findTypeInIntrospection, getChildFields, getFieldName } = require('@venncity/opencrud-schema-provider').introspectionUtils;
+import { get, keys } from 'lodash';
+import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 
-function getChildEntityCreateResolver(context, fieldType) {
+const { findTypeInIntrospection, getChildFields, getFieldName } = opencrudSchemaProvider.introspectionUtils;
+
+export function getChildEntityCreateResolver(context, fieldType) {
   return context.resolvers.Mutation[`create${fieldType}`];
 }
 
-function getChildEntityUpdateResolver(context, fieldType) {
+export function getChildEntityUpdateResolver(context, fieldType) {
   return context.resolvers.Mutation[`update${fieldType}`];
 }
 
-function getChildEntityDeleteResolver(context, fieldType) {
+export function getChildEntityDeleteResolver(context, fieldType) {
   return context.resolvers.Mutation[`delete${fieldType}`];
 }
 
-function detectChildFieldsToChange(context, resource, data) {
+export function detectChildFieldsToChange(context, resource, data) {
   const introspection = context.openCrudIntrospection;
   const parentEntityMetadata = findTypeInIntrospection(introspection, resource);
   const childFieldsMetadata = getChildFields(parentEntityMetadata, introspection);
@@ -21,7 +23,7 @@ function detectChildFieldsToChange(context, resource, data) {
   return { parentEntityMetadata, childFieldsToChangeMetadata };
 }
 
-function isReferencingSideOfJoin(context, type, field) {
+export function isReferencingSideOfJoin(context, type, field) {
   const fieldMetadata = context.openCrudDataModel.types.find(t => t.name === type).fields.find(f => f.name === getFieldName(field));
 
   const isUsingRelationTable = !!fieldMetadata.relationName;
@@ -32,11 +34,3 @@ function isReferencingSideOfJoin(context, type, field) {
   const pgRelationDirective = fieldMetadata.directives.find(d => d.name === 'pgRelation');
   return get(pgRelationDirective, 'arguments.column') !== undefined;
 }
-
-module.exports = {
-  getChildEntityCreateResolver,
-  getChildEntityUpdateResolver,
-  getChildEntityDeleteResolver,
-  detectChildFieldsToChange,
-  isReferencingSideOfJoin
-};

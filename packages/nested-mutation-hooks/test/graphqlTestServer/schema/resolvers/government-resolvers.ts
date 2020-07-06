@@ -1,7 +1,7 @@
-const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
-const { preCreation, postCreation, preUpdate, postUpdate } = require('../../../../src/index');
+import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
+import { preCreation, postCreation, preUpdate, postUpdate } from '../../../../src';
 
-module.exports = {
+export default {
   Query: {
     government: async (parent, { where }) => {
       return sequelizeDataProvider.getEntity('Government', where);

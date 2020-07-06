@@ -1,13 +1,14 @@
-const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
-const { createTestClient } = require('apollo-server-testing/dist/index');
-const { hacker } = require('faker');
-const sinon = require('sinon').createSandbox();
-const { sq } = require('@venncity/sequelize-model');
-const resolvers = require('./../test/graphqlTestServer/schema/resolvers');
-const models = require('./../../../test/model');
+/* eslint-disable import/first */
+import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
+import { createTestClient } from 'apollo-server-testing/dist/index';
+import { hacker } from 'faker';
+import sinon from 'sinon';
+import { sq } from '@venncity/sequelize-model';
+import resolvers from '../test/graphqlTestServer/schema/resolvers';
+import models from '../../../test/model';
 
 const mutationSpies = createMutationSpies();
-const { startApolloServer } = require('./../test/graphqlTestServer/');
+import { startApolloServer } from '../test/graphqlTestServer';
 
 const { mutate } = createTestClient(startApolloServer());
 

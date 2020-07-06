@@ -1,25 +1,21 @@
-const asyncRunner = require('async');
-const { promisify } = require('util');
-const { lowerFirst } = require('lodash');
+import asyncRunner from 'async';
+import { promisify } from 'util';
+import { lowerFirst } from 'lodash';
 
-const {
-  getChildFieldOfType,
-  getFieldName,
-  getFieldType,
-  extractFieldMetadata,
-  KINDS
-} = require('@venncity/opencrud-schema-provider').introspectionUtils;
-const {
+import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
+import {
   getChildEntityCreateResolver,
   getChildEntityUpdateResolver,
   getChildEntityDeleteResolver,
   detectChildFieldsToChange,
   isReferencingSideOfJoin
-} = require('./common');
+} from './common';
+
+const { getChildFieldOfType, getFieldName, getFieldType, extractFieldMetadata, KINDS } = opencrudSchemaProvider.introspectionUtils;
 
 const each = promisify(asyncRunner.each);
 
-async function preUpdate(context, parentUpdateData, where, entityName) {
+export async function preUpdate(context, parentUpdateData, where, entityName) {
   const postUpdateCalls = [];
   const { parentEntityMetadata, childFieldsToChangeMetadata } = detectChildFieldsToChange(context, entityName, parentUpdateData);
   await each(childFieldsToChangeMetadata, async childFieldToChange => {
@@ -278,11 +274,6 @@ async function fetchChildEntityIds(dataProvider, parentEntityMetadata, where, fi
   return dataProvider.getRelatedEntityIds(getFieldName(parentEntityMetadata), fetchedEntity.id, fieldName, relatedEntityWhere);
 }
 
-async function postUpdate(postUpdateCalls, updatedEntity) {
+export async function postUpdate(postUpdateCalls, updatedEntity) {
   await each(postUpdateCalls, async postUpdateCall => postUpdateCall && postUpdateCall(updatedEntity.id));
 }
-
-module.exports = {
-  preUpdate,
-  postUpdate
-};

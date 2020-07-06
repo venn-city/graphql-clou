@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 const governmentResolvers = require('./resolvers/government-resolvers');
 const ministerResolvers = require('./resolvers/minister-resolvers');
@@ -11,4 +11,4 @@ _.merge(resolvers, ministerResolvers);
 _.merge(resolvers, ministryResolvers);
 _.merge(resolvers, voteResolvers);
 
-module.exports = resolvers;
+export default resolvers;

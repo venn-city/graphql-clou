@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const express = require('express');
-const { sq } = require('@venncity/sequelize-model');
-const { startApolloServer } = require('./index');
+import express from 'express';
+import { sq } from '@venncity/sequelize-model';
+import { startApolloServer } from './index';
 
 const models = require('./../../../../test/model');
 

@@ -1,7 +1,7 @@
-const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
-const { preCreation, postCreation, preUpdate, postUpdate } = require('../../../../src/index');
+import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
+import { preCreation, postCreation, preUpdate, postUpdate } from '../../../../src/index';
 
-module.exports = {
+export default {
   Query: {
     ministry: async (parent, { where }) => {
       return sequelizeDataProvider.getEntity('Ministry', where);
@@ -22,16 +22,16 @@ module.exports = {
     },
     updateMinistry: async (parent, { data, where = {} }, context) => {
       const postUpdateCalls = await preUpdate(context, data, where, 'Ministry');
-      let updateMinistry = await sequelizeDataProvider.updateEntity('Ministry', data, where);
+      const updateMinistry = await sequelizeDataProvider.updateEntity('Ministry', data, where);
       await postUpdate(postUpdateCalls, updateMinistry);
       return updateMinistry;
     }
   },
   Ministry: {
-    minister: async (parent) => {
+    minister: async parent => {
       return sequelizeDataProvider.getRelatedEntity('Ministry', parent.id, 'minister');
     },
-    government: async (parent) => {
+    government: async parent => {
       return sequelizeDataProvider.getRelatedEntity('Ministry', parent.id, 'government');
     }
   }

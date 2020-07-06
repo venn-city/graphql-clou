@@ -1,18 +1,13 @@
-const asyncRunner = require('async');
-const { promisify } = require('util');
-const {
-  getChildFieldOfType,
-  getFieldName,
-  getFieldKind,
-  getFieldType,
-  extractFieldMetadata,
-  KINDS
-} = require('@venncity/opencrud-schema-provider').introspectionUtils;
-const { getChildEntityCreateResolver, getChildEntityUpdateResolver, detectChildFieldsToChange, isReferencingSideOfJoin } = require('./common');
+import asyncRunner from 'async';
+import { promisify } from 'util';
+import openCrudSchemaProvider from '@venncity/opencrud-schema-provider';
+import { getChildEntityCreateResolver, getChildEntityUpdateResolver, detectChildFieldsToChange, isReferencingSideOfJoin } from './common';
+
+const { getChildFieldOfType, getFieldName, getFieldKind, getFieldType, extractFieldMetadata, KINDS } = openCrudSchemaProvider.introspectionUtil;
 
 const each = promisify(asyncRunner.each);
 
-async function preCreation(context, parentCreationData, entityName) {
+export async function preCreation(context, parentCreationData, entityName) {
   const postCreationCalls = [];
   const { parentEntityMetadata, childFieldsToChangeMetadata } = detectChildFieldsToChange(context, entityName, parentCreationData);
   await each(childFieldsToChangeMetadata, async childFieldToChangeMetadata => {
@@ -34,6 +29,7 @@ async function preCreation(context, parentCreationData, entityName) {
         if (childEntityData.create) {
           await each(childEntityData.create, async childFieldToChangeElement => {
             postCreationCalls.push(
+              // @ts-ignore
               await nestedCreate({
                 context,
                 entityName,
@@ -48,6 +44,7 @@ async function preCreation(context, parentCreationData, entityName) {
         } else if (childEntityData.connect) {
           await each(childEntityData.connect, async childFieldToChangeElement => {
             postCreationCalls.push(
+              // @ts-ignore
               await nestedConnect({
                 context,
                 entityName,
@@ -69,7 +66,7 @@ async function preCreation(context, parentCreationData, entityName) {
   return postCreationCalls;
 }
 
-async function postCreation(postCreationCalls, createdEntity) {
+export async function postCreation(postCreationCalls, createdEntity) {
   await each(postCreationCalls, async postCreationCall => postCreationCall && postCreationCall(createdEntity.id));
 }
 
@@ -124,8 +121,3 @@ async function nestedConnect({ context, entityName, childFieldToChangeMetadata, 
     return childEntityUpdateResolver(parentCreationData, { data: reverseReferenceData, where: { id: ownerId } }, context);
   };
 }
-
-module.exports = {
-  preCreation,
-  postCreation
-};
