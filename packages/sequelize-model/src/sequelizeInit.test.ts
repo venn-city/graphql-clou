@@ -1,98 +1,129 @@
-import Sequelize from '@venncity/sequelize';
-import { forOwn } from 'lodash';
-import cls from 'cls-hooked';
-import DataTypes from '@venncity/sequelize/lib/data-types';
-import { isTrue } from '@venncity/clou-utils';
-import { hookDefinitions } from './hooks/hooks';
+import { hacker, random } from 'faker';
+import models from '../../../test/model';
+import sq from './sequelizeInit';
 
-let pg = require('pg');
-const config = require('@venncity/nested-config')(__dirname);
+process.env.CLS_ENABLED = 'true';
+process.env.IS_TEST = 'false';
 
-delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
+sq.init(models);
 
-/* istanbul ignore next */
-if (process.env.IS_TEST !== 'true') {
-  if (isTrue(config.get('xray.enabled'))) {
-    // eslint-disable-next-line global-require
-    const xray = require('aws-xray-sdk');
-    Sequelize.useCLS(xray.getNamespace());
-    pg = xray.capturePostgres(pg);
-  } else if (process.env.CLS_ENABLED === 'true') {
-    const namespace = cls.createNamespace(config.get('clsNamespace.name'));
-    Sequelize.useCLS(namespace);
-  }
-}
+const DUMMY_MODEL_FUNCTION = () => ({ associate: () => {} });
+const sequelize = sq.sequelize;
 
-const enableLogging = isTrue(config.get('sequelize.logging'));
-const sq: any = {};
+describe('sequelizeInit', () => {
+  afterAll(async () => {
+    await sq.sequelize.close();
+  });
 
-const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
-  host: config.get('db.host'),
-  pool: getPoolConfig(),
-  port: config.has('db.port') ? config.get('db.port') : 5432,
-  schema: config.get('db.schema'),
-  dialect: config.get('sequelize.dialect'),
-  dialectModule: pg,
-  logging: (query, metadata) => {
-    if (enableLogging) {
-      console.info(query);
-      console.debug(metadata);
-    }
-  },
-  native: undefined,
-  dialectOptions: {
-    useUTC: true
-  },
-  define: {
-    hooks: hookDefinitions
-  },
-  retry: getRetryConfig()
-});
+  test('should only init the sequelize models once', () => {
+    expect(sq.initialized).toBeTruthy();
 
-function getRetryConfig() {
-  return {
-    // config according to retry-as-promised (https://github.com/mickhansen/retry-as-promised)
-    max: 4,
-    timeout: config.get('sequelize.retry.timeout'),
-    match: [Sequelize.ConnectionError, /Connection terminated unexpectedly/],
-    backoffBase: 12, // ms
-    backoffExponent: 2,
-    report: (message, conf) => {
-      if (conf.$current > 1) {
-        console.warn('Retrying sequelize operation', message, 'attempt:', conf.$current);
+    sq.init({
+      DummyModel: DUMMY_MODEL_FUNCTION
+    });
+    expect(sq).not.toHaveProperty('DummyModel');
+  });
+
+  test('sequelize should be initialized properly with models for all test schema entities', async () => {
+    const governments = await sq.Government.findAll({ where: { id: 'x' } });
+    expect(governments).toHaveLength(0);
+
+    const missingGovernment = await sq.Government.findOne({ where: { id: 'x' } });
+    expect(missingGovernment).toBeNull();
+
+    const ministers = await sq.Minister.findAll({ where: { id: 'x' } });
+    expect(ministers).toHaveLength(0);
+
+    const ministries = await sq.Ministry.findAll({ where: { id: 'x' } });
+    expect(ministries).toHaveLength(0);
+
+    const votes = await sq.Vote.findAll({ where: { id: 'x' } });
+    expect(votes).toHaveLength(0);
+  });
+
+  test('sequelize should call schema hooks', async () => {
+    const createdMinistries = await sq.Ministry.bulkCreate([
+      { name: hacker.phrase(), budget: 100 },
+      { name: hacker.phrase(), budget: 200 }
+    ]);
+    createdMinistries.forEach(ministry => expect(ministry).toHaveProperty('id'));
+    const createdMinistriesBudgets = createdMinistries.map(ministry => ministry.budget);
+    expect(createdMinistriesBudgets).toContain(100);
+    expect(createdMinistriesBudgets).toContain(200);
+
+    const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: 77.9 });
+    const fetchedMinistry = await sq.Ministry.findOne({
+      where: {
+        id: createdMinistry.id
       }
-    },
-    name: 'sq-connection-error-retry'
-  };
-}
-
-function getPoolConfig() {
-  const poolConfig = config.get('sequelize.pool');
-  Object.entries(poolConfig).forEach(([key, value]) => {
-    poolConfig[key] = Number(value);
+    });
+    const updatedEntity = await fetchedMinistry.update({
+      budget: 88.2
+    });
+    expect(updatedEntity.dataValues).toHaveProperty('budget', 88.2);
+    expect(updatedEntity.dataValues).toHaveProperty('deleted', 0);
   });
-  return poolConfig;
-}
 
-function init(models) {
-  if (sq.initialized) {
-    console.log('Sequelize already initialized, skipping');
-    return sq;
-  }
-  forOwn(models, (model, modelName) => {
-    sq[modelName] = model(sequelize, DataTypes);
+  test('sequelize should not format a float of null', async () => {
+    const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: null });
+    expect(createdMinistry.dataValues).toHaveProperty('budget', null);
   });
-  forOwn(models, (model, modelName) => {
-    if (sq[modelName].associate) {
-      sq[modelName].associate(sq);
+
+  test('sequelize should call schema hooks on related fields (nesting)', async () => {
+    const num1 = random.number();
+    const num2 = random.number();
+    const ministerName = hacker.phrase();
+    const vote1 = await sq.Vote.create({ name: `vote${num1}` });
+    const vote2 = await sq.Vote.create({ name: `vote${num2}` });
+    const createdMinister = await sq.Minister.create({ name: ministerName, budget: 1313 });
+
+    await createdMinister.addVotes([vote1.id, vote2.id]);
+    const fetchedMinister = await sq.Minister.findOne({
+      where: { id: createdMinister.id },
+      include: {
+        model: sq.Vote,
+        as: 'votes',
+        attributes: ['createdAt', 'updatedAt']
+      }
+    });
+
+    expect(fetchedMinister.dataValues.votes).toHaveLength(2);
+    const ministerVotes = fetchedMinister.dataValues.votes;
+
+    ministerVotes.forEach(v => {
+      expect(typeof v.dataValues.createdAt === 'string').toBeTruthy();
+      expect(typeof v.dataValues.updatedAt === 'string').toBeTruthy();
+    });
+  });
+
+  test('sequelize should support block transactions using cls namespace without using transaction explicitly', async () => {
+    const originalBudget = 80;
+    const createdMinistry = await sq.Ministry.create({ name: hacker.phrase(), budget: originalBudget });
+
+    let errorMessage;
+
+    try {
+      await sequelize.transaction(async () => {
+        const newBudget = 88.2;
+        const fetchedMinistry = await sq.Ministry.findOne({
+          where: {
+            id: createdMinistry.id
+          }
+        });
+        await fetchedMinistry.update({ budget: newBudget });
+        const ministryDuringTransaction = await sq.Ministry.findOne({ where: { id: createdMinistry.id } });
+
+        expect(ministryDuringTransaction.dataValues).toHaveProperty('budget', newBudget);
+
+        throw new Error('Some error that occurred during a transaction');
+      });
+    } catch (e) {
+      errorMessage = e.message;
     }
+
+    expect(errorMessage).toEqual('Some error that occurred during a transaction');
+
+    const ministryAfterTransaction = await sq.Ministry.findOne({ where: { id: createdMinistry.id } });
+    expect(ministryAfterTransaction.dataValues).toHaveProperty('budget', originalBudget);
   });
-  sq.initialized = true;
-  return sq;
-}
-
-sq.sequelize = sequelize;
-sq.Sequelize = Sequelize;
-sq.init = init;
-
-export default sq;
+});
