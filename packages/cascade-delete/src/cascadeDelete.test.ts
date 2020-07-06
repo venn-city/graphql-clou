@@ -1,19 +1,21 @@
-const { hacker } = require('faker');
-const sinon = require('sinon');
-const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');
-const { sq } = require('@venncity/sequelize-model');
-const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
-const { cascadeDelete } = require('./cascadeDelete');
-const models = require('./../../../test/model');
+import { hacker } from 'faker';
+import { openCrudDataModel } from '@venncity/opencrud-schema-provider';
+
+import sinon from 'sinon';
+import { sq } from '@venncity/sequelize-model';
+import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
+
+import { cascadeDelete } from './cascadeDelete';
+import models from '../../../test/model';
 
 sq.init(models);
 
 describe('cascade delete', () => {
-  let context;
+  let context: any;
 
-  let government;
-  let ministry1;
-  let ministry2;
+  let government: any;
+  let ministry1: any;
+  let ministry2: any;
   const updateGovernmentStub = sinon.stub();
   const deleteManyMinistriesStub = sinon.stub();
   updateGovernmentStub.resolves();
