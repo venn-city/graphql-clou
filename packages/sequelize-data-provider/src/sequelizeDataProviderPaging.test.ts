@@ -44,57 +44,51 @@ describe('sequelizeDataProvider paging tests', () => {
   // Adding 123 makes sure data is not intersecting between testsuites
   const randomNumber = random.number() + 123;
 
-  let government1;
+  let government1: any;
   const governmentName1 = `9500BC${randomNumber}`;
   const governmentCountry1 = `Atlantis${randomNumber}`;
-  let government2;
+
   const governmentName2 = `1966${randomNumber}`;
   const governmentCountry2 = `Sorcha${randomNumber}`;
 
-  let ministry1;
   const ministryName1 = `Finance${randomNumber}`;
   const ministryBudget1 = 87 + randomNumber;
-  let ministry2;
+
   const ministryName2 = `Defence${randomNumber}`;
   const ministryBudget2 = 22.1 + randomNumber;
-  let ministry3;
+
   const ministryName3 = `Healthcare${randomNumber}`;
   const ministryBudget3 = 22.1 + randomNumber;
 
-  let minister1;
+  let minister1: any;
   const ministerName1 = `Lazaros${randomNumber}`;
-  let minister2;
+  let minister2: any;
   const ministerName2 = `Natassas${randomNumber}`;
-  let minister3;
   const ministerName3 = `Vasileia${randomNumber}`;
 
-  let vote1;
   const voteName1 = `Build walls${randomNumber}`;
   const voteBallot1 = 'YEA';
-  let vote2;
   const voteName2 = `Build walls${randomNumber}`;
   const voteBallot2 = 'NAY';
-  let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
-  let vote4;
   const voteName4 = `Make war${randomNumber}`;
   const voteBallot4 = 'ABSTAIN';
 
   beforeAll(async () => {
     console.info('random seed', randomNumber);
     government1 = await sequelizeDataProvider.createEntity('Government', { name: governmentName1, country: governmentCountry1 });
-    government2 = await sequelizeDataProvider.createEntity('Government', { name: governmentName2, country: governmentCountry2 });
+    await sequelizeDataProvider.createEntity('Government', { name: governmentName2, country: governmentCountry2 });
     minister1 = await sequelizeDataProvider.createEntity('Minister', {
       name: ministerName1
     });
     minister2 = await sequelizeDataProvider.createEntity('Minister', {
       name: ministerName2
     });
-    minister3 = await sequelizeDataProvider.createEntity('Minister', {
+    await sequelizeDataProvider.createEntity('Minister', {
       name: ministerName3
     });
-    ministry1 = await sequelizeDataProvider.createEntity('Ministry', {
+     await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName1,
       budget: ministryBudget1,
       government: {
@@ -108,7 +102,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-    ministry2 = await sequelizeDataProvider.createEntity('Ministry', {
+     await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName2,
       budget: ministryBudget2,
       government: {
@@ -122,7 +116,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-    ministry3 = await sequelizeDataProvider.createEntity('Ministry', {
+     await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName3,
       budget: ministryBudget3,
       government: {
@@ -132,7 +126,7 @@ describe('sequelizeDataProvider paging tests', () => {
       }
     });
 
-    vote1 = await sequelizeDataProvider.createEntity('Vote', {
+    await sequelizeDataProvider.createEntity('Vote', {
       name: voteName1,
       ballot: voteBallot1,
       minister: {
@@ -141,7 +135,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-    vote2 = await sequelizeDataProvider.createEntity('Vote', {
+    await sequelizeDataProvider.createEntity('Vote', {
       name: voteName2,
       ballot: voteBallot2,
       minister: {
@@ -150,7 +144,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-    vote3 = await sequelizeDataProvider.createEntity('Vote', {
+    await sequelizeDataProvider.createEntity('Vote', {
       name: voteName3,
       ballot: voteBallot3,
       minister: {
@@ -159,7 +153,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-    vote4 = await sequelizeDataProvider.createEntity('Vote', {
+    await sequelizeDataProvider.createEntity('Vote', {
       name: voteName4,
       ballot: voteBallot4
     });
@@ -176,7 +170,7 @@ describe('sequelizeDataProvider paging tests', () => {
         name: `${governmentName1}${i}`
       });
 
-      const ministries = [];
+      const ministries: any = [];
       for (let j = 0; j < 3; j += 1) {
         // eslint-disable-next-line no-await-in-loop
         const createdMinistry = await sequelizeDataProvider.createEntity('Ministry', {
