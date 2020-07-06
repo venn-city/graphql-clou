@@ -3,10 +3,11 @@ import { forOwn } from 'lodash';
 import cls from 'cls-hooked';
 import DataTypes from '@venncity/sequelize/lib/data-types';
 import { isTrue } from '@venncity/clou-utils';
-import { hookDefinitions } from './hooks/hooks';
+const config = require('@venncity/nested-config')(__dirname);
 
 let pg = require('pg');
-const config = require('@venncity/nested-config')(__dirname);
+// eslint-disable-next-line import/order,import/first
+import { hookDefinitions } from './hooks/hooks';
 
 delete pg.native; // A module of pg.native is being required even though native:false, https://github.com/sequelize/sequelize/issues/3781#issuecomment-104278869
 

@@ -1,9 +1,10 @@
+/* eslint-disable import/first */
+process.env.CLS_ENABLED = 'true';
+process.env.IS_TEST = 'false';
+
 import { hacker, random } from 'faker';
 import models from '../../../test/model';
 import sq from './sequelizeInit';
-
-process.env.CLS_ENABLED = 'true';
-process.env.IS_TEST = 'false';
 
 sq.init(models);
 
