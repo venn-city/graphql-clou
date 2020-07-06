@@ -5,7 +5,7 @@ import { errors } from '@venncity/errors';
 import util from 'util';
 import async from 'async';
 import { openCrudToSequelize } from '@venncity/graphql-transformers';
-import { sq } from '@venncity/sequelize-model';
+import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 
 const {
@@ -267,7 +267,7 @@ async function handleEntityRelationsPreCreate(entityName: string, entityToCreate
 }
 
 function model(entityName: string) {
-  return sq[entityName] || sq[upperFirst(entityName)];
+  return sequelizeModel.sq[entityName] || sequelizeModel.sq[upperFirst(entityName)];
 }
 
 export default {
