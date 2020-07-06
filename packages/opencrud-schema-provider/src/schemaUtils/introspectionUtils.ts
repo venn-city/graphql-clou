@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-const { upperFirst, get } = require('lodash');
+import { upperFirst, get } from 'lodash';
 
 const TYPE = '__Type';
 const FIELD = '__Field';
@@ -123,7 +123,7 @@ function findTypeInIntrospection(introspection, resource) {
   });
 }
 
-module.exports = {
+export default {
   getMutationWhereInputName,
   getQueryWhereInputName,
   findTypeInIntrospection,

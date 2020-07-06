@@ -1,4 +1,4 @@
-const { openCrudDataModel, openCrudSchema, openCrudSchemaGraphql, getOpenCrudIntrospection } = require('./openCRUDSchemaProvider');
+import { openCrudDataModel, openCrudSchema, openCrudSchemaGraphql, getOpenCrudIntrospection } from './openCRUDSchemaProvider';
 
 describe('openCrudSchemaProvider', () => {
   test('openCrudDataModel', () => {

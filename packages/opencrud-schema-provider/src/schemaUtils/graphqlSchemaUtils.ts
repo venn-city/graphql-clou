@@ -1,13 +1,5 @@
-const {
-  GraphQLObjectType,
-  GraphQLScalarType,
-  GraphQLInterfaceType,
-  GraphQLUnionType,
-  GraphQLList,
-  GraphQLEnumType,
-  GraphQLNonNull
-} = require('graphql');
-const { upperFirst } = require('lodash');
+import { GraphQLObjectType, GraphQLScalarType, GraphQLInterfaceType, GraphQLUnionType, GraphQLList, GraphQLEnumType, GraphQLNonNull } from 'graphql';
+import { upperFirst } from 'lodash';
 
 const SCALAR_TYPES = [GraphQLScalarType, GraphQLEnumType];
 const NON_SCALAR_TYPES = [GraphQLObjectType, GraphQLInterfaceType, GraphQLUnionType, GraphQLList];
@@ -43,15 +35,15 @@ function isList(fieldType) {
 }
 
 function getField(schema, entityName, fieldName) {
-  return Object.values(schema.getType(upperFirst(entityName)).getFields()).find(f => f.name === fieldName.split('_')[0]);
+  return Object.values(schema.getType(upperFirst(entityName)).getFields()).find((f: any) => f.name === fieldName.split('_')[0]);
 }
 
 function getFieldType(schema, entityName, fieldName) {
-  const relatedType = getField(schema, entityName, fieldName);
+  const relatedType: any = getField(schema, entityName, fieldName);
   return relatedType.type.name || relatedType.type.ofType.name || relatedType.type.ofType.ofType.name;
 }
 
-module.exports = {
+export default {
   isScalar,
   isObject,
   isList,
