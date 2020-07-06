@@ -19,7 +19,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint",
+      "yarn lint",
       "git add"
     ]
   },
