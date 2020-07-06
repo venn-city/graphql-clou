@@ -6,6 +6,7 @@ import { sq } from '@venncity/sequelize-model';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 
 import { cascadeDelete } from './cascadeDelete';
+// @ts-ignore
 import models from '../../../test/model';
 
 sq.init(models);

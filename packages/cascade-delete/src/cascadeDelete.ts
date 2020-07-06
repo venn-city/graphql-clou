@@ -8,8 +8,6 @@ import introspectionUtils from '@venncity/opencrud-schema-provider';
 
 const { getFieldType } = introspectionUtils;
 
-const eachOfAsync = util.promisify(async.eachOf);
-
 const CASCADE_DIRECTIVE = 'vnCascade';
 const DELETE_OPERATION = 'DELETE';
 const DISCONNECT_OPERATION = 'DISCONNECT';
@@ -24,7 +22,7 @@ export async function cascadeDelete({ entityName, entityId, context }: { entityN
 async function cascadeReferencedEntities(entityName: string, entityId: string, context: any) {
   const fieldsToCascade = getReferencedFieldsToCascade(context, entityName);
 
-  await eachOfAsync(fieldsToCascade, async (fieldToCascade: any) => {
+  await async.eachOf(fieldsToCascade, async (fieldToCascade: any) => {
     const fieldType = getFieldType(fieldToCascade);
     const { shouldDelete, shouldDisconnect } = getDirectiveOperations(fieldToCascade.directives, DIRECT);
 
@@ -34,7 +32,7 @@ async function cascadeReferencedEntities(entityName: string, entityId: string, c
         entityIdToCascade = [entityIdToCascade];
       }
       if (shouldDisconnect) {
-        await eachOfAsync(entityIdToCascade, async (idToCascade: any) => {
+        await async.eachOf(entityIdToCascade, async (idToCascade: any) => {
           if (shouldDelete) {
             await runPreDeletionOfNextEntity(fieldType, idToCascade, context);
           }
@@ -57,7 +55,7 @@ async function runPreDeletionOfNextEntity(fieldType: string, idToCascade: any, c
 
 async function cascadeReferencingEntities(originalEntityName: string, originalEntityId: string, context: any) {
   const allEntitiesTypes = context.openCrudDataModel.types;
-  await eachOfAsync(allEntitiesTypes, async (entity: any) => {
+  await async.eachOf(allEntitiesTypes, async (entity: any) => {
     const entityFields = entity.fields;
 
     const fieldsToCascade = getReferencingFieldsToCascade(entityFields, originalEntityName);
@@ -76,7 +74,7 @@ async function handleReferencingEntities(
   fieldsToCascade: any,
   context: any
 ) {
-  await eachOfAsync(fieldsToCascade, async (fieldToCascade: any) => {
+  await async.eachOf(fieldsToCascade, async (fieldToCascade: any) => {
     let where;
 
     if (fieldToCascade.isList) {
@@ -93,7 +91,7 @@ async function handleReferencingEntities(
     if (entityIdsToCascade.length) {
       const { shouldDelete, shouldDisconnect } = getDirectiveOperations(fieldToCascade.directives, INVERSE);
       if (shouldDisconnect) {
-        await eachOfAsync(entityIdsToCascade, async (entityIdToCascade: string) => {
+        await async.eachOf(entityIdsToCascade, async (entityIdToCascade: string) => {
           if (shouldDelete) {
             await runPreDeletionOfNextEntity(referencingEntityName, entityIdToCascade, context);
           }
