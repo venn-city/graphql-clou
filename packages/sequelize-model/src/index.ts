@@ -1,3 +1,9 @@
-export { default as sq } from './sequelizeInit';
-export { baseModel } from './base/baseModel';
-export { getCommonDbColumnDefinitions } from './commonColumnDefintions';
+import sq from './sequelizeInit';
+import { baseModel } from './base/baseModel';
+import { getCommonDbColumnDefinitions } from './commonColumnDefintions';
+
+export default {
+  sq,
+  baseModel,
+  getCommonDbColumnDefinitions
+};
