@@ -43,7 +43,7 @@ async function getRelatedEntityId(entityName: string, originalEntityId: string, 
   return relation && relation.id;
 }
 
-async function getRelatedEntity(entityName:string, originalEntityId: string, relationFieldName: string) {
+async function getRelatedEntity(entityName: string, originalEntityId: string, relationFieldName: string) {
   const originalEntity = await model(entityName).findOne({
     where: { id: originalEntityId },
     include: {
@@ -85,7 +85,7 @@ async function createEntity(entityName: string, entityToCreate: any) {
   return createdEntity.dataValues;
 }
 
-async function createManyEntities(entityName:string, entitiesToCreate: any) {
+async function createManyEntities(entityName: string, entitiesToCreate: any) {
   entitiesToCreate.forEach(entityToCreate => {
     entityToCreate.id = cuid();
   });

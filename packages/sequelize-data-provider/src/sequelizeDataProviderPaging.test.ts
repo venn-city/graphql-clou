@@ -88,7 +88,7 @@ describe('sequelizeDataProvider paging tests', () => {
     await sequelizeDataProvider.createEntity('Minister', {
       name: ministerName3
     });
-     await sequelizeDataProvider.createEntity('Ministry', {
+    await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName1,
       budget: ministryBudget1,
       government: {
@@ -102,7 +102,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-     await sequelizeDataProvider.createEntity('Ministry', {
+    await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName2,
       budget: ministryBudget2,
       government: {
@@ -116,7 +116,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-     await sequelizeDataProvider.createEntity('Ministry', {
+    await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName3,
       budget: ministryBudget3,
       government: {
