@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { random } from 'faker';
 import { uniq } from 'lodash';
-import sequelizeModel from '@venncity/sequelize-model';
+import { sq } from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
 import models from '../../../test/model';
 
-sequelizeModel.sq.init(models);
+sq.init(models);
 
 describe('sequelizeDataProvider paging tests', () => {
   /**
@@ -88,7 +88,7 @@ describe('sequelizeDataProvider paging tests', () => {
     await sequelizeDataProvider.createEntity('Minister', {
       name: ministerName3
     });
-     await sequelizeDataProvider.createEntity('Ministry', {
+    await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName1,
       budget: ministryBudget1,
       government: {
@@ -102,7 +102,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-     await sequelizeDataProvider.createEntity('Ministry', {
+    await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName2,
       budget: ministryBudget2,
       government: {
@@ -116,7 +116,7 @@ describe('sequelizeDataProvider paging tests', () => {
         }
       }
     });
-     await sequelizeDataProvider.createEntity('Ministry', {
+    await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName3,
       budget: ministryBudget3,
       government: {
@@ -160,7 +160,7 @@ describe('sequelizeDataProvider paging tests', () => {
   });
 
   afterAll(async () => {
-    sequelizeModel.sq.sequelize.close();
+    sq.sequelize.close();
   });
 
   test('getAllEntities with nested _every and _none filters', async () => {
