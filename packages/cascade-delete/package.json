@@ -23,8 +23,8 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint",
+    "*.ts": [
+      "yarn lint",
       "git add"
     ]
   },
