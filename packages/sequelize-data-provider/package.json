@@ -2,7 +2,7 @@
   "name": "@venncity/sequelize-data-provider",
   "version": "1.7.4",
   "author": "Venn Engineering",
-  "main": "src/index.js",
+  "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "sideEffects": false,
   "scripts": {
