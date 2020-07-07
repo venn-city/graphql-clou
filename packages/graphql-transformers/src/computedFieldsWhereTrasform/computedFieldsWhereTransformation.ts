@@ -1,5 +1,5 @@
 import { replace, cloneDeep, lowerFirst, isEmpty } from 'lodash';
-import async from 'async';
+import asyncUtil from 'async';
 import { getOpenCrudIntrospection, introspectionUtils } from '@venncity/opencrud-schema-provider';
 
 const openCrudIntrospection = getOpenCrudIntrospection();
@@ -41,7 +41,7 @@ function cloneIfRequired(initialCall, originalWhere) {
 async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context, originalWhere) {
   await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
 
-  const transformedWhereList = await async.reduce(Object.keys(transformedWhere), [{}], async (memo, originalWhereArgumentName) => {
+  const transformedWhereList = await asyncUtil.reduce(Object.keys(transformedWhere), [{}], async (memo, originalWhereArgumentName) => {
     const transformationFunction = computedWhereArgumentsTransformation[originalWhereArgumentName];
     const originalWhereValue = transformedWhere[originalWhereArgumentName];
     // computed field
@@ -78,9 +78,9 @@ async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, 
 
 async function replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context) {
   const booleanOperators = ['AND', 'OR', 'NOT'];
-  await async.forEach(booleanOperators, async operator => {
+  await asyncUtil.forEach(booleanOperators, async operator => {
     if (transformedWhere[operator]) {
-      transformedWhere[operator] = await async.map(transformedWhere[operator], async whereElementWithinBooleanOperator => {
+      transformedWhere[operator] = await asyncUtil.map(transformedWhere[operator], async whereElementWithinBooleanOperator => {
         const transformedWhereArg = await transformComputedFieldsWhereArguments({
           originalWhere: whereElementWithinBooleanOperator,
           whereInputName,
@@ -100,7 +100,7 @@ function convertWhereArgumentToFieldName(objectFieldName) {
 }
 
 async function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context) {
-  await async.forEach(whereInputObjectFields, async (whereInputObjectField: any) => {
+  await asyncUtil.forEach(whereInputObjectFields, async (whereInputObjectField: any) => {
     const objectFieldInWhere = whereInputObjectField.name;
     if (transformedWhere[objectFieldInWhere]) {
       const objectFieldNameWherePart = transformedWhere[objectFieldInWhere];
