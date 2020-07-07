@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-data-provider",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -25,11 +25,11 @@
   },
   "dependencies": {
     "@venncity/errors": "^1.6.2",
-    "@venncity/graphql-transformers": "^1.6.2",
+    "@venncity/graphql-transformers": "^1.6.3",
     "@venncity/nested-config": "^2.0.0",
-    "@venncity/opencrud-schema-provider": "^1.4.6",
+    "@venncity/opencrud-schema-provider": "^1.4.7",
     "@venncity/sequelize": "1.0.0",
-    "@venncity/sequelize-model": "^1.8.8",
+    "@venncity/sequelize-model": "^1.8.9",
     "async": "^3.1.0",
     "cuid": "^2.1.8",
     "deepdash": "^4.2.17",

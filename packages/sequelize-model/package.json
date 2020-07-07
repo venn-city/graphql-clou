@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-model",
-  "version": "1.8.8",
+  "version": "1.8.9",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@venncity/clou-utils": "^2.0.1",
     "@venncity/nested-config": "^2.0.0",
-    "@venncity/opencrud-schema-provider": "^1.4.6",
+    "@venncity/opencrud-schema-provider": "^1.4.7",
     "@venncity/sequelize": "1.0.0",
     "aws-xray-sdk": "^3.0.1",
     "cls-hooked": "^4.2.2",
