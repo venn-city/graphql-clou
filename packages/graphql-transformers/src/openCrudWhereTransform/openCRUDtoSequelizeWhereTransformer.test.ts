@@ -1,7 +1,7 @@
-const sequelizeModel = require('@venncity/sequelize-model');
-const { Op } = require('@venncity/sequelize');
-const { openCrudToSequelize } = require('./openCRUDtoSequelizeWhereTransformer');
-const models = require('./../../../../test/model');
+import sequelizeModel from '@venncity/sequelize-model';
+import { Op } from '@venncity/sequelize';
+import { openCrudToSequelize } from './openCRUDtoSequelizeWhereTransformer';
+import models from '../../../../test/model';
 
 const sq = sequelizeModel.sq.init(models);
 
@@ -398,16 +398,19 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
 
   describe('transformation errors', () => {
     test('general error', () => {
+      // @ts-ignore
       expect(() => openCrudToSequelize({ where: { i_made_up_this_field: 'ty' } })).toThrowError();
     });
 
     test('field name error', () => {
+      // @ts-ignore
       expect(() => openCrudToSequelize({ where: { name_foo: 'ty' } }, 'Government')).toThrowError({
         message: 'Unsupported where conditions, {"name_foo":"ty"}'
       });
     });
 
     test('field ministries_every error', () => {
+      // @ts-ignore
       expect(() => openCrudToSequelize({ where: { ministries_boom: { name: 'ty' } } }, 'Government')).toThrowError({
         message: 'Unsupported many-relation where conditions, {"ministries_boom":{"name":"ty"}}'
       });

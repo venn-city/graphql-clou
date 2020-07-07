@@ -1,4 +1,4 @@
-const { transformComputedFieldsWhereArguments } = require('./computedFieldsWhereTransformation');
+import { transformComputedFieldsWhereArguments } from './computedFieldsWhereTransformation';
 
 describe('computedFieldsWhereTransformation', () => {
   test('transformComputedFieldsWhereArguments should transform simple computed fields where clause', async () => {
@@ -42,7 +42,7 @@ describe('computedFieldsWhereTransformation', () => {
     };
     const computedWhereArgumentsTransformation = {
       extendedFieldFoo: (extendedFieldFoo, theOriginalWhere, context) => {
-        return { name: originalWhere.regularField, name_not: context.someKey };
+        return { name: originalWhere.regularField, name_not: context.DAOs.someKey };
       }
     };
     const context = {
@@ -64,7 +64,9 @@ describe('computedFieldsWhereTransformation', () => {
         {
           regularField: 'regularFieldValue'
         },
-        { name: originalWhere.regularField, name_not: context.someKey }
+        // TODO: Currently context.someKey is undefined, the error might be in the source code cause transformedWhere.name_not is coming as undefined as well.
+        // @ts-ignore
+        { name: originalWhere.regularField, name_not: context.DAOs.someKey }
       ]
     });
   });

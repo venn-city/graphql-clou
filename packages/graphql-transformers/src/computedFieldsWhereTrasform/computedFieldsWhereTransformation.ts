@@ -1,10 +1,10 @@
-const { replace, cloneDeep, lowerFirst, isEmpty } = require('lodash');
-const { forEach, map, reduce } = require('async');
-const { getOpenCrudIntrospection, introspectionUtils } = require('@venncity/opencrud-schema-provider');
+import { replace, cloneDeep, lowerFirst, isEmpty } from 'lodash';
+import async from 'async';
+import { getOpenCrudIntrospection, introspectionUtils } from '@venncity/opencrud-schema-provider';
 
 const openCrudIntrospection = getOpenCrudIntrospection();
 
-async function transformComputedFieldsWhereArguments({
+export async function transformComputedFieldsWhereArguments({
   originalWhere,
   whereInputName,
   computedWhereArgumentsTransformation,
@@ -41,7 +41,7 @@ function cloneIfRequired(initialCall, originalWhere) {
 async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, transformedWhere, whereInputName, context, originalWhere) {
   await replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context);
 
-  const transformedWhereList = await reduce(Object.keys(transformedWhere), [{}], async (memo, originalWhereArgumentName) => {
+  const transformedWhereList = await async.reduce(Object.keys(transformedWhere), [{}], async (memo, originalWhereArgumentName) => {
     const transformationFunction = computedWhereArgumentsTransformation[originalWhereArgumentName];
     const originalWhereValue = transformedWhere[originalWhereArgumentName];
     // computed field
@@ -50,18 +50,22 @@ async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, 
         return memo;
       }
       const transformedWhereArgument = await transformationFunction(originalWhereValue, originalWhere, context);
+      // @ts-ignore
       return [...memo, transformedWhereArgument];
     }
     // regular field
     return [
       {
+        // @ts-ignore
         ...memo[0],
         [originalWhereArgumentName]: originalWhereValue
       },
+      // @ts-ignore
       ...memo.slice(1)
     ];
   });
   // remove first value in case of empty object (there are no regular fields)
+  // @ts-ignore
   const filteredTransformedWhereList = transformedWhereList.filter(value => !isEmpty(value));
   // there is only one condition
   if (filteredTransformedWhereList.length === 1) {
@@ -74,9 +78,9 @@ async function replaceTopLevelWhereFields(computedWhereArgumentsTransformation, 
 
 async function replaceBooleanOperators(transformedWhere, whereInputName, computedWhereArgumentsTransformation, context) {
   const booleanOperators = ['AND', 'OR', 'NOT'];
-  await forEach(booleanOperators, async operator => {
+  await async.forEach(booleanOperators, async operator => {
     if (transformedWhere[operator]) {
-      transformedWhere[operator] = await map(transformedWhere[operator], async whereElementWithinBooleanOperator => {
+      transformedWhere[operator] = await async.map(transformedWhere[operator], async whereElementWithinBooleanOperator => {
         const transformedWhereArg = await transformComputedFieldsWhereArguments({
           originalWhere: whereElementWithinBooleanOperator,
           whereInputName,
@@ -96,7 +100,7 @@ function convertWhereArgumentToFieldName(objectFieldName) {
 }
 
 async function replaceWhereNestedObjectFields(whereInputObjectFields, transformedWhere, entityType, context) {
-  await forEach(whereInputObjectFields, async whereInputObjectField => {
+  await async.forEach(whereInputObjectFields, async (whereInputObjectField: any) => {
     const objectFieldInWhere = whereInputObjectField.name;
     if (transformedWhere[objectFieldInWhere]) {
       const objectFieldNameWherePart = transformedWhere[objectFieldInWhere];
@@ -128,6 +132,6 @@ function getEntityTypeFromWhereInput(whereInputName) {
   return introspectionUtils.findTypeInIntrospection(openCrudIntrospection, whereInputName.replace('WhereInput', ''));
 }
 
-module.exports = {
+export default {
   transformComputedFieldsWhereArguments
 };

@@ -2,14 +2,18 @@
   "name": "@venncity/graphql-transformers",
   "version": "1.6.3",
   "author": "Venn Engineering",
-  "main": "src/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "scripts": {
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "rm -rf lib/cjs && tsc",
+    "build:esm": "rm -rf lib/esm && tsc -m esnext --outDir lib/esm",
     "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "npm run test -- --watchAll",
-    "lint": "npx eslint --fix src/computedFieldsWhereTrasform",
+    "lint": "eslint . --fix  --ext .js,.ts",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
-    "lint:ci": "npx eslint src/computedFieldsWhereTrasform --format junit -o $LINT_JUNIT_OUTPUT"
+    "lint:ci": "eslint . --format junit -o $LINT_JUNIT_OUTPUT"
   },
   "husky": {
     "hooks": {
@@ -18,23 +22,26 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint",
+      "yarn lint",
       "git add"
     ]
   },
   "dependencies": {
+    "@types/jest": "^26.0.4",
     "@venncity/clou-utils": "^2.0.1",
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.7",
     "@venncity/sequelize": "1.0.0",
     "@venncity/sequelize-model": "^1.8.9",
-    "async": "^3.1.1",
+    "async": "^3.2.0",
     "deepdash": "^4.2.17",
     "lodash": "^4.17.15",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "@venncity/eslint-config": "^1.0.11",
+    "@types/async": "^3.2.3",
+    "@venncity/eslint-config": "^3.0.1",
+    "@venncity/jest-config-server": "^3.4.0",
     "@venncity/prettier-config-server": "^1.1.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -45,6 +52,7 @@
     "jest": "^24.9.0",
     "jest-junit": "^9.0.0",
     "lint-staged": "^9.4.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "typescript": "^3.9.6"
   }
 }
