@@ -64,15 +64,24 @@ describe('sequelizeDataProvider', () => {
   const ministerName1 = `Lazaros${randomNumber}`;
   let minister2;
   const ministerName2 = `Natassas${randomNumber}`;
+
+  // @ts-ignore
   let minister3;
   const ministerName3 = `Vasileia${randomNumber}`;
 
+  // @ts-ignore
+  let vote1;
   const voteName1 = `Build walls${randomNumber}`;
   const voteBallot1 = 'YEA';
+  // @ts-ignore
+  let vote2;
   const voteName2 = `Build walls${randomNumber}`;
   const voteBallot2 = 'NAY';
+  // @ts-ignore
+  let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
+  // @ts-ignore
   let vote4;
   const voteName4 = `Make war${randomNumber}`;
   const voteBallot4 = 'ABSTAIN';
@@ -128,7 +137,7 @@ describe('sequelizeDataProvider', () => {
       }
     });
 
-    await sequelizeDataProvider.createEntity('Vote', {
+    vote1 = await sequelizeDataProvider.createEntity('Vote', {
       name: voteName1,
       ballot: voteBallot1,
       minister: {
@@ -137,7 +146,7 @@ describe('sequelizeDataProvider', () => {
         }
       }
     });
-    await sequelizeDataProvider.createEntity('Vote', {
+    vote2 = await sequelizeDataProvider.createEntity('Vote', {
       name: voteName2,
       ballot: voteBallot2,
       minister: {
@@ -146,7 +155,7 @@ describe('sequelizeDataProvider', () => {
         }
       }
     });
-    await sequelizeDataProvider.createEntity('Vote', {
+    vote3 = await sequelizeDataProvider.createEntity('Vote', {
       name: voteName3,
       ballot: voteBallot3,
       minister: {
