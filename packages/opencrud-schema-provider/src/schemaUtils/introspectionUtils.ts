@@ -1,10 +1,10 @@
 /* eslint-disable consistent-return */
-const { upperFirst, get } = require('lodash');
+import { upperFirst, get } from 'lodash';
 
 const TYPE = '__Type';
 const FIELD = '__Field';
 
-const KINDS = {
+export const KINDS = {
   SCALAR: 'SCALAR',
   ENUM: 'ENUM',
   LIST: 'LIST',
@@ -12,7 +12,7 @@ const KINDS = {
   NON_NULL: 'NON_NULL'
 };
 
-function getQueryWhereInputName(context, fieldName) {
+export function getQueryWhereInputName(context, fieldName) {
   const whereInputType = context.openCrudIntrospection.types
     .find(t => t.name === 'Query')
     .fields.find(f => f.name === fieldName)
@@ -20,7 +20,7 @@ function getQueryWhereInputName(context, fieldName) {
   return whereInputType.name || whereInputType.ofType.name;
 }
 
-function getMutationWhereInputName(context, fieldName) {
+export function getMutationWhereInputName(context, fieldName) {
   const whereInputType = context.openCrudIntrospection.types
     .find(t => t.name === 'Mutation')
     .fields.find(f => f.name === fieldName)
@@ -29,7 +29,7 @@ function getMutationWhereInputName(context, fieldName) {
 }
 
 // e.g. SCALAR / OBJECT / LIST / ENUM / ...
-function getFieldKind(field) {
+export function getFieldKind(field) {
   switch (calcType(field)) {
     case TYPE:
       return field.kind;
@@ -46,7 +46,7 @@ function calcType(field) {
 }
 
 // e.g. String / PaymentRequest / Member / ...
-function getFieldType(field) {
+export function getFieldType(field) {
   switch (calcType(field)) {
     case TYPE:
       return field.name;
@@ -66,7 +66,7 @@ function getTypeForField(field) {
 }
 
 // e.g. firstName / member / leaseContracts / ...
-function getFieldName(field) {
+export function getFieldName(field) {
   switch (calcType(field)) {
     case TYPE:
       return field.name;
@@ -78,7 +78,7 @@ function getFieldName(field) {
   }
 }
 
-function extractFieldMetadata(field) {
+export function extractFieldMetadata(field) {
   const fieldName = getFieldName(field);
   const fieldKind = getFieldKind(field);
   const fieldType = getFieldType(field);
@@ -90,7 +90,7 @@ function throwError(field) {
   throw new Error(`unexpected field __typename: ${JSON.stringify(field)}`);
 }
 
-function getChildFieldsMetadata(field, introspection) {
+export function getChildFields(field, introspection) {
   const fieldType = getFieldType(field);
   if (!fieldType) {
     return [];
@@ -111,23 +111,23 @@ function verifyExactlyOneFieldOfTypeOnEntity(childFieldsOfTypeCount, childType, 
   }
 }
 
-function getChildFieldOfType(field, childType, introspection) {
-  const childFieldsOfType = getChildFieldsMetadata(field, introspection).filter(childField => getFieldType(childField) === childType);
+export function getChildFieldOfType(field, childType, introspection) {
+  const childFieldsOfType = getChildFields(field, introspection).filter(childField => getFieldType(childField) === childType);
   verifyExactlyOneFieldOfTypeOnEntity(childFieldsOfType.length, childType, field);
   return childFieldsOfType[0];
 }
 
-function findTypeInIntrospection(introspection, resource) {
+export function findTypeInIntrospection(introspection, resource) {
   return introspection.types.find(t => {
     return t.name === resource;
   });
 }
 
-module.exports = {
+export default {
   getMutationWhereInputName,
   getQueryWhereInputName,
   findTypeInIntrospection,
-  getChildFields: getChildFieldsMetadata,
+  getChildFields,
   getChildFieldOfType,
   getFieldName,
   getFieldKind,

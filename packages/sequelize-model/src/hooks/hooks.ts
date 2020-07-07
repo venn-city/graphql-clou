@@ -50,7 +50,7 @@ function runSchemaBasedHooks(entityInput, hooks) {
     const entityName = entity._modelOptions.name.singular;
     const entityTypeInSchema = entityTypesSchema.find(entityType => entityType.name === entityName);
     entity.dataValues = _.mapValues(entity.dataValues, (fieldValue, fieldName) => {
-      const fieldInSchema = entityTypeInSchema.fields.find(field => field.name === fieldName);
+      const fieldInSchema = entityTypeInSchema?.fields?.find(field => field.name === fieldName);
 
       let returnValue = fieldValue;
 
