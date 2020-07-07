@@ -1,23 +1,26 @@
-const fs = require('fs');
-const path = require('path');
+/* eslint-disable import/first */
+// eslint-disable-next-line import/order
 const config = require('@venncity/nested-config')(__dirname);
-const { importSchema } = require('graphql-import');
-const { DefaultParser, DatabaseType } = require('prisma-datamodel');
-const { makeExecutableSchema } = require('graphql-tools');
-const { graphqlSync, introspectionQuery } = require('graphql');
+
+import fs from 'fs';
+import path from 'path';
+import { importSchema } from 'graphql-import';
+import { DefaultParser, DatabaseType } from 'prisma-datamodel';
+import { makeExecutableSchema } from 'graphql-tools';
+import { graphqlSync, introspectionQuery } from 'graphql';
 
 const parser = DefaultParser.create(DatabaseType.postgres);
 const dataModelPath = config.has('graphql.schema.datamodel.path')
   ? config.get('graphql.schema.datamodel.path')
   : path.join(__dirname, '../../test/datamodel.graphql');
 
-const openCrudDataModel = parser.parseFromSchemaString(fs.readFileSync(dataModelPath, 'utf8'));
+export const openCrudDataModel = parser.parseFromSchemaString(fs.readFileSync(dataModelPath, 'utf8'));
 
 const schemaSdlPath = config.has('graphql.schema.sdl.path')
   ? config.get('graphql.schema.sdl.path')
   : path.join(__dirname, '../../test/openCRUD.graphql');
-const openCrudSchemaGraphql = importSchema(schemaSdlPath);
-const openCrudSchema = makeExecutableSchema({
+export const openCrudSchemaGraphql = importSchema(schemaSdlPath);
+export const openCrudSchema = makeExecutableSchema({
   typeDefs: [openCrudSchemaGraphql],
   resolvers: [],
   resolverValidationOptions: {
@@ -25,18 +28,11 @@ const openCrudSchema = makeExecutableSchema({
   }
 });
 
-let openCrudIntrospection;
-function getOpenCrudIntrospection() {
+let openCrudIntrospection: any;
+export function getOpenCrudIntrospection() {
   if (!openCrudIntrospection) {
     // eslint-disable-next-line no-underscore-dangle
-    openCrudIntrospection = graphqlSync(openCrudSchema, introspectionQuery).data.__schema;
+    openCrudIntrospection = graphqlSync(openCrudSchema, introspectionQuery).data?.__schema;
   }
   return openCrudIntrospection;
 }
-
-module.exports = {
-  openCrudDataModel,
-  openCrudSchema,
-  openCrudSchemaGraphql,
-  getOpenCrudIntrospection
-};

@@ -1,4 +1,4 @@
-const {
+import {
   GraphQLObjectType,
   GraphQLScalarType,
   GraphQLInterfaceType,
@@ -6,13 +6,13 @@ const {
   GraphQLList,
   GraphQLEnumType,
   GraphQLNonNull
-} = require('graphql');
-const { upperFirst } = require('lodash');
+} from 'graphql';
+import { upperFirst } from 'lodash';
 
 const SCALAR_TYPES = [GraphQLScalarType, GraphQLEnumType];
 const NON_SCALAR_TYPES = [GraphQLObjectType, GraphQLInterfaceType, GraphQLUnionType, GraphQLList];
 
-function isScalar(fieldType) {
+export function isScalar(fieldType: any) {
   if (SCALAR_TYPES.some(scalarType => fieldType instanceof scalarType)) {
     return true;
   }
@@ -22,7 +22,8 @@ function isScalar(fieldType) {
   return !NON_SCALAR_TYPES.some(scalarType => fieldType instanceof scalarType);
 }
 
-function isObject(fieldType) {
+// @ts-ignore
+export function isObject(fieldType) {
   if (fieldType instanceof GraphQLObjectType) {
     return true;
   }
@@ -32,7 +33,7 @@ function isObject(fieldType) {
   return false;
 }
 
-function isList(fieldType) {
+export function isList(fieldType) {
   if (fieldType instanceof GraphQLList) {
     return true;
   }
@@ -42,16 +43,16 @@ function isList(fieldType) {
   return false;
 }
 
-function getField(schema, entityName, fieldName) {
-  return Object.values(schema.getType(upperFirst(entityName)).getFields()).find(f => f.name === fieldName.split('_')[0]);
+export function getField(schema, entityName, fieldName) {
+  return Object.values(schema.getType(upperFirst(entityName)).getFields()).find((f:any) => f.name === fieldName.split('_')[0]);
 }
 
-function getFieldType(schema, entityName, fieldName) {
-  const relatedType = getField(schema, entityName, fieldName);
+export function getFieldType(schema, entityName, fieldName) {
+  const relatedType: any = getField(schema, entityName, fieldName);
   return relatedType.type.name || relatedType.type.ofType.name || relatedType.type.ofType.ofType.name;
 }
 
-module.exports = {
+export default {
   isScalar,
   isObject,
   isList,
