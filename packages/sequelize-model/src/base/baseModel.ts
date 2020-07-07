@@ -1,6 +1,7 @@
-const Sequelize = require('@venncity/sequelize');
+import Sequelize from '@venncity/sequelize';
 
-const baseModel = {
+// eslint-disable-next-line import/prefer-default-export
+export const baseModel = {
   id: {
     type: Sequelize.STRING,
     primaryKey: true
@@ -13,8 +14,4 @@ const baseModel = {
     allowNull: false,
     defaultValue: 0
   }
-};
-
-module.exports = {
-  baseModel
 };

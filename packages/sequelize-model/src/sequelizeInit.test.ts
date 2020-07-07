@@ -1,8 +1,12 @@
+/* eslint-disable import/first */
 process.env.CLS_ENABLED = 'true';
 process.env.IS_TEST = 'false';
-const { hacker, random } = require('faker');
-const models = require('../../../test/model');
-const sq = require('./sequelizeInit').init(models);
+
+import { hacker, random } from 'faker';
+import models from '../../../test/model';
+import sq from './sequelizeInit';
+
+sq.init(models);
 
 const DUMMY_MODEL_FUNCTION = () => ({ associate: () => {} });
 const sequelize = sq.sequelize;
