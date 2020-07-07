@@ -1,9 +1,9 @@
-const Sequelize = require('@venncity/sequelize');
-const { trimEnd } = require('lodash');
+import Sequelize from '@venncity/sequelize';
+import { trimEnd } from 'lodash';
 
 const Op = Sequelize.Op;
 
-function buildConditionSubquery(targetModel, filter, isNegative = false) {
+export function buildConditionSubquery(targetModel, filter, isNegative = false) {
   const positiveOrNegative = isNegative ? Op.not : Op.and;
   const queryGenerator = targetModel.QueryGenerator;
   const options = {
@@ -42,6 +42,6 @@ function removeIncludesAttributes(includes) {
   }
 }
 
-module.exports = {
+export default {
   buildConditionSubquery
 };

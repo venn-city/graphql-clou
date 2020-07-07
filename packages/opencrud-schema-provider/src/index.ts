@@ -15,10 +15,10 @@ export const graphqlSchemaUtils = graphqlSchemaUtilsOriginal;
 export const introspectionUtils = introspectionUtilsOriginal;
 
 export default {
-  openCrudDataModelOriginal,
-  openCrudSchemaOriginal,
-  openCrudSchemaGraphqlOriginal,
-  getOpenCrudIntrospectionOriginal,
-  graphqlSchemaUtilsOriginal,
-  introspectionUtilsOriginal
+  openCrudDataModel: openCrudDataModelOriginal,
+  openCrudSchema: openCrudSchemaOriginal,
+  openCrudSchemaGraphql: openCrudSchemaGraphqlOriginal,
+  getOpenCrudIntrospection: getOpenCrudIntrospectionOriginal,
+  graphqlSchemaUtils: graphqlSchemaUtilsOriginal,
+  introspectionUtils: introspectionUtilsOriginal
 };

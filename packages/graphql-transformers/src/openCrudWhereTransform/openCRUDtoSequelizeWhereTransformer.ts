@@ -1,14 +1,17 @@
-const { drop, endsWith, isNil, isEmpty, isArray, map, flatMap, isString } = require('lodash');
-const Sequelize = require('@venncity/sequelize');
+/* eslint-disable import/first */
+import { drop, endsWith, isNil, isEmpty, isArray, map, flatMap, isString } from 'lodash';
+import Sequelize from '@venncity/sequelize';
+
 require('@venncity/nested-config')(__dirname);
-const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+
+import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 
 const { isScalar, isObject, isList, getField, getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudSchema } = opencrudSchemaProvider;
-const { isEmptyArray, transformWithSymbols } = require('@venncity/clou-utils');
-const { sq } = require('@venncity/sequelize-model');
-const { buildConditionSubquery } = require('./manyRelationConditionSubquery');
-const sequelizeConsts = require('./sequelizeConsts');
+import { isEmptyArray, transformWithSymbols } from '@venncity/clou-utils';
+import { sq } from '@venncity/sequelize-model';
+import { buildConditionSubquery } from './manyRelationConditionSubquery';
+import sequelizeConsts from './sequelizeConsts';
 
 const { BELONGS_TO_MANY, HAS_MANY } = sequelizeConsts.RELATION_TYPES;
 
@@ -17,12 +20,17 @@ const AND = 'AND';
 const OR = 'OR';
 const NOT = 'NOT';
 
-function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityName, pathWithinSchema = [entityName], useColumnNames = false) {
+export function openCrudToSequelize(
+  { where, first, skip, orderBy = 'id_ASC' }: { where?: any; first?: number; skip?: number; orderBy?: string },
+  entityName,
+  pathWithinSchema = [entityName],
+  useColumnNames = false
+) {
   try {
     validateSqInit(entityName);
     const sqWhereElements = [];
     const sqIncludeElements = [];
-    let whereResult;
+    let whereResult: any;
     if (where) {
       Object.keys(where).forEach(whereArg => {
         const { sqWhereElement, sqIncludeElement } = openCrudFilterToSequelize(
@@ -40,7 +48,7 @@ function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityN
           where: {
             [Op.and]: sqWhereElements
           }
-        };
+        } as any;
       }
     }
     let sqFilter = {
@@ -55,6 +63,7 @@ function openCrudToSequelize({ where, first, skip, orderBy = 'id_ASC' }, entityN
     if (whereResult) {
       sqFilter = {
         ...sqFilter,
+        // @ts-ignore
         where: whereResult.where
       };
     }
@@ -94,7 +103,7 @@ function openCrudFilterToSequelize(whereArg, whereValue, entityName, pathWithinS
     }
     sqIncludeElement = flatMap(sqElements, 'include');
   } else {
-    const whereArgField = getField(openCrudSchema, entityName, whereArg);
+    const whereArgField = getField(openCrudSchema, entityName, whereArg) as any;
     if (isScalar(whereArgField.type)) {
       sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames);
     } else if (isObject(whereArgField.type)) {
@@ -119,7 +128,7 @@ function handleObjectField(whereArg, whereValue, entityName, pathWithinSchema, u
     pathWithinSchema,
     transformAssociationToNested: true,
     useColumnNames
-  });
+  }) as any;
   const sqWhereElement = relatedEntityFilter.where;
   includeElement.include = relatedEntityFilter.include;
   return { sqWhereElement, sqIncludeElement: includeElement };
@@ -184,7 +193,7 @@ function handleManyRelationSome(whereArg, whereValue, entityName, pathWithinSche
     required: false,
     pathWithinSchema,
     transformAssociationToNested: true
-  });
+  }) as any;
   includeElement.include = relatedEntityFilter.include;
   return { includeElement, whereElement: relatedEntityFilter.where };
 }
@@ -221,7 +230,12 @@ function handleRelation({
   useColumnNames = false
 }) {
   const relatedEntityName = getFieldType(openCrudSchema, entityName, associationAlias);
-  const relatedEntityFilter = openCrudToSequelize({ where: whereValue }, relatedEntityName, [...pathWithinSchema, associationAlias], useColumnNames);
+  const relatedEntityFilter: any = openCrudToSequelize(
+    { where: whereValue },
+    relatedEntityName,
+    [...pathWithinSchema, associationAlias],
+    useColumnNames
+  );
   if (whereValue === null) {
     // Build a condition which is only satisfied when the related entity is null
     relatedEntityFilter.where = {
@@ -232,7 +246,7 @@ function handleRelation({
   if (transformAssociationToNested && !useColumnNames) {
     relatedEntityFilter.where = transformWhereToNested(relatedEntityName, pathWithinSchema, associationAlias, relatedEntityFilter);
   }
-  const associationInfo = Object.values(sq[entityName].associations).find(association => association.as === associationAlias);
+  const associationInfo: any = Object.values(sq[entityName].associations).find((association: any) => association.as === associationAlias);
   const targetModel = associationInfo.target;
   const includeElement = {
     model: targetModel,
@@ -282,8 +296,8 @@ function transformWhereToNested(relatedEntityName, pathWithinSchema, association
 }
 
 function addSelectAttributes(sqFilter, entityName) {
-  const includeAttributes = [];
-  const excludeAttributes = [];
+  const includeAttributes: any = [];
+  const excludeAttributes: any = [];
   const rawAttributes = sq[entityName].rawAttributes;
   Object.keys(rawAttributes).forEach(rawAttrKey => {
     const attribute = rawAttributes[rawAttrKey];
@@ -341,6 +355,6 @@ const gqlPostfixesToSqOps = {
   _not_ends_with: { op: Op.notLike, valueTransformer: v => `%${v}` }
 };
 
-module.exports = {
+export default {
   openCrudToSequelize
 };
