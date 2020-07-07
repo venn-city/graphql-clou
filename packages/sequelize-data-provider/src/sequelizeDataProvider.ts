@@ -1,18 +1,18 @@
-const { upperFirst, map, camelCase, isObject } = require('lodash');
-const cuid = require('cuid');
-const Sequelize = require('@venncity/sequelize');
+import { upperFirst, map, camelCase, isObject } from 'lodash';
+import cuid from 'cuid';
+import Sequelize from '@venncity/sequelize';
+import { errors } from '@venncity/errors';
+import util from 'util';
+import async from 'async';
+import { openCrudToSequelize } from '@venncity/graphql-transformers';
+import sequelizeModel from '@venncity/sequelize-model';
+import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
+
 const {
-  errors: {
-    ClientDataValidationError,
-    ServerDataValidationError,
-    SUPPORTED_LOG_LEVELS: { WARN }
-  }
-} = require('@venncity/errors');
-const util = require('util');
-const async = require('async');
-const { openCrudToSequelize } = require('@venncity/graphql-transformers');
-const { sq } = require('@venncity/sequelize-model');
-const opencrudSchemaProvider = require('@venncity/opencrud-schema-provider');
+  ClientDataValidationError,
+  ServerDataValidationError,
+  SUPPORTED_LOG_LEVELS: { WARN }
+} = errors;
 
 const CREATE_MANY = true;
 
@@ -23,27 +23,27 @@ const Op = Sequelize.Op;
 const asyncEach = util.promisify(async.each);
 const asyncMap = util.promisify(async.map);
 
-async function getEntity(entityName, where) {
+async function getEntity(entityName: string, where: any) {
   const fetchedEntity = await model(entityName).findOne({ where });
   return fetchedEntity && fetchedEntity.dataValues;
 }
 
-async function getAllEntities(entityName, args) {
+async function getAllEntities(entityName: string, args?: any) {
   const fetchedEntities = await getAllEntitiesSqObjects(args, entityName);
   return map(fetchedEntities, 'dataValues');
 }
 
-async function getAllEntitiesSqObjects(args, entityName) {
+async function getAllEntitiesSqObjects(args: any, entityName: string) {
   const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName));
   return model(entityName).findAll(sqFilter);
 }
 
-async function getRelatedEntityId(entityName, originalEntityId, relationEntityName) {
+async function getRelatedEntityId(entityName: string, originalEntityId: string, relationEntityName: string) {
   const relation = await getRelatedEntity(entityName, originalEntityId, relationEntityName);
   return relation && relation.id;
 }
 
-async function getRelatedEntity(entityName, originalEntityId, relationFieldName) {
+async function getRelatedEntity(entityName: string, originalEntityId: string, relationFieldName: string) {
   const originalEntity = await model(entityName).findOne({
     where: { id: originalEntityId },
     include: {
@@ -60,12 +60,12 @@ async function getRelatedEntity(entityName, originalEntityId, relationFieldName)
   );
 }
 
-async function getRelatedEntityIds(entityName, originalEntityId, relationEntityName, args) {
+async function getRelatedEntityIds(entityName: string, originalEntityId: string, relationEntityName: string, args?: any) {
   const relations = await getRelatedEntities(entityName, originalEntityId, relationEntityName, args);
   return relations && (Array.isArray(relations) ? relations.map(relation => relation.id) : relations.id);
 }
 
-async function getRelatedEntities(entityName, originalEntityId, relationFieldName, args) {
+async function getRelatedEntities(entityName: string, originalEntityId: string, relationFieldName: string, args?: any) {
   const relatedEntityName = getFieldType(schema, entityName, relationFieldName);
   const relatedEntityFilter = args && openCrudToSequelize(args, upperFirst(relatedEntityName));
 
@@ -78,35 +78,36 @@ async function getRelatedEntities(entityName, originalEntityId, relationFieldNam
   return relatedEntities ? relatedEntities.dataValues : [];
 }
 
-async function createEntity(entityName, entityToCreate) {
-  const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate);
+async function createEntity(entityName: string, entityToCreate: any) {
+  const listRelations: any = await handleEntityRelationsPreCreate(entityName, entityToCreate);
   const createdEntity = await model(entityName).create(entityToCreate);
   await associateRelations(listRelations, createdEntity);
   return createdEntity.dataValues;
 }
 
-async function createManyEntities(entityName, entitiesToCreate) {
+async function createManyEntities(entityName: string, entitiesToCreate: any) {
   entitiesToCreate.forEach(entityToCreate => {
     entityToCreate.id = cuid();
   });
   const entityIdToListRelations = {};
   await async.each(entitiesToCreate, async entityToCreate => {
-    const listRelations = await handleEntityRelationsPreCreate(entityName, entityToCreate, CREATE_MANY);
+    const listRelations: any = await handleEntityRelationsPreCreate(entityName, entityToCreate, CREATE_MANY);
+    // @ts-ignore
     entityIdToListRelations[entityToCreate.id] = listRelations;
   });
 
   const createdEntities = await model(entityName).bulkCreate(entitiesToCreate);
-  await async.eachOf(createdEntities, async createdEntity => {
-    const listRelations = entityIdToListRelations[createdEntity.id];
+  await async.eachOf(createdEntities, async (createdEntity: any) => {
+    const listRelations: any = entityIdToListRelations[createdEntity.id];
     await associateRelations(listRelations, createdEntity);
   });
 
   return createdEntities.map(createdEntity => createdEntity.dataValues);
 }
 
-async function updateEntity(entityName, data, where) {
-  const listRelationsToAssociate = [];
-  const listRelationsToDisassociate = [];
+async function updateEntity(entityName: string, data: any, where: any) {
+  const listRelationsToAssociate: any = [];
+  const listRelationsToDisassociate: any = [];
   const entity = await model(entityName).findOne({
     where
   });
@@ -114,6 +115,7 @@ async function updateEntity(entityName, data, where) {
     // TODO: throw error instead of returning null?
     return null;
   }
+  // @ts-ignore
   await asyncEach(Object.keys(data), async entityField => {
     if (isObject(data[entityField]) && data[entityField].connect) {
       listRelationsToAssociate.push(...(await handleRelatedConnects(entityName, entityField, data)));
@@ -128,24 +130,25 @@ async function updateEntity(entityName, data, where) {
   return updatedEntity.dataValues;
 }
 
-async function updateManyEntities(entityName, data, where) {
+async function updateManyEntities(entityName: string, data: any, where: any) {
   const entities = await getAllEntitiesSqObjects({ where }, entityName);
-  const updatedEntities = await asyncMap(entities, async entity => {
+  // @ts-ignore
+  const updatedEntities: any = await asyncMap(entities, async entity => {
     return entity.update(data);
   });
   return map(updatedEntities, 'dataValues');
 }
 
-function isListRelation(fieldInSchema) {
+function isListRelation(fieldInSchema: any) {
   const relationName = openCrudDataModel.types.find(entityType => entityType.name === fieldInSchema.relationName);
   const isTableBasedRelation = relationName && relationName.directives.find(d => d.name === 'relationTable');
   return isTableBasedRelation || fieldInSchema.isList;
 }
 
-async function handleRelatedConnects(entityName, entityField, entityToCreate) {
-  const listRelations = [];
+async function handleRelatedConnects(entityName: string, entityField: string, entityToCreate: any) {
+  const listRelations: any = [];
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
-  const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
+  const fieldInSchema: any = entityTypeInSchema?.fields?.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
   if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
@@ -177,10 +180,10 @@ async function handleRelatedConnects(entityName, entityField, entityToCreate) {
   return listRelations;
 }
 
-async function handleRelatedDisconnects(entityName, entityField, entity, entityInstance) {
-  const listRelations = [];
+async function handleRelatedDisconnects(entityName: string, entityField: string, entity: any, entityInstance: any) {
+  const listRelations: any = [];
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
-  const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
+  const fieldInSchema: any = entityTypeInSchema?.fields?.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
   if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
@@ -203,23 +206,25 @@ async function handleRelatedDisconnects(entityName, entityField, entity, entityI
   return listRelations;
 }
 
-async function associateRelations(listRelations, entity) {
+async function associateRelations(listRelations: any, entity: any) {
   if (listRelations.length) {
+    // @ts-ignore
     await asyncEach(listRelations, async listRelation => {
       await entity[`add${listRelation.relatedEntityField}`](listRelation.relatedEntityId);
     });
   }
 }
 
-async function disassociateRelations(listRelations, entity) {
+async function disassociateRelations(listRelations: any, entity: any) {
   if (listRelations.length) {
+    // @ts-ignore
     await asyncEach(listRelations, async listRelation => {
       await entity[`remove${listRelation.relatedEntityField}`](listRelation.relatedEntityId);
     });
   }
 }
 
-async function deleteEntity(entityName, where) {
+async function deleteEntity(entityName: string, where: any) {
   const entity = await model(entityName).findOne({
     where
   });
@@ -227,15 +232,16 @@ async function deleteEntity(entityName, where) {
   return entity.dataValues;
 }
 
-async function deleteManyEntities(entityName, where) {
+async function deleteManyEntities(entityName: string, where: any) {
   const entities = await getAllEntitiesSqObjects({ where }, entityName);
+  // @ts-ignore
   await asyncEach(entities, async entity => {
     await entity.destroy();
   });
   return map(entities, 'dataValues');
 }
 
-async function getEntitiesConnection(entityName, args) {
+async function getEntitiesConnection(entityName: string, args: any) {
   const sqFilter = args && openCrudToSequelize(args, upperFirst(entityName));
   const entityCount = await model(entityName).count(sqFilter);
   return {
@@ -250,8 +256,8 @@ async function getEntitiesConnection(entityName, args) {
   };
 }
 
-async function handleEntityRelationsPreCreate(entityName, entityToCreate, isCreateMany = false) {
-  const listRelations = [];
+async function handleEntityRelationsPreCreate(entityName: string, entityToCreate: any, isCreateMany = false) {
+  const listRelations: any = [];
   await async.each(Object.keys(entityToCreate), async entityField => {
     if (isObject(entityToCreate[entityField])) {
       if (isCreateMany && entityToCreate[entityField].create) {
@@ -266,11 +272,11 @@ async function handleEntityRelationsPreCreate(entityName, entityToCreate, isCrea
   return listRelations;
 }
 
-function model(entityName) {
-  return sq[entityName] || sq[upperFirst(entityName)];
+function model(entityName: string) {
+  return sequelizeModel.sq[entityName] || sequelizeModel.sq[upperFirst(entityName)];
 }
 
-module.exports = {
+export default {
   getEntity,
   getAllEntities,
   getRelatedEntityId,

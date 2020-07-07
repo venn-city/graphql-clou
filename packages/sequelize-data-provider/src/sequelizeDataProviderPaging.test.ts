@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
-const { random } = require('faker');
-const { uniq } = require('lodash');
-const sequelizeModel = require('@venncity/sequelize-model');
-const sequelizeDataProvider = require('./sequelizeDataProvider');
-const models = require('./../../../test/model');
+import { random } from 'faker';
+import { uniq } from 'lodash';
+import sequelizeModel from '@venncity/sequelize-model';
+import sequelizeDataProvider from './sequelizeDataProvider';
+import models from '../../../test/model';
 
 sequelizeModel.sq.init(models);
 
 describe('sequelizeDataProvider paging tests', () => {
   /**
-
    +------------+                                 +--------------+
    |Government1 +-------------------------+       |Government2   |
    | Atlantis   +-------+                 |       | Sorcha       |
@@ -29,9 +28,9 @@ describe('sequelizeDataProvider paging tests', () => {
    |Minister1 |   |Minister2 +-----------+         |Minister3    |
    | Lazaros  |   | Natassas |           |         | Vasileia    |
    +----------+   +----------+   +-------+-----+   +-------------+
-       |               |         |Vote3        |
-       |               |         | Raise taxes |  +--------------+
-       |               |         | Nay         |  |Vote4         |
+      |                |         |Vote3        |
+      |                |         | Raise taxes |  +--------------+
+      |                |         | Nay         |  |Vote4         |
    +---+--------+      |         +-------------+  | Make war     |
    |Vote1       |      |                          | Abstain      |
    | Build walls|  +---+--------+                 +--------------+
@@ -40,23 +39,28 @@ describe('sequelizeDataProvider paging tests', () => {
                    | Nay        |
                    +------------+
    */
+
   // Sometimes both testsuits generate the same random number and test data collide
   // Adding 123 makes sure data is not intersecting between testsuites
   const randomNumber = random.number() + 123;
-
+  // @ts-ignore
   let government1;
   const governmentName1 = `9500BC${randomNumber}`;
   const governmentCountry1 = `Atlantis${randomNumber}`;
+  // @ts-ignore
   let government2;
   const governmentName2 = `1966${randomNumber}`;
   const governmentCountry2 = `Sorcha${randomNumber}`;
 
+  // @ts-ignore
   let ministry1;
   const ministryName1 = `Finance${randomNumber}`;
   const ministryBudget1 = 87 + randomNumber;
+  // @ts-ignore
   let ministry2;
   const ministryName2 = `Defence${randomNumber}`;
   const ministryBudget2 = 22.1 + randomNumber;
+  // @ts-ignore
   let ministry3;
   const ministryName3 = `Healthcare${randomNumber}`;
   const ministryBudget3 = 22.1 + randomNumber;
@@ -65,18 +69,23 @@ describe('sequelizeDataProvider paging tests', () => {
   const ministerName1 = `Lazaros${randomNumber}`;
   let minister2;
   const ministerName2 = `Natassas${randomNumber}`;
+  // @ts-ignore
   let minister3;
   const ministerName3 = `Vasileia${randomNumber}`;
-
+  // @ts-ignore
   let vote1;
   const voteName1 = `Build walls${randomNumber}`;
   const voteBallot1 = 'YEA';
+  // @ts-ignore
   let vote2;
   const voteName2 = `Build walls${randomNumber}`;
   const voteBallot2 = 'NAY';
+  // @ts-ignore
   let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
+
+  // @ts-ignore
   let vote4;
   const voteName4 = `Make war${randomNumber}`;
   const voteBallot4 = 'ABSTAIN';
@@ -172,11 +181,11 @@ describe('sequelizeDataProvider paging tests', () => {
   test('getAllEntities with nested _every and _none filters', async () => {
     for (let i = 0; i < 5; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      const createdGovernment = await sequelizeDataProvider.createEntity('Government', {
+      const createdGovernment = (await sequelizeDataProvider.createEntity('Government', {
         name: `${governmentName1}${i}`
-      });
+      })) as any;
 
-      const ministries = [];
+      const ministries: any = [];
       for (let j = 0; j < 3; j += 1) {
         // eslint-disable-next-line no-await-in-loop
         const createdMinistry = await sequelizeDataProvider.createEntity('Ministry', {

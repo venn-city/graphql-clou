@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-const { hacker, random } = require('faker');
-const { omit } = require('lodash');
-const sequelizeModel = require('@venncity/sequelize-model');
-const sequelizeDataProvider = require('./sequelizeDataProvider');
-const models = require('./../../../test/model');
+import { hacker, random } from 'faker';
+import { omit } from 'lodash';
+import sequelizeModel from '@venncity/sequelize-model';
+import sequelizeDataProvider from './sequelizeDataProvider';
+import models from '../../../test/model';
 
 sequelizeModel.sq.init(models);
 
@@ -64,18 +64,24 @@ describe('sequelizeDataProvider', () => {
   const ministerName1 = `Lazaros${randomNumber}`;
   let minister2;
   const ministerName2 = `Natassas${randomNumber}`;
+
+  // @ts-ignore
   let minister3;
   const ministerName3 = `Vasileia${randomNumber}`;
 
+  // @ts-ignore
   let vote1;
   const voteName1 = `Build walls${randomNumber}`;
   const voteBallot1 = 'YEA';
+  // @ts-ignore
   let vote2;
   const voteName2 = `Build walls${randomNumber}`;
   const voteBallot2 = 'NAY';
+  // @ts-ignore
   let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
+  // @ts-ignore
   let vote4;
   const voteName4 = `Make war${randomNumber}`;
   const voteBallot4 = 'ABSTAIN';
@@ -743,7 +749,7 @@ describe('sequelizeDataProvider', () => {
     const updatedGovernmentName = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName1 });
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName2 });
-    const updatedGovernments = await sequelizeDataProvider.updateManyEntities(
+    const updatedGovernments: any = await sequelizeDataProvider.updateManyEntities(
       'Government',
       {
         name: updatedGovernmentName
