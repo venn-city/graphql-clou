@@ -13,9 +13,9 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "npm run test -- --watchAll",
-    "lint": "npx eslint --fix src",
+    "lint": "eslint . --fix  --ext .js,.ts",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
-    "lint:ci": "npx eslint src --format junit -o $LINT_JUNIT_OUTPUT",
+    "lint:ci": "eslint . --format junit -o $LINT_JUNIT_OUTPUT",
     "generate-opencrud-schema": "node ./scripts/generateOpenCRUDSchema.js",
     "generate-opencrud-schema:test": "node ./scripts/generateOpenCRUDSchema.js ./test/datamodel.graphql ./test/openCRUD.graphql"
   },
@@ -26,7 +26,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint",
+      "yarn lint",
       "git add"
     ]
   },

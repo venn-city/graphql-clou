@@ -4,8 +4,8 @@ const { readFileSync, writeFileSync } = require('fs');
 const { generateCRUDSchema } = require('prisma-generate-schema');
 const { printSchema } = require('graphql');
 
-let dataModelPath = dataModelPathArg || './src/schema/datamodel.graphql';
-let openCRUDOutputPath = openCRUDOutputPathArg || './src/schema/openCRUD.graphql';
+const dataModelPath = dataModelPathArg || './src/schema/datamodel.graphql';
+const openCRUDOutputPath = openCRUDOutputPathArg || './src/schema/openCRUD.graphql';
 const modelInSDL = readFileSync(dataModelPath, 'utf8');
 const openCRUDSchema = generateCRUDSchema(modelInSDL, 'postgres');
 

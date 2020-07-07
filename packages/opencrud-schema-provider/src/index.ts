@@ -7,11 +7,11 @@ import {
 import graphqlSchemaUtilsOriginal from './schemaUtils/graphqlSchemaUtils';
 import introspectionUtilsOriginal from './schemaUtils/introspectionUtils';
 
-export const openCrudDataModel = openCrudDataModelOriginal
-export const openCrudSchema = openCrudSchemaOriginal
-export const openCrudSchemaGraphql = openCrudSchemaGraphqlOriginal
+export const openCrudDataModel = openCrudDataModelOriginal;
+export const openCrudSchema = openCrudSchemaOriginal;
+export const openCrudSchemaGraphql = openCrudSchemaGraphqlOriginal;
 export const getOpenCrudIntrospection = getOpenCrudIntrospectionOriginal;
-export const graphqlSchemaUtils = graphqlSchemaUtilsOriginal
+export const graphqlSchemaUtils = graphqlSchemaUtilsOriginal;
 export const introspectionUtils = introspectionUtilsOriginal;
 
 export default {

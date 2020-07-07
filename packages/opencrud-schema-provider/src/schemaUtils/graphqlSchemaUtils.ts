@@ -1,12 +1,4 @@
-import {
-  GraphQLObjectType,
-  GraphQLScalarType,
-  GraphQLInterfaceType,
-  GraphQLUnionType,
-  GraphQLList,
-  GraphQLEnumType,
-  GraphQLNonNull
-} from 'graphql';
+import { GraphQLObjectType, GraphQLScalarType, GraphQLInterfaceType, GraphQLUnionType, GraphQLList, GraphQLEnumType, GraphQLNonNull } from 'graphql';
 import { upperFirst } from 'lodash';
 
 const SCALAR_TYPES = [GraphQLScalarType, GraphQLEnumType];
@@ -44,7 +36,7 @@ export function isList(fieldType) {
 }
 
 export function getField(schema, entityName, fieldName) {
-  return Object.values(schema.getType(upperFirst(entityName)).getFields()).find((f:any) => f.name === fieldName.split('_')[0]);
+  return Object.values(schema.getType(upperFirst(entityName)).getFields()).find((f: any) => f.name === fieldName.split('_')[0]);
 }
 
 export function getFieldType(schema, entityName, fieldName) {
