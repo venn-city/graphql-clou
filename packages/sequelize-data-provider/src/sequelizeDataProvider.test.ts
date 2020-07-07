@@ -749,7 +749,7 @@ describe('sequelizeDataProvider', () => {
     const updatedGovernmentName = hacker.phrase();
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName1 });
     await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName2 });
-    const updatedGovernments = await sequelizeDataProvider.updateManyEntities(
+    const updatedGovernments: any = await sequelizeDataProvider.updateManyEntities(
       'Government',
       {
         name: updatedGovernmentName

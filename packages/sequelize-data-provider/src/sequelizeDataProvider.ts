@@ -92,11 +92,12 @@ async function createManyEntities(entityName: string, entitiesToCreate: any) {
   const entityIdToListRelations = {};
   await async.each(entitiesToCreate, async entityToCreate => {
     const listRelations: any = await handleEntityRelationsPreCreate(entityName, entityToCreate, CREATE_MANY);
+    // @ts-ignore
     entityIdToListRelations[entityToCreate.id] = listRelations;
   });
 
   const createdEntities = await model(entityName).bulkCreate(entitiesToCreate);
-  await async.eachOf(createdEntities, async createdEntity => {
+  await async.eachOf(createdEntities, async (createdEntity: any) => {
     const listRelations: any = entityIdToListRelations[createdEntity.id];
     await associateRelations(listRelations, createdEntity);
   });
@@ -114,6 +115,7 @@ async function updateEntity(entityName: string, data: any, where: any) {
     // TODO: throw error instead of returning null?
     return null;
   }
+  // @ts-ignore
   await asyncEach(Object.keys(data), async entityField => {
     if (isObject(data[entityField]) && data[entityField].connect) {
       listRelationsToAssociate.push(...(await handleRelatedConnects(entityName, entityField, data)));
@@ -130,7 +132,8 @@ async function updateEntity(entityName: string, data: any, where: any) {
 
 async function updateManyEntities(entityName: string, data: any, where: any) {
   const entities = await getAllEntitiesSqObjects({ where }, entityName);
-  const updatedEntities = await asyncMap(entities, async entity => {
+  // @ts-ignore
+  const updatedEntities: any = await asyncMap(entities, async entity => {
     return entity.update(data);
   });
   return map(updatedEntities, 'dataValues');
@@ -145,7 +148,7 @@ function isListRelation(fieldInSchema: any) {
 async function handleRelatedConnects(entityName: string, entityField: string, entityToCreate: any) {
   const listRelations: any = [];
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
-  const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
+  const fieldInSchema: any = entityTypeInSchema?.fields?.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
   if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
@@ -180,7 +183,7 @@ async function handleRelatedConnects(entityName: string, entityField: string, en
 async function handleRelatedDisconnects(entityName: string, entityField: string, entity: any, entityInstance: any) {
   const listRelations: any = [];
   const entityTypeInSchema = openCrudDataModel.types.find(entityType => entityType.name === upperFirst(entityName));
-  const fieldInSchema = entityTypeInSchema.fields.find(f => f.name === entityField);
+  const fieldInSchema: any = entityTypeInSchema?.fields?.find(f => f.name === entityField);
   const pgRelationDirective = fieldInSchema.directives.find(d => d.name === 'pgRelation');
   if (pgRelationDirective && !fieldInSchema.isList) {
     const columnName = pgRelationDirective.arguments.column;
@@ -205,6 +208,7 @@ async function handleRelatedDisconnects(entityName: string, entityField: string,
 
 async function associateRelations(listRelations: any, entity: any) {
   if (listRelations.length) {
+    // @ts-ignore
     await asyncEach(listRelations, async listRelation => {
       await entity[`add${listRelation.relatedEntityField}`](listRelation.relatedEntityId);
     });
@@ -213,6 +217,7 @@ async function associateRelations(listRelations: any, entity: any) {
 
 async function disassociateRelations(listRelations: any, entity: any) {
   if (listRelations.length) {
+    // @ts-ignore
     await asyncEach(listRelations, async listRelation => {
       await entity[`remove${listRelation.relatedEntityField}`](listRelation.relatedEntityId);
     });
@@ -229,6 +234,7 @@ async function deleteEntity(entityName: string, where: any) {
 
 async function deleteManyEntities(entityName: string, where: any) {
   const entities = await getAllEntitiesSqObjects({ where }, entityName);
+  // @ts-ignore
   await asyncEach(entities, async entity => {
     await entity.destroy();
   });
