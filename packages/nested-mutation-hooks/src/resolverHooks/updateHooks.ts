@@ -13,10 +13,10 @@ import {
 
 const { getChildFieldOfType, getFieldName, getFieldType, extractFieldMetadata, KINDS } = opencrudSchemaProvider.introspectionUtils;
 
-const each = promisify(asyncRunner.each);
+const each = promisify(asyncRunner.each) as any;
 
 export async function preUpdate(context, parentUpdateData, where, entityName) {
-  const postUpdateCalls = [];
+  const postUpdateCalls: any = [];
   const { parentEntityMetadata, childFieldsToChangeMetadata } = detectChildFieldsToChange(context, entityName, parentUpdateData);
   await each(childFieldsToChangeMetadata, async childFieldToChange => {
     const { fieldName, fieldKind } = extractFieldMetadata(childFieldToChange);
@@ -44,6 +44,7 @@ export async function preUpdate(context, parentUpdateData, where, entityName) {
           childEntityData.create = [].concat(childEntityData.create);
           await each(childEntityData.create, async childFieldToChangeElement => {
             postUpdateCalls.push(
+              // @ts-ignore
               await nestedCreate({
                 context,
                 childFieldToChange,
@@ -89,6 +90,7 @@ export async function preUpdate(context, parentUpdateData, where, entityName) {
           childEntityData.delete = [].concat(childEntityData.delete);
           await each(childEntityData.delete, async childFieldToChangeElement => {
             postUpdateCalls.push(
+              // @ts-ignore
               await nestedDelete({
                 context,
                 childFieldToChange,
@@ -154,7 +156,7 @@ export async function preUpdate(context, parentUpdateData, where, entityName) {
   return postUpdateCalls;
 }
 
-async function nestedCreate({ context, childFieldToChange, entityName, parentEntityMetadata, parentUpdateData, childElementData }) {
+async function nestedCreate({ context, childFieldToChange, entityName, parentEntityMetadata, parentUpdateData, childElementData }: any) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChange);
   const childEntityCreateResolver = getChildEntityCreateResolver(context, fieldType);
   const childCreationData = parentUpdateData[fieldName];
@@ -184,7 +186,23 @@ async function nestedCreate({ context, childFieldToChange, entityName, parentEnt
   };
 }
 
-async function nestedConnect({ context, childFieldToChange, entityName, parentEntityMetadata, where, parentUpdateData, childElementData }) {
+async function nestedConnect({
+  context,
+  childFieldToChange,
+  entityName,
+  parentEntityMetadata,
+  where,
+  parentUpdateData,
+  childElementData
+}: {
+  context?: any;
+  childFieldToChange?: any;
+  entityName?: any;
+  parentEntityMetadata?: any;
+  where?: any;
+  parentUpdateData?: any;
+  childElementData?: any;
+}) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChange);
   if (isReferencingSideOfJoin(context, entityName, childFieldToChange)) {
     // do nothing, leaving the connect as is.
@@ -200,7 +218,7 @@ async function nestedConnect({ context, childFieldToChange, entityName, parentEn
   }
 }
 
-async function nestedUpdate({ context, childFieldToChange, parentEntityMetadata, where, parentUpdateData, childElementData }) {
+async function nestedUpdate({ context, childFieldToChange, parentEntityMetadata, where, parentUpdateData, childElementData }: any) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChange);
   const childEntityIds = [].concat(
     childElementData
@@ -215,7 +233,7 @@ async function nestedUpdate({ context, childFieldToChange, parentEntityMetadata,
   });
 }
 
-async function nestedDelete({ context, childFieldToChange, entityName, parentEntityMetadata, where, parentUpdateData, childElementData }) {
+async function nestedDelete({ context, childFieldToChange, entityName, parentEntityMetadata, where, parentUpdateData, childElementData }: any) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChange);
   const childEntityIds = [].concat(
     childElementData
@@ -240,7 +258,7 @@ async function nestedDelete({ context, childFieldToChange, entityName, parentEnt
 }
 
 function buildDisconnectArgument(childFieldToChange, childEntityIds) {
-  const data = {};
+  const data: any = {};
   data.disconnect = true;
   if (childFieldToChange.type.kind === 'LIST') {
     data.disconnect = [];
@@ -249,7 +267,23 @@ function buildDisconnectArgument(childFieldToChange, childEntityIds) {
   return data;
 }
 
-async function nestedDisconnect({ context, entityName, childFieldToChange, parentEntityMetadata, where, parentUpdateData, childElementData }) {
+async function nestedDisconnect({
+  context,
+  entityName,
+  childFieldToChange,
+  parentEntityMetadata,
+  where,
+  parentUpdateData,
+  childElementData
+}: {
+  context?: any;
+  entityName?: any;
+  childFieldToChange?: any;
+  parentEntityMetadata?: any;
+  where?: any;
+  parentUpdateData?: any;
+  childElementData?: any;
+}) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChange);
   if (isReferencingSideOfJoin(context, entityName, childFieldToChange)) {
     // do nothing, leaving the disconnect as is.

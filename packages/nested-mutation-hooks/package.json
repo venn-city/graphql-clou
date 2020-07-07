@@ -40,6 +40,8 @@
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
+    "@types/async": "^3.2.3",
+    "@types/sinon": "^9.0.4",
     "@venncity/eslint-config": "^3.0.1",
     "@venncity/jest-config-server": "^3.3.4",
     "@venncity/prettier-config-server": "^1.1.0",
