@@ -311,3 +311,8 @@ async function fetchChildEntityIds(dataProvider, parentEntityMetadata, where, fi
 export async function postUpdate(postUpdateCalls, updatedEntity) {
   await each(postUpdateCalls, async postUpdateCall => postUpdateCall && postUpdateCall(updatedEntity.id));
 }
+
+export default {
+  preUpdate,
+  postUpdate
+}
