@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
-const governmentResolvers = require('./resolvers/government-resolvers');
-const ministerResolvers = require('./resolvers/minister-resolvers');
-const ministryResolvers = require('./resolvers/ministry-resolvers');
-const voteResolvers = require('./resolvers/vote-resolvers');
+import governmentResolvers from './resolvers/government-resolvers';
+import ministerResolvers from './resolvers/minister-resolvers';
+import ministryResolvers from './resolvers/ministry-resolvers';
+import voteResolvers from './resolvers/vote-resolvers';
 
 const resolvers = {};
 _.merge(resolvers, governmentResolvers);
