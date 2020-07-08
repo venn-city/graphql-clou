@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { random } from 'faker';
 import { uniq } from 'lodash';
-import { sq } from '@venncity/sequelize-model';
+import sequelizeModel from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
 import models from '../../../test/model';
 
-sq.init(models);
+sequelizeModel.sq.init(models);
 
 describe('sequelizeDataProvider paging tests', () => {
   /**
@@ -175,7 +175,7 @@ describe('sequelizeDataProvider paging tests', () => {
   });
 
   afterAll(async () => {
-    sq.sequelize.close();
+    sequelizeModel.sq.sequelize.close();
   });
 
   test('getAllEntities with nested _every and _none filters', async () => {
