@@ -1,6 +1,6 @@
-const baseDAO = require('./../src/baseDAO');
-const daoAuth = require('./auth/daoAuth');
-const { publishCrudEvent } = require('./publishCRUD/crudPublish');
+import baseDAO from '../baseDAO';
+import daoAuth from './auth/daoAuth';
+import { publishCrudEvent } from './publishCRUD/crudPublish';
 
 // eslint-disable-next-line no-unused-vars
 function buildAuthContext(context) {
@@ -51,4 +51,4 @@ const hooks = {
   }
 };
 
-module.exports = createGovernmentDAO;
+export default createGovernmentDAO;

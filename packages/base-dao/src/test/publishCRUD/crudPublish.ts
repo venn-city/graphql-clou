@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const eventPubSub = require('@venncity/event-pubsub');
-const _ = require('lodash');
+import eventPubSub from '@venncity/event-pubsub';
+import _ from 'lodash';
 
 const ENTITY_CRUD_TOPIC_NAME = 'entity-crud';
 
-async function publishCrudEvent({ entityName, operation, entityBefore, entityAfter, context }) {
+export async function publishCrudEvent({ entityName, operation, entityBefore, entityAfter, context }) {
   const entityNameUpperSnake = toUpperSnakeCase(entityName);
   const { requestAdditionalInfo } = context.requestAdditionalInfo ? context : { requestAdditionalInfo: undefined };
 
@@ -52,5 +52,3 @@ function buildAuthDataForPublishingEvent({ auth }) {
 function toUpperSnakeCase(str) {
   return _.snakeCase(str).toUpperCase();
 }
-
-module.exports = { publishCrudEvent };
