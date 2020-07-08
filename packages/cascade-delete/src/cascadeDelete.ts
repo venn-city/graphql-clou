@@ -1,12 +1,14 @@
-const _ = require('lodash');
-const util = require('util');
-const async = require('async');
-const { upperFirst, lowerFirst } = require('lodash');
-const pluralize = require('pluralize');
-const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
-const { getFieldType } = require('@venncity/opencrud-schema-provider').introspectionUtils;
+import { upperFirst, lowerFirst, isEqual, map } from 'lodash';
+import util from 'util';
+import async from 'async';
 
-const eachOfAsync = util.promisify(async.eachOf);
+import pluralize from 'pluralize';
+import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
+import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
+
+const { getFieldType } = opencrudSchemaProvider.introspectionUtils;
+
+const eachOfAsync = util.promisify(async.eachOf) as any;
 
 const CASCADE_DIRECTIVE = 'vnCascade';
 const DELETE_OPERATION = 'DELETE';
@@ -14,7 +16,7 @@ const DISCONNECT_OPERATION = 'DISCONNECT';
 const DIRECT = 'direct';
 const INVERSE = 'inverse';
 
-async function cascadeDelete({ entityName, entityId, context }) {
+export async function cascadeDelete({ entityName, entityId, context }) {
   await cascadeReferencedEntities(entityName, entityId, context);
   await cascadeReferencingEntities(entityName, entityId, context);
 }
@@ -80,7 +82,7 @@ async function handleReferencingEntities(originalEntityName, referencingEntityNa
         [fieldToCascade.name]: { id: originalEntityId }
       };
     }
-    const entityIdsToCascade = _.map(await sequelizeDataProvider.getAllEntities(referencingEntityName, { where }), 'id');
+    const entityIdsToCascade = map(await sequelizeDataProvider.getAllEntities(referencingEntityName, { where }), 'id');
 
     if (entityIdsToCascade.length) {
       const { shouldDelete, shouldDisconnect } = getDirectiveOperations(fieldToCascade.directives, INVERSE);
@@ -120,34 +122,27 @@ async function performDisconnect(entityName, entityId, entityIdToDisconnect, fie
   });
 }
 
-function getDirectiveOperations(directives, direction) {
-  const cascadeOperations = directives.find(d => _.isEqual(d.name, CASCADE_DIRECTIVE)).arguments[direction];
+export function getDirectiveOperations(directives, direction) {
+  const cascadeOperations = directives.find(d => isEqual(d.name, CASCADE_DIRECTIVE)).arguments[direction];
   const shouldDelete = cascadeOperations.includes(DELETE_OPERATION);
   const shouldDisconnect = cascadeOperations.includes(DISCONNECT_OPERATION);
   return { shouldDelete, shouldDisconnect };
 }
 
-function getReferencedFieldsToCascade(context, entityName) {
+export function getReferencedFieldsToCascade(context, entityName) {
   const entityFields = context.openCrudDataModel.types.find(t => t.name === upperFirst(entityName)).fields;
   return entityFields.filter(f =>
     f.directives.find(d => {
-      return _.isEqual(d.name, CASCADE_DIRECTIVE) && d.arguments.direct;
+      return isEqual(d.name, CASCADE_DIRECTIVE) && d.arguments.direct;
     })
   );
 }
 
-function getReferencingFieldsToCascade(entityFields, originalEntityName) {
+export function getReferencingFieldsToCascade(entityFields, originalEntityName) {
   return entityFields.filter(f => {
     if (lowerFirst(getFieldType(f)) === originalEntityName) {
-      return f.directives.some(d => _.isEqual(d.name, CASCADE_DIRECTIVE) && d.arguments.inverse);
+      return f.directives.some(d => isEqual(d.name, CASCADE_DIRECTIVE) && d.arguments.inverse);
     }
     return false;
   });
 }
-
-module.exports = {
-  cascadeDelete,
-  getDirectiveOperations,
-  getReferencedFieldsToCascade,
-  getReferencingFieldsToCascade
-};

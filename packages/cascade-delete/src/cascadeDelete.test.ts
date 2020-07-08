@@ -1,10 +1,10 @@
-const { hacker } = require('faker');
-const sinon = require('sinon');
-const { openCrudDataModel } = require('@venncity/opencrud-schema-provider');
-const { sq } = require('@venncity/sequelize-model');
-const { sequelizeDataProvider } = require('@venncity/sequelize-data-provider');
-const { cascadeDelete } = require('./cascadeDelete');
-const models = require('./../../../test/model');
+import { hacker } from 'faker';
+import sinon from 'sinon';
+import { openCrudDataModel } from '@venncity/opencrud-schema-provider';
+import { sq } from '@venncity/sequelize-model';
+import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
+import { cascadeDelete } from './cascadeDelete';
+import models from '../../../test/model';
 
 sq.init(models);
 
