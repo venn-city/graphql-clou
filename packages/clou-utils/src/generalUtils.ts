@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { isEmpty, isArray, every, isUndefined, get } from 'lodash';
+
 const config = require('@venncity/nested-config')(__dirname);
 
 const encryptionAlgorithm = config.get('encryption.algorithm');

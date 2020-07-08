@@ -25,7 +25,7 @@ export function transformer({
 }) {
   function transform(value, key) {
     const tranformer: any = transformers.find(({ cond }) => {
-      //@ts-ignore
+      // @ts-ignore
       return cond(value);
     });
     if (tranformer) {
@@ -37,7 +37,7 @@ export function transformer({
     if (isObject(value)) {
       return transformObject(value, key, transform, transformKey);
     }
-    //TODO: This function takes 2 parameters but given 3, to check with Mark.
+    // TODO: This function takes 2 parameters but given 3, to check with Mark.
     // @ts-ignore
     return transformValue(value, key, transform);
   }
