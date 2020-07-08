@@ -1,8 +1,10 @@
-import creationHooksOriginal from './resolverHooks/creationHooks';
-import updateHooksOriginal from './resolverHooks/updateHooks';
+import creationHooks from './resolverHooks/creationHooks';
+import updateHooks from './resolverHooks/updateHooks';
 
-export const creationHooks = creationHooksOriginal;
-export const updateHooks = updateHooksOriginal;
+export const preUpdate = updateHooks.preUpdate;
+export const postUpdate = updateHooks.postUpdate;
+export const preCreation = creationHooks.preCreation;
+export const postCreation = creationHooks.postCreation;
 
 export default {
   ...creationHooks,
