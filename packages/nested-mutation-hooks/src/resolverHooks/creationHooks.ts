@@ -153,3 +153,9 @@ async function nestedConnect({
     return childEntityUpdateResolver(parentCreationData, { data: reverseReferenceData, where: { id: ownerId } }, context);
   };
 }
+
+
+export default {
+  preCreation,
+  postCreation
+}
