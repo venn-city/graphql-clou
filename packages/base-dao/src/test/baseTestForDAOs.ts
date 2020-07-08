@@ -1,10 +1,10 @@
-const pluralize = require('pluralize'); // eslint-disable-line import/no-extraneous-dependencies
-const momentRandom = require('moment-random'); // eslint-disable-line import/no-extraneous-dependencies
-const _ = require('lodash');
-const { getOpenCrudIntrospection, openCrudDataModel } = require('@venncity/opencrud-schema-provider');
-const { getFunctionNamesForEntity } = require('./../src/baseDAO');
+import pluralize from 'pluralize'; // eslint-disable-line import/no-extraneous-dependencies
+import momentRandom from 'moment-random'; // eslint-disable-line import/no-extraneous-dependencies
+import _ from 'lodash';
+import { getOpenCrudIntrospection, openCrudDataModel } from '@venncity/opencrud-schema-provider';
+import { getFunctionNamesForEntity } from '../baseDAO';
 
-const BASE_DAO_TEST_TYPES = {
+export const BASE_DAO_TEST_TYPES = {
   CREATE: 'CREATE',
   DELETE_ONE: 'DELETE_ONE',
   DELETE_MANY: 'DELETE_MANY',
@@ -16,6 +16,7 @@ const BASE_DAO_TEST_TYPES = {
   UPDATE_ONE: 'UPDATE_ONE',
   UPDATE_MANY: 'UPDATE_MANY'
 };
+
 /**
  * This will run tests on all the functions that baseDAO provides.
  * This should be called from the test file of every DAO that is created.
@@ -28,7 +29,19 @@ const BASE_DAO_TEST_TYPES = {
  * @param dataType
  * @param expectWithEquality
  */
-function runGenericDAOTests({
+
+interface runGenericDAOTestsProps {
+  entityName: string;
+  createAllDAOs: any;
+  createAdminAuthContext?: any;
+  getDefaultEntityFunc?: any;
+  pluralizationFunction?: any;
+  stringFieldName?: any;
+  dataType?: any;
+  testsToSkip?: any;
+  expectEqual?: any;
+}
+export function runGenericDAOTests({
   entityName,
   createAllDAOs,
   createAdminAuthContext = createServiceAuthContext,
@@ -43,7 +56,7 @@ function runGenericDAOTests({
     }
     expect(expectedEntity).toHaveProperty(fieldName, value);
   }
-}) {
+}: runGenericDAOTestsProps) {
   const DAOName = `${entityName}DAO`;
   const entityNamePlural = pluralizationFunction(entityName);
 
@@ -74,6 +87,7 @@ function runGenericDAOTests({
     });
 
     describe('basic crud - as admin user', () => {
+      // @ts-ignore
       if (!testsToSkip.includes(BASE_DAO_TEST_TYPES.CREATE)) {
         test(`Create ${entityName}`, async () => {
           const entityToCreate = await getDefaultEntityFunc();
@@ -86,17 +100,18 @@ function runGenericDAOTests({
           });
         });
       }
+      // @ts-ignore
       if (!testsToSkip.includes(BASE_DAO_TEST_TYPES.GET_ALL)) {
         test(`Get all ${entityNamePlural}`, async () => {
           const entityToCreate = await getDefaultEntityFunc();
           let createdEntity = await entityDAO[CREATE_ENTITY_FUNCTION_NAME](adminContext, entityToCreate);
           const allEntities = await getAllEntitiesWithPagination(entityDAO, GET_ALL_ENTITIES_FUNCTION_NAME, adminContext);
 
-          createdEntity = allEntities.find(entity => entity.id === createdEntity.id);
+          createdEntity = allEntities.find((entity: any) => entity.id === createdEntity.id);
           expect(createdEntity).toBeTruthy();
         });
       }
-
+      // @ts-ignore
       if (!testsToSkip.includes(BASE_DAO_TEST_TYPES.GET_ONE_BY_ID)) {
         test(`Get ${entityName} by id`, async () => {
           const entityToCreate = await getDefaultEntityFunc();
@@ -105,6 +120,7 @@ function runGenericDAOTests({
           expect(entity).toHaveProperty('id', createdEntity.id);
         });
       }
+      // @ts-ignore
       if (!testsToSkip.includes(BASE_DAO_TEST_TYPES.GET_MANY_BY_IDS)) {
         test(`Get ${entityNamePlural} by ids`, async () => {
           const entityToCreate1 = await getDefaultEntityFunc();
@@ -118,6 +134,7 @@ function runGenericDAOTests({
           expect(entities[1]).toHaveProperty('id', entity2.id);
         });
       }
+      // @ts-ignore
       if (!testsToSkip.includes(BASE_DAO_TEST_TYPES.GET_ONE_BY_QUERY)) {
         test(`Get ${entityName} by query`, async () => {
           let entityFromGetQuery = await entityDAO[GET_ENTITY](adminContext, { id: 'ID_THAT_DOES_NOT_EXIST' });
@@ -132,6 +149,7 @@ function runGenericDAOTests({
           expect(entityFromGetQuery).toHaveProperty('id', createdEntity.id);
         });
       }
+      // @ts-ignore
       if (!testsToSkip.includes(BASE_DAO_TEST_TYPES.GET_MANY_BY_QUERY)) {
         test(`Get ${entityNamePlural} by query`, async () => {
           const stringFieldValue = randomValuesByType(dataType)[0];
@@ -147,7 +165,7 @@ function runGenericDAOTests({
           };
           let entitiesThatMatchQuery = await getAllEntitiesWithPagination(entityDAO, GET_ALL_ENTITIES_FUNCTION_NAME, adminContext, queryArgs);
 
-          const entityFoundByQuery1 = _.find(entitiesThatMatchQuery, entity => entity.id === createdEntity1.id);
+          const entityFoundByQuery1 = _.find(entitiesThatMatchQuery, (entity: any) => entity.id === createdEntity1.id);
           expectEqual(entityFoundByQuery1, fieldName, entityToCreate1[fieldName]);
 
           const createdEntity2 = await entityDAO[CREATE_ENTITY_FUNCTION_NAME](adminContext, entityToCreate2);
@@ -157,7 +175,7 @@ function runGenericDAOTests({
           };
           entitiesThatMatchQuery = await getAllEntitiesWithPagination(entityDAO, GET_ALL_ENTITIES_FUNCTION_NAME, adminContext, queryArgs);
 
-          const entityFoundByQuery2 = _.find(entitiesThatMatchQuery, entity => entity.id === createdEntity2.id);
+          const entityFoundByQuery2 = _.find(entitiesThatMatchQuery, (entity: any) => entity.id === createdEntity2.id);
           expectEqual(entityFoundByQuery2, fieldName, entityToCreate1[fieldName]);
         });
       }
@@ -273,7 +291,7 @@ function randomValuesByType(dataType) {
   }
 }
 
-async function createServiceAuthContext(DAOs) {
+export async function createServiceAuthContext(DAOs) {
   return {
     auth: {
       isService: true
@@ -301,4 +319,4 @@ async function getAllEntitiesWithPagination(entityDao, queryName, context, query
   return fetchedEntities;
 }
 
-module.exports = { runGenericDAOTests, BASE_DAO_TEST_TYPES, createServiceAuthContext };
+export default { runGenericDAOTests, BASE_DAO_TEST_TYPES, createServiceAuthContext };

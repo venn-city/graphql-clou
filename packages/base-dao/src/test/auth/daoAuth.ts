@@ -1,12 +1,12 @@
-const {
-  errors: { ForbiddenError }
-} = require('@venncity/errors');
+import { errors } from '@venncity/errors';
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { initAuth, hasPermissionForAllFields, supportedActions, filterUnauthorizedFields } = require('@venncity/auth');
+import { initAuth, hasPermissionForAllFields, supportedActions, filterUnauthorizedFieldsFromAuth } from '@venncity/auth';
 
-const { READ, UPDATE } = supportedActions;
+const { ForbiddenError } = errors;
+export const filterUnauthorizedFields = filterUnauthorizedFieldsFromAuth;
+export const { READ, UPDATE } = supportedActions;
 
-async function buildAuth(context, hooks) {
+export async function buildAuth(context, hooks) {
   const authContext = await hooks.authFunctions.buildAuthContext(context);
   const auth = await initAuth(
     {
@@ -19,7 +19,7 @@ async function buildAuth(context, hooks) {
   return auth;
 }
 
-function verifyHasPermission(auth, action, authDataFromDB, context, authTypeName) {
+export function verifyHasPermission(auth, action, authDataFromDB, context, authTypeName) {
   if (!hasPermission(auth, action, authDataFromDB, context, authTypeName)) {
     const userId = (context.auth && context.auth.id) || 'anonymous';
     const errorString = `User ${userId} is not authorized to perform ${action} on ${authTypeName}. Auth data from DB: `;
@@ -28,7 +28,7 @@ function verifyHasPermission(auth, action, authDataFromDB, context, authTypeName
   }
 }
 
-function hasPermission(auth, action, authDataFromDB, context, authTypeName) {
+export function hasPermission(auth, action, authDataFromDB, context, authTypeName) {
   if (context.skipAuth) {
     return true;
   }
@@ -38,7 +38,7 @@ function hasPermission(auth, action, authDataFromDB, context, authTypeName) {
   });
 }
 
-async function verifyCanUpdate({ where, auth, data, context, hooks, authTypeName, dataProvider, entityName }) {
+export async function verifyCanUpdate({ where, auth, data, context, hooks, authTypeName, dataProvider, entityName }) {
   const entitiesToUpdate = await dataProvider.getAllEntities(entityName, { where });
 
   // eslint-disable-next-line no-restricted-syntax
@@ -59,21 +59,21 @@ async function verifyCanUpdate({ where, auth, data, context, hooks, authTypeName
   return entitiesToUpdate;
 }
 
-async function verifyHasPermissionAndFilterUnauthorizedFields(context, auth, fetchedEntity, hooks, authTypeName) {
+export async function verifyHasPermissionAndFilterUnauthorizedFields(context, auth, fetchedEntity, hooks, authTypeName) {
   if (!fetchedEntity) {
     return fetchedEntity;
   }
   const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity && fetchedEntity.id);
   verifyHasPermission(auth, READ, authDataFromDB, context, authTypeName);
-  return context.skipAuth ? fetchedEntity : fetchedEntity && filterUnauthorizedFields(auth, { $type: authTypeName, ...fetchedEntity }, READ);
+  return context.skipAuth ? fetchedEntity : fetchedEntity && filterUnauthorizedFieldsFromAuth(auth, { $type: authTypeName, ...fetchedEntity }, READ);
 }
 
-module.exports = {
+export default {
   buildAuth,
   verifyHasPermission,
   hasPermission,
   verifyCanUpdate,
   verifyHasPermissionAndFilterUnauthorizedFields,
   supportedActions,
-  filterUnauthorizedFields
+  filterUnauthorizedFieldsFromAuth
 };

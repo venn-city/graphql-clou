@@ -1,25 +1,26 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
-const DataLoader = require('dataloader');
-const _ = require('lodash');
-const util = require('util');
-const async = require('async');
-const pluralize = require('pluralize');
-const { getQueryWhereInputName, getMutationWhereInputName } = require('@venncity/opencrud-schema-provider').introspectionUtils;
-const { transformComputedFieldsWhereArguments } = require('@venncity/graphql-transformers');
-const { cascadeDelete } = require('@venncity/cascade-delete');
-const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
-const { enforcePagination } = require('@venncity/graphql-pagination-enforce');
+import DataLoader from 'dataloader';
+import _ from 'lodash';
+import util from 'util';
+import async from 'async';
+import pluralize from 'pluralize';
+import openCrudSchema from '@venncity/opencrud-schema-provider';
+import { transformComputedFieldsWhereArguments } from '@venncity/graphql-transformers';
+import { cascadeDelete } from '@venncity/cascade-delete';
+import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
+import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 
-const asyncMap = util.promisify(async.map);
+const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
+const asyncMap = util.promisify(async.map) as any;
 
-const CRUD_TOPIC_OPERATION_NAMES = {
+export const CRUD_TOPIC_OPERATION_NAMES = {
   CREATED: 'CREATED',
   UPDATED: 'UPDATED',
   DELETED: 'DELETED'
 };
 
-function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAuth, publishCrudEvent }) {
+export function createEntityDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAuth, publishCrudEvent }) {
   const {
     CREATE_ENTITY_FUNCTION_NAME,
     GET_ENTITIES_BY_IDS_FUNCTION_NAME,
@@ -80,12 +81,16 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     transformComputedFieldsWhereArguments,
     // e.g unitById
     [GET_ENTITY_BY_ID]: async (context, where) => {
+      // TODO Verify with Mark, getEntityById takes only two arguments
+      // @ts-ignore
       const fetchedEntity = await getEntityById(context, where, hooks);
       return fetchedEntity;
     },
     [GET_ENTITY]: async (context, where, info) => {
       let fetchedEntity;
       if (isFetchingEntityById(where)) {
+        // TODO Verify with Mark, getEntityById takes only two arguments
+        // @ts-ignore
         fetchedEntity = await getEntityById(context, where.id, hooks);
         return fetchedEntity;
       }
@@ -103,7 +108,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       return entityWithOnlyAuthorizedFields;
     },
     // e.g units
-    [GET_ALL_ENTITIES_FUNCTION_NAME]: async (context, args = {}, info) => {
+    [GET_ALL_ENTITIES_FUNCTION_NAME]: async (context, args = { where: undefined, skipPagination: undefined }, info) => {
       const { skipPagination } = args;
       delete args.skipPagination;
       const auth = await buildAuth(context, hooks);
@@ -121,8 +126,8 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME, skipPagination);
 
       const fetchedEntities = await dataProvider.getAllEntities(entityName, transformedArgs);
-      const entitiesThatUserCanAccess = [];
-      const entitiesThatUserCannotAccess = [];
+      const entitiesThatUserCanAccess: any = [];
+      const entitiesThatUserCannotAccess: any = [];
       for (const fetchedEntity of fetchedEntities) {
         const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
         if (hasPermission(auth, READ, authDataFromDB, context, authTypeName)) {
@@ -140,7 +145,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
     [GET_ENTITIES_BY_IDS_FUNCTION_NAME]: async (context, entityIds) => {
       const auth = await buildAuth(context, hooks);
       const entities = await dataLoader.loadMany(entityIds);
-      const entitiesWithOnlyAuthorizedFields = [];
+      const entitiesWithOnlyAuthorizedFields: any = [];
       for (const entity of entities) {
         let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, entity, hooks, authTypeName);
         entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields);
@@ -316,7 +321,7 @@ function createDAO({ entityName, hooks, pluralizationFunction = pluralize, daoAu
       }
       return { count: deleteEntities.length };
     },
-    [ENTITIES_CONNECTION]: async (parent, args = {}, context, info) => {
+    [ENTITIES_CONNECTION]: async (parent, args = { where: undefined }, context, info) => {
       const whereInputName = getQueryWhereInputName(context, ENTITIES_CONNECTION);
       const transformedWhere = await transformComputedFieldsWhereArguments({
         originalWhere: args.where,
@@ -347,7 +352,7 @@ function logRequestsThatReturnUnauthorizedEntities(entitiesThatUserCannotAccess,
   }
 }
 
-function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize) {
+export function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize) {
   const entityNameUpperFirstLetter = _.upperFirst(entityName);
   return {
     CREATE_ENTITY_FUNCTION_NAME: `create${entityNameUpperFirstLetter}`,
@@ -363,7 +368,7 @@ function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize
   };
 }
 
-function transformJoinedEntityWhere(args, entityIds) {
+export function transformJoinedEntityWhere(args, entityIds) {
   return {
     ...args,
     where: {
@@ -373,8 +378,8 @@ function transformJoinedEntityWhere(args, entityIds) {
   };
 }
 
-module.exports = {
-  createEntityDAO: createDAO,
+export default {
+  createEntityDAO,
   getFunctionNamesForEntity,
   transformJoinedEntityWhere,
   CRUD_TOPIC_OPERATION_NAMES

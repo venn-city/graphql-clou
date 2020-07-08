@@ -1,5 +1,5 @@
-const createGovernmentDAO = require('./governmentDAO');
-const createMinistryDAO = require('./ministryDAO');
+import createGovernmentDAO from './governmentDAO';
+import createMinistryDAO from './ministryDAO';
 
 function createAllDAOs() {
   const allDAOs = {
@@ -10,4 +10,4 @@ function createAllDAOs() {
   return allDAOs;
 }
 
-module.exports = createAllDAOs;
+export default createAllDAOs;

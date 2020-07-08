@@ -1,9 +1,9 @@
-const { hacker, random } = require('faker');
-const { sq } = require('@venncity/sequelize-model');
-const { transformJoinedEntityWhere } = require('./baseDAO');
-const { runGenericDAOTests, createServiceAuthContext } = require('./../test/baseTestForDAOs');
-const createAllDAOs = require('./../test/DAOs');
-const models = require('./../../../test/model');
+import { hacker, random } from 'faker';
+import { sq } from '@venncity/sequelize-model';
+import { transformJoinedEntityWhere } from './baseDAO';
+import { runGenericDAOTests, createServiceAuthContext } from './test/baseTestForDAOs';
+import createAllDAOs from './test/DAOs';
+import models from '../../../test/model';
 
 sq.init(models);
 
