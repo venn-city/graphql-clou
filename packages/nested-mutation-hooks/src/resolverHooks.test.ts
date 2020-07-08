@@ -1,13 +1,14 @@
-const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
-const { createTestClient } = require('apollo-server-testing/dist/index');
-const { hacker } = require('faker');
-const sinon = require('sinon').createSandbox();
-const { sq } = require('@venncity/sequelize-model');
-const resolvers = require('./../test/graphqlTestServer/schema/resolvers');
-const models = require('./../../../test/model');
+/* eslint-disable import/first */
+import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
+import { createTestClient } from 'apollo-server-testing/dist/index';
+import { hacker } from 'faker';
+import sinon from 'sinon';
+import { sq } from '@venncity/sequelize-model';
+import resolvers from '../test/graphqlTestServer/schema/resolvers';
+import models from '../../../test/model';
 
 const mutationSpies = createMutationSpies();
-const { startApolloServer } = require('./../test/graphqlTestServer/');
+import { startApolloServer } from '../test/graphqlTestServer';
 
 const { mutate } = createTestClient(startApolloServer());
 
@@ -15,7 +16,7 @@ sq.init(models);
 
 describe('Nested mutations', () => {
   afterEach(() => {
-    Object.values(mutationSpies).forEach(mutationSpy => mutationSpy.resetHistory());
+    Object.values(mutationSpies).forEach((mutationSpy: any) => mutationSpy.resetHistory());
   });
 
   describe('Nested mutation field is Object', () => {
@@ -46,7 +47,7 @@ describe('Nested mutations', () => {
             name: nameValue
           }
         );
-        const ministry = response.data.createMinistry;
+        const ministry = response?.data?.createMinistry;
         expect(ministry).toHaveProperty('name', nameValue);
         expect(ministry.minister).toHaveProperty('name', nameValue);
         expect(ministry.government).toHaveProperty('name', nameValue);
@@ -94,7 +95,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const ministry = response.data.createMinistry;
+        const ministry = response?.data?.createMinistry;
         expect(ministry).toHaveProperty('name', nameValue);
         expect(ministry.minister).toHaveProperty('name', nameValue);
         expect(ministry.government).toHaveProperty('name', nameValue);
@@ -139,7 +140,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const updatedMinistry = response.data.updateMinistry;
+        const updatedMinistry = response?.data?.updateMinistry;
         expect(updatedMinistry).toHaveProperty('name', nameValue);
         expect(updatedMinistry.minister).toHaveProperty('name', nameValue);
         expect(updatedMinistry.government).toHaveProperty('name', nameValue);
@@ -197,7 +198,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const updatedMinistry = response.data.updateMinistry;
+        const updatedMinistry = response?.data?.updateMinistry;
         expect(updatedMinistry).toHaveProperty('name', nameValue);
         expect(updatedMinistry.minister).toHaveProperty('name', nameInitialValue);
         expect(updatedMinistry.government).toHaveProperty('name', nameInitialValue);
@@ -268,7 +269,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const updatedMinistry = response.data.updateMinistry;
+        const updatedMinistry = response?.data?.updateMinistry;
         expect(updatedMinistry).toHaveProperty('name', nameValue);
         expect(updatedMinistry.minister).toHaveProperty('name', nameValue);
         expect(updatedMinistry.government).toHaveProperty('name', nameValue);
@@ -334,7 +335,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const updatedMinistry = response.data.updateMinistry;
+        const updatedMinistry = response?.data?.updateMinistry;
         expect(updatedMinistry).toHaveProperty('name', nameValue);
         expect(updatedMinistry.minister).toBeNull();
         expect(updatedMinistry.government).toBeNull();
@@ -390,7 +391,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const updatedMinistry = response.data.updateMinistry;
+        const updatedMinistry = response?.data?.updateMinistry;
         expect(updatedMinistry).toHaveProperty('name', nameValue);
         const deleteMinister = await dataProvider.getEntity('Minister', { id: minister.id });
         expect(deleteMinister).toBeNull();
@@ -423,7 +424,7 @@ describe('Nested mutations', () => {
             name: nameValue
           }
         );
-        const minister = response.data.createMinister;
+        const minister = response?.data?.createMinister;
         expect(minister).toHaveProperty('name', nameValue);
         expect(minister.ministry).toHaveProperty('name', nameValue);
 
@@ -458,7 +459,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const minister = response.data.createMinister;
+        const minister = response?.data?.createMinister;
         expect(minister).toHaveProperty('name', nameValue);
         expect(minister.ministry).toHaveProperty('name', nameValue);
 
@@ -497,7 +498,7 @@ describe('Nested mutations', () => {
             ministerId: minister.id
           }
         );
-        const updatedMinister = response.data.updateMinister;
+        const updatedMinister = response?.data?.updateMinister;
         expect(updatedMinister).toHaveProperty('name', nameValue);
         expect(updatedMinister.ministry).toHaveProperty('name', nameValue);
 
@@ -541,7 +542,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const updatedMinister = response.data.updateMinister;
+        const updatedMinister = response?.data?.updateMinister;
         expect(updatedMinister).toHaveProperty('name', nameValue);
         expect(updatedMinister.ministry).toHaveProperty('name', nameValue);
 
@@ -592,7 +593,7 @@ describe('Nested mutations', () => {
             ministerId: minister.id
           }
         );
-        const updatedMinister = response.data.updateMinister;
+        const updatedMinister = response?.data?.updateMinister;
         expect(updatedMinister).toHaveProperty('name', nameValue);
         expect(updatedMinister.ministry).toHaveProperty('name', nameValue);
 
@@ -641,7 +642,7 @@ describe('Nested mutations', () => {
             ministerId: minister.id
           }
         );
-        const updatedMinister = response.data.updateMinister;
+        const updatedMinister = response?.data?.updateMinister;
         expect(updatedMinister).toHaveProperty('name', nameValue);
         expect(updatedMinister.ministry).toBeNull();
 
@@ -690,7 +691,7 @@ describe('Nested mutations', () => {
             ministerId: minister.id
           }
         );
-        const updatedMinister = response.data.updateMinister;
+        const updatedMinister = response?.data?.updateMinister;
         expect(updatedMinister).toHaveProperty('name', nameValue);
         const deletedMinistry = await dataProvider.getEntity('Ministry', { id: ministry.id });
 
@@ -728,7 +729,7 @@ describe('Nested mutations', () => {
               voteName
             }
           );
-          const vote = createdVote.data.createVote;
+          const vote = createdVote?.data?.createVote;
           expect(vote).toHaveProperty('minister.id');
           expect(vote).toHaveProperty('minister.name', ministerName);
 
@@ -750,7 +751,7 @@ describe('Nested mutations', () => {
         `,
             { name: ministerName }
           );
-          const minister = createdMinister.data.createMinister;
+          const minister = createdMinister?.data?.createMinister;
           const voteName = hacker.noun();
           const createdVote = await executeMutation(
             `
@@ -774,7 +775,7 @@ describe('Nested mutations', () => {
               voteName
             }
           );
-          const vote = createdVote.data.createVote;
+          const vote = createdVote?.data?.createVote;
           expect(vote).toHaveProperty('minister.id', minister.id);
           expect(vote).toHaveProperty('minister.name', ministerName);
 
@@ -796,7 +797,7 @@ describe('Nested mutations', () => {
         `,
             { name: ministerName }
           );
-          const minister = createdMinister.data.createMinister;
+          const minister = createdMinister?.data?.createMinister;
           const createdVote = await executeMutation(
             `
             mutation {
@@ -814,7 +815,7 @@ describe('Nested mutations', () => {
         `,
             {}
           );
-          const vote = createdVote.data.createVote;
+          const vote = createdVote?.data?.createVote;
           expect(vote.minister).toBeFalsy();
           const updatedVoteWithMinister = await executeMutation(
             `
@@ -837,7 +838,7 @@ describe('Nested mutations', () => {
               voteId: vote.id
             }
           );
-          expect(updatedVoteWithMinister.data.updateVote).toHaveProperty('minister.id', minister.id);
+          expect(updatedVoteWithMinister?.data?.updateVote).toHaveProperty('minister.id', minister.id);
 
           expect(mutationSpies.updateVote.calledOnce).toBeTruthy();
           expect(mutationSpies.updateMinister.notCalled).toBeTruthy();
@@ -861,7 +862,7 @@ describe('Nested mutations', () => {
         `,
             {}
           );
-          const vote = createdVote.data.createVote;
+          const vote = createdVote?.data?.createVote;
           expect(vote.minister).toBeFalsy();
           const updatedVoteWithMinister = await executeMutation(
             `
@@ -886,8 +887,8 @@ describe('Nested mutations', () => {
               voteId: vote.id
             }
           );
-          expect(updatedVoteWithMinister.data.updateVote).toHaveProperty('minister.id');
-          expect(updatedVoteWithMinister.data.updateVote).toHaveProperty('minister.name', ministerName);
+          expect(updatedVoteWithMinister?.data?.updateVote).toHaveProperty('minister.id');
+          expect(updatedVoteWithMinister?.data?.updateVote).toHaveProperty('minister.name', ministerName);
 
           expect(mutationSpies.updateVote.calledOnce).toBeTruthy();
           expect(mutationSpies.createMinister.calledOnce).toBeTruthy();
@@ -934,7 +935,7 @@ describe('Nested mutations', () => {
               voteId: vote.id
             }
           );
-          const updatedVote = response.data.updateVote;
+          const updatedVote = response?.data?.updateVote;
           expect(updatedVote).toHaveProperty('name', voteNameValue);
           expect(updatedVote.minister).toBeNull();
 
@@ -982,7 +983,7 @@ describe('Nested mutations', () => {
               voteId: vote.id
             }
           );
-          const updatedVote = response.data.updateVote;
+          const updatedVote = response?.data?.updateVote;
           expect(updatedVote).toHaveProperty('name', voteNameValue);
           expect(updatedVote.minister).toBeNull();
 
@@ -1019,7 +1020,7 @@ describe('Nested mutations', () => {
               voteName
             }
           );
-          const minister = createdMinister.data.createMinister;
+          const minister = createdMinister?.data?.createMinister;
           expect(minister.votes).toHaveLength(1);
           expect(minister.votes[0]).toHaveProperty('name', voteName);
 
@@ -1042,7 +1043,7 @@ describe('Nested mutations', () => {
         `,
             { voteName }
           );
-          const vote = createdVote.data.createVote;
+          const vote = createdVote?.data?.createVote;
           const ministerName = hacker.noun();
           const createdMinister = await executeMutation(
             `
@@ -1066,7 +1067,7 @@ describe('Nested mutations', () => {
               voteId: vote.id
             }
           );
-          const minister = createdMinister.data.createMinister;
+          const minister = createdMinister?.data?.createMinister;
           expect(minister.votes).toHaveLength(1);
           expect(minister.votes[0]).toMatchObject({ name: voteName, id: vote.id });
 
@@ -1095,7 +1096,7 @@ describe('Nested mutations', () => {
               ministerName
             }
           );
-          const minister = createdMinister.data.createMinister;
+          const minister = createdMinister?.data?.createMinister;
           expect(minister.votes).toHaveLength(0);
           const voteName = hacker.noun();
           const updatedMinister = await executeMutation(
@@ -1119,7 +1120,7 @@ describe('Nested mutations', () => {
               voteName
             }
           );
-          const updatedMinisterData = updatedMinister.data.updateMinister;
+          const updatedMinisterData = updatedMinister?.data?.updateMinister;
           expect(updatedMinisterData.votes).toHaveLength(1);
           expect(updatedMinisterData.votes[0]).toHaveProperty('name', voteName);
 
@@ -1142,7 +1143,7 @@ describe('Nested mutations', () => {
         `,
             { voteName }
           );
-          const vote = createdVote.data.createVote;
+          const vote = createdVote?.data?.createVote;
           const ministerName = hacker.noun();
           const createdMinister = await executeMutation(
             `
@@ -1164,7 +1165,7 @@ describe('Nested mutations', () => {
               ministerName
             }
           );
-          const minister = createdMinister.data.createMinister;
+          const minister = createdMinister?.data?.createMinister;
           expect(minister.votes).toHaveLength(0);
           const updatedMinister = await executeMutation(
             `
@@ -1187,7 +1188,7 @@ describe('Nested mutations', () => {
               voteId: vote.id
             }
           );
-          const updatedMinisterData = updatedMinister.data.updateMinister;
+          const updatedMinisterData = updatedMinister?.data?.updateMinister;
           expect(updatedMinisterData.votes).toHaveLength(1);
           expect(updatedMinisterData.votes[0]).toMatchObject({ name: voteName, id: vote.id });
 
@@ -1230,7 +1231,7 @@ describe('Nested mutations', () => {
               ministerId: minister.id
             }
           );
-          const updatedMinister = response.data.updateMinister;
+          const updatedMinister = response?.data?.updateMinister;
           expect(updatedMinister).toHaveProperty('name', voteNameValue);
           expect(updatedMinister.votes).toHaveLength(0);
 
@@ -1272,7 +1273,7 @@ describe('Nested mutations', () => {
               ministerId: minister.id
             }
           );
-          const updatedMinister = response.data.updateMinister;
+          const updatedMinister = response?.data?.updateMinister;
           expect(updatedMinister).toHaveProperty('name', voteNameValue);
           expect(updatedMinister.votes).toHaveLength(0);
 
@@ -1310,7 +1311,7 @@ describe('Nested mutations', () => {
             name: nameValue
           }
         );
-        const government = response.data.createGovernment;
+        const government = response?.data?.createGovernment;
         expect(government).toHaveProperty('name', nameValue);
         expect(government.ministries[0]).toHaveProperty('name', nameValue);
 
@@ -1342,7 +1343,7 @@ describe('Nested mutations', () => {
             anotherName: anotherNameValue
           }
         );
-        const government = response.data.createGovernment;
+        const government = response?.data?.createGovernment;
         expect(government).toHaveProperty('name', nameValue);
         expect(government.ministries).toHaveLength(2);
 
@@ -1377,7 +1378,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const government = response.data.createGovernment;
+        const government = response?.data?.createGovernment;
         expect(government).toHaveProperty('name', nameValue);
         expect(government.ministries[0]).toHaveProperty('name', nameValue);
 
@@ -1416,7 +1417,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries[0]).toHaveProperty('name', nameValue);
 
@@ -1461,7 +1462,7 @@ describe('Nested mutations', () => {
             ministryId: ministry.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries[0]).toHaveProperty('name', nameInitialValue);
 
@@ -1511,7 +1512,7 @@ describe('Nested mutations', () => {
             anotherMinistryId: anotherMinistry.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment.ministries[0]).toHaveProperty('name', nameInitialValue);
         expect(updatedGovernment.ministries[1]).toHaveProperty('name', nameInitialValue);
 
@@ -1576,7 +1577,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries).toHaveLength(2);
         expect(updatedGovernment.ministries.find(e => e.id === ministry.id)).toHaveProperty('name', nameValue);
@@ -1628,7 +1629,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries).toHaveLength(0);
 
@@ -1695,7 +1696,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         const ministriesAfterDelete = await dataProvider.getAllEntities('Ministry', {
           where: { id_in: [ministry.id, anotherMinistry.id, yetAnotherMinistry.id] }
@@ -1775,7 +1776,7 @@ describe('Nested mutations', () => {
             governmentId: government.id
           }
         );
-        const updatedGovernment = response.data.updateGovernment;
+        const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries).toHaveLength(3);
         expect(updatedGovernment.ministries.find(e => e.id === ministry.id)).toHaveProperty('name', nameValue);
@@ -1837,7 +1838,7 @@ describe('Nested mutations', () => {
           ministerId: minister.id
         }
       );
-      const updatedMinister = response.data.updateMinister;
+      const updatedMinister = response?.data?.updateMinister;
       expect(updatedMinister).toHaveProperty('name', nameValue);
       expect(updatedMinister.ministry).toHaveProperty('name', nameValue);
       expect(updatedMinister.ministry.government).toHaveProperty('name', nameValue);
@@ -1902,7 +1903,7 @@ describe('Nested mutations', () => {
           ministerId: minister.id
         }
       );
-      const updatedMinister = response.data.updateMinister;
+      const updatedMinister = response?.data?.updateMinister;
       expect(updatedMinister).toHaveProperty('name', nameValue);
       expect(updatedMinister.ministry).toHaveProperty('name', nameValue);
       expect(updatedMinister.ministry.government).toBeNull();
@@ -1967,6 +1968,7 @@ describe('Nested mutations', () => {
           governmentId: government.id
         }
       );
+      // @ts-ignore
       expect(mutationWithUpsertResponse.errors[0]).toHaveProperty('message', 'Nested upsert actions are not supported');
     });
   });
@@ -1979,10 +1981,11 @@ async function executeMutation(mutation, variables) {
 function createMutationSpies() {
   const entities = ['Government', 'Ministry', 'Minister', 'Vote'];
   const mutationTypes = ['create', 'update', 'delete'];
-  const spies = {};
+  const spies: any = {};
   entities.forEach(entity => {
     mutationTypes.forEach(mutationType => {
       const mutationName = `${mutationType}${entity}`;
+      // @ts-ignore
       spies[mutationName] = sinon.spy(resolvers.Mutation, mutationName);
     });
   });

@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { ApolloServer } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
-const { openCrudDataModel, openCrudSchemaGraphql, getOpenCrudIntrospection } = require('@venncity/opencrud-schema-provider');
-const { sequelizeDataProvider: dataProvider } = require('@venncity/sequelize-data-provider');
+import { ApolloServer } from 'apollo-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
+import { getOpenCrudIntrospection, openCrudDataModel, openCrudSchemaGraphql } from '@venncity/opencrud-schema-provider';
+import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
 
-const resolvers = require('./schema/resolvers');
+import resolvers from './schema/resolvers';
 
 const fullSchema = makeExecutableSchema({
   typeDefs: [openCrudSchemaGraphql],
@@ -14,7 +14,8 @@ const fullSchema = makeExecutableSchema({
   }
 });
 
-function startApolloServer() {
+// eslint-disable-next-line import/prefer-default-export
+export function startApolloServer() {
   const options = {
     schema: fullSchema,
     formatError: error => {
@@ -32,10 +33,5 @@ function startApolloServer() {
     }
   };
 
-  const server = new ApolloServer(options);
-  return server;
+  return new ApolloServer(options);
 }
-
-module.exports = {
-  startApolloServer
-};

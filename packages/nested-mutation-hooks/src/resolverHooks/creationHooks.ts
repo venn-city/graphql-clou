@@ -1,19 +1,14 @@
-const asyncRunner = require('async');
-const { promisify } = require('util');
-const {
-  getChildFieldOfType,
-  getFieldName,
-  getFieldKind,
-  getFieldType,
-  extractFieldMetadata,
-  KINDS
-} = require('@venncity/opencrud-schema-provider').introspectionUtils;
-const { getChildEntityCreateResolver, getChildEntityUpdateResolver, detectChildFieldsToChange, isReferencingSideOfJoin } = require('./common');
+import asyncRunner from 'async';
+import { promisify } from 'util';
+import openCrudSchemaProvider from '@venncity/opencrud-schema-provider';
+import { getChildEntityCreateResolver, getChildEntityUpdateResolver, detectChildFieldsToChange, isReferencingSideOfJoin } from './common';
 
-const each = promisify(asyncRunner.each);
+const { getChildFieldOfType, getFieldName, getFieldKind, getFieldType, extractFieldMetadata, KINDS } = openCrudSchemaProvider.introspectionUtils;
 
-async function preCreation(context, parentCreationData, entityName) {
-  const postCreationCalls = [];
+const each = promisify(asyncRunner.each) as any;
+
+export async function preCreation(context, parentCreationData, entityName) {
+  const postCreationCalls: any = [];
   const { parentEntityMetadata, childFieldsToChangeMetadata } = detectChildFieldsToChange(context, entityName, parentCreationData);
   await each(childFieldsToChangeMetadata, async childFieldToChangeMetadata => {
     const childFieldName = getFieldName(childFieldToChangeMetadata);
@@ -23,9 +18,13 @@ async function preCreation(context, parentCreationData, entityName) {
     switch (getFieldKind(childFieldToChangeMetadata)) {
       case KINDS.OBJECT:
         if (childEntityData.create) {
-          postCreationCalls.push(await nestedCreate({ context, entityName, childFieldToChangeMetadata, parentCreationData, parentEntityMetadata }));
+          postCreationCalls.push(
+            (await nestedCreate({ context, entityName, childFieldToChangeMetadata, parentCreationData, parentEntityMetadata })) as any
+          );
         } else if (childEntityData.connect) {
-          postCreationCalls.push(await nestedConnect({ context, entityName, childFieldToChangeMetadata, parentCreationData, parentEntityMetadata }));
+          postCreationCalls.push(
+            (await nestedConnect({ context, entityName, childFieldToChangeMetadata, parentCreationData, parentEntityMetadata })) as any
+          );
         } else {
           console.error('Unexpected operation', childEntityData, 'in', parentCreationData);
         }
@@ -34,6 +33,7 @@ async function preCreation(context, parentCreationData, entityName) {
         if (childEntityData.create) {
           await each(childEntityData.create, async childFieldToChangeElement => {
             postCreationCalls.push(
+              // @ts-ignore
               await nestedCreate({
                 context,
                 entityName,
@@ -48,6 +48,7 @@ async function preCreation(context, parentCreationData, entityName) {
         } else if (childEntityData.connect) {
           await each(childEntityData.connect, async childFieldToChangeElement => {
             postCreationCalls.push(
+              // @ts-ignore
               await nestedConnect({
                 context,
                 entityName,
@@ -69,11 +70,25 @@ async function preCreation(context, parentCreationData, entityName) {
   return postCreationCalls;
 }
 
-async function postCreation(postCreationCalls, createdEntity) {
+export async function postCreation(postCreationCalls, createdEntity) {
   await each(postCreationCalls, async postCreationCall => postCreationCall && postCreationCall(createdEntity.id));
 }
 
-async function nestedCreate({ context, entityName, childFieldToChangeMetadata, parentCreationData, parentEntityMetadata, childElementData }) {
+async function nestedCreate({
+  context,
+  entityName,
+  childFieldToChangeMetadata,
+  parentCreationData,
+  parentEntityMetadata,
+  childElementData
+}: {
+  context: any;
+  entityName: any;
+  childFieldToChangeMetadata: any;
+  parentCreationData: any;
+  parentEntityMetadata: any;
+  childElementData?: any;
+}) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChangeMetadata);
   const childEntityCreateResolver = getChildEntityCreateResolver(context, fieldType);
   const childCreationData = parentCreationData[fieldName];
@@ -107,7 +122,21 @@ async function nestedCreate({ context, entityName, childFieldToChangeMetadata, p
   };
 }
 
-async function nestedConnect({ context, entityName, childFieldToChangeMetadata, parentCreationData, parentEntityMetadata, childElementData }) {
+async function nestedConnect({
+  context,
+  entityName,
+  childFieldToChangeMetadata,
+  parentCreationData,
+  parentEntityMetadata,
+  childElementData
+}: {
+  context: any;
+  entityName: any;
+  childFieldToChangeMetadata: any;
+  parentCreationData: any;
+  parentEntityMetadata: any;
+  childElementData?: any;
+}) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChangeMetadata);
   const childEntityUpdateResolver = getChildEntityUpdateResolver(context, fieldType);
   const childConnectData = parentCreationData[fieldName];
@@ -124,8 +153,3 @@ async function nestedConnect({ context, entityName, childFieldToChangeMetadata, 
     return childEntityUpdateResolver(parentCreationData, { data: reverseReferenceData, where: { id: ownerId } }, context);
   };
 }
-
-module.exports = {
-  preCreation,
-  postCreation
-};
