@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const utils = require('./generalUtils');
+import crypto from 'crypto';
+import utils from './generalUtils';
 
 describe('utils', () => {
   describe('isTrue', () => {

@@ -271,12 +271,15 @@ function correctManyRelationJoin(associationInfo, transformAssociationToNested, 
 }
 
 function transformWhereToNested(relatedEntityName, pathWithinSchema, associationAlias, relatedEntityFilter) {
+  // @ts-ignore
   return transformWithSymbols.transformer({
     transformers: [
       {
+        // @ts-ignore
         cond: value => {
           return value instanceof Sequelize.Utils.Literal;
         },
+        // @ts-ignore
         func: (value, key, transform) => {
           value.val = transform(value.val, 'val');
           return value;
