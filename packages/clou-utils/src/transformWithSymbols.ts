@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const { isObject } = require('lodash');
+import { isObject } from 'lodash';
 
 function defaultTransformObject(object, key, transform, transformKey) {
   const transformedObject = {};
@@ -16,7 +16,7 @@ function defaultTransformArray(array, key, transformFn) {
   return array.map(transformFn);
 }
 
-function transformer({
+export function transformer({
   transformers = [],
   transformKey = (v, k) => k,
   transformValue = (v, k) => v,
@@ -24,7 +24,8 @@ function transformer({
   transformObject = defaultTransformObject
 }) {
   function transform(value, key) {
-    const tranformer = transformers.find(({ cond }) => {
+    const tranformer: any = transformers.find(({ cond }) => {
+      //@ts-ignore
       return cond(value);
     });
     if (tranformer) {
@@ -36,12 +37,14 @@ function transformer({
     if (isObject(value)) {
       return transformObject(value, key, transform, transformKey);
     }
+    //TODO: This function takes 2 parameters but given 3, to check with Mark.
+    // @ts-ignore
     return transformValue(value, key, transform);
   }
 
   return transform;
 }
 
-module.exports = {
+export default {
   transformer
 };
