@@ -7,7 +7,7 @@ import async from 'async';
 import { openCrudToSequelize } from '@venncity/graphql-transformers';
 import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
-//
+
 const {
   ClientDataValidationError,
   ServerDataValidationError,
