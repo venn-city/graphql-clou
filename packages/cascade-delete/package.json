@@ -1,6 +1,6 @@
 {
   "name": "@venncity/cascade-delete",
-  "version": "1.2.40",
+  "version": "1.2.41",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@venncity/base-dao",
-  "version": "1.9.10",
+  "version": "1.9.11",
   "author": "Venn Engineering",
   "main": "src/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "dependencies": {
     "@graphql-codegen/core": "^1.9.1",
     "@graphql-codegen/typescript": "^1.9.1",
-    "@venncity/cascade-delete": "^1.2.40",
+    "@venncity/cascade-delete": "^1.2.41",
     "@venncity/errors": "^1.5.1",
     "@venncity/graphql-pagination-enforce": "^1.2.0",
     "@venncity/graphql-transformers": "^1.6.6",
