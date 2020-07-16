@@ -284,6 +284,13 @@ type Survey {
   deleted: Int!
 }
 
+enum SURVEY_RESPONSES {
+  VERY_HAPPY
+  HAPPY
+  SAD
+  VERY_SAD
+}
+
 type SurveyConnection {
   pageInfo: PageInfo!
   edges: [SurveyEdge]!
@@ -456,7 +463,7 @@ type SurveyQuestionPreviousValues {
 
 type SurveyQuestionResponse {
   id: ID!
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   question: SurveyQuestion!
   responderId: String
@@ -473,7 +480,7 @@ type SurveyQuestionResponseConnection {
 }
 
 input SurveyQuestionResponseCreateInput {
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   question: SurveyQuestionCreateOneWithoutResponsesInput!
   responderId: String
@@ -487,7 +494,7 @@ input SurveyQuestionResponseCreateManyWithoutQuestionInput {
 }
 
 input SurveyQuestionResponseCreateWithoutQuestionInput {
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   responderId: String
   deletedAt: DateTime
@@ -520,7 +527,7 @@ enum SurveyQuestionResponseOrderByInput {
 
 type SurveyQuestionResponsePreviousValues {
   id: ID!
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   responderId: String
   createdAt: DateTime!
@@ -544,20 +551,10 @@ input SurveyQuestionResponseScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
+  value: SURVEY_RESPONSES
+  value_not: SURVEY_RESPONSES
+  value_in: [SURVEY_RESPONSES!]
+  value_not_in: [SURVEY_RESPONSES!]
   comment: String
   comment_not: String
   comment_in: [String!]
@@ -642,7 +639,7 @@ input SurveyQuestionResponseSubscriptionWhereInput {
 }
 
 input SurveyQuestionResponseUpdateInput {
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   question: SurveyQuestionUpdateOneRequiredWithoutResponsesInput
   responderId: String
@@ -651,7 +648,7 @@ input SurveyQuestionResponseUpdateInput {
 }
 
 input SurveyQuestionResponseUpdateManyDataInput {
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   responderId: String
   deletedAt: DateTime
@@ -659,7 +656,7 @@ input SurveyQuestionResponseUpdateManyDataInput {
 }
 
 input SurveyQuestionResponseUpdateManyMutationInput {
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   responderId: String
   deletedAt: DateTime
@@ -684,7 +681,7 @@ input SurveyQuestionResponseUpdateManyWithWhereNestedInput {
 }
 
 input SurveyQuestionResponseUpdateWithoutQuestionDataInput {
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   responderId: String
   deletedAt: DateTime
@@ -717,20 +714,10 @@ input SurveyQuestionResponseWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
+  value: SURVEY_RESPONSES
+  value_not: SURVEY_RESPONSES
+  value_in: [SURVEY_RESPONSES!]
+  value_not_in: [SURVEY_RESPONSES!]
   comment: String
   comment_not: String
   comment_in: [String!]
@@ -1561,6 +1548,13 @@ export type SurveyQuestionsArgs = {
   last?: Maybe<Scalars['Int']>
 };
 
+export enum Survey_Responses {
+  VeryHappy = 'VERY_HAPPY',
+  Happy = 'HAPPY',
+  Sad = 'SAD',
+  VerySad = 'VERY_SAD'
+}
+
 export type SurveyConnection = {
    __typename?: 'SurveyConnection',
   pageInfo: PageInfo,
@@ -1753,7 +1747,7 @@ export type SurveyQuestionPreviousValues = {
 export type SurveyQuestionResponse = {
    __typename?: 'SurveyQuestionResponse',
   id: Scalars['ID'],
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   question: SurveyQuestion,
   responderId?: Maybe<Scalars['String']>,
@@ -1772,7 +1766,7 @@ export type SurveyQuestionResponseConnection = {
 };
 
 export type SurveyQuestionResponseCreateInput = {
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   question: SurveyQuestionCreateOneWithoutResponsesInput,
   responderId?: Maybe<Scalars['String']>,
@@ -1786,7 +1780,7 @@ export type SurveyQuestionResponseCreateManyWithoutQuestionInput = {
 };
 
 export type SurveyQuestionResponseCreateWithoutQuestionInput = {
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -1821,7 +1815,7 @@ export enum SurveyQuestionResponseOrderByInput {
 export type SurveyQuestionResponsePreviousValues = {
    __typename?: 'SurveyQuestionResponsePreviousValues',
   id: Scalars['ID'],
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   createdAt: Scalars['DateTime'],
@@ -1845,20 +1839,10 @@ export type SurveyQuestionResponseScalarWhereInput = {
   id_not_starts_with?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
   id_not_ends_with?: Maybe<Scalars['ID']>,
-  value?: Maybe<Scalars['String']>,
-  value_not?: Maybe<Scalars['String']>,
-  value_in?: Maybe<Array<Scalars['String']>>,
-  value_not_in?: Maybe<Array<Scalars['String']>>,
-  value_lt?: Maybe<Scalars['String']>,
-  value_lte?: Maybe<Scalars['String']>,
-  value_gt?: Maybe<Scalars['String']>,
-  value_gte?: Maybe<Scalars['String']>,
-  value_contains?: Maybe<Scalars['String']>,
-  value_not_contains?: Maybe<Scalars['String']>,
-  value_starts_with?: Maybe<Scalars['String']>,
-  value_not_starts_with?: Maybe<Scalars['String']>,
-  value_ends_with?: Maybe<Scalars['String']>,
-  value_not_ends_with?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
+  value_not?: Maybe<Survey_Responses>,
+  value_in?: Maybe<Array<Survey_Responses>>,
+  value_not_in?: Maybe<Array<Survey_Responses>>,
   comment?: Maybe<Scalars['String']>,
   comment_not?: Maybe<Scalars['String']>,
   comment_in?: Maybe<Array<Scalars['String']>>,
@@ -1944,7 +1928,7 @@ export type SurveyQuestionResponseSubscriptionWhereInput = {
 };
 
 export type SurveyQuestionResponseUpdateInput = {
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   question?: Maybe<SurveyQuestionUpdateOneRequiredWithoutResponsesInput>,
   responderId?: Maybe<Scalars['String']>,
@@ -1953,7 +1937,7 @@ export type SurveyQuestionResponseUpdateInput = {
 };
 
 export type SurveyQuestionResponseUpdateManyDataInput = {
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -1961,7 +1945,7 @@ export type SurveyQuestionResponseUpdateManyDataInput = {
 };
 
 export type SurveyQuestionResponseUpdateManyMutationInput = {
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -1986,7 +1970,7 @@ export type SurveyQuestionResponseUpdateManyWithWhereNestedInput = {
 };
 
 export type SurveyQuestionResponseUpdateWithoutQuestionDataInput = {
-  value?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -2019,20 +2003,10 @@ export type SurveyQuestionResponseWhereInput = {
   id_not_starts_with?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
   id_not_ends_with?: Maybe<Scalars['ID']>,
-  value?: Maybe<Scalars['String']>,
-  value_not?: Maybe<Scalars['String']>,
-  value_in?: Maybe<Array<Scalars['String']>>,
-  value_not_in?: Maybe<Array<Scalars['String']>>,
-  value_lt?: Maybe<Scalars['String']>,
-  value_lte?: Maybe<Scalars['String']>,
-  value_gt?: Maybe<Scalars['String']>,
-  value_gte?: Maybe<Scalars['String']>,
-  value_contains?: Maybe<Scalars['String']>,
-  value_not_contains?: Maybe<Scalars['String']>,
-  value_starts_with?: Maybe<Scalars['String']>,
-  value_not_starts_with?: Maybe<Scalars['String']>,
-  value_ends_with?: Maybe<Scalars['String']>,
-  value_not_ends_with?: Maybe<Scalars['String']>,
+  value?: Maybe<Survey_Responses>,
+  value_not?: Maybe<Survey_Responses>,
+  value_in?: Maybe<Array<Survey_Responses>>,
+  value_not_in?: Maybe<Array<Survey_Responses>>,
   comment?: Maybe<Scalars['String']>,
   comment_not?: Maybe<Scalars['String']>,
   comment_in?: Maybe<Array<Scalars['String']>>,
@@ -2672,7 +2646,7 @@ scalar Json
 
 type SurveyQuestionResponse {
   id: ID!
-  value: String
+  value: SURVEY_RESPONSES
   comment: String
   question: SurveyQuestion!
   responderId: String
@@ -2697,20 +2671,10 @@ input SurveyQuestionResponseWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
+  value: SURVEY_RESPONSES
+  value_not: SURVEY_RESPONSES
+  value_in: [SURVEY_RESPONSES!]
+  value_not_in: [SURVEY_RESPONSES!]
   comment: String
   comment_not: String
   comment_in: [String!]
@@ -2909,6 +2873,13 @@ input SurveyWhereInput {
   AND: [SurveyWhereInput!]
   OR: [SurveyWhereInput!]
   NOT: [SurveyWhereInput!]
+}
+
+enum SURVEY_RESPONSES {
+  VERY_HAPPY
+  HAPPY
+  SAD
+  VERY_SAD
 }
 \`;
 "
