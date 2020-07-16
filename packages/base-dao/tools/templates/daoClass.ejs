@@ -22,7 +22,7 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
     return this.entityDAO.<%= entityNameLowerFirstLetter %>ById(context, id);
   }
 
-  <%= entitiesNameLowerFirstLetter %>(context: any, args: openCrudSchema.Query<%= entitiesNameUpperFirstLetter %>Args): Promise<openCrudSchema.Query['<%= entitiesNameLowerFirstLetter %>']> {
+  <%= entitiesNameLowerFirstLetter %>(context: any, args: openCrudSchema.Query<%= entitiesNameUpperFirstLetter %>Args & { skipPagination?: boolean }): Promise<openCrudSchema.Query['<%= entitiesNameLowerFirstLetter %>']> {
     return this.entityDAO.<%= entitiesNameLowerFirstLetter %>(context, args);
   }
 

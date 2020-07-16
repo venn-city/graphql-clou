@@ -25,7 +25,7 @@ export default class SurveyDAO {
     return this.entityDAO.surveyById(context, id);
   }
 
-  surveys(context: any, args: openCrudSchema.QuerySurveysArgs): Promise<openCrudSchema.Query['surveys']> {
+  surveys(context: any, args: openCrudSchema.QuerySurveysArgs & { skipPagination?: boolean }): Promise<openCrudSchema.Query['surveys']> {
     return this.entityDAO.surveys(context, args);
   }
 
@@ -85,7 +85,7 @@ export default class SurveyQuestionDAO {
     return this.entityDAO.surveyQuestionById(context, id);
   }
 
-  surveyQuestions(context: any, args: openCrudSchema.QuerySurveyQuestionsArgs): Promise<openCrudSchema.Query['surveyQuestions']> {
+  surveyQuestions(context: any, args: openCrudSchema.QuerySurveyQuestionsArgs & { skipPagination?: boolean }): Promise<openCrudSchema.Query['surveyQuestions']> {
     return this.entityDAO.surveyQuestions(context, args);
   }
 
@@ -145,7 +145,7 @@ export default class SurveyQuestionResponseDAO {
     return this.entityDAO.surveyQuestionResponseById(context, id);
   }
 
-  surveyQuestionResponses(context: any, args: openCrudSchema.QuerySurveyQuestionResponsesArgs): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
+  surveyQuestionResponses(context: any, args: openCrudSchema.QuerySurveyQuestionResponsesArgs & { skipPagination?: boolean }): Promise<openCrudSchema.Query['surveyQuestionResponses']> {
     return this.entityDAO.surveyQuestionResponses(context, args);
   }
 
