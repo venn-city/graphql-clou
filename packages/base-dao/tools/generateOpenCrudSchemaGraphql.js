@@ -1,9 +1,7 @@
-const { generateCRUDSchema } = require('prisma-generate-schema');
-const { printSchema } = require('graphql');
+const generateCRUDSchema = require('@venncity/prisma-generate-schema');
 
 function generateOpenCrudSchemaGraphql(dataModel) {
-  const schema = generateCRUDSchema(dataModel, 'postgres');
-  return printSchema(schema);
+  return generateCRUDSchema.default(dataModel);
 }
 
 module.exports = generateOpenCrudSchemaGraphql;

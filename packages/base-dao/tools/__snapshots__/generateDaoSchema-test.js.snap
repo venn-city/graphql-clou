@@ -252,13 +252,13 @@ type PageInfo {
 
 type Query {
   survey(where: SurveyWhereUniqueInput!): Survey
-  surveys(where: SurveyWhereInput, orderBy: SurveyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Survey]!
+  surveys(where: SurveyWhereInput, orderBy: SurveyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Survey!]!
   surveysConnection(where: SurveyWhereInput, orderBy: SurveyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SurveyConnection!
   surveyQuestion(where: SurveyQuestionWhereUniqueInput!): SurveyQuestion
-  surveyQuestions(where: SurveyQuestionWhereInput, orderBy: SurveyQuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestion]!
+  surveyQuestions(where: SurveyQuestionWhereInput, orderBy: SurveyQuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestion!]!
   surveyQuestionsConnection(where: SurveyQuestionWhereInput, orderBy: SurveyQuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SurveyQuestionConnection!
   surveyQuestionResponse(where: SurveyQuestionResponseWhereUniqueInput!): SurveyQuestionResponse
-  surveyQuestionResponses(where: SurveyQuestionResponseWhereInput, orderBy: SurveyQuestionResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestionResponse]!
+  surveyQuestionResponses(where: SurveyQuestionResponseWhereInput, orderBy: SurveyQuestionResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SurveyQuestionResponse!]!
   surveyQuestionResponsesConnection(where: SurveyQuestionResponseWhereInput, orderBy: SurveyQuestionResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SurveyQuestionResponseConnection!
   node(id: ID!): Node
 }
