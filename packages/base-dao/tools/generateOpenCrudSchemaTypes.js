@@ -8,6 +8,13 @@ function generateOpenCrudSchemaTypes(dataModel) {
 
   return codegen({
     schema,
+    config: {
+      namingConvention: {
+        typeNames: 'change-case#pascalCase',
+        enumValues: 'change-case#upperCase',
+        transformUnderscore: true
+      }
+    },
     plugins: [{ typescript: {} }],
     documents: [],
     pluginMap: {

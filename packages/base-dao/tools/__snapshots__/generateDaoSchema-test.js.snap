@@ -1382,9 +1382,9 @@ export type MutationDeleteManySurveyQuestionResponsesArgs = {
 };
 
 export enum MutationType {
-  Created = 'CREATED',
-  Updated = 'UPDATED',
-  Deleted = 'DELETED'
+  CREATED = 'CREATED',
+  UPDATED = 'UPDATED',
+  DELETED = 'DELETED'
 }
 
 export type Node = {
@@ -1548,11 +1548,11 @@ export type SurveyQuestionsArgs = {
   last?: Maybe<Scalars['Int']>
 };
 
-export enum Survey_Responses {
-  VeryHappy = 'VERY_HAPPY',
-  Happy = 'HAPPY',
-  Sad = 'SAD',
-  VerySad = 'VERY_SAD'
+export enum SurveyResponses {
+  VERY_HAPPY = 'VERY_HAPPY',
+  HAPPY = 'HAPPY',
+  SAD = 'SAD',
+  VERY_SAD = 'VERY_SAD'
 }
 
 export type SurveyConnection = {
@@ -1597,28 +1597,28 @@ export type SurveyEdge = {
 };
 
 export enum SurveyOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  DescriptionAsc = 'description_ASC',
-  DescriptionDesc = 'description_DESC',
-  EnabledAsc = 'enabled_ASC',
-  EnabledDesc = 'enabled_DESC',
-  IsAnonymousAsc = 'isAnonymous_ASC',
-  IsAnonymousDesc = 'isAnonymous_DESC',
-  HoodIdAsc = 'hoodId_ASC',
-  HoodIdDesc = 'hoodId_DESC',
-  CreatedAtAsc = 'createdAt_ASC',
-  CreatedAtDesc = 'createdAt_DESC',
-  UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC',
-  DeletedAtAsc = 'deletedAt_ASC',
-  DeletedAtDesc = 'deletedAt_DESC',
-  DeletedAsc = 'deleted_ASC',
-  DeletedDesc = 'deleted_DESC'
+  ID_ASC = 'id_ASC',
+  ID_DESC = 'id_DESC',
+  NAME_ASC = 'name_ASC',
+  NAME_DESC = 'name_DESC',
+  TITLE_ASC = 'title_ASC',
+  TITLE_DESC = 'title_DESC',
+  DESCRIPTION_ASC = 'description_ASC',
+  DESCRIPTION_DESC = 'description_DESC',
+  ENABLED_ASC = 'enabled_ASC',
+  ENABLED_DESC = 'enabled_DESC',
+  ISANONYMOUS_ASC = 'isAnonymous_ASC',
+  ISANONYMOUS_DESC = 'isAnonymous_DESC',
+  HOODID_ASC = 'hoodId_ASC',
+  HOODID_DESC = 'hoodId_DESC',
+  CREATEDAT_ASC = 'createdAt_ASC',
+  CREATEDAT_DESC = 'createdAt_DESC',
+  UPDATEDAT_ASC = 'updatedAt_ASC',
+  UPDATEDAT_DESC = 'updatedAt_DESC',
+  DELETEDAT_ASC = 'deletedAt_ASC',
+  DELETEDAT_DESC = 'deletedAt_DESC',
+  DELETED_ASC = 'deleted_ASC',
+  DELETED_DESC = 'deleted_DESC'
 }
 
 export type SurveyPreviousValues = {
@@ -1714,22 +1714,22 @@ export type SurveyQuestionEdge = {
 };
 
 export enum SurveyQuestionOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  TextAsc = 'text_ASC',
-  TextDesc = 'text_DESC',
-  OptionsAsc = 'options_ASC',
-  OptionsDesc = 'options_DESC',
-  AddCommentFieldAsc = 'addCommentField_ASC',
-  AddCommentFieldDesc = 'addCommentField_DESC',
-  CreatedAtAsc = 'createdAt_ASC',
-  CreatedAtDesc = 'createdAt_DESC',
-  UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC',
-  DeletedAtAsc = 'deletedAt_ASC',
-  DeletedAtDesc = 'deletedAt_DESC',
-  DeletedAsc = 'deleted_ASC',
-  DeletedDesc = 'deleted_DESC'
+  ID_ASC = 'id_ASC',
+  ID_DESC = 'id_DESC',
+  TEXT_ASC = 'text_ASC',
+  TEXT_DESC = 'text_DESC',
+  OPTIONS_ASC = 'options_ASC',
+  OPTIONS_DESC = 'options_DESC',
+  ADDCOMMENTFIELD_ASC = 'addCommentField_ASC',
+  ADDCOMMENTFIELD_DESC = 'addCommentField_DESC',
+  CREATEDAT_ASC = 'createdAt_ASC',
+  CREATEDAT_DESC = 'createdAt_DESC',
+  UPDATEDAT_ASC = 'updatedAt_ASC',
+  UPDATEDAT_DESC = 'updatedAt_DESC',
+  DELETEDAT_ASC = 'deletedAt_ASC',
+  DELETEDAT_DESC = 'deletedAt_DESC',
+  DELETED_ASC = 'deleted_ASC',
+  DELETED_DESC = 'deleted_DESC'
 }
 
 export type SurveyQuestionPreviousValues = {
@@ -1747,7 +1747,7 @@ export type SurveyQuestionPreviousValues = {
 export type SurveyQuestionResponse = {
    __typename?: 'SurveyQuestionResponse',
   id: Scalars['ID'],
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   question: SurveyQuestion,
   responderId?: Maybe<Scalars['String']>,
@@ -1766,7 +1766,7 @@ export type SurveyQuestionResponseConnection = {
 };
 
 export type SurveyQuestionResponseCreateInput = {
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   question: SurveyQuestionCreateOneWithoutResponsesInput,
   responderId?: Maybe<Scalars['String']>,
@@ -1780,7 +1780,7 @@ export type SurveyQuestionResponseCreateManyWithoutQuestionInput = {
 };
 
 export type SurveyQuestionResponseCreateWithoutQuestionInput = {
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -1794,28 +1794,28 @@ export type SurveyQuestionResponseEdge = {
 };
 
 export enum SurveyQuestionResponseOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  ValueAsc = 'value_ASC',
-  ValueDesc = 'value_DESC',
-  CommentAsc = 'comment_ASC',
-  CommentDesc = 'comment_DESC',
-  ResponderIdAsc = 'responderId_ASC',
-  ResponderIdDesc = 'responderId_DESC',
-  CreatedAtAsc = 'createdAt_ASC',
-  CreatedAtDesc = 'createdAt_DESC',
-  UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC',
-  DeletedAtAsc = 'deletedAt_ASC',
-  DeletedAtDesc = 'deletedAt_DESC',
-  DeletedAsc = 'deleted_ASC',
-  DeletedDesc = 'deleted_DESC'
+  ID_ASC = 'id_ASC',
+  ID_DESC = 'id_DESC',
+  VALUE_ASC = 'value_ASC',
+  VALUE_DESC = 'value_DESC',
+  COMMENT_ASC = 'comment_ASC',
+  COMMENT_DESC = 'comment_DESC',
+  RESPONDERID_ASC = 'responderId_ASC',
+  RESPONDERID_DESC = 'responderId_DESC',
+  CREATEDAT_ASC = 'createdAt_ASC',
+  CREATEDAT_DESC = 'createdAt_DESC',
+  UPDATEDAT_ASC = 'updatedAt_ASC',
+  UPDATEDAT_DESC = 'updatedAt_DESC',
+  DELETEDAT_ASC = 'deletedAt_ASC',
+  DELETEDAT_DESC = 'deletedAt_DESC',
+  DELETED_ASC = 'deleted_ASC',
+  DELETED_DESC = 'deleted_DESC'
 }
 
 export type SurveyQuestionResponsePreviousValues = {
    __typename?: 'SurveyQuestionResponsePreviousValues',
   id: Scalars['ID'],
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   createdAt: Scalars['DateTime'],
@@ -1839,10 +1839,10 @@ export type SurveyQuestionResponseScalarWhereInput = {
   id_not_starts_with?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
   id_not_ends_with?: Maybe<Scalars['ID']>,
-  value?: Maybe<Survey_Responses>,
-  value_not?: Maybe<Survey_Responses>,
-  value_in?: Maybe<Array<Survey_Responses>>,
-  value_not_in?: Maybe<Array<Survey_Responses>>,
+  value?: Maybe<SurveyResponses>,
+  value_not?: Maybe<SurveyResponses>,
+  value_in?: Maybe<Array<SurveyResponses>>,
+  value_not_in?: Maybe<Array<SurveyResponses>>,
   comment?: Maybe<Scalars['String']>,
   comment_not?: Maybe<Scalars['String']>,
   comment_in?: Maybe<Array<Scalars['String']>>,
@@ -1928,7 +1928,7 @@ export type SurveyQuestionResponseSubscriptionWhereInput = {
 };
 
 export type SurveyQuestionResponseUpdateInput = {
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   question?: Maybe<SurveyQuestionUpdateOneRequiredWithoutResponsesInput>,
   responderId?: Maybe<Scalars['String']>,
@@ -1937,7 +1937,7 @@ export type SurveyQuestionResponseUpdateInput = {
 };
 
 export type SurveyQuestionResponseUpdateManyDataInput = {
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -1945,7 +1945,7 @@ export type SurveyQuestionResponseUpdateManyDataInput = {
 };
 
 export type SurveyQuestionResponseUpdateManyMutationInput = {
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -1970,7 +1970,7 @@ export type SurveyQuestionResponseUpdateManyWithWhereNestedInput = {
 };
 
 export type SurveyQuestionResponseUpdateWithoutQuestionDataInput = {
-  value?: Maybe<Survey_Responses>,
+  value?: Maybe<SurveyResponses>,
   comment?: Maybe<Scalars['String']>,
   responderId?: Maybe<Scalars['String']>,
   deletedAt?: Maybe<Scalars['DateTime']>,
@@ -2003,10 +2003,10 @@ export type SurveyQuestionResponseWhereInput = {
   id_not_starts_with?: Maybe<Scalars['ID']>,
   id_ends_with?: Maybe<Scalars['ID']>,
   id_not_ends_with?: Maybe<Scalars['ID']>,
-  value?: Maybe<Survey_Responses>,
-  value_not?: Maybe<Survey_Responses>,
-  value_in?: Maybe<Array<Survey_Responses>>,
-  value_not_in?: Maybe<Array<Survey_Responses>>,
+  value?: Maybe<SurveyResponses>,
+  value_not?: Maybe<SurveyResponses>,
+  value_in?: Maybe<Array<SurveyResponses>>,
+  value_not_in?: Maybe<Array<SurveyResponses>>,
   comment?: Maybe<Scalars['String']>,
   comment_not?: Maybe<Scalars['String']>,
   comment_in?: Maybe<Array<Scalars['String']>>,
