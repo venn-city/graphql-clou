@@ -1402,13 +1402,13 @@ export type PageInfo = {
 export type Query = {
    __typename?: 'Query',
   survey?: Maybe<Survey>,
-  surveys: Array<Maybe<Survey>>,
+  surveys: Array<Survey>,
   surveysConnection: SurveyConnection,
   surveyQuestion?: Maybe<SurveyQuestion>,
-  surveyQuestions: Array<Maybe<SurveyQuestion>>,
+  surveyQuestions: Array<SurveyQuestion>,
   surveyQuestionsConnection: SurveyQuestionConnection,
   surveyQuestionResponse?: Maybe<SurveyQuestionResponse>,
-  surveyQuestionResponses: Array<Maybe<SurveyQuestionResponse>>,
+  surveyQuestionResponses: Array<SurveyQuestionResponse>,
   surveyQuestionResponsesConnection: SurveyQuestionResponseConnection,
   node?: Maybe<Node>,
 };

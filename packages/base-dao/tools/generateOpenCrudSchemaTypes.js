@@ -1,4 +1,4 @@
-const { parseInternalTypes, generateCRUDSchemaFromInternalISDL } = require('prisma-generate-schema');
+const { parseInternalTypes, generateCRUDSchemaFromInternalISDL } = require('@venncity/prisma-generate-schema');
 const { plugin } = require('@graphql-codegen/typescript');
 const { codegen } = require('@graphql-codegen/core');
 const { printSchema, parse, GraphQLID, GraphQLNonNull } = require('graphql');
