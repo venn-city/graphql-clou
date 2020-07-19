@@ -1,6 +1,6 @@
 const { lowerFirst, upperFirst } = require('lodash');
 const pluralize = require('pluralize');
-const { parseInternalTypes } = require('prisma-generate-schema');
+const { parseInternalTypes } = require('@venncity/prisma-generate-schema');
 const ejs = require('ejs');
 const path = require('path');
 

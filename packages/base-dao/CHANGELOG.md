@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0-alpha.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.9.13...@venncity/base-dao@1.10.0-alpha.0) (2020-07-17)
+
+**Note:** Version bump only for package @venncity/base-dao
+
+
+
+
+
 ## [1.9.13](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.9.12...@venncity/base-dao@1.9.13) (2020-07-16)
 
 **Note:** Version bump only for package @venncity/base-dao

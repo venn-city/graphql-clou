@@ -15,6 +15,13 @@ enum OPERATION {
   DISCONNECT_DELETE
 }
 
+enum SURVEY_RESPONSES {
+  VERY_HAPPY
+  HAPPY
+  SAD
+  VERY_SAD
+}
+
 type Survey @pgTable(name:"surveys") {
   id:                     ID!                     @unique
   name:                   String                  @pgColumn(name: "name") @unique
@@ -45,7 +52,7 @@ type SurveyQuestion @pgTable(name:"survey_questions") {
 
 type SurveyQuestionResponse @pgTable(name:"survey_question_responses") {
   id:                     ID!                     @unique
-  value:                  String                  @pgColumn(name: "value")
+  value:                  SURVEY_RESPONSES        @pgColumn(name: "value")
   comment:                String                  @pgColumn(name: "comment")
   question:               SurveyQuestion!         @pgRelation(column: "survey_question_id")
   responderId:            String                  @pgColumn(name: "responder_id")
