@@ -56,6 +56,10 @@ export default class SurveyDAO {
   surveysConnection(parent: any, args: openCrudSchema.QuerySurveysConnectionArgs, context: any): Promise<openCrudSchema.Query['surveysConnection']> {
     return this.entityDAO.surveysConnection(parent, args, context);
   }
+
+  getHooks(): any {
+    return this.entityDAO.getHooks();
+  }
 }
 "
 `;
@@ -116,6 +120,10 @@ export default class SurveyQuestionDAO {
   surveyQuestionsConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionsConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionsConnection']> {
     return this.entityDAO.surveyQuestionsConnection(parent, args, context);
   }
+
+  getHooks(): any {
+    return this.entityDAO.getHooks();
+  }
 }
 "
 `;
@@ -175,6 +183,10 @@ export default class SurveyQuestionResponseDAO {
 
   surveyQuestionResponsesConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
     return this.entityDAO.surveyQuestionResponsesConnection(parent, args, context);
+  }
+
+  getHooks(): any {
+    return this.entityDAO.getHooks();
   }
 }
 "

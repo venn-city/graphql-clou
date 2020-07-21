@@ -53,4 +53,8 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
   <%= entitiesNameLowerFirstLetter %>Connection(parent: any, args: openCrudSchema.Query<%= entitiesNameUpperFirstLetter %>ConnectionArgs, context: any): Promise<openCrudSchema.Query['<%= entitiesNameLowerFirstLetter %>Connection']> {
     return this.entityDAO.<%= entitiesNameLowerFirstLetter %>Connection(parent, args, context);
   }
+
+  getHooks(): any {
+    return this.entityDAO.getHooks();
+  }
 }
