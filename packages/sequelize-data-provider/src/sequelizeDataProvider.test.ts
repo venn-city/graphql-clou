@@ -369,12 +369,12 @@ describe('sequelizeDataProvider', () => {
         expect(fetchedMinistriesDESC).toHaveLength(3);
 
         // default order is id_ASC
-        const fetchedMinistriedDefaultOrderBy = await sequelizeDataProvider.getAllEntities('Ministry', {
+        const fetchedMinistriesDefaultOrderBy = await sequelizeDataProvider.getAllEntities('Ministry', {
           where: { government: { ministries_some: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } }
         });
-        expect(fetchedMinistriedDefaultOrderBy).toHaveLength(3);
+        expect(fetchedMinistriesDefaultOrderBy).toHaveLength(3);
 
-        expect(fetchedMinistriesDESC.reverse()).toEqual(fetchedMinistriedDefaultOrderBy);
+        expect(fetchedMinistriesDESC.reverse()).toEqual(fetchedMinistriesDefaultOrderBy);
       });
     });
 
@@ -556,22 +556,22 @@ describe('sequelizeDataProvider', () => {
       const ministry2Name = hacker.phrase();
       const ministry3Name = hacker.phrase();
       const ministry4Name = hacker.phrase();
-      const minsitry1 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry1Name });
-      const minsitry2 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry2Name });
-      const minsitry3 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry3Name });
-      const minsitry4 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry4Name });
+      const nestedMinistry1 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry1Name });
+      const nestedMinistry2 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry2Name });
+      const nestedMinistry3 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry3Name });
+      const nestedMinistry4 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry4Name });
 
       const createdGovernments = await sequelizeDataProvider.createManyEntities('Government', [
         {
           name: government1Name,
           ministries: {
-            connect: [{ id: minsitry1.id }, { id: minsitry2.id }]
+            connect: [{ id: nestedMinistry1.id }, { id: nestedMinistry2.id }]
           }
         },
         {
           name: government2Name,
           ministries: {
-            connect: [{ id: minsitry3.id }, { id: minsitry4.id }]
+            connect: [{ id: nestedMinistry3.id }, { id: nestedMinistry4.id }]
           }
         }
       ]);
@@ -689,8 +689,8 @@ describe('sequelizeDataProvider', () => {
       const createdGovernmentName = hacker.phrase();
       const updatedGovernmentName = hacker.phrase();
       const anotherGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
-      const minsitry = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
-      const minsitry2 = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
+      const nestedMinistry = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
+      const nestedMinistry2 = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
 
       // Update with connect.
       const updatedGovernmentWithMinistries = await sequelizeDataProvider.updateEntity(
@@ -698,7 +698,7 @@ describe('sequelizeDataProvider', () => {
         {
           name: updatedGovernmentName,
           ministries: {
-            connect: [{ id: minsitry.id }, { id: minsitry2.id }]
+            connect: [{ id: nestedMinistry.id }, { id: nestedMinistry2.id }]
           }
         },
         {
@@ -706,7 +706,7 @@ describe('sequelizeDataProvider', () => {
         }
       );
       const ministryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', anotherGovernment.id, 'ministries');
-      expect(ministryIds.sort()).toEqual([minsitry.id, minsitry2.id].sort());
+      expect(ministryIds.sort()).toEqual([nestedMinistry.id, nestedMinistry2.id].sort());
       expect(updatedGovernmentWithMinistries).toMatchObject({
         name: updatedGovernmentName,
         createdAt: updatedGovernmentWithMinistries.createdAt,
@@ -721,7 +721,7 @@ describe('sequelizeDataProvider', () => {
         {
           name: updatedGovernmentName,
           ministries: {
-            disconnect: [{ id: minsitry.id }, { id: minsitry2.id }]
+            disconnect: [{ id: nestedMinistry.id }, { id: nestedMinistry2.id }]
           }
         },
         {
