@@ -38,7 +38,7 @@ jobs:
   test:
     working_directory: ~/repo
     docker:
-      - image: venncity/circleci:10-0.1.17
+      - image: venncity/circleci
       - image: kartoza/postgis:11.0-2.5
         environment:
           POSTGRES_DB: venn
