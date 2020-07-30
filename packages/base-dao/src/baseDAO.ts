@@ -81,17 +81,13 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     transformComputedFieldsWhereArguments,
     // e.g unitById
     [GET_ENTITY_BY_ID]: async (context, where) => {
-      // TODO Verify with Mark, getEntityById takes only two arguments
-      // @ts-ignore
-      const fetchedEntity = await getEntityById(context, where, hooks);
+      const fetchedEntity = await getEntityById(context, where);
       return fetchedEntity;
     },
     [GET_ENTITY]: async (context, where, info) => {
       let fetchedEntity;
       if (isFetchingEntityById(where)) {
-        // TODO Verify with Mark, getEntityById takes only two arguments
-        // @ts-ignore
-        fetchedEntity = await getEntityById(context, where.id, hooks);
+        fetchedEntity = await getEntityById(context, where.id);
         return fetchedEntity;
       }
       const whereInputName = getQueryWhereInputName(context, GET_ENTITY);
@@ -125,6 +121,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       };
       enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME, skipPagination);
 
+      // TODO: if getting by only by ids... id_in: [] => call GET_ENTITIES_BY_IDS_FUNCTION_NAME
       const fetchedEntities = await dataProvider.getAllEntities(entityName, transformedArgs);
       const entitiesThatUserCanAccess: any = [];
       const entitiesThatUserCannotAccess: any = [];
@@ -202,15 +199,17 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
 
       data = await hooks.preSave(data, entitiesToUpdate, context);
       let updatedEntity = await dataProvider.updateEntity(entityName, data, transformedWhere);
-      dataLoader.clear(updatedEntity.id);
-      updatedEntity = await hooks.postFetch(updatedEntity);
-      await publishCrudEvent({
-        entityName,
-        operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
-        entityBefore: await hooks.postFetch(entitiesToUpdate[0]),
-        entityAfter: updatedEntity,
-        context
-      });
+      if (updatedEntity) {
+        dataLoader.clear(updatedEntity.id);
+        updatedEntity = await hooks.postFetch(updatedEntity);
+        await publishCrudEvent({
+          entityName,
+          operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
+          entityBefore: await hooks.postFetch(entitiesToUpdate[0]),
+          entityAfter: updatedEntity,
+          context
+        });
+      }
       return updatedEntity;
     },
     // e.g updateManyUnits
