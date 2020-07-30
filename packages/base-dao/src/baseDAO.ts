@@ -1,14 +1,21 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
-/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
+/* eslint @typescript-eslint/no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
 import DataLoader from 'dataloader';
 import _ from 'lodash';
+import hash from 'object-hash';
 import util from 'util';
 import async from 'async';
 import pluralize from 'pluralize';
 import openCrudSchema from '@venncity/opencrud-schema-provider';
 import { transformComputedFieldsWhereArguments } from '@venncity/graphql-transformers';
 import { cascadeDelete } from '@venncity/cascade-delete';
-import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
+import {
+  sequelizeDataProvider as dataProvider,
+  loadSingleRelatedEntities,
+  loadRelatedEntities,
+  GetRelatedEntitiesArgs,
+  GetRelatedEntityArgs
+} from '@venncity/sequelize-data-provider';
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 
 const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
@@ -45,7 +52,19 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   const { READ, CREATE, DELETE } = supportedActions;
 
   const authTypeName = _.upperFirst(entityName);
-  const dataLoader = new DataLoader(getEntitiesByIdsInternal);
+  const dataLoaderById = new DataLoader(getEntitiesByIdsInternal);
+  const dataLoaderForSingleRelatedEntity: DataLoader<GetRelatedEntityArgs, any> = new DataLoader(
+    keys => loadSingleRelatedEntities(entityName, keys),
+    {
+      cacheKeyFn: key => hash(key)
+    }
+  );
+  const dataLoaderForRelatedEntities = new DataLoader<GetRelatedEntitiesArgs, any>(
+    keys => loadRelatedEntities(entityName, keys, dataProvider.getRelatedEntities),
+    {
+      cacheKeyFn: key => hash(key)
+    }
+  );
   hooks = {
     preCreate: async entity => {
       return entity;
@@ -56,10 +75,18 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
 
   async function getEntityById(context, entityId) {
     const auth = await buildAuth(context, hooks);
-    const fetchedEntity = await dataLoader.load(entityId);
+    const fetchedEntity = await dataLoaderById.load(entityId);
     let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, fetchedEntity, hooks, authTypeName);
     entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields);
     return entityWithOnlyAuthorizedFields;
+  }
+
+  async function getAllEntitiesInternal(args) {
+    const fetchIsExactlyByIdIn = Object.keys(args).length === 1 && args.where && Object.keys(args.where).length === 1 && args.where.id_in;
+    if (fetchIsExactlyByIdIn) {
+      return dataLoaderById.loadMany(args.where.id_in);
+    }
+    return dataProvider.getAllEntities(entityName, args);
   }
 
   async function getEntitiesByIdsInternal(entityIds) {
@@ -76,22 +103,24 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     return whereKeys.length === 1 && whereKeys[0] === 'id';
   }
 
+  function clearLoaders(entityToDelete) {
+    dataLoaderById.clear(entityToDelete.id);
+    dataLoaderForSingleRelatedEntity.clearAll();
+    dataLoaderForRelatedEntities.clearAll();
+  }
+
   return {
     computedWhereArgumentsTransformation: hooks.computedWhereArgumentsTransformation,
     transformComputedFieldsWhereArguments,
     // e.g unitById
     [GET_ENTITY_BY_ID]: async (context, where) => {
-      // TODO Verify with Mark, getEntityById takes only two arguments
-      // @ts-ignore
-      const fetchedEntity = await getEntityById(context, where, hooks);
+      const fetchedEntity = await getEntityById(context, where);
       return fetchedEntity;
     },
     [GET_ENTITY]: async (context, where, info) => {
       let fetchedEntity;
       if (isFetchingEntityById(where)) {
-        // TODO Verify with Mark, getEntityById takes only two arguments
-        // @ts-ignore
-        fetchedEntity = await getEntityById(context, where.id, hooks);
+        fetchedEntity = await getEntityById(context, where.id);
         return fetchedEntity;
       }
       const whereInputName = getQueryWhereInputName(context, GET_ENTITY);
@@ -125,7 +154,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       };
       enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME, skipPagination);
 
-      const fetchedEntities = await dataProvider.getAllEntities(entityName, transformedArgs);
+      const fetchedEntities = await getAllEntitiesInternal(transformedArgs);
       const entitiesThatUserCanAccess: any = [];
       const entitiesThatUserCannotAccess: any = [];
       for (const fetchedEntity of fetchedEntities) {
@@ -144,7 +173,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     // e.g unitsByIds
     [GET_ENTITIES_BY_IDS_FUNCTION_NAME]: async (context, entityIds) => {
       const auth = await buildAuth(context, hooks);
-      const entities = await dataLoader.loadMany(entityIds);
+      const entities = await dataLoaderById.loadMany(entityIds);
       const entitiesWithOnlyAuthorizedFields: any = [];
       for (const entity of entities) {
         let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, entity, hooks, authTypeName);
@@ -202,15 +231,17 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
 
       data = await hooks.preSave(data, entitiesToUpdate, context);
       let updatedEntity = await dataProvider.updateEntity(entityName, data, transformedWhere);
-      dataLoader.clear(updatedEntity.id);
-      updatedEntity = await hooks.postFetch(updatedEntity);
-      await publishCrudEvent({
-        entityName,
-        operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
-        entityBefore: await hooks.postFetch(entitiesToUpdate[0]),
-        entityAfter: updatedEntity,
-        context
-      });
+      if (updatedEntity) {
+        clearLoaders(updatedEntity);
+        updatedEntity = await hooks.postFetch(updatedEntity);
+        await publishCrudEvent({
+          entityName,
+          operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
+          entityBefore: await hooks.postFetch(entitiesToUpdate[0]),
+          entityAfter: updatedEntity,
+          context
+        });
+      }
       return updatedEntity;
     },
     // e.g updateManyUnits
@@ -236,10 +267,10 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       entitiesToUpdate = await asyncMap(entitiesToUpdate, hooks.postFetch);
       data = await hooks.preSave(data, entitiesToUpdate, context);
       await dataProvider.updateManyEntities(entityName, data, transformedWhere);
-      const updatedEntities = await dataProvider.getAllEntities(entityName, { where: transformedWhere });
+      const updatedEntities = await getAllEntitiesInternal({ where: transformedWhere });
 
       for (const originalEntity of entitiesToUpdate) {
-        dataLoader.clear(originalEntity.id);
+        clearLoaders(originalEntity);
         let updatedEntity = updatedEntities.find(entity => entity.id === originalEntity.id);
         updatedEntity = await hooks.postFetch(updatedEntity);
         await publishCrudEvent({
@@ -276,7 +307,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       let deletedEntity = await dataProvider.deleteEntity(entityName, transformedWhere);
       deletedEntity = await hooks.postFetch(deletedEntity);
       if (deletedEntity) {
-        dataLoader.clear(deletedEntity.id);
+        clearLoaders(deletedEntity);
         await publishCrudEvent({
           entityName,
           operation: CRUD_TOPIC_OPERATION_NAMES.DELETED,
@@ -297,7 +328,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         computedWhereArgumentsTransformation,
         context
       });
-      let entitiesToDelete = await dataProvider.getAllEntities(entityName, { where: transformedWhere });
+      let entitiesToDelete = await getAllEntitiesInternal({ where: transformedWhere });
 
       entitiesToDelete = await asyncMap(entitiesToDelete, hooks.postFetch);
       for (const entityToDelete of entitiesToDelete) {
@@ -310,7 +341,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const deleteEntities = await dataProvider.deleteManyEntities(entityName, transformedWhere);
 
       for (const entityToDelete of entitiesToDelete) {
-        dataLoader.clear(entityToDelete.id);
+        clearLoaders(entityToDelete);
         await publishCrudEvent({
           entityName,
           operation: CRUD_TOPIC_OPERATION_NAMES.DELETED,
@@ -334,6 +365,21 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         where: transformedWhere
       };
       return dataProvider.getEntitiesConnection(entityName, transformedArgs);
+    },
+    getRelatedEntityId: async (originalEntityId: string, relationEntityName: string) => {
+      const relation = await dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName });
+      return relation && relation.id;
+    },
+    getRelatedEntity: async (originalEntityId: string, relationEntityName: string) => {
+      return dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName });
+    },
+    getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+      const relations = await dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args });
+      return relations && (Array.isArray(relations) ? _.without(relations, undefined).map(relation => relation.id) : relations.id);
+    },
+    getRelatedEntities: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+      const relatedEntities = await dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args });
+      return _.without(relatedEntities, undefined);
     },
     getHooks: () => {
       // need to expose for cascade delete

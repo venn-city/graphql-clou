@@ -8,23 +8,23 @@ function buildAuthContext(context) {
 }
 
 // eslint-disable-next-line no-unused-vars
-async function getAuthDataFromDB(context, ministryId) {
+async function getAuthDataFromDB(context, ministerId) {
   return {};
 }
 
-function createMinistryDAO() {
-  const ministryDAO = baseDAO.createEntityDAO({ entityName: 'ministry', hooks, daoAuth, publishCrudEvent });
+function createMinisterDAO() {
+  const ministerDAO = baseDAO.createEntityDAO({ entityName: 'minister', hooks, daoAuth, publishCrudEvent });
   return {
-    ...ministryDAO
+    ...ministerDAO
   };
 }
 
-async function preSave(ministry) {
-  return ministry;
+async function preSave(minister) {
+  return minister;
 }
 
-async function postFetch(ministry) {
-  return ministry;
+async function postFetch(minister) {
+  return minister;
 }
 
 // eslint-disable-next-line no-unused-vars,no-empty-function
@@ -40,4 +40,4 @@ const hooks = {
   }
 };
 
-export default createMinistryDAO;
+export default createMinisterDAO;

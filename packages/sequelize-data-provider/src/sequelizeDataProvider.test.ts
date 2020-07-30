@@ -1,8 +1,9 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
 import { hacker, random } from 'faker';
 import { omit } from 'lodash';
 import sequelizeModel from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
+import { loadSingleRelatedEntities, loadRelatedEntities } from './batchDataProvider';
 import models from '../../../test/model';
 
 sequelizeModel.sq.init(models);
@@ -81,7 +82,6 @@ describe('sequelizeDataProvider', () => {
   let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
-  // @ts-ignore
   let vote4;
   const voteName4 = `Make war${randomNumber}`;
   const voteBallot4 = 'ABSTAIN';
@@ -369,12 +369,12 @@ describe('sequelizeDataProvider', () => {
         expect(fetchedMinistriesDESC).toHaveLength(3);
 
         // default order is id_ASC
-        const fetchedMinistriedDefaultOrderBy = await sequelizeDataProvider.getAllEntities('Ministry', {
+        const fetchedMinistriesDefaultOrderBy = await sequelizeDataProvider.getAllEntities('Ministry', {
           where: { government: { ministries_some: { name_ends_with: `re${randomNumber}` }, name: governmentName1 } }
         });
-        expect(fetchedMinistriedDefaultOrderBy).toHaveLength(3);
+        expect(fetchedMinistriesDefaultOrderBy).toHaveLength(3);
 
-        expect(fetchedMinistriesDESC.reverse()).toEqual(fetchedMinistriedDefaultOrderBy);
+        expect(fetchedMinistriesDESC.reverse()).toEqual(fetchedMinistriesDefaultOrderBy);
       });
     });
 
@@ -531,6 +531,146 @@ describe('sequelizeDataProvider', () => {
     });
   });
 
+  describe('batchDataProvider', () => {
+    describe('loadSingleRelatedEntities', () => {
+      test('loadSingleRelatedEntities one key', async () => {
+        const fetchedGovernments = await loadSingleRelatedEntities('Ministry', [
+          { originalEntityId: ministry1.id, relationEntityName: 'government' }
+        ]);
+        const fetchedGovernmentIds = fetchedGovernments.map(g => g.id);
+        expect(fetchedGovernmentIds).toEqual([government1.id]);
+      });
+
+      test('loadSingleRelatedEntities one missing key', async () => {
+        const fetchedGovernments = await loadSingleRelatedEntities('Ministry', [
+          { originalEntityId: 'ishouldntexist999', relationEntityName: 'government' }
+        ]);
+        expect(fetchedGovernments).toEqual([undefined]);
+      });
+
+      test('loadSingleRelatedEntities multiple keys', async () => {
+        const [relatedGovernment1, relatedMinister1, relatedGovernment2, relatedMinister3, relatedGovernment3] = await loadSingleRelatedEntities(
+          'Ministry',
+          [
+            { originalEntityId: ministry1.id, relationEntityName: 'government' },
+            { originalEntityId: ministry1.id, relationEntityName: 'minister' },
+            { originalEntityId: ministry2.id, relationEntityName: 'government' },
+            { originalEntityId: ministry3.id, relationEntityName: 'minister' },
+            { originalEntityId: ministry3.id, relationEntityName: 'government' }
+          ]
+        );
+        expect(relatedGovernment1.id).toEqual(government1.id);
+        expect(relatedMinister1.id).toEqual(minister1.id);
+        expect(relatedGovernment2.id).toEqual(government1.id);
+        expect(relatedMinister3).toEqual(null);
+        expect(relatedGovernment3.id).toEqual(government1.id);
+      });
+
+      test('loadSingleRelatedEntities one duplicate key', async () => {
+        const [relatedGovernment1, relatedGovernment2] = await loadSingleRelatedEntities('Ministry', [
+          { originalEntityId: ministry1.id, relationEntityName: 'government' },
+          { originalEntityId: ministry1.id, relationEntityName: 'government' }
+        ]);
+        expect(relatedGovernment1.id).toEqual(government1.id);
+        expect(relatedGovernment2.id).toEqual(government1.id);
+      });
+    });
+
+    describe('loadRelatedEntities', () => {
+      test('loadRelatedEntities one key', async () => {
+        const [fetchedMinistries] = await loadRelatedEntities(
+          'Government',
+          [{ originalEntityId: government1.id, relationEntityName: 'ministries' }],
+          sequelizeDataProvider.getRelatedEntities
+        );
+        const fetchedMinistryIds = fetchedMinistries.map(g => g.id);
+        expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id, ministry3.id].sort());
+      });
+
+      test('loadRelatedEntities one missing key', async () => {
+        const [fetchedMinistries] = await loadRelatedEntities(
+          'Government',
+          [{ originalEntityId: 'ishouldntexist999', relationEntityName: 'ministries' }],
+          sequelizeDataProvider.getRelatedEntities
+        );
+        expect(fetchedMinistries).toEqual(undefined);
+      });
+
+      test('loadRelatedEntities multiple keys', async () => {
+        const [relatedMinistries1, relatedLobbyists1, relatedMinistries2] = await loadRelatedEntities(
+          'Government',
+          [
+            { originalEntityId: government1.id, relationEntityName: 'ministries' },
+            { originalEntityId: government1.id, relationEntityName: 'lobbyists' },
+            { originalEntityId: government2.id, relationEntityName: 'ministries' }
+          ],
+          sequelizeDataProvider.getRelatedEntities
+        );
+        expect(relatedMinistries1.map(g => g.id).sort()).toEqual([ministry1.id, ministry2.id, ministry3.id].sort());
+        expect(relatedLobbyists1).toEqual([]);
+        expect(relatedMinistries2).toEqual([]);
+      });
+
+      test('loadRelatedEntities multiple keys with args', async () => {
+        const [relatedMinistries1, relatedLobbyists1, relatedMinistries2] = await loadRelatedEntities(
+          'Government',
+          [
+            { originalEntityId: government1.id, relationEntityName: 'ministries', args: { where: { name: ministry2.name } } },
+            { originalEntityId: government1.id, relationEntityName: 'lobbyists' },
+            { originalEntityId: government2.id, relationEntityName: 'ministries' }
+          ],
+          sequelizeDataProvider.getRelatedEntities
+        );
+        expect(relatedMinistries1.map(g => g.id).sort()).toEqual([ministry2.id].sort());
+        expect(relatedLobbyists1).toEqual([]);
+        expect(relatedMinistries2).toEqual([]);
+      });
+
+      test('loadRelatedEntities multiple keys with different args', async () => {
+        const lobbyist1 = await sequelizeDataProvider.createEntity('Lobbyist', {
+          name: `lobbyist1${randomNumber}`,
+          governments: {
+            connect: [
+              {
+                id: government1.id
+              }
+            ]
+          }
+        });
+        const [relatedMinistries1a, relatedMinistries1b, relatedLobbyists1, relatedMinistries2] = await loadRelatedEntities(
+          'Government',
+          [
+            { originalEntityId: government1.id, relationEntityName: 'ministries', args: { where: { name: ministry2.name } } },
+            { originalEntityId: government1.id, relationEntityName: 'ministries', args: { where: { name_not: ministry1.name } } },
+            { originalEntityId: government1.id, relationEntityName: 'lobbyists' },
+            { originalEntityId: government1.id, relationEntityName: 'ministries' }
+          ],
+          sequelizeDataProvider.getRelatedEntities
+        );
+        expect(relatedMinistries1a.map(g => g.id).sort()).toEqual([ministry2.id].sort());
+        expect(relatedMinistries1b.map(g => g.id).sort()).toEqual([ministry2.id, ministry3.id].sort());
+        expect(relatedLobbyists1.map(g => g.id)).toEqual([lobbyist1.id]);
+        expect(relatedMinistries2.map(g => g.id).sort()).toEqual([ministry1.id, ministry2.id, ministry3.id].sort());
+        await sequelizeDataProvider.updateEntity(
+          'Lobbyist',
+          {
+            governments: {
+              disconnect: [
+                {
+                  id: government1.id
+                }
+              ]
+            }
+          },
+          {
+            id: lobbyist1.id
+          }
+        );
+        await sequelizeDataProvider.deleteEntity('Lobbyist', { id: lobbyist1.id });
+      });
+    });
+  });
+
   describe('Create many entities', () => {
     test('simple', async () => {
       const government1Name = hacker.phrase();
@@ -556,22 +696,22 @@ describe('sequelizeDataProvider', () => {
       const ministry2Name = hacker.phrase();
       const ministry3Name = hacker.phrase();
       const ministry4Name = hacker.phrase();
-      const minsitry1 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry1Name });
-      const minsitry2 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry2Name });
-      const minsitry3 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry3Name });
-      const minsitry4 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry4Name });
+      const nestedMinistry1 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry1Name });
+      const nestedMinistry2 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry2Name });
+      const nestedMinistry3 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry3Name });
+      const nestedMinistry4 = await sequelizeDataProvider.createEntity('Ministry', { name: ministry4Name });
 
       const createdGovernments = await sequelizeDataProvider.createManyEntities('Government', [
         {
           name: government1Name,
           ministries: {
-            connect: [{ id: minsitry1.id }, { id: minsitry2.id }]
+            connect: [{ id: nestedMinistry1.id }, { id: nestedMinistry2.id }]
           }
         },
         {
           name: government2Name,
           ministries: {
-            connect: [{ id: minsitry3.id }, { id: minsitry4.id }]
+            connect: [{ id: nestedMinistry3.id }, { id: nestedMinistry4.id }]
           }
         }
       ]);
@@ -689,8 +829,8 @@ describe('sequelizeDataProvider', () => {
       const createdGovernmentName = hacker.phrase();
       const updatedGovernmentName = hacker.phrase();
       const anotherGovernment = await sequelizeDataProvider.createEntity('Government', { name: createdGovernmentName });
-      const minsitry = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
-      const minsitry2 = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
+      const nestedMinistry = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
+      const nestedMinistry2 = await sequelizeDataProvider.createEntity('Ministry', { name: hacker.phrase() });
 
       // Update with connect.
       const updatedGovernmentWithMinistries = await sequelizeDataProvider.updateEntity(
@@ -698,7 +838,7 @@ describe('sequelizeDataProvider', () => {
         {
           name: updatedGovernmentName,
           ministries: {
-            connect: [{ id: minsitry.id }, { id: minsitry2.id }]
+            connect: [{ id: nestedMinistry.id }, { id: nestedMinistry2.id }]
           }
         },
         {
@@ -706,7 +846,7 @@ describe('sequelizeDataProvider', () => {
         }
       );
       const ministryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', anotherGovernment.id, 'ministries');
-      expect(ministryIds.sort()).toEqual([minsitry.id, minsitry2.id].sort());
+      expect(ministryIds.sort()).toEqual([nestedMinistry.id, nestedMinistry2.id].sort());
       expect(updatedGovernmentWithMinistries).toMatchObject({
         name: updatedGovernmentName,
         createdAt: updatedGovernmentWithMinistries.createdAt,
@@ -721,7 +861,7 @@ describe('sequelizeDataProvider', () => {
         {
           name: updatedGovernmentName,
           ministries: {
-            disconnect: [{ id: minsitry.id }, { id: minsitry2.id }]
+            disconnect: [{ id: nestedMinistry.id }, { id: nestedMinistry2.id }]
           }
         },
         {

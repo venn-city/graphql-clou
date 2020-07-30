@@ -57,6 +57,22 @@ export default class SurveyDAO {
     return this.entityDAO.surveysConnection(parent, args, context);
   }
 
+  getRelatedEntityId: async (originalEntityId: string, relationEntityName: string) => {
+    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
+  }
+
+  getRelatedEntity: async (originalEntityId: string, relationEntityName: string) => {
+    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
+  }
+
+  getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
+  }
+
+  getRelatedEntities: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
+  }
+
   getHooks(): any {
     return this.entityDAO.getHooks();
   }
@@ -121,6 +137,22 @@ export default class SurveyQuestionDAO {
     return this.entityDAO.surveyQuestionsConnection(parent, args, context);
   }
 
+  getRelatedEntityId: async (originalEntityId: string, relationEntityName: string) => {
+    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
+  }
+
+  getRelatedEntity: async (originalEntityId: string, relationEntityName: string) => {
+    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
+  }
+
+  getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
+  }
+
+  getRelatedEntities: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
+  }
+
   getHooks(): any {
     return this.entityDAO.getHooks();
   }
@@ -183,6 +215,22 @@ export default class SurveyQuestionResponseDAO {
 
   surveyQuestionResponsesConnection(parent: any, args: openCrudSchema.QuerySurveyQuestionResponsesConnectionArgs, context: any): Promise<openCrudSchema.Query['surveyQuestionResponsesConnection']> {
     return this.entityDAO.surveyQuestionResponsesConnection(parent, args, context);
+  }
+
+  getRelatedEntityId: async (originalEntityId: string, relationEntityName: string) => {
+    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
+  }
+
+  getRelatedEntity: async (originalEntityId: string, relationEntityName: string) => {
+    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
+  }
+
+  getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
+  }
+
+  getRelatedEntities: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
   }
 
   getHooks(): any {

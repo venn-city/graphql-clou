@@ -7,6 +7,7 @@ import async from 'async';
 import { openCrudToSequelize } from '@venncity/graphql-transformers';
 import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
+import { extractManyResult, extractSingleResult } from './resultExtractionHelper';
 
 const {
   ClientDataValidationError,
@@ -52,12 +53,7 @@ async function getRelatedEntity(entityName: string, originalEntityId: string, re
       required: true
     }
   });
-  return (
-    originalEntity &&
-    (Array.isArray(originalEntity[relationFieldName]) && originalEntity[relationFieldName].length === 1
-      ? originalEntity[relationFieldName][0].dataValues // [0] is required in cases of many-to-one mappings using a join-table.
-      : originalEntity[relationFieldName].dataValues)
-  );
+  return extractSingleResult(originalEntity, relationFieldName);
 }
 
 async function getRelatedEntityIds(entityName: string, originalEntityId: string, relationEntityName: string, args?: any) {
@@ -71,11 +67,7 @@ async function getRelatedEntities(entityName: string, originalEntityId: string, 
 
   const originalEntity = await model(entityName).findOne({ where: { id: originalEntityId } });
   const relatedEntities = originalEntity ? await originalEntity[`get${upperFirst(relationFieldName)}`](relatedEntityFilter) : [];
-
-  if (Array.isArray(relatedEntities)) {
-    return relatedEntities.map(relatedEntity => relatedEntity.dataValues);
-  }
-  return relatedEntities ? relatedEntities.dataValues : [];
+  return extractManyResult(relatedEntities);
 }
 
 async function createEntity(entityName: string, entityToCreate: any) {

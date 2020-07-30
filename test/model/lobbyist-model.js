@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     Lobbyist.belongsToMany(Government, {
       as: 'governments',
       through: 'government_lobbyist_join_table',
-      foreignKey: 'government_id',
-      otherKey: 'lobbyist_id'
+      otherKey: 'government_id',
+      foreignKey: 'lobbyist_id'
     });
   };
   return lobbyist;
