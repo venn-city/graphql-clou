@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.3](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.10.2...@venncity/base-dao@1.10.3) (2020-07-30)
+
+
+### Bug Fixes
+
+* **base-dao:** filter out undefined values from getAllEntitiesInternal ([#109](https://github.com/venn-city/graphql-clou/issues/109)) ([4344820](https://github.com/venn-city/graphql-clou/commit/43448200c7a536d39384c9dbc05dc6bed401155d))
+
+
+
+
+
 ## [1.10.2](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.10.1...@venncity/base-dao@1.10.2) (2020-07-30)
 
 **Note:** Version bump only for package @venncity/base-dao
