@@ -1,5 +1,5 @@
 import baseDAO from '../baseDAO';
-import daoAuth from './auth/daoAuth';
+import { daoAuth } from './auth/daoAuth';
 import { publishCrudEvent } from './publishCRUD/crudPublish';
 
 // eslint-disable-next-line no-unused-vars
