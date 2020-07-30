@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: venncity/circleci:12-0.1.18
+    - image: venncity/circleci
 
 jobs:
   checkout:
@@ -49,11 +49,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run:
-          name: Install psql
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y postgresql-client
       - run:
           name: Run tests
           command: |
