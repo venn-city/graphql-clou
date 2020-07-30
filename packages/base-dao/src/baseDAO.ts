@@ -81,9 +81,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     return entityWithOnlyAuthorizedFields;
   }
 
-  async function getBatchedEntitiesByIdsInternal(args) {
-    const fetchIsByExactlyByIdIn = Object.keys(args).length === 1 && args.where && Object.keys(args.where).length === 1 && args.where.id_in;
-    if (fetchIsByExactlyByIdIn) {
+  async function getAllEntitiesInternal(args) {
+    const fetchIsExactlyByIdIn = Object.keys(args).length === 1 && args.where && Object.keys(args.where).length === 1 && args.where.id_in;
+    if (fetchIsExactlyByIdIn) {
       return dataLoaderById.loadMany(args.where.id_in);
     }
     return dataProvider.getAllEntities(entityName, args);
@@ -154,7 +154,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       };
       enforcePagination(transformedArgs, GET_ALL_ENTITIES_FUNCTION_NAME, skipPagination);
 
-      const fetchedEntities = await getBatchedEntitiesByIdsInternal(transformedArgs);
+      const fetchedEntities = await getAllEntitiesInternal(transformedArgs);
       const entitiesThatUserCanAccess: any = [];
       const entitiesThatUserCannotAccess: any = [];
       for (const fetchedEntity of fetchedEntities) {
@@ -267,7 +267,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       entitiesToUpdate = await asyncMap(entitiesToUpdate, hooks.postFetch);
       data = await hooks.preSave(data, entitiesToUpdate, context);
       await dataProvider.updateManyEntities(entityName, data, transformedWhere);
-      const updatedEntities = await getBatchedEntitiesByIdsInternal({ where: transformedWhere });
+      const updatedEntities = await getAllEntitiesInternal({ where: transformedWhere });
 
       for (const originalEntity of entitiesToUpdate) {
         clearLoaders(originalEntity);
@@ -328,7 +328,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         computedWhereArgumentsTransformation,
         context
       });
-      let entitiesToDelete = await getBatchedEntitiesByIdsInternal({ where: transformedWhere });
+      let entitiesToDelete = await getAllEntitiesInternal({ where: transformedWhere });
 
       entitiesToDelete = await asyncMap(entitiesToDelete, hooks.postFetch);
       for (const entityToDelete of entitiesToDelete) {
