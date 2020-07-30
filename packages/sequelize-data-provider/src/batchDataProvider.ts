@@ -71,11 +71,11 @@ function model(entityName: string) {
   return sequelizeModel.sq[entityName] || sequelizeModel.sq[upperFirst(entityName)];
 }
 
-interface GetRelatedEntityArgs {
+export interface GetRelatedEntityArgs {
   originalEntityId: string;
   relationEntityName: string;
 }
 
-interface GetRelatedEntitiesArgs extends GetRelatedEntityArgs {
+export interface GetRelatedEntitiesArgs extends GetRelatedEntityArgs {
   args?: any;
 }

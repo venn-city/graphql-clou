@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
 import { hacker, random } from 'faker';
 import { omit } from 'lodash';
 import sequelizeModel from '@venncity/sequelize-model';
@@ -82,7 +82,6 @@ describe('sequelizeDataProvider', () => {
   let vote3;
   const voteName3 = `Raise taxes${randomNumber}`;
   const voteBallot3 = 'NAY';
-  // @ts-ignore
   let vote4;
   const voteName4 = `Make war${randomNumber}`;
   const voteBallot4 = 'ABSTAIN';
