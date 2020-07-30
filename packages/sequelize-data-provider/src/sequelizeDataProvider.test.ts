@@ -670,28 +670,6 @@ describe('sequelizeDataProvider', () => {
         await sequelizeDataProvider.deleteEntity('Lobbyist', { id: lobbyist1.id });
       });
     });
-
-    test('getRelatedEntityIds no args', async () => {
-      const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government1.id, 'ministries');
-      expect(fetchedMinistryIds.sort()).toEqual([ministry1.id, ministry2.id, ministry3.id].sort());
-    });
-
-    test('getRelatedEntityIds with args', async () => {
-      const fetchedMinistryIds = await sequelizeDataProvider.getRelatedEntityIds('Government', government1.id, 'ministries', {
-        first: 1,
-        orderBy: 'createdAt_ASC'
-      });
-      expect(fetchedMinistryIds).toHaveLength(1);
-      expect(fetchedMinistryIds[0]).toEqual(ministry1.id);
-    });
-
-    test('getRelatedEntityIds with args for nXm relation', async () => {
-      const fetchedVoteIds = await sequelizeDataProvider.getRelatedEntityIds('Minister', minister2.id, 'votes', {
-        first: 1,
-        orderBy: 'createdAt_ASC'
-      });
-      expect(fetchedVoteIds).toHaveLength(1);
-    });
   });
 
   describe('Create many entities', () => {
