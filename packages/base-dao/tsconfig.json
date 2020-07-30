@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "lib/cjs",
     "noEmit": false,
-    "noImplicitAny": false,
+    "noImplicitAny": false
   },
   "include": [
     "src",
