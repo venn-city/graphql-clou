@@ -1,4 +1,4 @@
-import { partition, uniq, upperFirst } from 'lodash';
+import { partition, uniq, upperFirst, isEmpty } from 'lodash';
 import async from 'async';
 import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
@@ -17,7 +17,7 @@ export async function loadRelatedEntities(
   keys: GetRelatedEntitiesArgs[],
   getRelatedEntities: (entityName: string, originalEntityId: string, relationFieldName: string, args?: any) => any
 ) {
-  const [keysWithArgs, keysWithoutArgs] = partition(keys, 'args');
+  const [keysWithoutArgs, keysWithArgs] = partition(keys, k => isEmpty(k));
 
   const originalEntitiesWithoutArgs = await fetchEntitiesWithRelations(keysWithoutArgs, entityName);
   const originalEntitiesWithArgs: { key: GetRelatedEntitiesArgs; relatedEntitiesWithArgs: any[] }[] = await async.map(
