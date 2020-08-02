@@ -367,20 +367,23 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       };
       return dataProvider.getEntitiesConnection(entityName, transformedArgs);
     },
-    getRelatedEntityId: async (originalEntityId: string, relationEntityName: string) => {
+    getRelatedEntityId: async (originalEntityId: string, relationEntityName: string): Promise<string | null> => {
       const relation = await dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName });
       return relation && relation.id;
     },
-    getRelatedEntity: async (originalEntityId: string, relationEntityName: string) => {
+    getRelatedEntity: async <T>(originalEntityId: string, relationEntityName: string): Promise<T | null> => {
       return dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName });
     },
-    getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any): Promise<string[]> => {
       const relations = await dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args });
-      return relations && (Array.isArray(relations) ? _.without(relations, undefined).map(relation => relation.id) : relations.id);
+      if (!relations) {
+        return [];
+      }
+      return Array.isArray(relations) ? _.without(relations, undefined).map(relation => relation.id) : [relations.id];
     },
-    getRelatedEntities: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+    getRelatedEntities: async <T>(originalEntityId: string, relationEntityName: string, args?: any): Promise<T[]> => {
       const relatedEntities = await dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args });
-      return _.without(relatedEntities, undefined);
+      return (_.without(relatedEntities, undefined) as unknown) as T[];
     },
     getHooks: () => {
       // need to expose for cascade delete
