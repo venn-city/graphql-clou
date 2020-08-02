@@ -54,19 +54,19 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
     return this.entityDAO.<%= entitiesNameLowerFirstLetter %>Connection(parent, args, context);
   }
 
-  getRelatedEntityId: async (originalEntityId: string, relationEntityName: string) => {
+  async getRelatedEntityId(originalEntityId: string, relationEntityName: string): Promise<string | null> {
     return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
   }
 
-  getRelatedEntity: async (originalEntityId: string, relationEntityName: string) => {
+  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string): Promise<T | null> {
     return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
   }
 
-  getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, args?: any): Promise<string[]> {
     return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
   }
 
-  getRelatedEntities: async (originalEntityId: string, relationEntityName: string, args?: any) => {
+  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, args?: any): Promise<T[]> {
     return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
   }
 
