@@ -77,7 +77,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     const auth = await buildAuth(context, hooks);
     const fetchedEntity = await dataLoaderById.load(entityId);
     let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, fetchedEntity, hooks, authTypeName);
-    entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields);
+    entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
     return entityWithOnlyAuthorizedFields;
   }
 
@@ -134,7 +134,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const auth = await buildAuth(context, hooks);
       fetchedEntity = await dataProvider.getEntity(entityName, transformedWhere);
       let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, fetchedEntity, hooks, authTypeName);
-      entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields);
+      entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
       return entityWithOnlyAuthorizedFields;
     },
     // e.g units
@@ -162,7 +162,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
         if (hasPermission(auth, READ, authDataFromDB, context, authTypeName)) {
           let entityWithOnlyAuthorizedFields = filterUnauthorizedFields(auth, { $type: authTypeName, ...fetchedEntity }, READ);
-          entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields);
+          entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
           entitiesThatUserCanAccess.push(entityWithOnlyAuthorizedFields);
         } else {
           entitiesThatUserCannotAccess.push(fetchedEntity);
@@ -178,7 +178,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const entitiesWithOnlyAuthorizedFields: any = [];
       for (const entity of entities) {
         let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, entity, hooks, authTypeName);
-        entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields);
+        entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
         entitiesWithOnlyAuthorizedFields.push(entityWithOnlyAuthorizedFields);
       }
       return entitiesWithOnlyAuthorizedFields;
@@ -198,7 +198,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       if (hooks.postCreate) {
         creationResult = await hooks.postCreate(entityToCreate, creationResult);
       }
-      creationResult = await hooks.postFetch(creationResult);
+      creationResult = await hooks.postFetch(creationResult, context);
 
       await publishCrudEvent({
         entityName,
@@ -234,11 +234,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       let updatedEntity = await dataProvider.updateEntity(entityName, data, transformedWhere);
       if (updatedEntity) {
         clearLoaders(updatedEntity);
-        updatedEntity = await hooks.postFetch(updatedEntity);
+        updatedEntity = await hooks.postFetch(updatedEntity, context);
         await publishCrudEvent({
           entityName,
           operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
-          entityBefore: await hooks.postFetch(entitiesToUpdate[0]),
+          entityBefore: await hooks.postFetch(entitiesToUpdate[0], context),
           entityAfter: updatedEntity,
           context
         });
@@ -273,7 +273,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       for (const originalEntity of entitiesToUpdate) {
         clearLoaders(originalEntity);
         let updatedEntity = updatedEntities.find(entity => entity.id === originalEntity.id);
-        updatedEntity = await hooks.postFetch(updatedEntity);
+        updatedEntity = await hooks.postFetch(updatedEntity, context);
         await publishCrudEvent({
           entityName,
           operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
@@ -306,7 +306,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       await cascadeDelete({ entityName, entityId, context });
 
       let deletedEntity = await dataProvider.deleteEntity(entityName, transformedWhere);
-      deletedEntity = await hooks.postFetch(deletedEntity);
+      deletedEntity = await hooks.postFetch(deletedEntity, context);
       if (deletedEntity) {
         clearLoaders(deletedEntity);
         await publishCrudEvent({
