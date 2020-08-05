@@ -29,7 +29,7 @@ describe('sequelizeDataProvider paging tests', () => {
    | Lazaros  |   | Natassas |           |         | Vasileia    |
    +----------+   +----------+   +-------+-----+   +-------------+
       |                |         |Vote3        |
-      |                |         | Raise taxes |  +--------------+
+     |                |         | Raise taxes |   +--------------+
       |                |         | Nay         |  |Vote4         |
    +---+--------+      |         +-------------+  | Make war     |
    |Vote1       |      |                          | Abstain      |
