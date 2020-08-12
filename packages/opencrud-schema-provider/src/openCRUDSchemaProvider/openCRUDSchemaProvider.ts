@@ -10,8 +10,8 @@ import { graphqlSync, introspectionQuery } from 'graphql';
 const config = require('@venncity/nested-config')(__dirname);
 
 const parser = DefaultParser.create(DatabaseType.postgres);
-const dataModelPath = config.get('graphql.schema.datamodel.path');
-const schemaSdlPath = config.get('graphql.schema.sdl.path');
+const dataModelPath = config.has('graphql.schema.datamodel.path') ? config.get('graphql.schema.datamodel.path') : null;
+const schemaSdlPath = config.has('graphql.schema.sdl.path') ? config.get('graphql.schema.sdl.path') : null;
 
 let openCrudDataModel: any;
 let openCrudSchemaGraphql: any;
