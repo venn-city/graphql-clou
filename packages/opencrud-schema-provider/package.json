@@ -9,7 +9,7 @@
     "build": "yarn build:cjs && yarn build:esm && yarn insertTestGraphqlFilesToLib",
     "build:cjs": "rm -rf lib/cjs && tsc",
     "build:esm": "rm -rf lib/esm && tsc -m esnext --outDir lib/esm",
-    "insertTestGraphqlFilesToLib": "cp -R test lib",
+    "insertTestGraphqlFilesToLib": "cp -R ../../test lib",
     "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "npm run test -- --watchAll",

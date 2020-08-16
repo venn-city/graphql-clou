@@ -2,10 +2,10 @@
   "graphql": {
     "schema": {
       "datamodel": {
-        "path": "test/datamodel.graphql"
+        "path": "./../../test/datamodel.graphql"
       },
       "sdl": {
-        "path": "test/openCRUD.graphql"
+        "path": "./../../test/openCRUD.graphql"
       }
     }
   }
