@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.45](https://github.com/venn-city/graphql-clou/compare/@venncity/cascade-delete@1.2.44...@venncity/cascade-delete@1.2.45) (2020-08-16)
+
+**Note:** Version bump only for package @venncity/cascade-delete
+
+
+
+
+
 ## [1.2.44](https://github.com/venn-city/graphql-clou/compare/@venncity/cascade-delete@1.2.43...@venncity/cascade-delete@1.2.44) (2020-08-05)
 
 **Note:** Version bump only for package @venncity/cascade-delete
