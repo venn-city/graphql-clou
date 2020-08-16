@@ -11,8 +11,25 @@ sq.init(models);
 const DUMMY_MODEL_FUNCTION = () => ({ associate: () => {} });
 const sequelize = sq.sequelize;
 
+jest.mock('@venncity/nested-config', () => {
+  const dataModelPath = './../../test/datamodel.graphql';
+  const sdlPath = './../../test/openCRUD.graphql';
+  const dataModelKey = 'graphql.schema.datamodel.path';
+  return () => ({
+    has: () => true,
+    get: (key: string) => {
+      if (key === dataModelKey) {
+        return dataModelPath;
+      }
+
+      return sdlPath;
+    }
+  });
+});
+
 describe('sequelizeInit', () => {
   afterAll(async () => {
+    jest.clearAllMocks();
     await sq.sequelize.close();
   });
 
