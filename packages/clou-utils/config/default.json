@@ -3,5 +3,15 @@
     "algorithm": "aes-256-gcm",
     "inputEncoding": "utf8",
     "outputEncoding":  "hex"
+  },
+  "graphql": {
+    "schema": {
+      "datamodel": {
+        "path": "test/datamodel.graphql"
+      },
+      "sdl": {
+        "path": "test/openCRUD.graphql"
+      }
+    }
   }
 }
