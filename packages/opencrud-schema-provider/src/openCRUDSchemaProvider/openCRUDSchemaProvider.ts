@@ -30,7 +30,7 @@ export function getOpenCrudIntrospection() {
   if (!openCrudIntrospection) {
     // eslint-disable-next-line no-underscore-dangle
     // @ts-ignore
-    openCrudIntrospection = graphqlSync(openCrudSchema, introspectionQuery).data?.__schema;
+    openCrudIntrospection = openCrudSchema && graphqlSync(openCrudSchema, introspectionQuery).data?.__schema;
   }
   return openCrudIntrospection;
 }
