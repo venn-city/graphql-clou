@@ -17,7 +17,7 @@
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
     "lint:ci": "eslint . --format junit -o $LINT_JUNIT_OUTPUT",
     "generate-opencrud-schema": "node ./scripts/generateOpenCRUDSchema.js",
-    "generate-opencrud-schema:test": "node ./scripts/generateOpenCRUDSchema.js ./test/datamodel.graphql ./test/openCRUD.graphql"
+    "generate-opencrud-schema:test": "node ./scripts/generateOpenCRUDSchema.js ../../test/datamodel.graphql ../../test/openCRUD.graphql"
   },
   "husky": {
     "hooks": {
