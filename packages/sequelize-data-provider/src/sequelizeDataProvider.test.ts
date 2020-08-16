@@ -5,7 +5,9 @@ import sequelizeModel from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
 import { loadSingleRelatedEntities, loadRelatedEntities } from './batchDataProvider';
 import models from '../../../test/model';
+import mockConfig from '../../../test/mockConfig';
 
+mockConfig();
 sequelizeModel.sq.init(models);
 
 describe('sequelizeDataProvider', () => {
@@ -173,6 +175,7 @@ describe('sequelizeDataProvider', () => {
   });
 
   afterAll(async () => {
+    jest.resetAllMocks();
     sequelizeModel.sq.sequelize.close();
   });
 

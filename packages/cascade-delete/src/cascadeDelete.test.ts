@@ -5,6 +5,9 @@ import { sq } from '@venncity/sequelize-model';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 import { cascadeDelete } from './cascadeDelete';
 import models from '../../../test/model';
+import mockConfig from '../../../test/mockConfig';
+
+mockConfig();
 
 sq.init(models);
 
@@ -58,6 +61,8 @@ describe('cascade delete', () => {
       }
     });
   });
+
+  afterAll(() => jest.resetAllMocks());
 
   test('should delete', async () => {
     await cascadeDelete({ entityName: 'Government', entityId: government.id, context });

@@ -6,18 +6,21 @@ import sinon from 'sinon';
 import { sq } from '@venncity/sequelize-model';
 import resolvers from '../test/graphqlTestServer/schema/resolvers';
 import models from '../../../test/model';
+import mockConfig from '../../../test/mockConfig';
 
 const mutationSpies = createMutationSpies();
 import { startApolloServer } from '../test/graphqlTestServer';
 
 const { mutate } = createTestClient(startApolloServer());
 
+mockConfig();
 sq.init(models);
 
 describe('Nested mutations', () => {
   afterEach(() => {
     Object.values(mutationSpies).forEach((mutationSpy: any) => mutationSpy.resetHistory());
   });
+  afterAll(() => jest.resetAllMocks());
 
   describe('Nested mutation field is Object', () => {
     describe('Relation owner is parent', () => {

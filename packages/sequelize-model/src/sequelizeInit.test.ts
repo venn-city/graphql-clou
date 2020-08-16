@@ -5,7 +5,9 @@ process.env.IS_TEST = 'false';
 import { hacker, random } from 'faker';
 import models from '../../../test/model';
 import sq from './sequelizeInit';
+import mockConfig from '../../../test/mockConfig';
 
+mockConfig();
 sq.init(models);
 
 const DUMMY_MODEL_FUNCTION = () => ({ associate: () => {} });
@@ -14,6 +16,7 @@ const sequelize = sq.sequelize;
 describe('sequelizeInit', () => {
   afterAll(async () => {
     await sq.sequelize.close();
+    jest.resetAllMocks();
   });
 
   test('should only init the sequelize models once', () => {
