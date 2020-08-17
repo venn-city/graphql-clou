@@ -2,7 +2,7 @@ import sequelizeModel from '@venncity/sequelize-model';
 import { Op } from '@venncity/sequelize';
 import { openCrudToSequelize } from './openCRUDtoSequelizeWhereTransformer';
 import models from '../../../../test/model';
-import mockConfig from '../../../test/mockConfig';
+import mockConfig from '../../../../test/mockConfig';
 
 const sq = sequelizeModel.sq.init(models);
 

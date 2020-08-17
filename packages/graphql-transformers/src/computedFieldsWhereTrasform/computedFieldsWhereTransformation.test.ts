@@ -1,5 +1,5 @@
 import { transformComputedFieldsWhereArguments } from './computedFieldsWhereTransformation';
-import mockConfig from '../../../test/mockConfig';
+import mockConfig from '../../../../test/mockConfig';
 
 mockConfig();
 describe('computedFieldsWhereTransformation', () => {
