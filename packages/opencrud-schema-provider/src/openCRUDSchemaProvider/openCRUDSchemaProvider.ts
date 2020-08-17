@@ -1,4 +1,5 @@
 /* eslint-disable import/first */
+/* eslint-disable import/no-mutable-exports */
 // eslint-disable-next-line import/order
 const config = require('@venncity/nested-config')(__dirname);
 
@@ -7,14 +8,27 @@ import { importSchema } from 'graphql-import';
 import { DefaultParser, DatabaseType } from 'prisma-datamodel';
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphqlSync, introspectionQuery } from 'graphql';
+import { sdl, datamodel } from '../test/models';
 
 const parser = DefaultParser.create(DatabaseType.postgres);
-const dataModelPath = config.has('graphql.schema.datamodel.path') ? config.get('graphql.schema.datamodel.path') : null;
 
-export const openCrudDataModel = dataModelPath && parser.parseFromSchemaString(fs.readFileSync(dataModelPath, 'utf8'));
+let openCrudDataModel;
+let openCrudSchemaGraphql;
 
-const schemaSdlPath = config.has('graphql.schema.sdl.path') ? config.get('graphql.schema.sdl.path') : null;
-export const openCrudSchemaGraphql = schemaSdlPath && importSchema(schemaSdlPath);
+if (config.has('graphql.schema.datamodel.path')) {
+  const dataModelPath = config.get('graphql.schema.datamodel.path');
+  openCrudDataModel = dataModelPath && parser.parseFromSchemaString(fs.readFileSync(dataModelPath, 'utf8'));
+} else {
+  openCrudDataModel = parser.parseFromSchemaString(datamodel);
+}
+
+if (config.has('graphql.schema.sdl.path')) {
+  const schemaSdlPath = config.get('graphql.schema.sdl.path');
+  openCrudSchemaGraphql = schemaSdlPath && importSchema(schemaSdlPath);
+} else {
+  openCrudSchemaGraphql = importSchema(sdl);
+}
+
 export const openCrudSchema =
   openCrudSchemaGraphql &&
   makeExecutableSchema({
@@ -34,3 +48,5 @@ export function getOpenCrudIntrospection() {
   }
   return openCrudIntrospection;
 }
+
+export { openCrudDataModel, openCrudSchemaGraphql };
