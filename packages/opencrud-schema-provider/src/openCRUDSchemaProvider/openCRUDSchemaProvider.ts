@@ -8,7 +8,9 @@ import { importSchema } from 'graphql-import';
 import { DefaultParser, DatabaseType } from 'prisma-datamodel';
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphqlSync, introspectionQuery } from 'graphql';
-import { sdl, datamodel } from '../test/models';
+import * as testModels from '../test/models';
+
+const { sdl, datamodel } = testModels;
 
 const parser = DefaultParser.create(DatabaseType.postgres);
 
@@ -17,7 +19,7 @@ let openCrudSchemaGraphql;
 
 if (config.has('graphql.schema.datamodel.path')) {
   const dataModelPath = config.get('graphql.schema.datamodel.path');
-  openCrudDataModel = dataModelPath && parser.parseFromSchemaString(fs.readFileSync(dataModelPath, 'utf8'));
+  openCrudDataModel = parser.parseFromSchemaString(fs.readFileSync(dataModelPath, 'utf8'));
 } else {
   openCrudDataModel = parser.parseFromSchemaString(datamodel);
 }
