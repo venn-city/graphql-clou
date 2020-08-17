@@ -19,19 +19,19 @@ jest.mock('@venncity/nested-config', () => {
 describe('mock datamodels', () => {
   afterAll(() => jest.restoreAllMocks());
 
-  test('openCrudDataModel', () => {
+  test('openCrudDataModel mocked', () => {
     expect(openCrudDataModel).toMatchSnapshot();
   });
 
-  test('openCrudSchema', () => {
+  test('openCrudSchema mocked', () => {
     expect(openCrudSchema).toMatchSnapshot();
   });
 
-  test('openCrudSchemaGraphql', () => {
+  test('openCrudSchemaGraphql mocked', () => {
     expect(openCrudSchemaGraphql).toMatchSnapshot();
   });
 
-  test('getOpenCrudIntrospection', () => {
+  test('getOpenCrudIntrospection mocked', () => {
     expect(getOpenCrudIntrospection()).toMatchSnapshot();
   });
 });
