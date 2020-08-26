@@ -29,7 +29,7 @@
     ]
   },
   "dependencies": {
-    "@venncity/errors": "^1.6.2",
+    "@venncity/errors": "^1.7.18",
     "@venncity/graphql-transformers": "^1.6.9",
     "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.11",

@@ -1694,6 +1694,85 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@sentry/apm@5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/apm/-/apm-5.21.4.tgz#bc1e026e36edced3f79fc86869b4b65749e20a2f"
+  integrity sha512-JkBfBKBXZifDI9CsKU+XHzNWkubM7U9dXDW4c6/kU3lURYGXpiR/WI+f3IQG5Vbd2t+cukYhG7BeMkhG8Tj+cA==
+  dependencies:
+    "@sentry/browser" "5.21.4"
+    "@sentry/hub" "5.21.4"
+    "@sentry/minimal" "5.21.4"
+    "@sentry/types" "5.21.4"
+    "@sentry/utils" "5.21.4"
+    tslib "^1.9.3"
+
+"@sentry/browser@5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/browser/-/browser-5.21.4.tgz#50cb1f815f5468bb7c891fee329b8298f2aa5d9a"
+  integrity sha512-/bRGMNjJc4Qt9Me9qLobZe0pREUAMFQAR7GOF9HbgzxUc49qVvmPRglvwzwhPJ6XKPg0NH/C6MOn+yuIRjfMag==
+  dependencies:
+    "@sentry/core" "5.21.4"
+    "@sentry/types" "5.21.4"
+    "@sentry/utils" "5.21.4"
+    tslib "^1.9.3"
+
+"@sentry/core@5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/core/-/core-5.21.4.tgz#e2557344e106ad3af0dbe7a81fc00909c768470c"
+  integrity sha512-2hB0shKL6RUuLqqmnDUPvwiV25OSnchxkJ6NbLqnn2DYLqLARfZuVcw2II4wb/Jlw7SDnbkQIPs0/ax7GPe1Nw==
+  dependencies:
+    "@sentry/hub" "5.21.4"
+    "@sentry/minimal" "5.21.4"
+    "@sentry/types" "5.21.4"
+    "@sentry/utils" "5.21.4"
+    tslib "^1.9.3"
+
+"@sentry/hub@5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/hub/-/hub-5.21.4.tgz#5cfc400f48796286f1a24cb013fdbd40958841b3"
+  integrity sha512-bgEgBHK6OWoAkrnYwVsIOw+sR4MWpe5/CB7H7r+GBJsSnBysncbSaBgndKmtb1GTWdzMxMlvXU16zC6TR5JX5Q==
+  dependencies:
+    "@sentry/types" "5.21.4"
+    "@sentry/utils" "5.21.4"
+    tslib "^1.9.3"
+
+"@sentry/minimal@5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/minimal/-/minimal-5.21.4.tgz#7a6872e98fe21cb4addd36b3a0b9906c13076047"
+  integrity sha512-pIpIH2ZTwdijGTw6VwfkTETAEoc9k/Aejz6mAjFDMzlOPb3bCx+W8EbGzFOxuwOsiE84bysd2UPVgFY4YSLV/g==
+  dependencies:
+    "@sentry/hub" "5.21.4"
+    "@sentry/types" "5.21.4"
+    tslib "^1.9.3"
+
+"@sentry/node@^5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/node/-/node-5.21.4.tgz#bab63b099c2a44714c7fc2d3c6b1ba5d634e8952"
+  integrity sha512-8XnEIwWZyvCSawjMyf6d7bm4lat3bv54SwWrxWqNr6akxbfVI/cV8DsWC045g2Gx799mbXBo4hMaTGJYW6CrWg==
+  dependencies:
+    "@sentry/apm" "5.21.4"
+    "@sentry/core" "5.21.4"
+    "@sentry/hub" "5.21.4"
+    "@sentry/types" "5.21.4"
+    "@sentry/utils" "5.21.4"
+    cookie "^0.4.1"
+    https-proxy-agent "^5.0.0"
+    lru_map "^0.3.3"
+    tslib "^1.9.3"
+
+"@sentry/types@5.21.4", "@sentry/types@^5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/types/-/types-5.21.4.tgz#f088a36ca765657b74b869f8739056961383c159"
+  integrity sha512-uJTRxW//NPO0UJJzRQOtYHg5tiSBvn1dRk5FvURXmeXt9d9XtwmRhHWDwI51uAkyv+51tun3v+0OZQfLvAI+gQ==
+
+"@sentry/utils@5.21.4":
+  version "5.21.4"
+  resolved "https://registry.npmjs.org/@sentry/utils/-/utils-5.21.4.tgz#353264fdd5743edf140daf4c37209d350c9d8258"
+  integrity sha512-zY8OvaE/lU+DCzTSFrDZNXZmBLM/0URUlyYD4RubqzrgKY/eP1pSbEsDzYYhc+OrBr8TjG66N+5T3gMZX0BfNg==
+  dependencies:
+    "@sentry/types" "5.21.4"
+    tslib "^1.9.3"
+
 "@sinonjs/commons@^1", "@sinonjs/commons@^1.3.0", "@sinonjs/commons@^1.4.0", "@sinonjs/commons@^1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.7.0.tgz#f90ffc52a2e519f018b13b6c4da03cbff36ebed6"
@@ -2311,12 +2390,18 @@
     joi "^14.3.1"
     verror "^1.10.0"
 
-"@venncity/errors@^1.6.2":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@venncity/errors/-/errors-1.6.2.tgz#26a4f916e72b7958cf83fdbabe724d33425ae1e9"
-  integrity sha512-UDoC0Ix0mlA237qyEffQ921Yb3547uJ68XF/KmwghTEtpiZVzI/2BeTctsRGDI0aikRPhLqz46w7nup2VEvN9Q==
+"@venncity/errors@^1.7.18", "@venncity/errors@^1.7.19":
+  version "1.7.19"
+  resolved "https://registry.npmjs.org/@venncity/errors/-/errors-1.7.19.tgz#4aa66b54a66b4af98fd584c44d9870e6c359f073"
+  integrity sha512-cqdgfJDIre/IdOo67aBZCQAT2Hmeceqi5cRketj/H/0DpLKHEtNpJVCTkepKV/Ivlr61gH8Hp8FlMzcs3piDHw==
   dependencies:
+    "@sentry/node" "^5.21.4"
+    "@sentry/types" "^5.21.4"
+    "@venncity/nested-config" "^2.0.27"
+    fast-safe-stringify "^2.0.7"
     joi "^14.3.1"
+    lodash "^4.17.15"
+    uuid "^8.0.0"
     verror "^1.10.0"
 
 "@venncity/errors@^1.7.7":
@@ -2475,12 +2560,32 @@
     path "^0.12.7"
     string-replace-loader venn-city/string-replace-loader
 
+"@venncity/nested-config@^2.0.27":
+  version "2.0.27"
+  resolved "https://registry.npmjs.org/@venncity/nested-config/-/nested-config-2.0.27.tgz#22120005b1a3dd963c7bcf409d0dd4fd53b0bac7"
+  integrity sha512-bYkBQWlLvuTPzwdV3olLM2RzOr/QoWCpWlt4owfkHzDxIRvS3sV4pJdrwJ7IM5txQHrlZyWqgR+waobBxzbXqg==
+  dependencies:
+    "@venncity/package-info" "^1.1.30"
+    config "^3.1.0"
+    lodash "^4.17.11"
+    path "^0.12.7"
+    string-replace-loader venn-city/string-replace-loader
+
 "@venncity/package-info@^1.1.18":
   version "1.1.18"
   resolved "https://registry.yarnpkg.com/@venncity/package-info/-/package-info-1.1.18.tgz#c3257d1b340538bb2c2926472562ca3039041b5e"
   integrity sha512-kgb8kXGs63CZFxtiu4hN/r1dz+wxRbWJn+V9u63QI0gdc6M3tFqXpia7edKnCEMEe+VWIvAn8rFEKes7xLRvqQ==
   dependencies:
     "@venncity/errors" "^1.7.7"
+    lodash "^4.17.11"
+    path "^0.12.7"
+
+"@venncity/package-info@^1.1.30":
+  version "1.1.30"
+  resolved "https://registry.npmjs.org/@venncity/package-info/-/package-info-1.1.30.tgz#1e71164a9a692a460b9f7b9707e5acdbcd4c8547"
+  integrity sha512-l3/BYpES6LrQcFIPUigdGjZ7mfobOYbqYIMbr30iv5YR38TG4kxzJSihRiiTXPV5OZx7nOiZvk0b0zBzf6wzAQ==
+  dependencies:
+    "@venncity/errors" "^1.7.19"
     lodash "^4.17.11"
     path "^0.12.7"
 
@@ -2650,6 +2755,13 @@ agent-base@4, agent-base@^4.3.0:
   integrity sha512-salcGninV0nPrwpGNn4VTXBb1SOuXQBiqbrNXoeizJsHrsL6ERFM2Ne3JUSBWRE6aeNJI2ROP/WEEIDUiDe3cg==
   dependencies:
     es6-promisify "^5.0.0"
+
+agent-base@6:
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/agent-base/-/agent-base-6.0.1.tgz#808007e4e5867decb0ab6ab2f928fbdb5a596db4"
+  integrity sha512-01q25QQDwLSsyfhrKbn8yuur+JNw0H+0Y4JiGIKd3z9aYk/w/2kxD/Upc+t2ZBBSUNff50VjPsSW2YxM8QYKVg==
+  dependencies:
+    debug "4"
 
 agent-base@~4.2.1:
   version "4.2.1"
@@ -4240,6 +4352,11 @@ cookie@0.4.0:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
 
+cookie@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
+  integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
+
 copy-concurrently@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/copy-concurrently/-/copy-concurrently-1.0.5.tgz#92297398cae34937fcafd6ec8139c18051f0b5e0"
@@ -4441,17 +4558,17 @@ debug@3.1.0, debug@=3.1.0:
   dependencies:
     ms "2.0.0"
 
+debug@4, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
 debug@^3.1.0:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
-  dependencies:
-    ms "^2.1.1"
-
-debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
-  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
   dependencies:
     ms "^2.1.1"
 
@@ -6181,6 +6298,14 @@ https-proxy-agent@^2.2.3:
     agent-base "^4.3.0"
     debug "^3.1.0"
 
+https-proxy-agent@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.0.tgz#e2a90542abb68a762e0a0850f6c9edadfd8506b2"
+  integrity sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==
+  dependencies:
+    agent-base "6"
+    debug "4"
+
 humanize-ms@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/humanize-ms/-/humanize-ms-1.2.1.tgz#c46e3159a293f6b896da29316d8b6fe8bb79bbed"
@@ -7870,6 +7995,11 @@ lru-queue@0.1:
   integrity sha1-Jzi9nw089PhEkMVzbEhpmsYyzaM=
   dependencies:
     es5-ext "~0.10.2"
+
+lru_map@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.npmjs.org/lru_map/-/lru_map-0.3.3.tgz#b5c8351b9464cbd750335a79650a0ec0e56118dd"
+  integrity sha1-tcg1G5Rky9dQM1p5ZQoOwOVhGN0=
 
 macos-release@^2.2.0:
   version "2.3.0"
@@ -10577,7 +10707,7 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-string-replace-loader@venn-city/string-replace-loader:
+"string-replace-loader@github:venn-city/string-replace-loader", string-replace-loader@venn-city/string-replace-loader:
   version "2.2.0"
   resolved "https://codeload.github.com/venn-city/string-replace-loader/tar.gz/e7d88bd7e3d11dbaa5aade4672c6ebc706320cb3"
   dependencies:
