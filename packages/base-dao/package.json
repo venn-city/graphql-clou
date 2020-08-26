@@ -35,7 +35,7 @@
     "@graphql-codegen/core": "^1.9.1",
     "@graphql-codegen/typescript": "^1.9.1",
     "@venncity/cascade-delete": "^1.2.47",
-    "@venncity/errors": "^1.5.1",
+    "@venncity/errors": "^1.7.18",
     "@venncity/graphql-pagination-enforce": "^1.2.0",
     "@venncity/graphql-transformers": "^1.6.9",
     "@venncity/nested-config": "^2.0.0",
