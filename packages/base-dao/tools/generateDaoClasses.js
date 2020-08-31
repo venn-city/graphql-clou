@@ -1,6 +1,6 @@
 const { lowerFirst, upperFirst } = require('lodash');
 const pluralize = require('pluralize');
-const { parseInternalTypes } = require('@venncity/prisma-generate-schema');
+const { parseInternalTypes, generateCRUDSchemaFromInternalISDL } = require('@venncity/prisma-generate-schema');
 const ejs = require('ejs');
 const path = require('path');
 
@@ -14,13 +14,16 @@ function generateDaoClass(entityName) {
 }
 
 async function generateDaoClasses(dataModel) {
-  const { types } = parseInternalTypes(dataModel, 'postgres');
+  const sdl = parseInternalTypes(dataModel, 'postgres');
+  const schema = generateCRUDSchemaFromInternalISDL(sdl, 'postgres');
+  const { types } = sdl;
   const daoClasses = {};
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < types.length; i++) {
     const { isEnum, name } = types[i];
-    if (!isEnum) {
+    const schemaType = schema.getType(name);
+    if (!isEnum && schemaType) {
       // eslint-disable-next-line no-await-in-loop
       daoClasses[`${upperFirst(name)}DAO`] = await generateDaoClass(name);
     }
