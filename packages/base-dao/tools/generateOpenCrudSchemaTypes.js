@@ -28,10 +28,11 @@ function generateSchema(dataModel) {
   const schema = generateCRUDSchemaFromInternalISDL(sdl, 'postgres');
 
   sdl.types.forEach(({ isEnum, fields, name: entityName }) => {
-    if (isEnum) {
+    const schemaType = schema.getType(entityName);
+    if (isEnum || !schemaType) {
       return;
     }
-    const schemaFileds = schema.getType(entityName).getFields();
+    const schemaFileds = schemaType.getFields();
 
     fields.forEach(({ relatedField, isRequired, isList, name: filedName }) => {
       if (relatedField === null || isList) {
