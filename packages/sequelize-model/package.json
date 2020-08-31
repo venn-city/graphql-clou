@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-model",
-  "version": "1.8.15",
+  "version": "1.8.16",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -28,8 +28,8 @@
     ]
   },
   "dependencies": {
-    "@venncity/clou-utils": "^2.0.4",
-    "@venncity/opencrud-schema-provider": "^1.4.11",
+    "@venncity/clou-utils": "^2.0.5",
+    "@venncity/opencrud-schema-provider": "^1.4.12",
     "@venncity/sequelize": "1.0.0",
     "aws-xray-sdk": "^3.0.1",
     "cls-hooked": "^4.2.2",
@@ -41,6 +41,7 @@
     "@types/jest": "^26.0.3",
     "@venncity/eslint-config": "^3.0.1",
     "@venncity/jest-config-server": "^3.3.4",
+    "@venncity/nested-config": "*",
     "@venncity/prettier-config-server": "^1.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
@@ -55,8 +56,7 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "sequelize-cli": "^5.5.1",
-    "typescript": "^3.9.6",
-    "@venncity/nested-config": "*"
+    "typescript": "^3.9.6"
   },
   "peerDependencies": {
     "@venncity/nested-config": "*"

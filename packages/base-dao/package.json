@@ -1,6 +1,6 @@
 {
   "name": "@venncity/base-dao",
-  "version": "1.10.11",
+  "version": "1.10.12",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -34,13 +34,13 @@
   "dependencies": {
     "@graphql-codegen/core": "^1.9.1",
     "@graphql-codegen/typescript": "^1.9.1",
-    "@venncity/cascade-delete": "^1.2.48",
-    "@venncity/graphql-transformers": "^1.6.9",
-    "@venncity/opencrud-schema-provider": "^1.4.11",
+    "@venncity/cascade-delete": "^1.2.49",
+    "@venncity/graphql-transformers": "^1.6.10",
+    "@venncity/opencrud-schema-provider": "^1.4.12",
     "@venncity/prisma-generate-schema": "^1.21.0-0",
     "@venncity/sequelize": "1.0.0",
-    "@venncity/sequelize-data-provider": "^1.7.14",
-    "@venncity/sequelize-model": "^1.8.15",
+    "@venncity/sequelize-data-provider": "^1.7.15",
+    "@venncity/sequelize-model": "^1.8.16",
     "async": "^3.1.0",
     "dataloader": "^1.4.0",
     "ejs": "^3.0.1",
@@ -60,9 +60,13 @@
     "@types/lodash": "^4.14.157",
     "@types/pluralize": "^0.0.29",
     "@types/sinon": "^9.0.4",
+    "@venncity/auth": "*",
+    "@venncity/errors": "*",
     "@venncity/eslint-config": "^3.0.1",
-
+    "@venncity/event-pubsub": "*",
+    "@venncity/graphql-pagination-enforce": "*",
     "@venncity/jest-config-server": "^3.4.0",
+    "@venncity/nested-config": "*",
     "@venncity/prettier-config-server": "^1.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
@@ -77,18 +81,13 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "sinon": "^7.5.0",
-    "typescript": "^3.9.6",
-    "@venncity/errors": "*",
-    "@venncity/graphql-pagination-enforce": "*",
-    "@venncity/nested-config": "*",
-    "@venncity/auth": "*",
-    "@venncity/event-pubsub": "*"
+    "typescript": "^3.9.6"
   },
   "peerDependencies": {
-    "@venncity/errors": "*",
-    "@venncity/graphql-pagination-enforce": "*",
-    "@venncity/nested-config": "*",
     "@venncity/auth": "*",
-    "@venncity/event-pubsub": "*"
+    "@venncity/errors": "*",
+    "@venncity/event-pubsub": "*",
+    "@venncity/graphql-pagination-enforce": "*",
+    "@venncity/nested-config": "*"
   }
 }
