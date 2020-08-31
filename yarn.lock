@@ -2081,7 +2081,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@>= 8", "@types/node@>=6":
+"@types/node@*", "@types/node@>= 8":
   version "13.1.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.5.tgz#4d5efc52a1d3e45d13e5ec9f911cbc5b089ccaec"
   integrity sha512-wupvfmtbqRJzjCm1H2diy7wo31Gn1OzvqoxCfQuKM9eSecogzP0WTlrjdq7cf7jgSO2ZX6hxwgRPR8Wt7FA22g==
@@ -2228,26 +2228,30 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@venncity/auth@^6.3.0":
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/@venncity/auth/-/auth-6.10.0.tgz#05e70f60f1ab9ead7f7c76d8901902f6804ea32c"
-  integrity sha512-fdD9rOSPUUbHf5e3UwW0QNk7FIUeFcbE7nY8VAA/hzWdkQ3lyrVYtnHHKZzoy2SEeywPONfI2EIq4vMjZf0U0g==
+"@venncity/auth@*":
+  version "9.1.10"
+  resolved "https://registry.npmjs.org/@venncity/auth/-/auth-9.1.10.tgz#731f63614cb95126a9a5712dd43578de8b836712"
+  integrity sha512-Ixxp7GcU2EQ1n6K/DhqR+JHCodH4KC03qiYY/af5VQHiZzuTD54+ht5Uc0jR3joUvsvmSjYQb9HvFV7UfxXPXQ==
   dependencies:
     "@casl/ability" "^2.5.1"
-    "@venncity/aws-ssm" "^1.3.1"
-    "@venncity/data-clients" "^2.2.7"
-    "@venncity/errors" "^1.5.1"
-    "@venncity/logger" "1.0.5"
-    "@venncity/nested-config" "^2.0.1"
-    "@venncity/schema-consts" "^3.11.2"
-    "@venncity/test-helper" "^4.0.1"
+    "@venncity/aws-ssm" "^1.4.0"
+    "@venncity/data-clients" "^4.1.9"
+    "@venncity/errors" "^1.7.21"
+    "@venncity/jest-config-server" "^3.4.1"
+    "@venncity/logger" "^2.0.10"
+    "@venncity/memcached" "^1.3.9"
+    "@venncity/nested-config" "^2.0.29"
+    "@venncity/schema-consts" "^4.1.7"
+    aws-sdk "^2.713.0"
     config "^3.2.2"
+    graphql-tag "^2.10.3"
     jsonwebtoken "^8.4.0"
     jwk-to-pem "^2.0.1"
     lodash "^4.17.11"
     lodash-deep "^2.0.0"
+    lz-string "^1.4.4"
     moment "^2.23.0"
-    node-cache "^4.2.0"
+    object-hash "^2.0.3"
 
 "@venncity/auth@^8.4.19":
   version "8.5.1"
@@ -2269,13 +2273,6 @@
     lodash "^4.17.11"
     lodash-deep "^2.0.0"
     moment "^2.23.0"
-
-"@venncity/aws-ssm@^1.3.1", "@venncity/aws-ssm@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@venncity/aws-ssm/-/aws-ssm-1.3.3.tgz#32f093b9e902f0f437a3b080eed001a5ceadf373"
-  integrity sha512-cKUz+Y9n3gL0F7NPoaWdhBv6b6zJDVZRzSdAY4olfkh4loARlEzQ3dmbUN4TBc/JG3sHKd9pyyUc1SkuZGqzQQ==
-  dependencies:
-    aws-sdk "^2.493.0"
 
 "@venncity/aws-ssm@^1.4.0":
   version "1.4.0"
@@ -2327,22 +2324,6 @@
     serverless-dynamodb-client "0.0.2"
     yargs-parser "^11.1.1"
 
-"@venncity/data-clients@^2.2.7", "@venncity/data-clients@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@venncity/data-clients/-/data-clients-2.4.1.tgz#730c79348b7cf60adbcf58f0c15cc7f7ebf61c0c"
-  integrity sha512-NJFsHNkyax03ae+FGnBZCgm7M7L5LVxZfRm5C18BPiporSDddaqUsBv3VAPALd3N1690ZN8+OkXhlZ+kYBr/Xg==
-  dependencies:
-    "@venncity/nested-config" "^2.0.4"
-    apollo-boost "^0.4.7"
-    aws-sdk "^2.382.0"
-    axios "^0.18.0"
-    config "3.2.2"
-    cross-fetch "^3.0.0"
-    graphql "^14.5.8"
-    jsonwebtoken "^8.5.1"
-    lodash "^4.17.15"
-    moment "^2.24.0"
-
 "@venncity/data-clients@^4.0.0", "@venncity/data-clients@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@venncity/data-clients/-/data-clients-4.0.2.tgz#86100f8de4cf48ab09422e5e87b894297370835b"
@@ -2363,16 +2344,35 @@
     lodash "^4.17.15"
     moment "^2.24.0"
 
-"@venncity/dedup@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@venncity/dedup/-/dedup-1.0.5.tgz#a5a0cbc3a27cdee9d78455c6c3bd08857e6757b9"
-  integrity sha512-HSZGRHgMg0+YpKNcOb7eOX449c93j+pSXLWiDMpqAPgCT8N4BlGFobKHCbplI/AUubyWqxaZcwUy1EQLPzuShA==
+"@venncity/data-clients@^4.1.9":
+  version "4.1.9"
+  resolved "https://registry.npmjs.org/@venncity/data-clients/-/data-clients-4.1.9.tgz#6e8fffa59c14a0bfff4437f443c956ff40225c50"
+  integrity sha512-e6ZaNmVCcp2YTf4fLm3YoujAVRVROWcOw3ICYM3R3XKmiCigcDcPItQBiNWAQBd2kj2WQKtGDOydCVLse6LMGQ==
   dependencies:
-    "@venncity/aws-ssm" "^1.3.3"
-    "@venncity/nested-config" "^2.0.4"
-    es6-promisify "^6.0.2"
-    lodash "^4.17.15"
-    memcached "^2.2.2"
+    "@venncity/memcached" "^1.3.9"
+    "@venncity/nested-config" "^2.0.28"
+    apollo-client "^2.6.8"
+    aws-sdk "^2.382.0"
+    aws-xray-sdk "^3.0.1"
+    axios "^0.19.2"
+    cls-hooked "^4.2.2"
+    config "3.2.2"
+    cross-fetch "^3.0.0"
+    dataloader "^2.0.0"
+    graphql "^14.6.0"
+    graphql-tag "^2.10.1"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.19"
+    moment "^2.24.0"
+    object-hash "^2.0.3"
+
+"@venncity/dedup@^1.1.15":
+  version "1.1.15"
+  resolved "https://registry.npmjs.org/@venncity/dedup/-/dedup-1.1.15.tgz#0864c81b3aef1b8c55532059973cac3e474cf315"
+  integrity sha512-iwu9+ihWezhapy/qlzEyJGlyjvAB+VcYy3lEJVFogmEbyKlvOpHLOiqFl9gaIIrvKZJn5Qmv94OZdZ2NARWJOA==
+  dependencies:
+    "@venncity/memcached" "^1.3.9"
+    "@venncity/nested-config" "^2.0.28"
 
 "@venncity/dedup@^1.1.3":
   version "1.1.5"
@@ -2382,22 +2382,14 @@
     "@venncity/memcached" "^1.3.0"
     "@venncity/nested-config" "^2.0.15"
 
-"@venncity/errors@^1.5.1", "@venncity/errors@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@venncity/errors/-/errors-1.6.1.tgz#510642e4c5d5924d74439ff91d83913aa6a5218f"
-  integrity sha512-LAka2LrpuuWEdZkunMpOVyfhKsvkPyYtTa6pENkoVAFkrUDujiWuuG1NCtkUpggg7LHfQ91h4+Tg1YkoDmkG7A==
-  dependencies:
-    joi "^14.3.1"
-    verror "^1.10.0"
-
-"@venncity/errors@^1.7.18", "@venncity/errors@^1.7.19":
-  version "1.7.19"
-  resolved "https://registry.npmjs.org/@venncity/errors/-/errors-1.7.19.tgz#4aa66b54a66b4af98fd584c44d9870e6c359f073"
-  integrity sha512-cqdgfJDIre/IdOo67aBZCQAT2Hmeceqi5cRketj/H/0DpLKHEtNpJVCTkepKV/Ivlr61gH8Hp8FlMzcs3piDHw==
+"@venncity/errors@*", "@venncity/errors@^1.7.21":
+  version "1.7.21"
+  resolved "https://registry.npmjs.org/@venncity/errors/-/errors-1.7.21.tgz#93e35333067745971c17ed644074779ce0f576a2"
+  integrity sha512-ZOdaNAtvFiJkiJDguRrxdq0PLfsyv0NWV46I9M9cvNq7Ew90wCpBSjlF51FDse72OZy3DZs5gJ60u41pIkDK6A==
   dependencies:
     "@sentry/node" "^5.21.4"
     "@sentry/types" "^5.21.4"
-    "@venncity/nested-config" "^2.0.27"
+    "@venncity/nested-config" "^2.0.29"
     fast-safe-stringify "^2.0.7"
     joi "^14.3.1"
     lodash "^4.17.15"
@@ -2425,24 +2417,24 @@
     "@typescript-eslint/eslint-plugin" "^2.10.0"
     "@typescript-eslint/parser" "^2.10.0"
 
-"@venncity/event-pubsub@^1.3.6":
-  version "1.3.16"
-  resolved "https://registry.yarnpkg.com/@venncity/event-pubsub/-/event-pubsub-1.3.16.tgz#8ecb0b92d2528610f42a3d543eb4382f4d0ba165"
-  integrity sha512-cPdbyqcK8G65QsMGVV184Thh2V0W086FbuGb7mxQbHvqnCiRRo67Hgc05khDtgsRdRqXUUf/a4FywGTO+34VDg==
+"@venncity/event-pubsub@*":
+  version "1.3.51"
+  resolved "https://registry.npmjs.org/@venncity/event-pubsub/-/event-pubsub-1.3.51.tgz#c41d4ad5f6673d4c1f61df159dc75d814799b244"
+  integrity sha512-EQLodiS+H04nIARnd3oGrx67f1Tr7qpm6Z/UkMZfYV2mNWdE2inPPo0lgZ0L5B9CBEZDb0FVfLkMquWA4ViKNw==
   dependencies:
-    "@venncity/aws-ssm" "^1.3.3"
-    "@venncity/dedup" "^1.0.5"
-    "@venncity/nested-config" "^2.0.4"
+    "@venncity/aws-ssm" "^1.4.0"
+    "@venncity/dedup" "^1.1.15"
+    "@venncity/nested-config" "^2.0.28"
     aws-sdk "^2.398.0"
     config "^3.0.1"
 
-"@venncity/graphql-pagination-enforce@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@venncity/graphql-pagination-enforce/-/graphql-pagination-enforce-1.2.0.tgz#0596606da7a46bc4e23100de6f0e7b4c176d72cc"
-  integrity sha512-zNjmOJiJYFrLQpH5ySpomV8jbDZj88DwE/gwve5Rl83dBKZaYGDXZsRHypl/LHSY1p27/3Ze3tT/jAcOMcX+rw==
+"@venncity/graphql-pagination-enforce@*":
+  version "1.3.7"
+  resolved "https://registry.npmjs.org/@venncity/graphql-pagination-enforce/-/graphql-pagination-enforce-1.3.7.tgz#303bfb9d1160ee219c029ab8a0b4694cc4a52991"
+  integrity sha512-baIttfBEVvZqyoqJl/4o4RN+8tyjsOBFhxgWlc7oR4o0slJP9Bs2awMWRZRWVV3tYaWZ5WiL/SMz8m5j9Ol3QQ==
   dependencies:
-    "@venncity/errors" "^1.6.1"
-    "@venncity/nested-config" "^2.0.4"
+    "@venncity/errors" "^1.7.21"
+    "@venncity/nested-config" "^2.0.29"
 
 "@venncity/graphql-pagination-enforce@^1.2.11":
   version "1.2.11"
@@ -2492,15 +2484,33 @@
     moment "^2.24.0"
     ts-jest "^24.3.0"
 
-"@venncity/logger@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@venncity/logger/-/logger-1.0.5.tgz#2cc2e4a4a92361dea4fc3d4d156eea29cecbe1de"
-  integrity sha512-GedowCEYG0oVMrnN5WGfG9IMq1px077zfz1K2dGtHtvj4hf/By+cTwmCOrSpTxy/OW4tbHa2i9ooyjRIOXeWcA==
+"@venncity/jest-config-server@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.npmjs.org/@venncity/jest-config-server/-/jest-config-server-3.4.1.tgz#dff07ef6a354b5ac807421df1fa3c5185acdbdb8"
+  integrity sha512-UaBiYGbD8DRuIbm3PxmP09CgwFckGr6DaB1QrQCE9n9l1xBGZtBTPGqVanfnTm0lc3UZ6qv66SzhZN2+ppyApw==
   dependencies:
-    circular-json "^0.5.9"
+    chalk "^4.0.0"
+    dotenv "^8.2.0"
+    graphql-import "^0.7.1"
+    jest "^24.9.0"
+    jest-junit "^6.4.0"
+    jest-preset-typescript "^1.2.0"
+    jest-sinon "1.0.1"
+    lodash "^4.17.15"
+    moment "^2.24.0"
+    ts-jest "^24.3.0"
+
+"@venncity/logger@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.npmjs.org/@venncity/logger/-/logger-2.0.10.tgz#67b6a776d95ebef2f6d61d6beb87e94c78b8ac24"
+  integrity sha512-jyNVkmDq7QFttfQpkoFX2u3p0cXgiNCdQgEYm7WFeS8gFOT+MFYfVwsEcd/Ctl8jU73lc2VwdhsrDADZdD/uvw==
+  dependencies:
+    "@venncity/errors" "^1.7.21"
+    fast-safe-stringify "^2.0.6"
     lodash "^4.17.10"
     pino "^5.10.5"
     pino-pretty "^2.5.0"
+    stack-trace "0.0.10"
 
 "@venncity/logger@^2.0.3", "@venncity/logger@^2.0.4":
   version "2.0.4"
@@ -2529,6 +2539,22 @@
     p-memoize "^4.0.0"
     retry-as-promised "^3.2.0"
 
+"@venncity/memcached@^1.3.9":
+  version "1.3.9"
+  resolved "https://registry.npmjs.org/@venncity/memcached/-/memcached-1.3.9.tgz#0877879c846add011b08bf28649fac5f216624f0"
+  integrity sha512-cXipOMHTx9YEvTxbJgnsivbV2qVqjMC/JgJ7xVNaopQxm6MObiDBd+A2EtmI5cfHDqeVQwpZsohpn7uzhnRyDA==
+  dependencies:
+    "@venncity/aws-ssm" "^1.4.0"
+    "@venncity/nested-config" "^2.0.28"
+    cache-manager "^3.3.0"
+    cache-manager-memcached-store "^2.2.0"
+    es6-promisify "^6.1.0"
+    lodash "^4.17.15"
+    memcache-plus "0.2.20"
+    object-hash "^2.0.3"
+    p-memoize "^4.0.0"
+    retry-as-promised "^3.2.0"
+
 "@venncity/monitor@^1.0.26":
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/@venncity/monitor/-/monitor-1.0.28.tgz#7bdc95ce1df1fadfb3a1d47fbdbcfcaf8959f653"
@@ -2538,12 +2564,12 @@
     aws-xray-sdk "^3.0.1"
     uuid "^8.0.0"
 
-"@venncity/nested-config@^2.0.0", "@venncity/nested-config@^2.0.1", "@venncity/nested-config@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@venncity/nested-config/-/nested-config-2.0.4.tgz#1ffaf2968ed45c3305654874c37df41a60a4a561"
-  integrity sha512-1eU2MrvJ40luDzpp3GxtuqqkZzV1XxaKJav0iyzaFGxd5HDt50y1UykV1uNufuNFVFdl9yF2PjQggbZvCHLzZg==
+"@venncity/nested-config@*", "@venncity/nested-config@^2.0.28", "@venncity/nested-config@^2.0.29":
+  version "2.0.29"
+  resolved "https://registry.npmjs.org/@venncity/nested-config/-/nested-config-2.0.29.tgz#ac0d2d2156771a550ab18602159b93e4ecc6c726"
+  integrity sha512-USRhT9yJEnbmOet/bFwOet1uSDc3s8ywDd8UjeegxuDvDM0OmidMPtHCCpabNw45BZEC6Kjxb/RdXsh4JXbXsQ==
   dependencies:
-    "@venncity/package-info" "^1.1.8"
+    "@venncity/package-info" "^1.1.32"
     config "^3.1.0"
     lodash "^4.17.11"
     path "^0.12.7"
@@ -2560,17 +2586,6 @@
     path "^0.12.7"
     string-replace-loader venn-city/string-replace-loader
 
-"@venncity/nested-config@^2.0.27":
-  version "2.0.27"
-  resolved "https://registry.npmjs.org/@venncity/nested-config/-/nested-config-2.0.27.tgz#22120005b1a3dd963c7bcf409d0dd4fd53b0bac7"
-  integrity sha512-bYkBQWlLvuTPzwdV3olLM2RzOr/QoWCpWlt4owfkHzDxIRvS3sV4pJdrwJ7IM5txQHrlZyWqgR+waobBxzbXqg==
-  dependencies:
-    "@venncity/package-info" "^1.1.30"
-    config "^3.1.0"
-    lodash "^4.17.11"
-    path "^0.12.7"
-    string-replace-loader venn-city/string-replace-loader
-
 "@venncity/package-info@^1.1.18":
   version "1.1.18"
   resolved "https://registry.yarnpkg.com/@venncity/package-info/-/package-info-1.1.18.tgz#c3257d1b340538bb2c2926472562ca3039041b5e"
@@ -2580,21 +2595,12 @@
     lodash "^4.17.11"
     path "^0.12.7"
 
-"@venncity/package-info@^1.1.30":
-  version "1.1.30"
-  resolved "https://registry.npmjs.org/@venncity/package-info/-/package-info-1.1.30.tgz#1e71164a9a692a460b9f7b9707e5acdbcd4c8547"
-  integrity sha512-l3/BYpES6LrQcFIPUigdGjZ7mfobOYbqYIMbr30iv5YR38TG4kxzJSihRiiTXPV5OZx7nOiZvk0b0zBzf6wzAQ==
+"@venncity/package-info@^1.1.32":
+  version "1.1.32"
+  resolved "https://registry.npmjs.org/@venncity/package-info/-/package-info-1.1.32.tgz#659692c74d61fd1b4d8f9f4fd06380ed8542edb7"
+  integrity sha512-PbaHR/OguIEJL27L5vibtS3AnxvL7tTurkLdTZBwysDyvWkwcc3lccrbLK0HCk3IfBlXUkT8g+uRiaswJcm9Pg==
   dependencies:
-    "@venncity/errors" "^1.7.19"
-    lodash "^4.17.11"
-    path "^0.12.7"
-
-"@venncity/package-info@^1.1.8":
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/@venncity/package-info/-/package-info-1.1.8.tgz#f0b8d7d01b2c85707611555a86476638475f525f"
-  integrity sha512-YkAm4+ghJA442jvQqZlyUVwNha7dKhCS2Po3kpKVkDoPO9Jaa+3PPMv8cwvxf968V3kWYvlJyJJSzPNwyMlUVg==
-  dependencies:
-    "@venncity/errors" "^1.6.1"
+    "@venncity/errors" "^1.7.21"
     lodash "^4.17.11"
     path "^0.12.7"
 
@@ -2612,13 +2618,6 @@
     pluralize "^7.0.0"
     popsicle "10"
     prisma-datamodel "npm:@venncity/prisma-datamodel@latest"
-
-"@venncity/schema-consts@^3.11.2", "@venncity/schema-consts@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/@venncity/schema-consts/-/schema-consts-3.13.0.tgz#1f89913fd1f2e62d5958bfdb323cd5f251dc2512"
-  integrity sha512-erFg1EI0Brnq+uUwzSY6AbyqH/MwUhSkmzWRpR1NMEzP4R7xekt3kMG4THYEIVOr1myCACdJN5hDsyRkN1eBgw==
-  dependencies:
-    graphql "^14.5.8"
 
 "@venncity/schema-consts@^4.1.7":
   version "4.1.7"
@@ -2654,25 +2653,6 @@
   integrity sha512-66/9FjHXWIPI25Mq4uwp774gZWf5Xde1804+uXfy6VeFsfc79NY5xf3pzc558ejNBFFANm9XfGsdTKvu3cqt1A==
   dependencies:
     bluebird "^3.5.0"
-
-"@venncity/test-helper@^4.0.1":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@venncity/test-helper/-/test-helper-4.1.4.tgz#ac089a46efa93a041b8db617f87d25a938f7da5a"
-  integrity sha512-7J5w5gsU9H1JcxSR//4rW3KcynKhE5D2ZlLPg+8b4YXSU/SZahqI/3j8yVQEKd5gzxXdl7nd6g0qfUXkCo7QdA==
-  dependencies:
-    "@venncity/data-clients" "^2.4.1"
-    "@venncity/schema-consts" "^3.13.0"
-    faker "^4.1.0"
-    lodash "^4.17.14"
-    moment "^2.24.0"
-
-"@wry/context@^0.4.0":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@wry/context/-/context-0.4.4.tgz#e50f5fa1d6cfaabf2977d1fda5ae91717f8815f8"
-  integrity sha512-LrKVLove/zw6h2Md/KZyWxIkFM6AoyKp71OqpH9Hiip1csjPVoD3tPxlbQUNxEnHENks3UGgNpSBCAfq9KWuag==
-  dependencies:
-    "@types/node" ">=6"
-    tslib "^1.9.3"
 
 "@wry/equality@^0.1.2":
   version "0.1.9"
@@ -2875,21 +2855,6 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-apollo-boost@^0.4.7:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/apollo-boost/-/apollo-boost-0.4.7.tgz#b0680ab0893e3f8b1ab1058dcfa2b00cb6440d79"
-  integrity sha512-jfc3aqO0vpCV+W662EOG5gq4AH94yIsvSgAUuDvS3o/Z+8Joqn4zGC9CgLCDHusK30mFgtsEgwEe0pZoedohsQ==
-  dependencies:
-    apollo-cache "^1.3.4"
-    apollo-cache-inmemory "^1.6.5"
-    apollo-client "^2.6.7"
-    apollo-link "^1.0.6"
-    apollo-link-error "^1.0.3"
-    apollo-link-http "^1.3.1"
-    graphql-tag "^2.4.2"
-    ts-invariant "^0.4.0"
-    tslib "^1.10.0"
-
 apollo-cache-control@^0.8.10:
   version "0.8.10"
   resolved "https://registry.yarnpkg.com/apollo-cache-control/-/apollo-cache-control-0.8.10.tgz#c104481ffa77ba32127ad8351ba8948c6382ff8d"
@@ -2898,25 +2863,6 @@ apollo-cache-control@^0.8.10:
     apollo-server-env "^2.4.3"
     graphql-extensions "^0.10.9"
 
-apollo-cache-inmemory@^1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.6.5.tgz#2ccaa3827686f6ed7fb634203dbf2b8d7015856a"
-  integrity sha512-koB76JUDJaycfejHmrXBbWIN9pRKM0Z9CJGQcBzIOtmte1JhEBSuzsOUu7NQgiXKYI4iGoMREcnaWffsosZynA==
-  dependencies:
-    apollo-cache "^1.3.4"
-    apollo-utilities "^1.3.3"
-    optimism "^0.10.0"
-    ts-invariant "^0.4.0"
-    tslib "^1.10.0"
-
-apollo-cache@1.3.4, apollo-cache@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.3.4.tgz#0c9f63c793e1cd6e34c450f7668e77aff58c9a42"
-  integrity sha512-7X5aGbqaOWYG+SSkCzJNHTz2ZKDcyRwtmvW4mGVLRqdQs+HxfXS4dUS2CcwrAj449se6tZ6NLUMnjko4KMt3KA==
-  dependencies:
-    apollo-utilities "^1.3.3"
-    tslib "^1.10.0"
-
 apollo-cache@1.3.5:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.3.5.tgz#9dbebfc8dbe8fe7f97ba568a224bca2c5d81f461"
@@ -2924,20 +2870,6 @@ apollo-cache@1.3.5:
   dependencies:
     apollo-utilities "^1.3.4"
     tslib "^1.10.0"
-
-apollo-client@^2.6.7:
-  version "2.6.8"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.6.8.tgz#01cebc18692abf90c6b3806414e081696b0fa537"
-  integrity sha512-0zvJtAcONiozpa5z5zgou83iEKkBaXhhSSXJebFHRXs100SecDojyUWKjwTtBPn9HbM6o5xrvC5mo9VQ5fgAjw==
-  dependencies:
-    "@types/zen-observable" "^0.8.0"
-    apollo-cache "1.3.4"
-    apollo-link "^1.0.0"
-    apollo-utilities "1.3.3"
-    symbol-observable "^1.0.2"
-    ts-invariant "^0.4.0"
-    tslib "^1.10.0"
-    zen-observable "^0.8.0"
 
 apollo-client@^2.6.8:
   version "2.6.10"
@@ -2999,34 +2931,7 @@ apollo-graphql@^0.3.4:
     apollo-env "^0.6.0"
     lodash.sortby "^4.7.0"
 
-apollo-link-error@^1.0.3:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/apollo-link-error/-/apollo-link-error-1.1.12.tgz#e24487bb3c30af0654047611cda87038afbacbf9"
-  integrity sha512-psNmHyuy3valGikt/XHJfe0pKJnRX19tLLs6P6EHRxg+6q6JMXNVLYPaQBkL0FkwdTCB0cbFJAGRYCBviG8TDA==
-  dependencies:
-    apollo-link "^1.2.13"
-    apollo-link-http-common "^0.2.15"
-    tslib "^1.9.3"
-
-apollo-link-http-common@^0.2.15:
-  version "0.2.15"
-  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.15.tgz#304e67705122bf69a9abaded4351b10bc5efd6d9"
-  integrity sha512-+Heey4S2IPsPyTf8Ag3PugUupASJMW894iVps6hXbvwtg1aHSNMXUYO5VG7iRHkPzqpuzT4HMBanCTXPjtGzxg==
-  dependencies:
-    apollo-link "^1.2.13"
-    ts-invariant "^0.4.0"
-    tslib "^1.9.3"
-
-apollo-link-http@^1.3.1:
-  version "1.5.16"
-  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.16.tgz#44fe760bcc2803b8a7f57fc9269173afb00f3814"
-  integrity sha512-IA3xA/OcrOzINRZEECI6IdhRp/Twom5X5L9jMehfzEo2AXdeRwAMlH5LuvTZHgKD8V1MBnXdM6YXawXkTDSmJw==
-  dependencies:
-    apollo-link "^1.2.13"
-    apollo-link-http-common "^0.2.15"
-    tslib "^1.9.3"
-
-apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.13, apollo-link@^1.2.3:
+apollo-link@^1.0.0, apollo-link@^1.2.3:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.13.tgz#dff00fbf19dfcd90fddbc14b6a3f9a771acac6c4"
   integrity sha512-+iBMcYeevMm1JpYgwDEIDt/y0BB7VWyvlm/7x+TIPNLHCTCMgcEgDuW5kH86iQZWo0I7mNwQiTOz+/3ShPFmBw==
@@ -3136,20 +3041,20 @@ apollo-tracing@^0.8.10:
     apollo-server-env "^2.4.3"
     graphql-extensions "^0.10.9"
 
-apollo-utilities@1.3.3, apollo-utilities@^1.0.1, apollo-utilities@^1.3.0, apollo-utilities@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.3.tgz#f1854715a7be80cd810bc3ac95df085815c0787c"
-  integrity sha512-F14aX2R/fKNYMvhuP2t9GD9fggID7zp5I96MF5QeKYWDWTrkRdHRp4+SVfXUVN+cXOaB/IebfvRtzPf25CM0zw==
+apollo-utilities@1.3.4, apollo-utilities@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.4.tgz#6129e438e8be201b6c55b0f13ce49d2c7175c9cf"
+  integrity sha512-pk2hiWrCXMAy2fRPwEyhvka+mqwzeP60Jr1tRYi5xru+3ko94HI9o6lK0CT33/w4RDlxWchmdhDCrvdr+pHCig==
   dependencies:
     "@wry/equality" "^0.1.2"
     fast-json-stable-stringify "^2.0.0"
     ts-invariant "^0.4.0"
     tslib "^1.10.0"
 
-apollo-utilities@1.3.4, apollo-utilities@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.4.tgz#6129e438e8be201b6c55b0f13ce49d2c7175c9cf"
-  integrity sha512-pk2hiWrCXMAy2fRPwEyhvka+mqwzeP60Jr1tRYi5xru+3ko94HI9o6lK0CT33/w4RDlxWchmdhDCrvdr+pHCig==
+apollo-utilities@^1.0.1, apollo-utilities@^1.3.0:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.3.3.tgz#f1854715a7be80cd810bc3ac95df085815c0787c"
+  integrity sha512-F14aX2R/fKNYMvhuP2t9GD9fggID7zp5I96MF5QeKYWDWTrkRdHRp4+SVfXUVN+cXOaB/IebfvRtzPf25CM0zw==
   dependencies:
     "@wry/equality" "^0.1.2"
     fast-json-stable-stringify "^2.0.0"
@@ -3381,6 +3286,21 @@ aws-sdk@^2.291.0, aws-sdk@^2.3.19, aws-sdk@^2.382.0, aws-sdk@^2.398.0, aws-sdk@^
   integrity sha512-ySgOVN7plt4g3SmbvAz6fD8aefcmU/IjgogiEgal5BZB5ad5o99MOFwcTILRSLF9rDyoKAHNE3hx0Jcie6XsBQ==
   dependencies:
     buffer "4.9.1"
+    events "1.1.1"
+    ieee754 "1.1.13"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.3.2"
+    xml2js "0.4.19"
+
+aws-sdk@^2.713.0:
+  version "2.742.0"
+  resolved "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.742.0.tgz#02373d324ca8201cd3fc8c1b82eff8b48b593f4c"
+  integrity sha512-zntDB0BpMn/y+B4RQvXuqY8DmJDYPkeFjZ6BbZ6vdNrsdB5TRz8p53ats4D3mLG068RB4M4AmVioFnU69nDXyQ==
+  dependencies:
+    buffer "4.9.2"
     events "1.1.1"
     ieee754 "1.1.13"
     jmespath "0.15.0"
@@ -3718,6 +3638,15 @@ buffer@4.9.1:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+buffer@4.9.2:
+  version "4.9.2"
+  resolved "https://registry.npmjs.org/buffer/-/buffer-4.9.2.tgz#230ead344002988644841ab0244af8c44bbe3ef8"
+  integrity sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
+    isarray "^1.0.0"
+
 builtins@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
@@ -3945,11 +3874,6 @@ ci-info@^2.0.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-circular-json@^0.5.9:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.5.9.tgz#932763ae88f4f7dead7a0d09c8a51a4743a53b1d"
-  integrity sha512-4ivwqHpIFJZBuhN3g/pEcdbnGUywkBblloGbkglyloVjjR3uT6tieI89MVOfbP2tHX5sgb01FuLgAOzebNlJNQ==
-
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -4030,11 +3954,6 @@ clone-deep@^4.0.1:
     is-plain-object "^2.0.4"
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
-
-clone@2.x:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
-  integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
 clone@^1.0.2:
   version "1.0.4"
@@ -4534,6 +4453,11 @@ dataloader@^1.4.0:
   resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-1.4.0.tgz#bca11d867f5d3f1b9ed9f737bd15970c65dff5c8"
   integrity sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==
 
+dataloader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/dataloader/-/dataloader-2.0.0.tgz#41eaf123db115987e21ca93c005cd7753c55fe6f"
+  integrity sha512-YzhyDAwA4TaQIhM5go+vCLmU0UikghC/t9DTQYZR2M/UvZ1MdOhPezSDZcjj9uqQJOMqjLcpWtyW2iNINdlatQ==
+
 date-fns@^1.27.2:
   version "1.30.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
@@ -5007,11 +4931,6 @@ es6-promisify@^5.0.0:
   integrity sha1-UQnWLz5W6pZ8S2NQWu8IKRyKUgM=
   dependencies:
     es6-promise "^4.0.3"
-
-es6-promisify@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-6.0.2.tgz#525c23725b8510f5f1f2feb5a1fbad93a93e29b4"
-  integrity sha512-eO6vFm0JvqGzjWIQA6QVKjxpmELfhWbDUWHm1rPfIbn55mhKPiAa5xpLmQWJrNa629ZIeQ8ZvMAi13kvrjK6Mg==
 
 es6-promisify@^6.1.0:
   version "6.1.1"
@@ -6053,7 +5972,7 @@ graphql-subscriptions@^1.0.0:
   dependencies:
     iterall "^1.2.1"
 
-graphql-tag@2.10.1, graphql-tag@^2.4.2, graphql-tag@^2.9.2:
+graphql-tag@2.10.1, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
@@ -6205,7 +6124,7 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hashring@3.2.x, hashring@^3.2.0:
+hashring@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/hashring/-/hashring-3.2.0.tgz#fda4efde8aa22cdb97fb1d2a65e88401e1c144ce"
   integrity sha1-/aTv3oqiLNuX+x0qZeiEAeHBRM4=
@@ -6928,13 +6847,6 @@ iterall@^1.1.3, iterall@^1.2.1, iterall@^1.2.2:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
   integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
-
-jackpot@>=0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/jackpot/-/jackpot-0.0.6.tgz#3cff064285cbf66f4eab2593c90bce816a821849"
-  integrity sha1-PP8GQoXL9m9OqyWTyQvOgWqCGEk=
-  dependencies:
-    retry "0.6.0"
 
 jest-changed-files@^24.9.0:
   version "24.9.0"
@@ -7899,6 +7811,11 @@ lodash@4.17.15, lodash@>=3.7.0, lodash@^4.14.0, lodash@^4.17.10, lodash@^4.17.11
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
+lodash@^4.17.19:
+  version "4.17.20"
+  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
+  integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
+
 log-symbols@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-1.0.2.tgz#376ff7b58ea3086a0f09facc74617eca501e1a18"
@@ -8000,6 +7917,11 @@ lru_map@^0.3.3:
   version "0.3.3"
   resolved "https://registry.npmjs.org/lru_map/-/lru_map-0.3.3.tgz#b5c8351b9464cbd750335a79650a0ec0e56118dd"
   integrity sha1-tcg1G5Rky9dQM1p5ZQoOwOVhGN0=
+
+lz-string@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npmjs.org/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
+  integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
 macos-release@^2.2.0:
   version "2.3.0"
@@ -8116,14 +8038,6 @@ memcache-plus@0.2.20:
     immutable "^3.8.1"
     lodash "^4.14.0"
     ramda "^0.24.1"
-
-memcached@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/memcached/-/memcached-2.2.2.tgz#68f86ccfd84bcf93cc25ed46d6d7fc0c7521c9d5"
-  integrity sha1-aPhsz9hLz5PMJe1G1tf8DHUhydU=
-  dependencies:
-    hashring "3.2.x"
-    jackpot ">=0.0.6"
 
 memoizee@^0.4.14:
   version "0.4.14"
@@ -8523,14 +8437,6 @@ no-case@^3.0.3:
     lower-case "^2.0.1"
     tslib "^1.10.0"
 
-node-cache@^4.2.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/node-cache/-/node-cache-4.2.1.tgz#efd8474dee4edec4138cdded580f5516500f7334"
-  integrity sha512-BOb67bWg2dTyax5kdef5WfU3X8xu4wPg+zHzkvls0Q/QpYycIFRLEEIdAx9Wma43DxG6Qzn4illdZoYseKWa4A==
-  dependencies:
-    clone "2.x"
-    lodash "^4.17.15"
-
 node-fetch-npm@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/node-fetch-npm/-/node-fetch-npm-2.0.2.tgz#7258c9046182dca345b4208eda918daf33697ff7"
@@ -8846,13 +8752,6 @@ opencollective-postinstall@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz#5657f1bede69b6e33a45939b061eb53d3c6c3a89"
   integrity sha512-pVOEP16TrAO2/fjej1IdOyupJY8KDUM1CvsaScRbw6oddvpQoOfGk4ywha0HKKVAD6RkW4x6Q+tNBwhf3Bgpuw==
-
-optimism@^0.10.0:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.10.3.tgz#163268fdc741dea2fb50f300bedda80356445fd7"
-  integrity sha512-9A5pqGoQk49H6Vhjb9kPgAeeECfUDF6aIICbMDL23kDLStBn1MWk3YvcZ4xWF9CsSf6XEgvRLkXy4xof/56vVw==
-  dependencies:
-    "@wry/context" "^0.4.0"
 
 optimist@^0.6.1:
   version "0.6.1"
@@ -10074,11 +9973,6 @@ retry@0.12.0:
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
   integrity sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=
 
-retry@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/retry/-/retry-0.6.0.tgz#1c010713279a6fd1e8def28af0c3ff1871caa537"
-  integrity sha1-HAEHEyeab9Ho3vKK8MP/GHHKpTc=
-
 retry@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
@@ -10707,7 +10601,7 @@ string-length@^2.0.0:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
 
-"string-replace-loader@github:venn-city/string-replace-loader", string-replace-loader@venn-city/string-replace-loader:
+string-replace-loader@venn-city/string-replace-loader:
   version "2.2.0"
   resolved "https://codeload.github.com/venn-city/string-replace-loader/tar.gz/e7d88bd7e3d11dbaa5aade4672c6ebc706320cb3"
   dependencies:
