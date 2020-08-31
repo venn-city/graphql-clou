@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@venncity/clou-utils": "^2.0.4",
-    "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.11",
     "@venncity/sequelize": "1.0.0",
     "aws-xray-sdk": "^3.0.1",
@@ -56,6 +55,10 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "sequelize-cli": "^5.5.1",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "@venncity/nested-config": "*"
+  },
+  "peerDependencies": {
+    "@venncity/nested-config": "*"
   }
 }

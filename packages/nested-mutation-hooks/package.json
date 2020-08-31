@@ -30,7 +30,6 @@
     ]
   },
   "dependencies": {
-    "@venncity/nested-config": "^2.0.0",
     "@venncity/opencrud-schema-provider": "^1.4.11",
     "@venncity/sequelize": "1.0.0",
     "@venncity/sequelize-data-provider": "^1.7.14",
@@ -61,6 +60,10 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "sinon": "^7.5.0",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "@venncity/nested-config": "*"
+  },
+  "peerDependencies": {
+    "@venncity/nested-config": "*"
   }
 }
