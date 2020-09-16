@@ -266,7 +266,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         entityName
       });
       entitiesToUpdate = await asyncMap(entitiesToUpdate, hooks.postFetch);
-      data = await hooks.preSave(data, entitiesToUpdate, context);
+      data = await asyncMap(entitiesToUpdate, async entityToUpdate => hooks.preSave(data, entityToUpdate, context));
       await dataProvider.updateManyEntities(entityName, data, transformedWhere);
       const updatedEntities = await getAllEntitiesInternal({ where: transformedWhere });
 
