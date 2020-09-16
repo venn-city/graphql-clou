@@ -3,7 +3,7 @@ import express from 'express';
 import { sq } from '@venncity/sequelize-model';
 import { startApolloServer } from './index';
 
-const models = require('./../../../../test/model');
+const models = require('../../../../test/model');
 
 sq.init(models);
 

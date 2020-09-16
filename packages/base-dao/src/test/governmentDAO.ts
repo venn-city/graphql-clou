@@ -1,6 +1,7 @@
 import baseDAO from '../baseDAO';
 import { daoAuth } from './auth/daoAuth';
 import { publishCrudEvent } from './publishCRUD/crudPublish';
+import { randomValuesByType } from './baseTestForDAOs';
 
 // eslint-disable-next-line no-unused-vars
 function buildAuthContext(context) {
@@ -29,6 +30,9 @@ async function postCreate(entityToCreate, creationResult) {
 }
 
 async function preSave(government) {
+  if (government.name === 'preSave') {
+    return { name: `${government.name}_${randomValuesByType('string')}` };
+  }
   return government;
 }
 

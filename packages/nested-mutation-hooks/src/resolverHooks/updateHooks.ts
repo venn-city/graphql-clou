@@ -315,4 +315,4 @@ export async function postUpdate(postUpdateCalls, updatedEntity) {
 export default {
   preUpdate,
   postUpdate
-}
+};

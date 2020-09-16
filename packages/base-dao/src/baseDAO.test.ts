@@ -32,6 +32,17 @@ describe('BaseDao', () => {
       governmentDAO = createAllDAOs().governmentDAO;
     });
 
+    test('update many with preSave', async () => {
+      const createdGovernment1 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const createdGovernment2 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      await governmentDAO.updateManyGovernments(serviceContext, { data: { name: 'preSave' }, id_in: [createdGovernment1.id, createdGovernment2.id] });
+      const updatedGovernment1 = await governmentDAO.government(serviceContext, { id: createdGovernment1.id });
+      const updatedGovernment2 = await governmentDAO.government(serviceContext, { id: createdGovernment2.id });
+
+      expect(updatedGovernment1.name).toMatch('preSave_');
+      expect(updatedGovernment2.name).toMatch('preSave_');
+    });
+
     test('fetch by id_in', async () => {
       const createdGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const governmentByCountry = await governmentDAO.governments(serviceContext, { skipPagination: true, where: { id_in: [createdGovernment.id] } });
