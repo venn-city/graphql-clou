@@ -154,8 +154,7 @@ async function nestedConnect({
   };
 }
 
-
 export default {
   preCreation,
   postCreation
-}
+};

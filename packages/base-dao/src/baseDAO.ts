@@ -1,10 +1,9 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
 import DataLoader from 'dataloader';
-import _ from 'lodash';
+import { isEqual, without, upperFirst } from 'lodash';
 import hash from 'object-hash';
-import util from 'util';
-import async from 'async';
+import { forEachOf, map as asyncMap } from 'async';
 import pluralize from 'pluralize';
 import openCrudSchema from '@venncity/opencrud-schema-provider';
 import { transformComputedFieldsWhereArguments } from '@venncity/graphql-transformers';
@@ -19,7 +18,6 @@ import {
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 
 const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
-const asyncMap = util.promisify(async.map) as any;
 
 export const CRUD_TOPIC_OPERATION_NAMES = {
   CREATED: 'CREATED',
@@ -51,7 +49,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   } = daoAuth;
   const { READ, CREATE, DELETE } = supportedActions;
 
-  const authTypeName = _.upperFirst(entityName);
+  const authTypeName = upperFirst(entityName);
   const dataLoaderById = new DataLoader(getEntitiesByIdsInternal);
   const dataLoaderForSingleRelatedEntity: DataLoader<GetRelatedEntityArgs, any> = new DataLoader(
     keys => loadSingleRelatedEntities(entityName, keys),
@@ -85,7 +83,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     const fetchIsExactlyByIdIn = Object.keys(args).length === 1 && args.where && Object.keys(args.where).length === 1 && args.where.id_in;
     if (fetchIsExactlyByIdIn) {
       const loadedEntities = await dataLoaderById.loadMany(args.where.id_in);
-      return _.without(loadedEntities, undefined);
+      return without(loadedEntities, undefined);
     }
     return dataProvider.getAllEntities(entityName, args);
   }
@@ -266,8 +264,15 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         entityName
       });
       entitiesToUpdate = await asyncMap(entitiesToUpdate, hooks.postFetch);
-      data = await hooks.preSave(data, entitiesToUpdate, context);
-      await dataProvider.updateManyEntities(entityName, data, transformedWhere);
+      data = await asyncMap(entitiesToUpdate, async entityToUpdate => hooks.preSave(data, entityToUpdate, context));
+      if (allDataEqual(data)) {
+        await dataProvider.updateManyEntities(entityName, data[0], transformedWhere);
+      } else {
+        await forEachOf(entitiesToUpdate, async (entity, index) => {
+          // @ts-ignore
+          await dataProvider.updateEntity(entityName, data[index], { id: entity.id });
+        });
+      }
       const updatedEntities = await getAllEntitiesInternal({ where: transformedWhere });
 
       for (const originalEntity of entitiesToUpdate) {
@@ -379,11 +384,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       if (!relations) {
         return [];
       }
-      return Array.isArray(relations) ? _.without(relations, undefined).map(relation => relation.id) : [relations.id];
+      return Array.isArray(relations) ? without(relations, undefined).map(relation => relation.id) : [relations.id];
     },
     getRelatedEntities: async <T>(originalEntityId: string, relationEntityName: string, args?: any): Promise<T[]> => {
       const relatedEntities = await dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args });
-      return (_.without(relatedEntities, undefined) as unknown) as T[];
+      return (without(relatedEntities, undefined) as unknown) as T[];
     },
     getHooks: () => {
       // need to expose for cascade delete
@@ -402,8 +407,12 @@ function logRequestsThatReturnUnauthorizedEntities(entitiesThatUserCannotAccess,
   }
 }
 
+function allDataEqual(dataArray) {
+  return dataArray.every(data => isEqual(dataArray[0], data));
+}
+
 export function getFunctionNamesForEntity(entityName, pluralizationFunction = pluralize) {
-  const entityNameUpperFirstLetter = _.upperFirst(entityName);
+  const entityNameUpperFirstLetter = upperFirst(entityName);
   return {
     CREATE_ENTITY_FUNCTION_NAME: `create${entityNameUpperFirstLetter}`,
     GET_ENTITIES_BY_IDS_FUNCTION_NAME: `${pluralizationFunction(entityName)}ByIds`,

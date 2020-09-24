@@ -1,6 +1,6 @@
 import pluralize from 'pluralize'; // eslint-disable-line import/no-extraneous-dependencies
 import momentRandom from 'moment-random'; // eslint-disable-line import/no-extraneous-dependencies
-import _ from 'lodash';
+import { isArray, find } from 'lodash';
 import { getOpenCrudIntrospection, openCrudDataModel } from '@venncity/opencrud-schema-provider';
 import { getFunctionNamesForEntity } from '../baseDAO';
 
@@ -165,7 +165,7 @@ export function runGenericDAOTests({
           };
           let entitiesThatMatchQuery = await getAllEntitiesWithPagination(entityDAO, GET_ALL_ENTITIES_FUNCTION_NAME, adminContext, queryArgs);
 
-          const entityFoundByQuery1 = _.find(entitiesThatMatchQuery, (entity: any) => entity.id === createdEntity1.id);
+          const entityFoundByQuery1 = find(entitiesThatMatchQuery, (entity: any) => entity.id === createdEntity1.id);
           expectEqual(entityFoundByQuery1, fieldName, entityToCreate1[fieldName]);
 
           const createdEntity2 = await entityDAO[CREATE_ENTITY_FUNCTION_NAME](adminContext, entityToCreate2);
@@ -175,7 +175,7 @@ export function runGenericDAOTests({
           };
           entitiesThatMatchQuery = await getAllEntitiesWithPagination(entityDAO, GET_ALL_ENTITIES_FUNCTION_NAME, adminContext, queryArgs);
 
-          const entityFoundByQuery2 = _.find(entitiesThatMatchQuery, (entity: any) => entity.id === createdEntity2.id);
+          const entityFoundByQuery2 = find(entitiesThatMatchQuery, (entity: any) => entity.id === createdEntity2.id);
           expectEqual(entityFoundByQuery2, fieldName, entityToCreate1[fieldName]);
         });
       }
@@ -271,8 +271,8 @@ export function runGenericDAOTests({
   });
 }
 
-function randomValuesByType(dataType) {
-  if (_.isArray(dataType)) {
+export function randomValuesByType(dataType) {
+  if (isArray(dataType)) {
     // Hardcoded values, e.g. enum.
     return [dataType[0], dataType[1]];
   }
