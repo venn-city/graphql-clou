@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.13](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.10.12...@venncity/base-dao@1.10.13) (2020-09-24)
+
+
+### Bug Fixes
+
+* **basedao:** preSave fixed to run on every entity ([0d56346](https://github.com/venn-city/graphql-clou/commit/0d563468e268667633286b96b3d722c91bc7f679))
+
+
+
+
+
 ## [1.10.12](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.10.11...@venncity/base-dao@1.10.12) (2020-08-31)
 
 **Note:** Version bump only for package @venncity/base-dao

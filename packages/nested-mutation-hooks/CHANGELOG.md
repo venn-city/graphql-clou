@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.30](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.3.29...@venncity/nested-mutation-hooks@1.3.30) (2020-09-24)
+
+
+### Bug Fixes
+
+* **basedao:** preSave fixed to run on every entity ([0d56346](https://github.com/venn-city/graphql-clou/commit/0d563468e268667633286b96b3d722c91bc7f679))
+
+
+
+
+
 ## [1.3.29](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.3.28...@venncity/nested-mutation-hooks@1.3.29) (2020-08-31)
 
 **Note:** Version bump only for package @venncity/nested-mutation-hooks
