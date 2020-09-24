@@ -1,6 +1,6 @@
 {
   "name": "@venncity/base-dao",
-  "version": "1.10.13",
+  "version": "1.10.14",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
