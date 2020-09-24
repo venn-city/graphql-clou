@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
 import DataLoader from 'dataloader';
-import { isEqual, without, upperFirst } from 'lodash';
+import { isEqual, without, upperFirst, get } from 'lodash';
 import hash from 'object-hash';
 import { forEachOf, map as asyncMap } from 'async';
 import pluralize from 'pluralize';
@@ -227,8 +227,8 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         dataProvider,
         entityName
       });
-
-      data = await hooks.preSave(data, entitiesToUpdate, context);
+      const entityToUpdate = get(entitiesToUpdate, '[0]');
+      data = await hooks.preSave(data, entityToUpdate, context);
       let updatedEntity = await dataProvider.updateEntity(entityName, data, transformedWhere);
       if (updatedEntity) {
         clearLoaders(updatedEntity);
