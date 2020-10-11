@@ -67,7 +67,7 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
   }
 
   async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<T[]> {
-    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName,context, args);
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
   getHooks(): any {
