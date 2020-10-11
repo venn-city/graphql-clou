@@ -144,8 +144,9 @@ describe('BaseDao', () => {
     let vote4;
     const voteName4 = `Make war${randomNumber}`;
     const voteBallot4 = 'ABSTAIN';
-
+    let serviceContext;
     beforeAll(async () => {
+      serviceContext = await createServiceAuthContext(createAllDAOs());
       console.info('random seed', randomNumber);
       government1 = await sequelizeDataProvider.createEntity('Government', { name: governmentName1, country: governmentCountry1 });
       government2 = await sequelizeDataProvider.createEntity('Government', { name: governmentName2, country: governmentCountry2 });
@@ -243,17 +244,17 @@ describe('BaseDao', () => {
     });
 
     test('getRelatedEntity', async () => {
-      const relatedGovernment1Promise = ministryDAO.getRelatedEntity(ministry1.id, 'government');
-      const relatedGovernment2Promise = ministryDAO.getRelatedEntity(ministry2.id, 'government');
+      const relatedGovernment1Promise = ministryDAO.getRelatedEntity(ministry1.id, 'government', serviceContext);
+      const relatedGovernment2Promise = ministryDAO.getRelatedEntity(ministry2.id, 'government', serviceContext);
       const [relatedGovernment1, relatedGovernment2] = await Promise.all([relatedGovernment1Promise, relatedGovernment2Promise]);
       expect(relatedGovernment1.id).toEqual(government1.id);
       expect(relatedGovernment2.id).toEqual(government1.id);
     });
 
     test('getRelatedEntityId', async () => {
-      const relatedGovernment1Promise = ministryDAO.getRelatedEntityId(ministry1.id, 'government');
-      const relatedGovernment2Promise = ministryDAO.getRelatedEntityId(ministry2.id, 'government');
-      const relatedMinistry1Promise = ministerDAO.getRelatedEntityId(minister1.id, 'ministry');
+      const relatedGovernment1Promise = ministryDAO.getRelatedEntityId(ministry1.id, 'government', serviceContext);
+      const relatedGovernment2Promise = ministryDAO.getRelatedEntityId(ministry2.id, 'government', serviceContext);
+      const relatedMinistry1Promise = ministerDAO.getRelatedEntityId(minister1.id, 'ministry', serviceContext);
       const [relatedGovernment1, relatedMinistry1, relatedGovernment2] = await Promise.all([
         relatedGovernment1Promise,
         relatedMinistry1Promise,
@@ -265,17 +266,23 @@ describe('BaseDao', () => {
     });
 
     test('getRelatedEntities', async () => {
-      const relatedMinistries1Promise = governmentDAO.getRelatedEntities(government1.id, 'ministries');
-      const relatedMinistries2Promise = governmentDAO.getRelatedEntities(government2.id, 'ministries');
+      const relatedMinistries1Promise = governmentDAO.getRelatedEntities(government1.id, 'ministries', serviceContext);
+      const relatedMinistries2Promise = governmentDAO.getRelatedEntities(government2.id, 'ministries', serviceContext);
       const [relatedMinistries1, relatedMinistries2] = await Promise.all([relatedMinistries1Promise, relatedMinistries2Promise]);
       expect(relatedMinistries1.map((m: { id: any }) => m.id).sort()).toEqual([ministry1.id, ministry2.id, ministry3.id].sort());
       expect(relatedMinistries2).toEqual([]);
     });
 
     test('getRelatedEntityIds', async () => {
-      const relatedMinistries0Promise = governmentDAO.getRelatedEntityIds(government1.id, 'ministries', { where: { name: 'nosuchname3432' } });
-      const relatedMinistries1Promise = governmentDAO.getRelatedEntityIds(government1.id, 'ministries', { where: { name: ministry2.name } });
-      const relatedMinistries2Promise = governmentDAO.getRelatedEntityIds(government1.id, 'ministries', { where: { name_not: ministry1.name } });
+      const relatedMinistries0Promise = governmentDAO.getRelatedEntityIds(government1.id, 'ministries', serviceContext, {
+        where: { name: 'nosuchname3432' }
+      });
+      const relatedMinistries1Promise = governmentDAO.getRelatedEntityIds(government1.id, 'ministries', serviceContext, {
+        where: { name: ministry2.name }
+      });
+      const relatedMinistries2Promise = governmentDAO.getRelatedEntityIds(government1.id, 'ministries', serviceContext, {
+        where: { name_not: ministry1.name }
+      });
       const [relatedMinistries0, relatedMinistries1, relatedMinistries2] = await Promise.all([
         relatedMinistries0Promise,
         relatedMinistries1Promise,
