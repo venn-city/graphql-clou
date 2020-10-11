@@ -57,20 +57,20 @@ export default class SurveyDAO {
     return this.entityDAO.surveysConnection(parent, args, context);
   }
 
-  async getRelatedEntityId(originalEntityId: string, relationEntityName: string): Promise<string | null> {
-    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
+  async getRelatedEntityId(originalEntityId: string, relationEntityName: string, context:any): Promise<string | null> {
+    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName, context);
   }
 
-  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string): Promise<T | null> {
-    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
+  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string, context:any): Promise<T | null> {
+    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName, context);
   }
 
-  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, args?: any): Promise<string[]> {
-    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
+  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<string[]> {
+    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, context, args);
   }
 
-  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, args?: any): Promise<T[]> {
-    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
+  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<T[]> {
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
   getHooks(): any {
@@ -137,20 +137,20 @@ export default class SurveyQuestionDAO {
     return this.entityDAO.surveyQuestionsConnection(parent, args, context);
   }
 
-  async getRelatedEntityId(originalEntityId: string, relationEntityName: string): Promise<string | null> {
-    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
+  async getRelatedEntityId(originalEntityId: string, relationEntityName: string, context:any): Promise<string | null> {
+    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName, context);
   }
 
-  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string): Promise<T | null> {
-    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
+  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string, context:any): Promise<T | null> {
+    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName, context);
   }
 
-  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, args?: any): Promise<string[]> {
-    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
+  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<string[]> {
+    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, context, args);
   }
 
-  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, args?: any): Promise<T[]> {
-    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
+  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<T[]> {
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
   getHooks(): any {
@@ -217,20 +217,20 @@ export default class SurveyQuestionResponseDAO {
     return this.entityDAO.surveyQuestionResponsesConnection(parent, args, context);
   }
 
-  async getRelatedEntityId(originalEntityId: string, relationEntityName: string): Promise<string | null> {
-    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName);
+  async getRelatedEntityId(originalEntityId: string, relationEntityName: string, context:any): Promise<string | null> {
+    return this.entityDAO.getRelatedEntityId(originalEntityId, relationEntityName, context);
   }
 
-  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string): Promise<T | null> {
-    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName);
+  async getRelatedEntity<T>(originalEntityId: string, relationEntityName: string, context:any): Promise<T | null> {
+    return this.entityDAO.getRelatedEntity(originalEntityId, relationEntityName, context);
   }
 
-  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, args?: any): Promise<string[]> {
-    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, args);
+  async getRelatedEntityIds(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<string[]> {
+    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, context, args);
   }
 
-  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, args?: any): Promise<T[]> {
-    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, args);
+  async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<T[]> {
+    return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
   getHooks(): any {
