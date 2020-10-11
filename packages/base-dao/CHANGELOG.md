@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.10.14...@venncity/base-dao@2.0.0) (2020-10-11)
+
+
+### Bug Fixes
+
+* **base dao related entities:** added permission check and post fetch to related entities queries ([248aeda](https://github.com/venn-city/graphql-clou/commit/248aeda85dd3dfec7707990249854ffc390da8cd))
+
+
+### BREAKING CHANGES
+
+* **base dao related entities:** added context to related entities queries in order to add permission check and post
+fetch
+
+
+
+
+
 ## [1.10.14](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@1.10.13...@venncity/base-dao@1.10.14) (2020-09-24)
 
 
