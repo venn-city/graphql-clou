@@ -374,20 +374,17 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       return dataProvider.getEntitiesConnection(entityName, transformedArgs);
     },
     getRelatedEntityId: async (originalEntityId: string, relationEntityName: string, context): Promise<string | null> => {
-      const relatedEntityTypeName = getFieldType(schema, entityName, relationEntityName);
-      const relatedEntityDAO = context.DAOs[`${lowerFirst(relatedEntityTypeName)}DAO`]
+      const relatedEntityDAO = getRelatedEntityDAO(context, entityName, relationEntityName);
       const relatedEntities = await relatedEntityDAO.getRelatedEntitiesByFetchFunction(context, () => dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName }))
       return relatedEntities && relatedEntities[0] && relatedEntities[0].id;
     },
     getRelatedEntity: async <T>(originalEntityId: string, relationEntityName: string, context): Promise<T | null> => {
-      const relatedEntityTypeName = getFieldType(schema, entityName, relationEntityName);
-      const relatedEntityDAO = context.DAOs[`${lowerFirst(relatedEntityTypeName)}DAO`]
+      const relatedEntityDAO = getRelatedEntityDAO(context, entityName, relationEntityName);
       const relatedEntities = await relatedEntityDAO.getRelatedEntitiesByFetchFunction(context, () => dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName }))
       return relatedEntities && relatedEntities[0];
     },
     getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, context, args?: any): Promise<string[]> => {
-      const relatedEntityTypeName = getFieldType(schema, entityName, relationEntityName);
-      const relatedEntityDAO = context.DAOs[`${lowerFirst(relatedEntityTypeName)}DAO`]
+      const relatedEntityDAO = getRelatedEntityDAO(context, entityName, relationEntityName);
       const relatedEntities = await relatedEntityDAO.getRelatedEntitiesByFetchFunction(context, () => dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args }));
       if (!relatedEntities) {
         return [];
@@ -395,8 +392,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       return Array.isArray(relatedEntities) ? without(relatedEntities, undefined).map(relation => relation.id) : [relatedEntities.id];
     },
     getRelatedEntities: async <T>(originalEntityId: string, relationEntityName: string, context, args?: any): Promise<T[]> => {
-      const relatedEntityTypeName = getFieldType(schema, entityName, relationEntityName);
-      const relatedEntityDAO = context.DAOs[`${lowerFirst(relatedEntityTypeName)}DAO`]
+      const relatedEntityDAO = getRelatedEntityDAO(context, entityName, relationEntityName);
       const relatedEntities = await relatedEntityDAO.getRelatedEntitiesByFetchFunction(context, () => dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args }));
       return (without(relatedEntities, undefined) as unknown) as T[];
     },
@@ -419,6 +415,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   };
 }
 
+function getRelatedEntityDAO(context, entityName, relationEntityName){
+  const relatedEntityTypeName = getFieldType(schema, entityName, relationEntityName);
+  const relatedEntityDAO = context.DAOs[`${lowerFirst(relatedEntityTypeName)}DAO`]
+  return relatedEntityDAO;
+}
 function logRequestsThatReturnUnauthorizedEntities(entitiesThatUserCannotAccess, context, functionName) {
   if (entitiesThatUserCannotAccess.length) {
     console.warn(
