@@ -70,7 +70,7 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
     return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
-  async etRelatedEntitiesByFetchFunction: async (context:any, fetchFunction;any): Promise<any> {
+  async getRelatedEntitiesByFetchFunction: async (context:any, fetchFunction;any): Promise<any> {
     return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, context, args);
   }
 
