@@ -71,7 +71,7 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
   }
 
   async getRelatedEntitiesByFetchFunction: async (context:any, fetchFunction;any): Promise<any> {
-    return this.entityDAO.getRelatedEntityIds(originalEntityId, relationEntityName, context, args);
+    return this.entityDAO.getRelatedEntitiesByFetchFunction(context, fetchFunction);
   }
 
   getHooks(): any {
