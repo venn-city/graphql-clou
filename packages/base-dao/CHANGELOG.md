@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.0.2...@venncity/base-dao@2.0.3) (2020-10-12)
+
+
+### Bug Fixes
+
+* **dao classes generator:** fix getRelatedEntitiesByFetchFunction in dao generator ([3c9daf7](https://github.com/venn-city/graphql-clou/commit/3c9daf7da781aff0cb8255ba6bf19550c420fee8))
+
+
+
+
+
 ## [2.0.2](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.0.1...@venncity/base-dao@2.0.2) (2020-10-12)
 
 
