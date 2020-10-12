@@ -73,6 +73,10 @@ export default class SurveyDAO {
     return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
+  async getRelatedEntitiesByFetchFunction: async (context:any, fetchFunction;any): Promise<any> {
+    return this.entityDAO.getRelatedEntitiesByFetchFunction(context, fetchFunction);
+  }
+
   getHooks(): any {
     return this.entityDAO.getHooks();
   }
@@ -153,6 +157,10 @@ export default class SurveyQuestionDAO {
     return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
   }
 
+  async getRelatedEntitiesByFetchFunction: async (context:any, fetchFunction;any): Promise<any> {
+    return this.entityDAO.getRelatedEntitiesByFetchFunction(context, fetchFunction);
+  }
+
   getHooks(): any {
     return this.entityDAO.getHooks();
   }
@@ -231,6 +239,10 @@ export default class SurveyQuestionResponseDAO {
 
   async getRelatedEntities<T>(originalEntityId: string, relationEntityName: string, context:any, args?: any): Promise<T[]> {
     return this.entityDAO.getRelatedEntities(originalEntityId, relationEntityName, context, args);
+  }
+
+  async getRelatedEntitiesByFetchFunction: async (context:any, fetchFunction;any): Promise<any> {
+    return this.entityDAO.getRelatedEntitiesByFetchFunction(context, fetchFunction);
   }
 
   getHooks(): any {
