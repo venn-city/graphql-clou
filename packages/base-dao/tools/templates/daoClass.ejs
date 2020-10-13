@@ -77,4 +77,12 @@ export default class <%= entityNameUpperFirstLetter %>DAO {
   getHooks(): any {
     return this.entityDAO.getHooks();
   }
+
+  async loadEntity(entityId: string): Promise<any> {
+    return this.entityDAO.loadEntity();
+  }
+
+  storeForLoading(entityKey: string, value: any): DataLoader<unknown, unknown> {
+    return this.entityDAO.storeForLoading();
+  }
 }
