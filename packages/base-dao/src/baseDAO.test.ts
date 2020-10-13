@@ -293,4 +293,29 @@ describe('BaseDao', () => {
       expect(relatedMinistries2.sort()).toEqual([ministry2.id, ministry3.id].sort());
     });
   });
+
+  describe('batching and loading', () => {
+    let serviceContext: any;
+    let governmentDAO: any;
+    beforeAll(async () => {
+      serviceContext = await createServiceAuthContext(createAllDAOs());
+      governmentDAO = createAllDAOs().governmentDAO;
+    });
+
+    test('load entity after create', async () => {
+      const createdGovernment1 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const loadedGovernment = await governmentDAO.loadEntity(createdGovernment1.id);
+
+      expect(loadedGovernment.name).toEqual(createdGovernment1.name);
+    });
+
+    test('store entity for loading and fetch it', async () => {
+      const storedId = random.uuid();
+      const storedName = random.word();
+      governmentDAO.storeForLoading(storedId, { id: storedId, name: storedName });
+      const loadedEntity = await governmentDAO.loadEntity(storedId);
+
+      expect(loadedEntity.name).toEqual(storedName);
+    });
+  });
 });

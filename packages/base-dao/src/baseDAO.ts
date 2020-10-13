@@ -385,7 +385,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const relatedEntities = await relatedEntityDAO.getRelatedEntitiesByFetchFunction(context, () =>
         dataLoaderForSingleRelatedEntity.load({ originalEntityId, relationEntityName })
       );
-      return relatedEntities && relatedEntities[0];
+      const relatedEntity = relatedEntities && relatedEntities[0];
+      if (relatedEntity) {
+        relatedEntityDAO.storeForLoading(relatedEntity.id, relatedEntity);
+      }
+      return relatedEntity;
     },
     getRelatedEntityIds: async (originalEntityId: string, relationEntityName: string, context, args?: any): Promise<string[]> => {
       const relatedEntityDAO = getRelatedEntityDAO(context, entityName, relationEntityName);
@@ -402,7 +406,13 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const relatedEntities = await relatedEntityDAO.getRelatedEntitiesByFetchFunction(context, () =>
         dataLoaderForRelatedEntities.load({ originalEntityId, relationEntityName, args })
       );
-      return (without(relatedEntities, undefined) as unknown) as T[];
+
+      const relatedEntitiesToStore = without(relatedEntities, undefined);
+      relatedEntitiesToStore.forEach(relatedEntity => {
+        // @ts-ignore: Object is possibly 'undefined'.
+        relatedEntityDAO.storeForLoading(relatedEntity.id, relatedEntity);
+      });
+      return (relatedEntitiesToStore as unknown) as T[];
     },
     getRelatedEntitiesByFetchFunction: async (context, fetchFunction) => {
       const auth = await buildAuth(context, hooks);
@@ -419,6 +429,12 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     getHooks: () => {
       // need to expose for cascade delete
       return hooks;
+    },
+    loadEntity: async (entityId: string) => {
+      return dataLoaderById.load(entityId);
+    },
+    storeForLoading: (entityId: string, entity: any): DataLoader<unknown, unknown> => {
+      return dataLoaderById.prime(entityId, entity);
     }
   };
 }
