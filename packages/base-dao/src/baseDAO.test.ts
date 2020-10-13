@@ -302,7 +302,7 @@ describe('BaseDao', () => {
       governmentDAO = createAllDAOs().governmentDAO;
     });
 
-    test('load entity after creat', async () => {
+    test('load entity after create', async () => {
       const createdGovernment1 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const loadedGovernment = await governmentDAO.loadEntity(createdGovernment1.id);
 

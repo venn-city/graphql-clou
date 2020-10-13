@@ -433,8 +433,8 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     loadEntity: async (entityId: string) => {
       return dataLoaderById.load(entityId);
     },
-    storeForLoading: (entityKey: string, value: any): DataLoader<unknown, unknown> => {
-      return dataLoaderById.prime(entityKey, value);
+    storeForLoading: (entityId: string, entity: any): DataLoader<unknown, unknown> => {
+      return dataLoaderById.prime(entityId, entity);
     }
   };
 }
