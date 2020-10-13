@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.0.3...@venncity/base-dao@2.1.0) (2020-10-13)
+
+
+### Features
+
+* **base dao:** add loadEntity and storeForLoadingFunction in base dao ([cca50ce](https://github.com/venn-city/graphql-clou/commit/cca50ceb9221822c894c4e7b1dfbd3bfdf97412f))
+
+
+
+
+
 ## [2.0.3](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.0.2...@venncity/base-dao@2.0.3) (2020-10-12)
 
 
