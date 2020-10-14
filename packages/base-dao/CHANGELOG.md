@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.1.0...@venncity/base-dao@2.1.1) (2020-10-14)
+
+
+### Bug Fixes
+
+* **base dao:** upgrade dataloader version and fix base dao class script ([9ef6afb](https://github.com/venn-city/graphql-clou/commit/9ef6afb9cf72550571782dc2cdd3fd5c6dc24093))
+
+
+
+
+
 # [2.1.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.0.3...@venncity/base-dao@2.1.0) (2020-10-13)
 
 
