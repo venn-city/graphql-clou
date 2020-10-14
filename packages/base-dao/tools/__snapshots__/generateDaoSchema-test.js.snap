@@ -4,6 +4,7 @@ exports[`generateDaoSchema generate files should be match to snapshots 1`] = `
 "// @ts-ignore
 import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
+import DataLoader from 'dataloader';
 
 export default class SurveyDAO {
   private readonly entityDAO: any;
@@ -96,6 +97,7 @@ exports[`generateDaoSchema generate files should be match to snapshots 2`] = `
 "// @ts-ignore
 import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
+import DataLoader from 'dataloader';
 
 export default class SurveyQuestionDAO {
   private readonly entityDAO: any;
@@ -188,6 +190,7 @@ exports[`generateDaoSchema generate files should be match to snapshots 3`] = `
 "// @ts-ignore
 import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
+import DataLoader from 'dataloader';
 
 export default class SurveyQuestionResponseDAO {
   private readonly entityDAO: any;

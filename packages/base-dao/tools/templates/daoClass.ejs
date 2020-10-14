@@ -1,6 +1,7 @@
 // @ts-ignore
 import { createEntityDAO } from '@venncity/base-dao';
 import * as openCrudSchema from './openCrudSchema';
+import DataLoader from 'dataloader';
 
 export default class <%= entityNameUpperFirstLetter %>DAO {
   private readonly entityDAO: any;
