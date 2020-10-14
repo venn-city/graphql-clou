@@ -7,14 +7,14 @@ import { extractManyResult, extractSingleResult } from './resultExtractionHelper
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;
 const { openCrudSchema: schema } = opencrudSchemaProvider;
 
-export async function loadSingleRelatedEntities(entityName: string, keys: GetRelatedEntityArgs[]) {
+export async function loadSingleRelatedEntities(entityName: string, keys: readonly GetRelatedEntityArgs[]) {
   const originalEntities = await fetchEntitiesWithRelations(keys, entityName);
   return keys.map(k => extractSingleResult(originalEntities.find(o => o.dataValues.id === k.originalEntityId)?.dataValues, k.relationEntityName));
 }
 
 export async function loadRelatedEntities(
   entityName: string,
-  keys: GetRelatedEntitiesArgs[],
+  keys: readonly GetRelatedEntitiesArgs[],
   getRelatedEntities: (entityName: string, originalEntityId: string, relationFieldName: string, args?: any) => any
 ) {
   const [keysWithoutArgs, keysWithArgs] = partition(keys, k => isEmpty(k));
@@ -39,7 +39,7 @@ export async function loadRelatedEntities(
   return mapResultsToKeys(keys, originalEntitiesWithArgs, originalEntitiesWithoutArgs);
 }
 
-async function fetchEntitiesWithRelations(keys: GetRelatedEntityArgs[], entityName: string) {
+async function fetchEntitiesWithRelations(keys: readonly GetRelatedEntityArgs[], entityName: string) {
   const includes = keys.map(k => ({
     model: model(getFieldType(schema, entityName, k.relationEntityName)),
     as: k.relationEntityName,
