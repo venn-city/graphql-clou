@@ -3,7 +3,7 @@ import { hacker, random } from 'faker';
 import { sq } from '@venncity/sequelize-model';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 import { transformJoinedEntityWhere } from './baseDAO';
-import { runGenericDAOTests, createServiceAuthContext } from './test/baseTestForDAOs';
+import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthContext } from './test/baseTestForDAOs';
 import createAllDAOs from './test/DAOs';
 // @ts-ignore
 import models from '../../../test/model';
@@ -26,9 +26,12 @@ describe('BaseDao', () => {
     });
 
     let serviceContext: any;
+    let publicAccessContext: any;
     let governmentDAO: any;
     beforeAll(async () => {
-      serviceContext = await createServiceAuthContext(createAllDAOs());
+      const allDAOs = createAllDAOs();
+      serviceContext = await createServiceAuthContext(allDAOs);
+      publicAccessContext = createPublicAccessAuthContext(allDAOs);
       governmentDAO = createAllDAOs().governmentDAO;
     });
 
@@ -63,6 +66,16 @@ describe('BaseDao', () => {
       const firstGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const secondGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const fetchedAllGovernments = await governmentDAO.governments(serviceContext, { skipPagination: true });
+      expect(fetchedAllGovernments.length).toBeGreaterThanOrEqual(2);
+      const fetchedGovernmentsIds = fetchedAllGovernments.map((gov: { id: string }) => gov.id);
+      expect(fetchedGovernmentsIds).toContain(firstGovernment.id);
+      expect(fetchedGovernmentsIds).toContain(secondGovernment.id);
+    });
+
+    test('fetch all governments with public Access when skipAuth true', async () => {
+      const firstGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const secondGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const fetchedAllGovernments = await governmentDAO.governments({ ...publicAccessContext, skipAuth: true }, { skipPagination: true });
       expect(fetchedAllGovernments.length).toBeGreaterThanOrEqual(2);
       const fetchedGovernmentsIds = fetchedAllGovernments.map((gov: { id: string }) => gov.id);
       expect(fetchedGovernmentsIds).toContain(firstGovernment.id);
