@@ -75,7 +75,7 @@ describe('BaseDao', () => {
     test('fetch all governments with public Access when skipAuth true', async () => {
       const firstGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const secondGovernment = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
-      const fetchedAllGovernments = await governmentDAO.governments({...publicAccessContext, skipAuth:true}, { skipPagination: true });
+      const fetchedAllGovernments = await governmentDAO.governments({ ...publicAccessContext, skipAuth: true }, { skipPagination: true });
       expect(fetchedAllGovernments.length).toBeGreaterThanOrEqual(2);
       const fetchedGovernmentsIds = fetchedAllGovernments.map((gov: { id: string }) => gov.id);
       expect(fetchedGovernmentsIds).toContain(firstGovernment.id);
