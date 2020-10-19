@@ -160,7 +160,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       for (const fetchedEntity of fetchedEntities) {
         const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
         if (hasPermission(auth, READ, authDataFromDB, context, authTypeName)) {
-          let entityWithOnlyAuthorizedFields = filterUnauthorizedFields(auth, { $type: authTypeName, ...fetchedEntity }, READ);
+          let entityWithOnlyAuthorizedFields = context.skipAuth
+            ? fetchedEntity
+            : filterUnauthorizedFields(auth, { $type: authTypeName, ...fetchedEntity }, READ);
           entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
           entitiesThatUserCanAccess.push(entityWithOnlyAuthorizedFields);
         } else {

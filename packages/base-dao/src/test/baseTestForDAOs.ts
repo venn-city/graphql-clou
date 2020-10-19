@@ -302,6 +302,17 @@ export async function createServiceAuthContext(DAOs) {
   };
 }
 
+export function createPublicAccessAuthContext(DAOs) {
+  return {
+    auth: {
+      isPublicAccess: true
+    },
+    openCrudIntrospection: getOpenCrudIntrospection(),
+    openCrudDataModel,
+    DAOs
+  };
+}
+
 const GRAPHQL_SERVER_MAX_PAGE_SIZE = 50;
 
 async function getAllEntitiesWithPagination(entityDao, queryName, context, queryArgs = {}) {
