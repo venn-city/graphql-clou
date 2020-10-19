@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.1.1...@venncity/base-dao@2.1.2) (2020-10-19)
+
+
+### Bug Fixes
+
+* **base dao:** fix skipAuth case in get all entities path ([939aa26](https://github.com/venn-city/graphql-clou/commit/939aa2682cfdb1fefa3f0ff524c954daad0d1bba))
+
+
+
+
+
 ## [2.1.1](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.1.0...@venncity/base-dao@2.1.1) (2020-10-14)
 
 
