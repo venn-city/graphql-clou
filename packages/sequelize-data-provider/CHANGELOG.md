@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.17](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.7.16...@venncity/sequelize-data-provider@1.7.17) (2020-11-09)
+
+
+### Bug Fixes
+
+* **sequelize-data-provider:** correctly partition to keysWithoutArgs vs keysWithArgs in loadRelatedEntities ([#135](https://github.com/venn-city/graphql-clou/issues/135)) ([e6e8a0c](https://github.com/venn-city/graphql-clou/commit/e6e8a0c7ca6de75e7a68129f10cfff835f636857))
+
+
+
+
+
 ## [1.7.16](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.7.15...@venncity/sequelize-data-provider@1.7.16) (2020-10-14)
 
 **Note:** Version bump only for package @venncity/sequelize-data-provider
