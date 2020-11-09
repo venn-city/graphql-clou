@@ -593,7 +593,7 @@ describe('sequelizeDataProvider', () => {
           [{ originalEntityId: 'ishouldntexist999', relationEntityName: 'ministries' }],
           sequelizeDataProvider.getRelatedEntities
         );
-        expect(fetchedMinistries).toEqual([]);
+        expect(fetchedMinistries).toBeFalsy();
       });
 
       test('loadRelatedEntities multiple keys', async () => {
