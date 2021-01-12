@@ -1784,6 +1784,36 @@ describe('Nested mutations', () => {
         expect(updatedGovernment.ministries.find(e => e.id === yetAnotherMinistry.id)).toHaveProperty('name', nameValue);
       });
     });
+
+    describe('Set operation', () => {
+      test('should create ministry with list of domains', async () => {
+        const nameValue = hacker.noun();
+        const domains = ['schools', 'college'];
+        const response = await executeMutation(
+          `
+              mutation($name: String!, $domains: [String!]!) {
+                createMinistry(
+                  data: {
+                    name: $name
+                    domains: {set: $domains}
+                  }
+                ) {
+                  id
+                  name
+                  domains
+                }
+              }
+            `,
+          {
+            name: nameValue,
+            domains
+          }
+        );
+        const createdMinistry = response?.data?.createMinistry;
+        expect(createdMinistry).toHaveProperty('domains', domains);
+      });
+      test('should update ministry with list of domains', async () => {});
+    });
   });
 
   describe('Nesting of multiple levels deep', () => {
