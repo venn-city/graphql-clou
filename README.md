@@ -63,11 +63,13 @@ $ yarn db:bootstrap:local
     but rather a declarative description of the model entities and their relations and attributes 
     (you can think about it as the ORM mapping of the model entities to the DB tables, 
     in this project there is some duplication as similar mapping is also performed in the *-model.js sequelize mapping files)
-* If you're changing the data model (that is the `./packages/opencrud-schema-provider/test/datamodel.graphql`) 
+* If you're changing the data model (that is the `.graphql-clou/test/datamodel.graphql`) 
     and the sequelize model files; you need to then run:
 ```shell script
 packages/opencrud-schema-provider$ yarn generate-opencrud-schema:test
 ```
+* Make sure to copy paste the content of the datamodel (from `./test/datamodel.graphql`) to the file `./packages/opencrud-schema-provider/src/test/models.ts`
+to the variable `datamodel`, and the content of the generated open crud schema (from `./test/openCRUD.graphql`) to the variable `sdl`. 
 
 ### Contributing
 * Create a new branch
