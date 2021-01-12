@@ -1,6 +1,7 @@
 import asyncRunner from 'async';
 import { promisify } from 'util';
 import openCrudSchemaProvider from '@venncity/opencrud-schema-provider';
+import { get } from 'lodash';
 import { getChildEntityCreateResolver, getChildEntityUpdateResolver, detectChildFieldsToChange, isReferencingSideOfJoin } from './common';
 
 const { getChildFieldOfType, getFieldName, getFieldKind, getFieldType, extractFieldMetadata, KINDS } = openCrudSchemaProvider.introspectionUtils;
@@ -15,6 +16,8 @@ export async function preCreation(context, parentCreationData, entityName) {
     const childEntityData = parentCreationData[childFieldName];
     if (!childEntityData) return;
 
+    const typeKinds = getFieldKind(childFieldToChangeMetadata);
+    console.log('kind: ', typeKinds, 'for field: ', childFieldName);
     switch (getFieldKind(childFieldToChangeMetadata)) {
       case KINDS.OBJECT:
         if (childEntityData.create) {
@@ -59,6 +62,10 @@ export async function preCreation(context, parentCreationData, entityName) {
               })
             );
           });
+        } else if (childEntityData.set) {
+          const childEntityDataSet = { childFieldName: get(childEntityData, 'set', []) };
+          delete parentCreationData[childFieldName];
+          postCreationCalls.push(childEntityDataSet);
         } else {
           console.error('Unexpected operation', childEntityData, 'in', parentCreationData);
         }
