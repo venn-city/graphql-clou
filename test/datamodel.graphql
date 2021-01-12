@@ -29,6 +29,7 @@ type Ministry @pgTable(name: "ministries") {
     budget:                 Float                   @pgColumn(name: "budget_in_million_usd")
     minister:               Minister                @pgRelation(column: "minister_id") @vnCascade(direct: DISCONNECT)
     government:             Government              @pgRelation(column: "government_id")
+    domains:                [String]                @pgColumn(name: "domains")
     createdAt:              DateTime!               @pgColumn(name: "created_at")
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")

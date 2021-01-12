@@ -5991,6 +5991,30 @@ Object {
           "deprecationReason": null,
           "description": "",
           "isDeprecated": false,
+          "name": "domains",
+          "type": Object {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": Object {
+              "kind": "LIST",
+              "name": null,
+              "ofType": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null,
+                },
+              },
+            },
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
           "name": "createdAt",
           "type": Object {
             "kind": "NON_NULL",
@@ -9132,6 +9156,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryCreatedomainsInput",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -9353,6 +9387,35 @@ Object {
       "interfaces": null,
       "kind": "INPUT_OBJECT",
       "name": "VoteCreateWithoutMinisterInput",
+      "possibleTypes": null,
+    },
+    Object {
+      "description": "",
+      "enumValues": null,
+      "fields": null,
+      "inputFields": Array [
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "set",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          },
+        },
+      ],
+      "interfaces": null,
+      "kind": "INPUT_OBJECT",
+      "name": "MinistryCreatedomainsInput",
       "possibleTypes": null,
     },
     Object {
@@ -9758,6 +9821,16 @@ Object {
           "type": Object {
             "kind": "INPUT_OBJECT",
             "name": "MinisterUpdateOneWithoutMinistryInput",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryUpdatedomainsInput",
             "ofType": null,
           },
         },
@@ -11219,6 +11292,35 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "set",
+          "type": Object {
+            "kind": "LIST",
+            "name": null,
+            "ofType": Object {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          },
+        },
+      ],
+      "interfaces": null,
+      "kind": "INPUT_OBJECT",
+      "name": "MinistryUpdatedomainsInput",
+      "possibleTypes": null,
+    },
+    Object {
+      "description": "",
+      "enumValues": null,
+      "fields": null,
+      "inputFields": Array [
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "where",
           "type": Object {
             "kind": "NON_NULL",
@@ -12182,6 +12284,16 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryUpdatedomainsInput",
             "ofType": null,
           },
         },
@@ -15160,6 +15272,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryCreatedomainsInput",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -15439,6 +15561,16 @@ Object {
           "type": Object {
             "kind": "INPUT_OBJECT",
             "name": "GovernmentUpdateOneWithoutMinistriesInput",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryUpdatedomainsInput",
             "ofType": null,
           },
         },
@@ -15767,6 +15899,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryCreatedomainsInput",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -15838,6 +15980,16 @@ Object {
         Object {
           "defaultValue": null,
           "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryUpdatedomainsInput",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
           "name": "deletedAt",
           "type": Object {
             "kind": "SCALAR",
@@ -15883,6 +16035,16 @@ Object {
           "type": Object {
             "kind": "SCALAR",
             "name": "Float",
+            "ofType": null,
+          },
+        },
+        Object {
+          "defaultValue": null,
+          "description": "",
+          "name": "domains",
+          "type": Object {
+            "kind": "INPUT_OBJECT",
+            "name": "MinistryUpdatedomainsInput",
             "ofType": null,
           },
         },
@@ -17734,6 +17896,30 @@ Object {
             "kind": "SCALAR",
             "name": "Float",
             "ofType": null,
+          },
+        },
+        Object {
+          "args": Array [],
+          "deprecationReason": null,
+          "description": "",
+          "isDeprecated": false,
+          "name": "domains",
+          "type": Object {
+            "kind": "NON_NULL",
+            "name": null,
+            "ofType": Object {
+              "kind": "LIST",
+              "name": null,
+              "ofType": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null,
+                },
+              },
+            },
           },
         },
         Object {
@@ -20302,6 +20488,32 @@ Object {
         Object {
           "associatedSequence": null,
           "comments": Array [],
+          "databaseName": "domains",
+          "defaultValue": null,
+          "directives": Array [
+            Object {
+              "arguments": Object {
+                "name": "domains",
+              },
+              "name": "pgColumn",
+            },
+          ],
+          "idStrategy": null,
+          "isCreatedAt": false,
+          "isId": false,
+          "isList": true,
+          "isReadOnly": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isUpdatedAt": false,
+          "name": "domains",
+          "relatedField": null,
+          "relationName": null,
+          "type": "String",
+        },
+        Object {
+          "associatedSequence": null,
+          "comments": Array [],
           "databaseName": "created_at",
           "defaultValue": null,
           "directives": Array [
@@ -21509,6 +21721,32 @@ Object {
               Object {
                 "associatedSequence": null,
                 "comments": Array [],
+                "databaseName": "domains",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "domains",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": true,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "domains",
+                "relatedField": null,
+                "relationName": null,
+                "type": "String",
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
                 "databaseName": "created_at",
                 "defaultValue": null,
                 "directives": Array [
@@ -22594,6 +22832,32 @@ Object {
                 "relatedField": [Circular],
                 "relationName": null,
                 "type": [Circular],
+              },
+              Object {
+                "associatedSequence": null,
+                "comments": Array [],
+                "databaseName": "domains",
+                "defaultValue": null,
+                "directives": Array [
+                  Object {
+                    "arguments": Object {
+                      "name": "domains",
+                    },
+                    "name": "pgColumn",
+                  },
+                ],
+                "idStrategy": null,
+                "isCreatedAt": false,
+                "isId": false,
+                "isList": true,
+                "isReadOnly": false,
+                "isRequired": false,
+                "isUnique": false,
+                "isUpdatedAt": false,
+                "name": "domains",
+                "relatedField": null,
+                "relationName": null,
+                "type": "String",
               },
               Object {
                 "associatedSequence": null,
@@ -24017,6 +24281,32 @@ Object {
                         "isRelationTable": false,
                         "name": "Government",
                       },
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
+                      "databaseName": "domains",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "domains",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": true,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "domains",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
                     },
                     Object {
                       "associatedSequence": null,
@@ -25478,6 +25768,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "domains",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "domains",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": true,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "domains",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": "created_at",
                       "defaultValue": null,
                       "directives": Array [
@@ -26706,6 +27022,32 @@ Object {
                               "isRelationTable": false,
                               "name": "Government",
                             },
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": "domains",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "domains",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": true,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "domains",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
                           },
                           Object {
                             "associatedSequence": null,
@@ -28272,6 +28614,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "domains",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "domains",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": true,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "domains",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": "created_at",
                       "defaultValue": null,
                       "directives": Array [
@@ -29500,6 +29868,32 @@ Object {
                               "isRelationTable": false,
                               "name": "Government",
                             },
+                          },
+                          Object {
+                            "associatedSequence": null,
+                            "comments": Array [],
+                            "databaseName": "domains",
+                            "defaultValue": null,
+                            "directives": Array [
+                              Object {
+                                "arguments": Object {
+                                  "name": "domains",
+                                },
+                                "name": "pgColumn",
+                              },
+                            ],
+                            "idStrategy": null,
+                            "isCreatedAt": false,
+                            "isId": false,
+                            "isList": true,
+                            "isReadOnly": false,
+                            "isRequired": false,
+                            "isUnique": false,
+                            "isUpdatedAt": false,
+                            "name": "domains",
+                            "relatedField": null,
+                            "relationName": null,
+                            "type": "String",
                           },
                           Object {
                             "associatedSequence": null,
@@ -30895,6 +31289,32 @@ Object {
                     Object {
                       "associatedSequence": null,
                       "comments": Array [],
+                      "databaseName": "domains",
+                      "defaultValue": null,
+                      "directives": Array [
+                        Object {
+                          "arguments": Object {
+                            "name": "domains",
+                          },
+                          "name": "pgColumn",
+                        },
+                      ],
+                      "idStrategy": null,
+                      "isCreatedAt": false,
+                      "isId": false,
+                      "isList": true,
+                      "isReadOnly": false,
+                      "isRequired": false,
+                      "isUnique": false,
+                      "isUpdatedAt": false,
+                      "name": "domains",
+                      "relatedField": null,
+                      "relationName": null,
+                      "type": "String",
+                    },
+                    Object {
+                      "associatedSequence": null,
+                      "comments": Array [],
                       "databaseName": "created_at",
                       "defaultValue": null,
                       "directives": Array [
@@ -31334,6 +31754,7 @@ GraphQLSchema {
     "MinistryCreateOneWithoutMinisterInput": "MinistryCreateOneWithoutMinisterInput",
     "MinistryCreateWithoutGovernmentInput": "MinistryCreateWithoutGovernmentInput",
     "MinistryCreateWithoutMinisterInput": "MinistryCreateWithoutMinisterInput",
+    "MinistryCreatedomainsInput": "MinistryCreatedomainsInput",
     "MinistryEdge": "MinistryEdge",
     "MinistryOrderByInput": "MinistryOrderByInput",
     "MinistryPreviousValues": "MinistryPreviousValues",
@@ -31349,6 +31770,7 @@ GraphQLSchema {
     "MinistryUpdateWithWhereUniqueWithoutGovernmentInput": "MinistryUpdateWithWhereUniqueWithoutGovernmentInput",
     "MinistryUpdateWithoutGovernmentDataInput": "MinistryUpdateWithoutGovernmentDataInput",
     "MinistryUpdateWithoutMinisterDataInput": "MinistryUpdateWithoutMinisterDataInput",
+    "MinistryUpdatedomainsInput": "MinistryUpdatedomainsInput",
     "MinistryUpsertWithWhereUniqueWithoutGovernmentInput": "MinistryUpsertWithWhereUniqueWithoutGovernmentInput",
     "MinistryUpsertWithoutMinisterInput": "MinistryUpsertWithoutMinisterInput",
     "MinistryWhereInput": "MinistryWhereInput",
@@ -32353,6 +32775,7 @@ type Ministry {
   budget: Float
   minister: Minister
   government: Government
+  domains: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -32365,11 +32788,16 @@ type MinistryConnection {
   aggregate: AggregateMinistry!
 }
 
+input MinistryCreatedomainsInput {
+  set: [String!]
+}
+
 input MinistryCreateInput {
   name: String
   budget: Float
   minister: MinisterCreateOneWithoutMinistryInput
   government: GovernmentCreateOneWithoutMinistriesInput
+  domains: MinistryCreatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32388,6 +32816,7 @@ input MinistryCreateWithoutGovernmentInput {
   name: String
   budget: Float
   minister: MinisterCreateOneWithoutMinistryInput
+  domains: MinistryCreatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32396,6 +32825,7 @@ input MinistryCreateWithoutMinisterInput {
   name: String
   budget: Float
   government: GovernmentCreateOneWithoutMinistriesInput
+  domains: MinistryCreatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32426,6 +32856,7 @@ type MinistryPreviousValues {
   id: ID!
   name: String
   budget: Float
+  domains: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -32524,11 +32955,16 @@ input MinistrySubscriptionWhereInput {
   NOT: [MinistrySubscriptionWhereInput!]
 }
 
+input MinistryUpdatedomainsInput {
+  set: [String!]
+}
+
 input MinistryUpdateInput {
   name: String
   budget: Float
   minister: MinisterUpdateOneWithoutMinistryInput
   government: GovernmentUpdateOneWithoutMinistriesInput
+  domains: MinistryUpdatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32536,6 +32972,7 @@ input MinistryUpdateInput {
 input MinistryUpdateManyDataInput {
   name: String
   budget: Float
+  domains: MinistryUpdatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32543,6 +32980,7 @@ input MinistryUpdateManyDataInput {
 input MinistryUpdateManyMutationInput {
   name: String
   budget: Float
+  domains: MinistryUpdatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32577,6 +33015,7 @@ input MinistryUpdateWithoutGovernmentDataInput {
   name: String
   budget: Float
   minister: MinisterUpdateOneWithoutMinistryInput
+  domains: MinistryUpdatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }
@@ -32585,6 +33024,7 @@ input MinistryUpdateWithoutMinisterDataInput {
   name: String
   budget: Float
   government: GovernmentUpdateOneWithoutMinistriesInput
+  domains: MinistryUpdatedomainsInput
   deletedAt: DateTime
   deleted: Int
 }

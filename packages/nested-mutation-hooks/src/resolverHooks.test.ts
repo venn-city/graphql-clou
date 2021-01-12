@@ -1784,6 +1784,132 @@ describe('Nested mutations', () => {
         expect(updatedGovernment.ministries.find(e => e.id === yetAnotherMinistry.id)).toHaveProperty('name', nameValue);
       });
     });
+
+    describe('Set operation', () => {
+      test('should create ministry with list of domains', async () => {
+        const nameValue = hacker.noun();
+        const domains = ['schools', 'college'];
+        const response = await executeMutation(
+          `
+              mutation($name: String!, $domains: [String!]!) {
+                createMinistry(
+                  data: {
+                    name: $name
+                    domains: {set: $domains}
+                  }
+                ) {
+                  id
+                  name
+                  domains
+                }
+              }
+            `,
+          {
+            name: nameValue,
+            domains
+          }
+        );
+        const createdMinistry = response?.data?.createMinistry;
+        expect(createdMinistry).toHaveProperty('domains', domains);
+      });
+      test('should update ministry with list of domains', async () => {
+        const name = hacker.noun();
+        const initialDomains = ['school', 'college'];
+        const ministry = await dataProvider.createEntity('Ministry', {
+          name,
+          domains: initialDomains
+        });
+        const updatedDomains = ['university'];
+        let response = await executeMutation(
+          `
+              mutation($ministryId: ID!, $domains: [String!]!) {
+                updateMinistry(
+                  data: {
+                    domains: {set: $domains}
+                  }
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            domains: updatedDomains,
+            ministryId: ministry.id
+          }
+        );
+        const updatedMinistry = response?.data?.updateMinistry;
+        expect(updatedMinistry).toHaveProperty('domains', updatedDomains);
+
+        response = await executeMutation(
+          `
+              query($ministryId: ID!) {
+                ministry(
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            ministryId: ministry.id
+          }
+        );
+        const fetchedMinistry = response?.data?.ministry;
+        expect(fetchedMinistry).toHaveProperty('domains', updatedDomains);
+      });
+
+      test('should update ministry with empty list of domains', async () => {
+        const name = hacker.noun();
+        const initialDomains = ['school', 'college'];
+        const ministry = await dataProvider.createEntity('Ministry', {
+          name,
+          domains: initialDomains
+        });
+        const updatedDomains: any = [];
+        let response = await executeMutation(
+          `
+              mutation($ministryId: ID!, $domains: [String!]!) {
+                updateMinistry(
+                  data: {
+                    domains: {set: $domains}
+                  }
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            domains: updatedDomains,
+            ministryId: ministry.id
+          }
+        );
+        const updatedMinistry = response?.data?.updateMinistry;
+        expect(updatedMinistry).toHaveProperty('domains', updatedDomains);
+
+        response = await executeMutation(
+          `
+              query($ministryId: ID!) {
+                ministry(
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            ministryId: ministry.id
+          }
+        );
+        const fetchedMinistry = response?.data?.ministry;
+        expect(fetchedMinistry).toHaveProperty('domains', updatedDomains);
+      });
+    });
   });
 
   describe('Nesting of multiple levels deep', () => {

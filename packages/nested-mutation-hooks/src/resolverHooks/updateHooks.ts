@@ -8,7 +8,8 @@ import {
   getChildEntityUpdateResolver,
   getChildEntityDeleteResolver,
   detectChildFieldsToChange,
-  isReferencingSideOfJoin
+  isReferencingSideOfJoin,
+  nestedSetEntity
 } from './common';
 
 const { getChildFieldOfType, getFieldName, getFieldType, extractFieldMetadata, KINDS } = opencrudSchemaProvider.introspectionUtils;
@@ -144,6 +145,9 @@ export async function preUpdate(context, parentUpdateData, where, entityName) {
               childElementData: childFieldToChangeElement
             });
           });
+        }
+        if (childEntityData.set) {
+          nestedSetEntity(parentUpdateData, fieldName);
         }
         if (childEntityData.upsert) {
           throw new Error('Nested upsert actions are not supported');
