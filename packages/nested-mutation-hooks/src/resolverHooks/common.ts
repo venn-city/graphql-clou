@@ -34,3 +34,9 @@ export function isReferencingSideOfJoin(context, type, field) {
   const pgRelationDirective = fieldMetadata.directives.find(d => d.name === 'pgRelation');
   return get(pgRelationDirective, 'arguments.column') !== undefined;
 }
+
+export function nestedSetEntity(parentData, childFieldName) {
+  const childEntityDataSet = { [childFieldName]: get(parentData, `${childFieldName}.set`, []) };
+  delete parentData[childFieldName];
+  Object.assign(parentData, childEntityDataSet);
+}
