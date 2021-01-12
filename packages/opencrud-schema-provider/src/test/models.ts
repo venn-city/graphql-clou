@@ -1,42 +1,43 @@
 export const datamodel = `
   directive @unique on FIELD_DEFINITION | FIELD
-  directive @pgTable(name: String) on FIELD_DEFINITION | FIELD | OBJECT
-  directive @pgColumn(name: String) on FIELD_DEFINITION | FIELD
-  directive @default(value: ANY) on FIELD_DEFINITION | FIELD
-  directive @pgRelation(column: String) on FIELD_DEFINITION | FIELD
-  directive @relationTable on FIELD_DEFINITION | FIELD
-  directive @relation(link: String, name: String) on FIELD_DEFINITION | FIELD
-  directive @vnCascade(direct: OPERATION, inverse: OPERATION) on FIELD_DEFINITION | FIELD
-  
-  union ANY = String | Int | Float
-  
-  scalar Json
-  
-  enum OPERATION {
+directive @pgTable(name: String) on FIELD_DEFINITION | FIELD | OBJECT
+directive @pgColumn(name: String) on FIELD_DEFINITION | FIELD
+directive @default(value: ANY) on FIELD_DEFINITION | FIELD
+directive @pgRelation(column: String) on FIELD_DEFINITION | FIELD
+directive @relationTable on FIELD_DEFINITION | FIELD
+directive @relation(link: String, name: String) on FIELD_DEFINITION | FIELD
+directive @vnCascade(direct: OPERATION, inverse: OPERATION) on FIELD_DEFINITION | FIELD
+
+union ANY = String | Int | Float
+
+scalar Json
+
+enum OPERATION {
     DELETE
     DISCONNECT
     DISCONNECT_DELETE
-  }
-  
-  enum BALLOT {
+}
+
+enum BALLOT {
     YEA,
     NAY,
     ABSTAIN
-  }
-  
-  type Ministry @pgTable(name: "ministries") {
+}
+
+type Ministry @pgTable(name: "ministries") {
     id:                     ID!                     @unique
     name:                   String                  @pgColumn(name: "name")
     budget:                 Float                   @pgColumn(name: "budget_in_million_usd")
     minister:               Minister                @pgRelation(column: "minister_id") @vnCascade(direct: DISCONNECT)
     government:             Government              @pgRelation(column: "government_id")
+    domains:                [String]                @pgColumn(name: "domains")
     createdAt:              DateTime!               @pgColumn(name: "created_at")
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
-  
-  type Minister @pgTable(name: "ministers") {
+}
+
+type Minister @pgTable(name: "ministers") {
     id:                     ID!                     @unique
     name:                   String                  @pgColumn(name: "name")
     votes:                  [Vote]                  @relation(link: TABLE, name:"MinisterVotesRelation") @vnCascade(direct: DELETE)
@@ -45,9 +46,9 @@ export const datamodel = `
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
-  
-  type Government @pgTable(name: "governments") {
+}
+
+type Government @pgTable(name: "governments") {
     id:                     ID!                     @unique
     name:                   String                  @pgColumn(name: "name")
     country:                String                  @unique @pgColumn(name: "country_code")
@@ -57,9 +58,9 @@ export const datamodel = `
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
-  
-  type Vote @pgTable(name: "votes") {
+}
+
+type Vote @pgTable(name: "votes") {
     id:                     ID!                     @unique
     name:                   String                  @pgColumn(name: "name")
     ballot:                 BALLOT                  @pgColumn(name: "ballot")
@@ -70,27 +71,27 @@ export const datamodel = `
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
-  
-  type MinisterVotesRelation @relationTable @pgTable(name: "ministers_votes_join_table") {
+}
+
+type MinisterVotesRelation @relationTable @pgTable(name: "ministers_votes_join_table") {
     minister:               Minister!               @pgColumn(name: "minister_id")
     vote:                   Vote!                   @pgColumn(name: "vote_id")
     createdAt:              DateTime!               @pgColumn(name: "created_at")
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
-  
-  type GovernmentLobbyistRelation @relationTable @pgTable(name: "government_lobbyist_join_table") {
+}
+
+type GovernmentLobbyistRelation @relationTable @pgTable(name: "government_lobbyist_join_table") {
     minister:               Minister!               @pgColumn(name: "government_id")
     vote:                   Vote!                   @pgColumn(name: "lobbyist_id")
     createdAt:              DateTime!               @pgColumn(name: "created_at")
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
-  
-  type Lobbyist @pgTable(name: "lobbyists") {
+}
+
+type Lobbyist @pgTable(name: "lobbyists") {
     id:                     ID!                     @unique
     name:                   String                  @pgColumn(name: "name")
     governments:            [Government]            @relation(link: TABLE, name: "GovernmentLobbyistRelation")
@@ -98,1622 +99,1639 @@ export const datamodel = `
     updatedAt:              DateTime!               @pgColumn(name: "updated_at")
     deletedAt:              DateTime                @pgColumn(name: "deleted_at")
     deleted:                Int!                    @default(value: 0)
-  }
+}
 `;
 
 export const sdl = `
-  type AggregateGovernment {
-  count: Int!
+    type AggregateGovernment {
+    count: Int!
 }
 
 type AggregateLobbyist {
-  count: Int!
+    count: Int!
 }
 
 type AggregateMinister {
-  count: Int!
+    count: Int!
 }
 
 type AggregateMinistry {
-  count: Int!
+    count: Int!
 }
 
 type AggregateVote {
-  count: Int!
+    count: Int!
 }
 
 enum BALLOT {
-  YEA
-  NAY
-  ABSTAIN
+    YEA
+NAY
+ABSTAIN
 }
 
 type BatchPayload {
-  count: Long!
+    count: Long!
 }
 
 scalar DateTime
 
 type Government {
-  id: ID!
-  name: String
-  country: String
-  ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry!]
-  lobbyists(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lobbyist!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    country: String
+    ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry!]
+    lobbyists(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lobbyist!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 type GovernmentConnection {
-  pageInfo: PageInfo!
-  edges: [GovernmentEdge]!
-  aggregate: AggregateGovernment!
+    pageInfo: PageInfo!
+    edges: [GovernmentEdge]!
+    aggregate: AggregateGovernment!
 }
 
 input GovernmentCreateInput {
-  name: String
-  country: String
-  ministries: MinistryCreateManyWithoutGovernmentInput
-  lobbyists: LobbyistCreateManyWithoutGovernmentsInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    ministries: MinistryCreateManyWithoutGovernmentInput
+    lobbyists: LobbyistCreateManyWithoutGovernmentsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentCreateManyWithoutLobbyistsInput {
-  create: [GovernmentCreateWithoutLobbyistsInput!]
-  connect: [GovernmentWhereUniqueInput!]
+    create: [GovernmentCreateWithoutLobbyistsInput!]
+    connect: [GovernmentWhereUniqueInput!]
 }
 
 input GovernmentCreateOneWithoutMinistriesInput {
-  create: GovernmentCreateWithoutMinistriesInput
-  connect: GovernmentWhereUniqueInput
+    create: GovernmentCreateWithoutMinistriesInput
+    connect: GovernmentWhereUniqueInput
 }
 
 input GovernmentCreateWithoutLobbyistsInput {
-  name: String
-  country: String
-  ministries: MinistryCreateManyWithoutGovernmentInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    ministries: MinistryCreateManyWithoutGovernmentInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentCreateWithoutMinistriesInput {
-  name: String
-  country: String
-  lobbyists: LobbyistCreateManyWithoutGovernmentsInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    lobbyists: LobbyistCreateManyWithoutGovernmentsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 type GovernmentEdge {
-  node: Government!
-  cursor: String!
+    node: Government!
+    cursor: String!
 }
 
 enum GovernmentOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  country_ASC
-  country_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deleted_ASC
-  deleted_DESC
+    id_ASC
+id_DESC
+name_ASC
+name_DESC
+country_ASC
+country_DESC
+createdAt_ASC
+createdAt_DESC
+updatedAt_ASC
+updatedAt_DESC
+deletedAt_ASC
+deletedAt_DESC
+deleted_ASC
+deleted_DESC
 }
 
 type GovernmentPreviousValues {
-  id: ID!
-  name: String
-  country: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    country: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 input GovernmentScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  country: String
-  country_not: String
-  country_in: [String!]
-  country_not_in: [String!]
-  country_lt: String
-  country_lte: String
-  country_gt: String
-  country_gte: String
-  country_contains: String
-  country_not_contains: String
-  country_starts_with: String
-  country_not_starts_with: String
-  country_ends_with: String
-  country_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [GovernmentScalarWhereInput!]
-  OR: [GovernmentScalarWhereInput!]
-  NOT: [GovernmentScalarWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    country: String
+    country_not: String
+    country_in: [String!]
+    country_not_in: [String!]
+    country_lt: String
+    country_lte: String
+    country_gt: String
+    country_gte: String
+    country_contains: String
+    country_not_contains: String
+    country_starts_with: String
+    country_not_starts_with: String
+    country_ends_with: String
+    country_not_ends_with: String
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [GovernmentScalarWhereInput!]
+    OR: [GovernmentScalarWhereInput!]
+    NOT: [GovernmentScalarWhereInput!]
 }
 
 type GovernmentSubscriptionPayload {
-  mutation: MutationType!
-  node: Government
-  updatedFields: [String!]
-  previousValues: GovernmentPreviousValues
+    mutation: MutationType!
+    node: Government
+    updatedFields: [String!]
+    previousValues: GovernmentPreviousValues
 }
 
 input GovernmentSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: GovernmentWhereInput
-  AND: [GovernmentSubscriptionWhereInput!]
-  OR: [GovernmentSubscriptionWhereInput!]
-  NOT: [GovernmentSubscriptionWhereInput!]
+    mutation_in: [MutationType!]
+    updatedFields_contains: String
+    updatedFields_contains_every: [String!]
+    updatedFields_contains_some: [String!]
+    node: GovernmentWhereInput
+    AND: [GovernmentSubscriptionWhereInput!]
+    OR: [GovernmentSubscriptionWhereInput!]
+    NOT: [GovernmentSubscriptionWhereInput!]
 }
 
 input GovernmentUpdateInput {
-  name: String
-  country: String
-  ministries: MinistryUpdateManyWithoutGovernmentInput
-  lobbyists: LobbyistUpdateManyWithoutGovernmentsInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    ministries: MinistryUpdateManyWithoutGovernmentInput
+    lobbyists: LobbyistUpdateManyWithoutGovernmentsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentUpdateManyDataInput {
-  name: String
-  country: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentUpdateManyMutationInput {
-  name: String
-  country: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentUpdateManyWithoutLobbyistsInput {
-  create: [GovernmentCreateWithoutLobbyistsInput!]
-  delete: [GovernmentWhereUniqueInput!]
-  connect: [GovernmentWhereUniqueInput!]
-  set: [GovernmentWhereUniqueInput!]
-  disconnect: [GovernmentWhereUniqueInput!]
-  update: [GovernmentUpdateWithWhereUniqueWithoutLobbyistsInput!]
-  upsert: [GovernmentUpsertWithWhereUniqueWithoutLobbyistsInput!]
-  deleteMany: [GovernmentScalarWhereInput!]
-  updateMany: [GovernmentUpdateManyWithWhereNestedInput!]
+    create: [GovernmentCreateWithoutLobbyistsInput!]
+    delete: [GovernmentWhereUniqueInput!]
+    connect: [GovernmentWhereUniqueInput!]
+    set: [GovernmentWhereUniqueInput!]
+    disconnect: [GovernmentWhereUniqueInput!]
+    update: [GovernmentUpdateWithWhereUniqueWithoutLobbyistsInput!]
+    upsert: [GovernmentUpsertWithWhereUniqueWithoutLobbyistsInput!]
+    deleteMany: [GovernmentScalarWhereInput!]
+    updateMany: [GovernmentUpdateManyWithWhereNestedInput!]
 }
 
 input GovernmentUpdateManyWithWhereNestedInput {
-  where: GovernmentScalarWhereInput!
-  data: GovernmentUpdateManyDataInput!
+    where: GovernmentScalarWhereInput!
+    data: GovernmentUpdateManyDataInput!
 }
 
 input GovernmentUpdateOneWithoutMinistriesInput {
-  create: GovernmentCreateWithoutMinistriesInput
-  update: GovernmentUpdateWithoutMinistriesDataInput
-  upsert: GovernmentUpsertWithoutMinistriesInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: GovernmentWhereUniqueInput
+    create: GovernmentCreateWithoutMinistriesInput
+    update: GovernmentUpdateWithoutMinistriesDataInput
+    upsert: GovernmentUpsertWithoutMinistriesInput
+    delete: Boolean
+    disconnect: Boolean
+    connect: GovernmentWhereUniqueInput
 }
 
 input GovernmentUpdateWithoutLobbyistsDataInput {
-  name: String
-  country: String
-  ministries: MinistryUpdateManyWithoutGovernmentInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    ministries: MinistryUpdateManyWithoutGovernmentInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentUpdateWithoutMinistriesDataInput {
-  name: String
-  country: String
-  lobbyists: LobbyistUpdateManyWithoutGovernmentsInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    country: String
+    lobbyists: LobbyistUpdateManyWithoutGovernmentsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input GovernmentUpdateWithWhereUniqueWithoutLobbyistsInput {
-  where: GovernmentWhereUniqueInput!
-  data: GovernmentUpdateWithoutLobbyistsDataInput!
+    where: GovernmentWhereUniqueInput!
+    data: GovernmentUpdateWithoutLobbyistsDataInput!
 }
 
 input GovernmentUpsertWithoutMinistriesInput {
-  update: GovernmentUpdateWithoutMinistriesDataInput!
-  create: GovernmentCreateWithoutMinistriesInput!
+    update: GovernmentUpdateWithoutMinistriesDataInput!
+    create: GovernmentCreateWithoutMinistriesInput!
 }
 
 input GovernmentUpsertWithWhereUniqueWithoutLobbyistsInput {
-  where: GovernmentWhereUniqueInput!
-  update: GovernmentUpdateWithoutLobbyistsDataInput!
-  create: GovernmentCreateWithoutLobbyistsInput!
+    where: GovernmentWhereUniqueInput!
+    update: GovernmentUpdateWithoutLobbyistsDataInput!
+    create: GovernmentCreateWithoutLobbyistsInput!
 }
 
 input GovernmentWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  country: String
-  country_not: String
-  country_in: [String!]
-  country_not_in: [String!]
-  country_lt: String
-  country_lte: String
-  country_gt: String
-  country_gte: String
-  country_contains: String
-  country_not_contains: String
-  country_starts_with: String
-  country_not_starts_with: String
-  country_ends_with: String
-  country_not_ends_with: String
-  ministries_every: MinistryWhereInput
-  ministries_some: MinistryWhereInput
-  ministries_none: MinistryWhereInput
-  lobbyists_every: LobbyistWhereInput
-  lobbyists_some: LobbyistWhereInput
-  lobbyists_none: LobbyistWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [GovernmentWhereInput!]
-  OR: [GovernmentWhereInput!]
-  NOT: [GovernmentWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    country: String
+    country_not: String
+    country_in: [String!]
+    country_not_in: [String!]
+    country_lt: String
+    country_lte: String
+    country_gt: String
+    country_gte: String
+    country_contains: String
+    country_not_contains: String
+    country_starts_with: String
+    country_not_starts_with: String
+    country_ends_with: String
+    country_not_ends_with: String
+    ministries_every: MinistryWhereInput
+    ministries_some: MinistryWhereInput
+    ministries_none: MinistryWhereInput
+    lobbyists_every: LobbyistWhereInput
+    lobbyists_some: LobbyistWhereInput
+    lobbyists_none: LobbyistWhereInput
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [GovernmentWhereInput!]
+    OR: [GovernmentWhereInput!]
+    NOT: [GovernmentWhereInput!]
 }
 
 input GovernmentWhereUniqueInput {
-  id: ID
-  country: String
+    id: ID
+    country: String
 }
 
 scalar Json
 
 type Lobbyist {
-  id: ID!
-  name: String
-  governments(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Government!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    governments(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Government!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 type LobbyistConnection {
-  pageInfo: PageInfo!
-  edges: [LobbyistEdge]!
-  aggregate: AggregateLobbyist!
+    pageInfo: PageInfo!
+    edges: [LobbyistEdge]!
+    aggregate: AggregateLobbyist!
 }
 
 input LobbyistCreateInput {
-  name: String
-  governments: GovernmentCreateManyWithoutLobbyistsInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    governments: GovernmentCreateManyWithoutLobbyistsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input LobbyistCreateManyWithoutGovernmentsInput {
-  create: [LobbyistCreateWithoutGovernmentsInput!]
-  connect: [LobbyistWhereUniqueInput!]
+    create: [LobbyistCreateWithoutGovernmentsInput!]
+    connect: [LobbyistWhereUniqueInput!]
 }
 
 input LobbyistCreateWithoutGovernmentsInput {
-  name: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 type LobbyistEdge {
-  node: Lobbyist!
-  cursor: String!
+    node: Lobbyist!
+    cursor: String!
 }
 
 enum LobbyistOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deleted_ASC
-  deleted_DESC
+    id_ASC
+id_DESC
+name_ASC
+name_DESC
+createdAt_ASC
+createdAt_DESC
+updatedAt_ASC
+updatedAt_DESC
+deletedAt_ASC
+deletedAt_DESC
+deleted_ASC
+deleted_DESC
 }
 
 type LobbyistPreviousValues {
-  id: ID!
-  name: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 input LobbyistScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [LobbyistScalarWhereInput!]
-  OR: [LobbyistScalarWhereInput!]
-  NOT: [LobbyistScalarWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [LobbyistScalarWhereInput!]
+    OR: [LobbyistScalarWhereInput!]
+    NOT: [LobbyistScalarWhereInput!]
 }
 
 type LobbyistSubscriptionPayload {
-  mutation: MutationType!
-  node: Lobbyist
-  updatedFields: [String!]
-  previousValues: LobbyistPreviousValues
+    mutation: MutationType!
+    node: Lobbyist
+    updatedFields: [String!]
+    previousValues: LobbyistPreviousValues
 }
 
 input LobbyistSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: LobbyistWhereInput
-  AND: [LobbyistSubscriptionWhereInput!]
-  OR: [LobbyistSubscriptionWhereInput!]
-  NOT: [LobbyistSubscriptionWhereInput!]
+    mutation_in: [MutationType!]
+    updatedFields_contains: String
+    updatedFields_contains_every: [String!]
+    updatedFields_contains_some: [String!]
+    node: LobbyistWhereInput
+    AND: [LobbyistSubscriptionWhereInput!]
+    OR: [LobbyistSubscriptionWhereInput!]
+    NOT: [LobbyistSubscriptionWhereInput!]
 }
 
 input LobbyistUpdateInput {
-  name: String
-  governments: GovernmentUpdateManyWithoutLobbyistsInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    governments: GovernmentUpdateManyWithoutLobbyistsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input LobbyistUpdateManyDataInput {
-  name: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input LobbyistUpdateManyMutationInput {
-  name: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input LobbyistUpdateManyWithoutGovernmentsInput {
-  create: [LobbyistCreateWithoutGovernmentsInput!]
-  delete: [LobbyistWhereUniqueInput!]
-  connect: [LobbyistWhereUniqueInput!]
-  set: [LobbyistWhereUniqueInput!]
-  disconnect: [LobbyistWhereUniqueInput!]
-  update: [LobbyistUpdateWithWhereUniqueWithoutGovernmentsInput!]
-  upsert: [LobbyistUpsertWithWhereUniqueWithoutGovernmentsInput!]
-  deleteMany: [LobbyistScalarWhereInput!]
-  updateMany: [LobbyistUpdateManyWithWhereNestedInput!]
+    create: [LobbyistCreateWithoutGovernmentsInput!]
+    delete: [LobbyistWhereUniqueInput!]
+    connect: [LobbyistWhereUniqueInput!]
+    set: [LobbyistWhereUniqueInput!]
+    disconnect: [LobbyistWhereUniqueInput!]
+    update: [LobbyistUpdateWithWhereUniqueWithoutGovernmentsInput!]
+    upsert: [LobbyistUpsertWithWhereUniqueWithoutGovernmentsInput!]
+    deleteMany: [LobbyistScalarWhereInput!]
+    updateMany: [LobbyistUpdateManyWithWhereNestedInput!]
 }
 
 input LobbyistUpdateManyWithWhereNestedInput {
-  where: LobbyistScalarWhereInput!
-  data: LobbyistUpdateManyDataInput!
+    where: LobbyistScalarWhereInput!
+    data: LobbyistUpdateManyDataInput!
 }
 
 input LobbyistUpdateWithoutGovernmentsDataInput {
-  name: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input LobbyistUpdateWithWhereUniqueWithoutGovernmentsInput {
-  where: LobbyistWhereUniqueInput!
-  data: LobbyistUpdateWithoutGovernmentsDataInput!
+    where: LobbyistWhereUniqueInput!
+    data: LobbyistUpdateWithoutGovernmentsDataInput!
 }
 
 input LobbyistUpsertWithWhereUniqueWithoutGovernmentsInput {
-  where: LobbyistWhereUniqueInput!
-  update: LobbyistUpdateWithoutGovernmentsDataInput!
-  create: LobbyistCreateWithoutGovernmentsInput!
+    where: LobbyistWhereUniqueInput!
+    update: LobbyistUpdateWithoutGovernmentsDataInput!
+    create: LobbyistCreateWithoutGovernmentsInput!
 }
 
 input LobbyistWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  governments_every: GovernmentWhereInput
-  governments_some: GovernmentWhereInput
-  governments_none: GovernmentWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [LobbyistWhereInput!]
-  OR: [LobbyistWhereInput!]
-  NOT: [LobbyistWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    governments_every: GovernmentWhereInput
+    governments_some: GovernmentWhereInput
+    governments_none: GovernmentWhereInput
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [LobbyistWhereInput!]
+    OR: [LobbyistWhereInput!]
+    NOT: [LobbyistWhereInput!]
 }
 
 input LobbyistWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 scalar Long
 
 type Minister {
-  id: ID!
-  name: String
-  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
-  ministry: Ministry
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
+    ministry: Ministry
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 type MinisterConnection {
-  pageInfo: PageInfo!
-  edges: [MinisterEdge]!
-  aggregate: AggregateMinister!
+    pageInfo: PageInfo!
+    edges: [MinisterEdge]!
+    aggregate: AggregateMinister!
 }
 
 input MinisterCreateInput {
-  name: String
-  votes: VoteCreateManyWithoutMinisterInput
-  ministry: MinistryCreateOneWithoutMinisterInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    votes: VoteCreateManyWithoutMinisterInput
+    ministry: MinistryCreateOneWithoutMinisterInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinisterCreateOneWithoutMinistryInput {
-  create: MinisterCreateWithoutMinistryInput
-  connect: MinisterWhereUniqueInput
+    create: MinisterCreateWithoutMinistryInput
+    connect: MinisterWhereUniqueInput
 }
 
 input MinisterCreateOneWithoutVotesInput {
-  create: MinisterCreateWithoutVotesInput
-  connect: MinisterWhereUniqueInput
+    create: MinisterCreateWithoutVotesInput
+    connect: MinisterWhereUniqueInput
 }
 
 input MinisterCreateWithoutMinistryInput {
-  name: String
-  votes: VoteCreateManyWithoutMinisterInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    votes: VoteCreateManyWithoutMinisterInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinisterCreateWithoutVotesInput {
-  name: String
-  ministry: MinistryCreateOneWithoutMinisterInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ministry: MinistryCreateOneWithoutMinisterInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 type MinisterEdge {
-  node: Minister!
-  cursor: String!
+    node: Minister!
+    cursor: String!
 }
 
 enum MinisterOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deleted_ASC
-  deleted_DESC
+    id_ASC
+id_DESC
+name_ASC
+name_DESC
+createdAt_ASC
+createdAt_DESC
+updatedAt_ASC
+updatedAt_DESC
+deletedAt_ASC
+deletedAt_DESC
+deleted_ASC
+deleted_DESC
 }
 
 type MinisterPreviousValues {
-  id: ID!
-  name: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 type MinisterSubscriptionPayload {
-  mutation: MutationType!
-  node: Minister
-  updatedFields: [String!]
-  previousValues: MinisterPreviousValues
+    mutation: MutationType!
+    node: Minister
+    updatedFields: [String!]
+    previousValues: MinisterPreviousValues
 }
 
 input MinisterSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: MinisterWhereInput
-  AND: [MinisterSubscriptionWhereInput!]
-  OR: [MinisterSubscriptionWhereInput!]
-  NOT: [MinisterSubscriptionWhereInput!]
+    mutation_in: [MutationType!]
+    updatedFields_contains: String
+    updatedFields_contains_every: [String!]
+    updatedFields_contains_some: [String!]
+    node: MinisterWhereInput
+    AND: [MinisterSubscriptionWhereInput!]
+    OR: [MinisterSubscriptionWhereInput!]
+    NOT: [MinisterSubscriptionWhereInput!]
 }
 
 input MinisterUpdateInput {
-  name: String
-  votes: VoteUpdateManyWithoutMinisterInput
-  ministry: MinistryUpdateOneWithoutMinisterInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    votes: VoteUpdateManyWithoutMinisterInput
+    ministry: MinistryUpdateOneWithoutMinisterInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinisterUpdateManyMutationInput {
-  name: String
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinisterUpdateOneWithoutMinistryInput {
-  create: MinisterCreateWithoutMinistryInput
-  update: MinisterUpdateWithoutMinistryDataInput
-  upsert: MinisterUpsertWithoutMinistryInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: MinisterWhereUniqueInput
+    create: MinisterCreateWithoutMinistryInput
+    update: MinisterUpdateWithoutMinistryDataInput
+    upsert: MinisterUpsertWithoutMinistryInput
+    delete: Boolean
+    disconnect: Boolean
+    connect: MinisterWhereUniqueInput
 }
 
 input MinisterUpdateOneWithoutVotesInput {
-  create: MinisterCreateWithoutVotesInput
-  update: MinisterUpdateWithoutVotesDataInput
-  upsert: MinisterUpsertWithoutVotesInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: MinisterWhereUniqueInput
+    create: MinisterCreateWithoutVotesInput
+    update: MinisterUpdateWithoutVotesDataInput
+    upsert: MinisterUpsertWithoutVotesInput
+    delete: Boolean
+    disconnect: Boolean
+    connect: MinisterWhereUniqueInput
 }
 
 input MinisterUpdateWithoutMinistryDataInput {
-  name: String
-  votes: VoteUpdateManyWithoutMinisterInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    votes: VoteUpdateManyWithoutMinisterInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinisterUpdateWithoutVotesDataInput {
-  name: String
-  ministry: MinistryUpdateOneWithoutMinisterInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ministry: MinistryUpdateOneWithoutMinisterInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinisterUpsertWithoutMinistryInput {
-  update: MinisterUpdateWithoutMinistryDataInput!
-  create: MinisterCreateWithoutMinistryInput!
+    update: MinisterUpdateWithoutMinistryDataInput!
+    create: MinisterCreateWithoutMinistryInput!
 }
 
 input MinisterUpsertWithoutVotesInput {
-  update: MinisterUpdateWithoutVotesDataInput!
-  create: MinisterCreateWithoutVotesInput!
+    update: MinisterUpdateWithoutVotesDataInput!
+    create: MinisterCreateWithoutVotesInput!
 }
 
 input MinisterWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  votes_every: VoteWhereInput
-  votes_some: VoteWhereInput
-  votes_none: VoteWhereInput
-  ministry: MinistryWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [MinisterWhereInput!]
-  OR: [MinisterWhereInput!]
-  NOT: [MinisterWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    votes_every: VoteWhereInput
+    votes_some: VoteWhereInput
+    votes_none: VoteWhereInput
+    ministry: MinistryWhereInput
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [MinisterWhereInput!]
+    OR: [MinisterWhereInput!]
+    NOT: [MinisterWhereInput!]
 }
 
 input MinisterWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 type Ministry {
-  id: ID!
-  name: String
-  budget: Float
-  minister: Minister
-  government: Government
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    budget: Float
+    minister: Minister
+    government: Government
+    domains: [String!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 type MinistryConnection {
-  pageInfo: PageInfo!
-  edges: [MinistryEdge]!
-  aggregate: AggregateMinistry!
+    pageInfo: PageInfo!
+    edges: [MinistryEdge]!
+    aggregate: AggregateMinistry!
+}
+
+input MinistryCreatedomainsInput {
+    set: [String!]
 }
 
 input MinistryCreateInput {
-  name: String
-  budget: Float
-  minister: MinisterCreateOneWithoutMinistryInput
-  government: GovernmentCreateOneWithoutMinistriesInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    minister: MinisterCreateOneWithoutMinistryInput
+    government: GovernmentCreateOneWithoutMinistriesInput
+    domains: MinistryCreatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryCreateManyWithoutGovernmentInput {
-  create: [MinistryCreateWithoutGovernmentInput!]
-  connect: [MinistryWhereUniqueInput!]
+    create: [MinistryCreateWithoutGovernmentInput!]
+    connect: [MinistryWhereUniqueInput!]
 }
 
 input MinistryCreateOneWithoutMinisterInput {
-  create: MinistryCreateWithoutMinisterInput
-  connect: MinistryWhereUniqueInput
+    create: MinistryCreateWithoutMinisterInput
+    connect: MinistryWhereUniqueInput
 }
 
 input MinistryCreateWithoutGovernmentInput {
-  name: String
-  budget: Float
-  minister: MinisterCreateOneWithoutMinistryInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    minister: MinisterCreateOneWithoutMinistryInput
+    domains: MinistryCreatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryCreateWithoutMinisterInput {
-  name: String
-  budget: Float
-  government: GovernmentCreateOneWithoutMinistriesInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    government: GovernmentCreateOneWithoutMinistriesInput
+    domains: MinistryCreatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 type MinistryEdge {
-  node: Ministry!
-  cursor: String!
+    node: Ministry!
+    cursor: String!
 }
 
 enum MinistryOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  budget_ASC
-  budget_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deleted_ASC
-  deleted_DESC
+    id_ASC
+id_DESC
+name_ASC
+name_DESC
+budget_ASC
+budget_DESC
+createdAt_ASC
+createdAt_DESC
+updatedAt_ASC
+updatedAt_DESC
+deletedAt_ASC
+deletedAt_DESC
+deleted_ASC
+deleted_DESC
 }
 
 type MinistryPreviousValues {
-  id: ID!
-  name: String
-  budget: Float
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    budget: Float
+    domains: [String!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 input MinistryScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  budget: Float
-  budget_not: Float
-  budget_in: [Float!]
-  budget_not_in: [Float!]
-  budget_lt: Float
-  budget_lte: Float
-  budget_gt: Float
-  budget_gte: Float
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [MinistryScalarWhereInput!]
-  OR: [MinistryScalarWhereInput!]
-  NOT: [MinistryScalarWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    budget: Float
+    budget_not: Float
+    budget_in: [Float!]
+    budget_not_in: [Float!]
+    budget_lt: Float
+    budget_lte: Float
+    budget_gt: Float
+    budget_gte: Float
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [MinistryScalarWhereInput!]
+    OR: [MinistryScalarWhereInput!]
+    NOT: [MinistryScalarWhereInput!]
 }
 
 type MinistrySubscriptionPayload {
-  mutation: MutationType!
-  node: Ministry
-  updatedFields: [String!]
-  previousValues: MinistryPreviousValues
+    mutation: MutationType!
+    node: Ministry
+    updatedFields: [String!]
+    previousValues: MinistryPreviousValues
 }
 
 input MinistrySubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: MinistryWhereInput
-  AND: [MinistrySubscriptionWhereInput!]
-  OR: [MinistrySubscriptionWhereInput!]
-  NOT: [MinistrySubscriptionWhereInput!]
+    mutation_in: [MutationType!]
+    updatedFields_contains: String
+    updatedFields_contains_every: [String!]
+    updatedFields_contains_some: [String!]
+    node: MinistryWhereInput
+    AND: [MinistrySubscriptionWhereInput!]
+    OR: [MinistrySubscriptionWhereInput!]
+    NOT: [MinistrySubscriptionWhereInput!]
+}
+
+input MinistryUpdatedomainsInput {
+    set: [String!]
 }
 
 input MinistryUpdateInput {
-  name: String
-  budget: Float
-  minister: MinisterUpdateOneWithoutMinistryInput
-  government: GovernmentUpdateOneWithoutMinistriesInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    minister: MinisterUpdateOneWithoutMinistryInput
+    government: GovernmentUpdateOneWithoutMinistriesInput
+    domains: MinistryUpdatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryUpdateManyDataInput {
-  name: String
-  budget: Float
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    domains: MinistryUpdatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryUpdateManyMutationInput {
-  name: String
-  budget: Float
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    domains: MinistryUpdatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryUpdateManyWithoutGovernmentInput {
-  create: [MinistryCreateWithoutGovernmentInput!]
-  delete: [MinistryWhereUniqueInput!]
-  connect: [MinistryWhereUniqueInput!]
-  set: [MinistryWhereUniqueInput!]
-  disconnect: [MinistryWhereUniqueInput!]
-  update: [MinistryUpdateWithWhereUniqueWithoutGovernmentInput!]
-  upsert: [MinistryUpsertWithWhereUniqueWithoutGovernmentInput!]
-  deleteMany: [MinistryScalarWhereInput!]
-  updateMany: [MinistryUpdateManyWithWhereNestedInput!]
+    create: [MinistryCreateWithoutGovernmentInput!]
+    delete: [MinistryWhereUniqueInput!]
+    connect: [MinistryWhereUniqueInput!]
+    set: [MinistryWhereUniqueInput!]
+    disconnect: [MinistryWhereUniqueInput!]
+    update: [MinistryUpdateWithWhereUniqueWithoutGovernmentInput!]
+    upsert: [MinistryUpsertWithWhereUniqueWithoutGovernmentInput!]
+    deleteMany: [MinistryScalarWhereInput!]
+    updateMany: [MinistryUpdateManyWithWhereNestedInput!]
 }
 
 input MinistryUpdateManyWithWhereNestedInput {
-  where: MinistryScalarWhereInput!
-  data: MinistryUpdateManyDataInput!
+    where: MinistryScalarWhereInput!
+    data: MinistryUpdateManyDataInput!
 }
 
 input MinistryUpdateOneWithoutMinisterInput {
-  create: MinistryCreateWithoutMinisterInput
-  update: MinistryUpdateWithoutMinisterDataInput
-  upsert: MinistryUpsertWithoutMinisterInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: MinistryWhereUniqueInput
+    create: MinistryCreateWithoutMinisterInput
+    update: MinistryUpdateWithoutMinisterDataInput
+    upsert: MinistryUpsertWithoutMinisterInput
+    delete: Boolean
+    disconnect: Boolean
+    connect: MinistryWhereUniqueInput
 }
 
 input MinistryUpdateWithoutGovernmentDataInput {
-  name: String
-  budget: Float
-  minister: MinisterUpdateOneWithoutMinistryInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    minister: MinisterUpdateOneWithoutMinistryInput
+    domains: MinistryUpdatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryUpdateWithoutMinisterDataInput {
-  name: String
-  budget: Float
-  government: GovernmentUpdateOneWithoutMinistriesInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    budget: Float
+    government: GovernmentUpdateOneWithoutMinistriesInput
+    domains: MinistryUpdatedomainsInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input MinistryUpdateWithWhereUniqueWithoutGovernmentInput {
-  where: MinistryWhereUniqueInput!
-  data: MinistryUpdateWithoutGovernmentDataInput!
+    where: MinistryWhereUniqueInput!
+    data: MinistryUpdateWithoutGovernmentDataInput!
 }
 
 input MinistryUpsertWithoutMinisterInput {
-  update: MinistryUpdateWithoutMinisterDataInput!
-  create: MinistryCreateWithoutMinisterInput!
+    update: MinistryUpdateWithoutMinisterDataInput!
+    create: MinistryCreateWithoutMinisterInput!
 }
 
 input MinistryUpsertWithWhereUniqueWithoutGovernmentInput {
-  where: MinistryWhereUniqueInput!
-  update: MinistryUpdateWithoutGovernmentDataInput!
-  create: MinistryCreateWithoutGovernmentInput!
+    where: MinistryWhereUniqueInput!
+    update: MinistryUpdateWithoutGovernmentDataInput!
+    create: MinistryCreateWithoutGovernmentInput!
 }
 
 input MinistryWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  budget: Float
-  budget_not: Float
-  budget_in: [Float!]
-  budget_not_in: [Float!]
-  budget_lt: Float
-  budget_lte: Float
-  budget_gt: Float
-  budget_gte: Float
-  minister: MinisterWhereInput
-  government: GovernmentWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [MinistryWhereInput!]
-  OR: [MinistryWhereInput!]
-  NOT: [MinistryWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    budget: Float
+    budget_not: Float
+    budget_in: [Float!]
+    budget_not_in: [Float!]
+    budget_lt: Float
+    budget_lte: Float
+    budget_gt: Float
+    budget_gte: Float
+    minister: MinisterWhereInput
+    government: GovernmentWhereInput
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [MinistryWhereInput!]
+    OR: [MinistryWhereInput!]
+    NOT: [MinistryWhereInput!]
 }
 
 input MinistryWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 type Mutation {
-  createGovernment(data: GovernmentCreateInput!): Government!
-  updateGovernment(data: GovernmentUpdateInput!, where: GovernmentWhereUniqueInput!): Government
-  updateManyGovernments(data: GovernmentUpdateManyMutationInput!, where: GovernmentWhereInput): BatchPayload!
-  upsertGovernment(where: GovernmentWhereUniqueInput!, create: GovernmentCreateInput!, update: GovernmentUpdateInput!): Government!
-  deleteGovernment(where: GovernmentWhereUniqueInput!): Government
-  deleteManyGovernments(where: GovernmentWhereInput): BatchPayload!
-  createLobbyist(data: LobbyistCreateInput!): Lobbyist!
-  updateLobbyist(data: LobbyistUpdateInput!, where: LobbyistWhereUniqueInput!): Lobbyist
-  updateManyLobbyists(data: LobbyistUpdateManyMutationInput!, where: LobbyistWhereInput): BatchPayload!
-  upsertLobbyist(where: LobbyistWhereUniqueInput!, create: LobbyistCreateInput!, update: LobbyistUpdateInput!): Lobbyist!
-  deleteLobbyist(where: LobbyistWhereUniqueInput!): Lobbyist
-  deleteManyLobbyists(where: LobbyistWhereInput): BatchPayload!
-  createMinister(data: MinisterCreateInput!): Minister!
-  updateMinister(data: MinisterUpdateInput!, where: MinisterWhereUniqueInput!): Minister
-  updateManyMinisters(data: MinisterUpdateManyMutationInput!, where: MinisterWhereInput): BatchPayload!
-  upsertMinister(where: MinisterWhereUniqueInput!, create: MinisterCreateInput!, update: MinisterUpdateInput!): Minister!
-  deleteMinister(where: MinisterWhereUniqueInput!): Minister
-  deleteManyMinisters(where: MinisterWhereInput): BatchPayload!
-  createMinistry(data: MinistryCreateInput!): Ministry!
-  updateMinistry(data: MinistryUpdateInput!, where: MinistryWhereUniqueInput!): Ministry
-  updateManyMinistries(data: MinistryUpdateManyMutationInput!, where: MinistryWhereInput): BatchPayload!
-  upsertMinistry(where: MinistryWhereUniqueInput!, create: MinistryCreateInput!, update: MinistryUpdateInput!): Ministry!
-  deleteMinistry(where: MinistryWhereUniqueInput!): Ministry
-  deleteManyMinistries(where: MinistryWhereInput): BatchPayload!
-  createVote(data: VoteCreateInput!): Vote!
-  updateVote(data: VoteUpdateInput!, where: VoteWhereUniqueInput!): Vote
-  updateManyVotes(data: VoteUpdateManyMutationInput!, where: VoteWhereInput): BatchPayload!
-  upsertVote(where: VoteWhereUniqueInput!, create: VoteCreateInput!, update: VoteUpdateInput!): Vote!
-  deleteVote(where: VoteWhereUniqueInput!): Vote
-  deleteManyVotes(where: VoteWhereInput): BatchPayload!
+    createGovernment(data: GovernmentCreateInput!): Government!
+    updateGovernment(data: GovernmentUpdateInput!, where: GovernmentWhereUniqueInput!): Government
+    updateManyGovernments(data: GovernmentUpdateManyMutationInput!, where: GovernmentWhereInput): BatchPayload!
+    upsertGovernment(where: GovernmentWhereUniqueInput!, create: GovernmentCreateInput!, update: GovernmentUpdateInput!): Government!
+    deleteGovernment(where: GovernmentWhereUniqueInput!): Government
+    deleteManyGovernments(where: GovernmentWhereInput): BatchPayload!
+    createLobbyist(data: LobbyistCreateInput!): Lobbyist!
+    updateLobbyist(data: LobbyistUpdateInput!, where: LobbyistWhereUniqueInput!): Lobbyist
+    updateManyLobbyists(data: LobbyistUpdateManyMutationInput!, where: LobbyistWhereInput): BatchPayload!
+    upsertLobbyist(where: LobbyistWhereUniqueInput!, create: LobbyistCreateInput!, update: LobbyistUpdateInput!): Lobbyist!
+    deleteLobbyist(where: LobbyistWhereUniqueInput!): Lobbyist
+    deleteManyLobbyists(where: LobbyistWhereInput): BatchPayload!
+    createMinister(data: MinisterCreateInput!): Minister!
+    updateMinister(data: MinisterUpdateInput!, where: MinisterWhereUniqueInput!): Minister
+    updateManyMinisters(data: MinisterUpdateManyMutationInput!, where: MinisterWhereInput): BatchPayload!
+    upsertMinister(where: MinisterWhereUniqueInput!, create: MinisterCreateInput!, update: MinisterUpdateInput!): Minister!
+    deleteMinister(where: MinisterWhereUniqueInput!): Minister
+    deleteManyMinisters(where: MinisterWhereInput): BatchPayload!
+    createMinistry(data: MinistryCreateInput!): Ministry!
+    updateMinistry(data: MinistryUpdateInput!, where: MinistryWhereUniqueInput!): Ministry
+    updateManyMinistries(data: MinistryUpdateManyMutationInput!, where: MinistryWhereInput): BatchPayload!
+    upsertMinistry(where: MinistryWhereUniqueInput!, create: MinistryCreateInput!, update: MinistryUpdateInput!): Ministry!
+    deleteMinistry(where: MinistryWhereUniqueInput!): Ministry
+    deleteManyMinistries(where: MinistryWhereInput): BatchPayload!
+    createVote(data: VoteCreateInput!): Vote!
+    updateVote(data: VoteUpdateInput!, where: VoteWhereUniqueInput!): Vote
+    updateManyVotes(data: VoteUpdateManyMutationInput!, where: VoteWhereInput): BatchPayload!
+    upsertVote(where: VoteWhereUniqueInput!, create: VoteCreateInput!, update: VoteUpdateInput!): Vote!
+    deleteVote(where: VoteWhereUniqueInput!): Vote
+    deleteManyVotes(where: VoteWhereInput): BatchPayload!
 }
 
 enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
+    CREATED
+UPDATED
+DELETED
 }
 
 interface Node {
-  id: ID!
+    id: ID!
 }
 
 type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-  endCursor: String
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
 }
 
 type Query {
-  government(where: GovernmentWhereUniqueInput!): Government
-  governments(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Government]!
-  governmentsConnection(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GovernmentConnection!
-  lobbyist(where: LobbyistWhereUniqueInput!): Lobbyist
-  lobbyists(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lobbyist]!
-  lobbyistsConnection(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LobbyistConnection!
-  minister(where: MinisterWhereUniqueInput!): Minister
-  ministers(where: MinisterWhereInput, orderBy: MinisterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Minister]!
-  ministersConnection(where: MinisterWhereInput, orderBy: MinisterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MinisterConnection!
-  ministry(where: MinistryWhereUniqueInput!): Ministry
-  ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry]!
-  ministriesConnection(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MinistryConnection!
-  vote(where: VoteWhereUniqueInput!): Vote
-  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote]!
-  votesConnection(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VoteConnection!
-  node(id: ID!): Node
+    government(where: GovernmentWhereUniqueInput!): Government
+    governments(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Government]!
+    governmentsConnection(where: GovernmentWhereInput, orderBy: GovernmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GovernmentConnection!
+    lobbyist(where: LobbyistWhereUniqueInput!): Lobbyist
+    lobbyists(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lobbyist]!
+    lobbyistsConnection(where: LobbyistWhereInput, orderBy: LobbyistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LobbyistConnection!
+    minister(where: MinisterWhereUniqueInput!): Minister
+    ministers(where: MinisterWhereInput, orderBy: MinisterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Minister]!
+    ministersConnection(where: MinisterWhereInput, orderBy: MinisterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MinisterConnection!
+    ministry(where: MinistryWhereUniqueInput!): Ministry
+    ministries(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ministry]!
+    ministriesConnection(where: MinistryWhereInput, orderBy: MinistryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MinistryConnection!
+    vote(where: VoteWhereUniqueInput!): Vote
+    votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote]!
+    votesConnection(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VoteConnection!
+    node(id: ID!): Node
 }
 
 type Subscription {
-  government(where: GovernmentSubscriptionWhereInput): GovernmentSubscriptionPayload
-  lobbyist(where: LobbyistSubscriptionWhereInput): LobbyistSubscriptionPayload
-  minister(where: MinisterSubscriptionWhereInput): MinisterSubscriptionPayload
-  ministry(where: MinistrySubscriptionWhereInput): MinistrySubscriptionPayload
-  vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
+    government(where: GovernmentSubscriptionWhereInput): GovernmentSubscriptionPayload
+    lobbyist(where: LobbyistSubscriptionWhereInput): LobbyistSubscriptionPayload
+    minister(where: MinisterSubscriptionWhereInput): MinisterSubscriptionPayload
+    ministry(where: MinistrySubscriptionWhereInput): MinistrySubscriptionPayload
+    vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
 }
 
 type Vote {
-  id: ID!
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  minister: Minister
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    minister: Minister
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 type VoteConnection {
-  pageInfo: PageInfo!
-  edges: [VoteEdge]!
-  aggregate: AggregateVote!
+    pageInfo: PageInfo!
+    edges: [VoteEdge]!
+    aggregate: AggregateVote!
 }
 
 input VoteCreateInput {
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  minister: MinisterCreateOneWithoutVotesInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    minister: MinisterCreateOneWithoutVotesInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input VoteCreateManyWithoutMinisterInput {
-  create: [VoteCreateWithoutMinisterInput!]
-  connect: [VoteWhereUniqueInput!]
+    create: [VoteCreateWithoutMinisterInput!]
+    connect: [VoteWhereUniqueInput!]
 }
 
 input VoteCreateWithoutMinisterInput {
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    deletedAt: DateTime
+    deleted: Int
 }
 
 type VoteEdge {
-  node: Vote!
-  cursor: String!
+    node: Vote!
+    cursor: String!
 }
 
 enum VoteOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  ballot_ASC
-  ballot_DESC
-  lawInfo_ASC
-  lawInfo_DESC
-  lawInfoJson_ASC
-  lawInfoJson_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deleted_ASC
-  deleted_DESC
+    id_ASC
+id_DESC
+name_ASC
+name_DESC
+ballot_ASC
+ballot_DESC
+lawInfo_ASC
+lawInfo_DESC
+lawInfoJson_ASC
+lawInfoJson_DESC
+createdAt_ASC
+createdAt_DESC
+updatedAt_ASC
+updatedAt_DESC
+deletedAt_ASC
+deletedAt_DESC
+deleted_ASC
+deleted_DESC
 }
 
 type VotePreviousValues {
-  id: ID!
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime
-  deleted: Int!
+    id: ID!
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    deleted: Int!
 }
 
 input VoteScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  ballot: BALLOT
-  ballot_not: BALLOT
-  ballot_in: [BALLOT!]
-  ballot_not_in: [BALLOT!]
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [VoteScalarWhereInput!]
-  OR: [VoteScalarWhereInput!]
-  NOT: [VoteScalarWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    ballot: BALLOT
+    ballot_not: BALLOT
+    ballot_in: [BALLOT!]
+    ballot_not_in: [BALLOT!]
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [VoteScalarWhereInput!]
+    OR: [VoteScalarWhereInput!]
+    NOT: [VoteScalarWhereInput!]
 }
 
 type VoteSubscriptionPayload {
-  mutation: MutationType!
-  node: Vote
-  updatedFields: [String!]
-  previousValues: VotePreviousValues
+    mutation: MutationType!
+    node: Vote
+    updatedFields: [String!]
+    previousValues: VotePreviousValues
 }
 
 input VoteSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: VoteWhereInput
-  AND: [VoteSubscriptionWhereInput!]
-  OR: [VoteSubscriptionWhereInput!]
-  NOT: [VoteSubscriptionWhereInput!]
+    mutation_in: [MutationType!]
+    updatedFields_contains: String
+    updatedFields_contains_every: [String!]
+    updatedFields_contains_some: [String!]
+    node: VoteWhereInput
+    AND: [VoteSubscriptionWhereInput!]
+    OR: [VoteSubscriptionWhereInput!]
+    NOT: [VoteSubscriptionWhereInput!]
 }
 
 input VoteUpdateInput {
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  minister: MinisterUpdateOneWithoutVotesInput
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    minister: MinisterUpdateOneWithoutVotesInput
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input VoteUpdateManyDataInput {
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input VoteUpdateManyMutationInput {
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input VoteUpdateManyWithoutMinisterInput {
-  create: [VoteCreateWithoutMinisterInput!]
-  delete: [VoteWhereUniqueInput!]
-  connect: [VoteWhereUniqueInput!]
-  set: [VoteWhereUniqueInput!]
-  disconnect: [VoteWhereUniqueInput!]
-  update: [VoteUpdateWithWhereUniqueWithoutMinisterInput!]
-  upsert: [VoteUpsertWithWhereUniqueWithoutMinisterInput!]
-  deleteMany: [VoteScalarWhereInput!]
-  updateMany: [VoteUpdateManyWithWhereNestedInput!]
+    create: [VoteCreateWithoutMinisterInput!]
+    delete: [VoteWhereUniqueInput!]
+    connect: [VoteWhereUniqueInput!]
+    set: [VoteWhereUniqueInput!]
+    disconnect: [VoteWhereUniqueInput!]
+    update: [VoteUpdateWithWhereUniqueWithoutMinisterInput!]
+    upsert: [VoteUpsertWithWhereUniqueWithoutMinisterInput!]
+    deleteMany: [VoteScalarWhereInput!]
+    updateMany: [VoteUpdateManyWithWhereNestedInput!]
 }
 
 input VoteUpdateManyWithWhereNestedInput {
-  where: VoteScalarWhereInput!
-  data: VoteUpdateManyDataInput!
+    where: VoteScalarWhereInput!
+    data: VoteUpdateManyDataInput!
 }
 
 input VoteUpdateWithoutMinisterDataInput {
-  name: String
-  ballot: BALLOT
-  lawInfo: Json
-  lawInfoJson: Json
-  deletedAt: DateTime
-  deleted: Int
+    name: String
+    ballot: BALLOT
+    lawInfo: Json
+    lawInfoJson: Json
+    deletedAt: DateTime
+    deleted: Int
 }
 
 input VoteUpdateWithWhereUniqueWithoutMinisterInput {
-  where: VoteWhereUniqueInput!
-  data: VoteUpdateWithoutMinisterDataInput!
+    where: VoteWhereUniqueInput!
+    data: VoteUpdateWithoutMinisterDataInput!
 }
 
 input VoteUpsertWithWhereUniqueWithoutMinisterInput {
-  where: VoteWhereUniqueInput!
-  update: VoteUpdateWithoutMinisterDataInput!
-  create: VoteCreateWithoutMinisterInput!
+    where: VoteWhereUniqueInput!
+    update: VoteUpdateWithoutMinisterDataInput!
+    create: VoteCreateWithoutMinisterInput!
 }
 
 input VoteWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  ballot: BALLOT
-  ballot_not: BALLOT
-  ballot_in: [BALLOT!]
-  ballot_not_in: [BALLOT!]
-  minister: MinisterWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  deletedAt: DateTime
-  deletedAt_not: DateTime
-  deletedAt_in: [DateTime!]
-  deletedAt_not_in: [DateTime!]
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deleted: Int
-  deleted_not: Int
-  deleted_in: [Int!]
-  deleted_not_in: [Int!]
-  deleted_lt: Int
-  deleted_lte: Int
-  deleted_gt: Int
-  deleted_gte: Int
-  AND: [VoteWhereInput!]
-  OR: [VoteWhereInput!]
-  NOT: [VoteWhereInput!]
+    id: ID
+    id_not: ID
+    id_in: [ID!]
+    id_not_in: [ID!]
+    id_lt: ID
+    id_lte: ID
+    id_gt: ID
+    id_gte: ID
+    id_contains: ID
+    id_not_contains: ID
+    id_starts_with: ID
+    id_not_starts_with: ID
+    id_ends_with: ID
+    id_not_ends_with: ID
+    name: String
+    name_not: String
+    name_in: [String!]
+    name_not_in: [String!]
+    name_lt: String
+    name_lte: String
+    name_gt: String
+    name_gte: String
+    name_contains: String
+    name_not_contains: String
+    name_starts_with: String
+    name_not_starts_with: String
+    name_ends_with: String
+    name_not_ends_with: String
+    ballot: BALLOT
+    ballot_not: BALLOT
+    ballot_in: [BALLOT!]
+    ballot_not_in: [BALLOT!]
+    minister: MinisterWhereInput
+    createdAt: DateTime
+    createdAt_not: DateTime
+    createdAt_in: [DateTime!]
+    createdAt_not_in: [DateTime!]
+    createdAt_lt: DateTime
+    createdAt_lte: DateTime
+    createdAt_gt: DateTime
+    createdAt_gte: DateTime
+    updatedAt: DateTime
+    updatedAt_not: DateTime
+    updatedAt_in: [DateTime!]
+    updatedAt_not_in: [DateTime!]
+    updatedAt_lt: DateTime
+    updatedAt_lte: DateTime
+    updatedAt_gt: DateTime
+    updatedAt_gte: DateTime
+    deletedAt: DateTime
+    deletedAt_not: DateTime
+    deletedAt_in: [DateTime!]
+    deletedAt_not_in: [DateTime!]
+    deletedAt_lt: DateTime
+    deletedAt_lte: DateTime
+    deletedAt_gt: DateTime
+    deletedAt_gte: DateTime
+    deleted: Int
+    deleted_not: Int
+    deleted_in: [Int!]
+    deleted_not_in: [Int!]
+    deleted_lt: Int
+    deleted_lte: Int
+    deleted_gt: Int
+    deleted_gte: Int
+    AND: [VoteWhereInput!]
+    OR: [VoteWhereInput!]
+    NOT: [VoteWhereInput!]
 }
 
 input VoteWhereUniqueInput {
-  id: ID
+    id: ID
 }
-
 `;
