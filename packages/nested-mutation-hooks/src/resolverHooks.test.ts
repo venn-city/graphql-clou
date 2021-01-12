@@ -1820,7 +1820,7 @@ describe('Nested mutations', () => {
           domains: initialDomains
         });
         const updatedDomains = ['university'];
-        const response = await executeMutation(
+        let response = await executeMutation(
           `
               mutation($ministryId: ID!, $domains: [String!]!) {
                 updateMinistry(
@@ -1841,6 +1841,73 @@ describe('Nested mutations', () => {
         );
         const updatedMinistry = response?.data?.updateMinistry;
         expect(updatedMinistry).toHaveProperty('domains', updatedDomains);
+
+        response = await executeMutation(
+          `
+              query($ministryId: ID!) {
+                ministry(
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            ministryId: ministry.id
+          }
+        );
+        const fetchedMinistry = response?.data?.ministry;
+        expect(fetchedMinistry).toHaveProperty('domains', updatedDomains);
+      });
+
+      test('should update ministry with empty list of domains', async () => {
+        const name = hacker.noun();
+        const initialDomains = ['school', 'college'];
+        const ministry = await dataProvider.createEntity('Ministry', {
+          name,
+          domains: initialDomains
+        });
+        const updatedDomains: any = [];
+        let response = await executeMutation(
+          `
+              mutation($ministryId: ID!, $domains: [String!]!) {
+                updateMinistry(
+                  data: {
+                    domains: {set: $domains}
+                  }
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            domains: updatedDomains,
+            ministryId: ministry.id
+          }
+        );
+        const updatedMinistry = response?.data?.updateMinistry;
+        expect(updatedMinistry).toHaveProperty('domains', updatedDomains);
+
+        response = await executeMutation(
+          `
+              query($ministryId: ID!) {
+                ministry(
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            ministryId: ministry.id
+          }
+        );
+        const fetchedMinistry = response?.data?.ministry;
+        expect(fetchedMinistry).toHaveProperty('domains', updatedDomains);
       });
     });
   });
