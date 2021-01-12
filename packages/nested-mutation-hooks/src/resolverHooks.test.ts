@@ -1812,7 +1812,36 @@ describe('Nested mutations', () => {
         const createdMinistry = response?.data?.createMinistry;
         expect(createdMinistry).toHaveProperty('domains', domains);
       });
-      test('should update ministry with list of domains', async () => {});
+      test('should update ministry with list of domains', async () => {
+        const name = hacker.noun();
+        const initialDomains = ['school', 'college'];
+        const ministry = await dataProvider.createEntity('Ministry', {
+          name,
+          domains: initialDomains
+        });
+        const updatedDomains = ['university'];
+        const response = await executeMutation(
+          `
+              mutation($ministryId: ID!, $domains: [String!]!) {
+                updateMinistry(
+                  data: {
+                    domains: {set: $domains}
+                  }
+                  where: { id: $ministryId}
+                ) {
+                  id
+                  domains
+                }
+              }
+            `,
+          {
+            domains: updatedDomains,
+            ministryId: ministry.id
+          }
+        );
+        const updatedMinistry = response?.data?.updateMinistry;
+        expect(updatedMinistry).toHaveProperty('domains', updatedDomains);
+      });
     });
   });
 
