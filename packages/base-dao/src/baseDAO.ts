@@ -187,9 +187,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     // e.g createUnit
     [CREATE_ENTITY_FUNCTION_NAME]: async (context, entityToCreate) => {
       const auth = await buildAuth(context, hooks);
-      const entityForCreatePermissionCheck = hooks.authFunctions.transformEntityForCreate
+      const entityForCreatePermissionCheck = await (hooks.authFunctions.transformEntityForCreate
         ? hooks.authFunctions.transformEntityForCreate(entityToCreate)
-        : entityToCreate;
+        : entityToCreate);
       verifyHasPermission(auth, CREATE, entityForCreatePermissionCheck, context, authTypeName);
 
       entityToCreate = await hooks.preCreate(entityToCreate);
