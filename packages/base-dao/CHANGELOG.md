@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.1.4...@venncity/base-dao@2.2.0) (2021-02-15)
+
+
+### Features
+
+* **basedao:** make transformEntityForCreate async to allow complex auth conditions ([2859ebc](https://github.com/venn-city/graphql-clou/commit/2859ebc41a6a9de461d38d864f2337700bc12f26))
+
+
+
+
+
 ## [2.1.4](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.1.3...@venncity/base-dao@2.1.4) (2021-01-12)
 
 **Note:** Version bump only for package @venncity/base-dao
