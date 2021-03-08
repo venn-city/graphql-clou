@@ -1,6 +1,6 @@
 {
   "name": "@venncity/graphql-transformers",
-  "version": "1.6.11",
+  "version": "1.6.12",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -28,10 +28,10 @@
   },
   "dependencies": {
     "@types/jest": "^26.0.4",
-    "@venncity/clou-utils": "^2.0.5",
-    "@venncity/opencrud-schema-provider": "^1.4.13",
+    "@venncity/clou-utils": "^2.0.6",
+    "@venncity/opencrud-schema-provider": "^1.4.14",
     "@venncity/sequelize": "1.0.0",
-    "@venncity/sequelize-model": "^1.8.17",
+    "@venncity/sequelize-model": "^1.8.18",
     "async": "^3.2.0",
     "deepdash": "^4.2.17",
     "lodash": "^4.17.15",
