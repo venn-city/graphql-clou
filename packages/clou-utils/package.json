@@ -35,8 +35,8 @@
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "@venncity/eslint-config": "^3.0.1",
-    "@venncity/jest-config-server": "^3.4.0",
-    "@venncity/nested-config": "*",
+    "@venncity/jest-config-server": "^3.4.2",
+    "@venncity/nested-config": "3.1.8",
     "@venncity/prettier-config-server": "^1.1.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
