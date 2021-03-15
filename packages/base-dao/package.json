@@ -43,7 +43,7 @@
     "@venncity/prisma-generate-schema": "^1.21.0-0",
     "@venncity/sequelize": "1.0.0",
     "@venncity/sequelize-data-provider": "^1.7.12",
-    "@venncity/sequelize-model": "^1.8.14",
+    "@venncity/sequelize-model": "^1.8.18",
     "async": "^3.1.0",
     "dataloader": "^1.4.0",
     "ejs": "^3.0.1",

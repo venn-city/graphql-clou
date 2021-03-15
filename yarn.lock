@@ -2228,6 +2228,14 @@
     moment "^2.23.0"
     uuid "^3.3.2"
 
+"@venncity/clou-utils@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@venncity/clou-utils/-/clou-utils-2.0.6.tgz#4a16a5f120b109d41301927e763439b0d17acb3b"
+  integrity sha512-RoqtCC7Z2H8sVpfjqEBHSpyqknkR5vmA7XIkiwZwZUjSdQAsZG5CkxIjY/YNFrJvCvLu6SXBidgJZIiTcm4v9A==
+  dependencies:
+    crypto "^1.0.1"
+    lodash "^4.17.15"
+
 "@venncity/coverage-police@^1.1.8":
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/@venncity/coverage-police/-/coverage-police-1.1.8.tgz#98092267d8eda1ce0c3fa125de69aba7ae85ce1b"
@@ -2375,6 +2383,21 @@
     "@venncity/errors" "^1.7.7"
     "@venncity/nested-config" "^2.0.15"
 
+"@venncity/graphql-transformers@^1.6.12":
+  version "1.6.12"
+  resolved "https://registry.yarnpkg.com/@venncity/graphql-transformers/-/graphql-transformers-1.6.12.tgz#23fafb382c2e1b00dbd000b266418cfa06af6498"
+  integrity sha512-hma/DfE0rUYXT9e55TrvQvvFmAhku3Ozz0wtfSxGceBwViYsxIlOvhCXldJ95aAbuO97PYqED1w3kU7He2YRBw==
+  dependencies:
+    "@types/jest" "^26.0.4"
+    "@venncity/clou-utils" "^2.0.6"
+    "@venncity/opencrud-schema-provider" "^1.4.14"
+    "@venncity/sequelize" "1.0.0"
+    "@venncity/sequelize-model" "^1.8.18"
+    async "^3.2.0"
+    deepdash "^4.2.17"
+    lodash "^4.17.15"
+    pluralize "^8.0.0"
+
 "@venncity/jest-config-server@^3.3.4":
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/@venncity/jest-config-server/-/jest-config-server-3.3.4.tgz#6d377138c178373b7937794cc0ab523e7e400296"
@@ -2475,6 +2498,17 @@
     path "^0.12.7"
     string-replace-loader venn-city/string-replace-loader
 
+"@venncity/opencrud-schema-provider@^1.4.14":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/@venncity/opencrud-schema-provider/-/opencrud-schema-provider-1.4.14.tgz#077dc6df780fe575f8461dcd9abb36b3585003ee"
+  integrity sha512-/DTvSjBePykucDEADWJBDupE8rbbJhsXdbv/sFLueuXVDZe6npojeC+GA61sTMzj3AORp06ud4BjVv+NTAV8ow==
+  dependencies:
+    graphql "^14.5.8"
+    graphql-import "^0.7.1"
+    graphql-tools "^4.0.6"
+    lodash "^4.17.15"
+    prisma-datamodel "^1.34.10"
+
 "@venncity/package-info@^1.1.18":
   version "1.1.18"
   resolved "https://registry.yarnpkg.com/@venncity/package-info/-/package-info-1.1.18.tgz#c3257d1b340538bb2c2926472562ca3039041b5e"
@@ -2521,6 +2555,34 @@
   integrity sha512-vEAzahLuXgvYOpD5R0aa1ydYBtR/bdMG2gDPCOJudX+WKFbi36qMnpOsaRr/wyZuSeasOI2qoC86uZKrRj/WEw==
   dependencies:
     graphql "^14.6.0"
+
+"@venncity/sequelize-data-provider@^1.7.19":
+  version "1.7.19"
+  resolved "https://registry.yarnpkg.com/@venncity/sequelize-data-provider/-/sequelize-data-provider-1.7.19.tgz#f2c3f42254ec1eccc1c4e85674166a463307a0a8"
+  integrity sha512-/aF+WEfN2MN8/Sgy4biaN5DsN2zpnI3wZ0ENFqlM7jN5Y/YMN7f++zwUal9kvFHlFRa2ZpTD4rzEGrw854+4cg==
+  dependencies:
+    "@venncity/graphql-transformers" "^1.6.12"
+    "@venncity/opencrud-schema-provider" "^1.4.14"
+    "@venncity/sequelize" "1.0.0"
+    "@venncity/sequelize-model" "^1.8.18"
+    async "^3.1.0"
+    cuid "^2.1.8"
+    deepdash "^4.2.17"
+    lodash "^4.17.15"
+
+"@venncity/sequelize-model@^1.8.17", "@venncity/sequelize-model@^1.8.18":
+  version "1.8.18"
+  resolved "https://registry.yarnpkg.com/@venncity/sequelize-model/-/sequelize-model-1.8.18.tgz#0cea0d26c4171cb41278af8fed4f08cf4839fb8a"
+  integrity sha512-OHzls0euo0A+7CW3E31kmVq3qyjdcuzxiaN6dHPMtK5BOxiKluxQGwAii/wMl8nk58SEz1naIYoDwFwld283ig==
+  dependencies:
+    "@venncity/clou-utils" "^2.0.6"
+    "@venncity/opencrud-schema-provider" "^1.4.14"
+    "@venncity/sequelize" "1.0.0"
+    aws-xray-sdk "^3.0.1"
+    cls-hooked "^4.2.2"
+    cuid "^2.1.6"
+    lodash "^4.17.15"
+    pg "^7.12.1"
 
 "@venncity/sequelize@1.0.0":
   version "1.0.0"
