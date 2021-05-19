@@ -3,7 +3,7 @@
 import DataLoader from 'dataloader';
 import { isEqual, without, upperFirst, lowerFirst, get } from 'lodash';
 import hash from 'object-hash';
-import { forEachOf, map as asyncMap } from 'async';
+import { forEachOf, map as asyncMap, each as asyncEach } from 'async';
 import pluralize from 'pluralize';
 import openCrudSchema from '@venncity/opencrud-schema-provider';
 import { transformComputedFieldsWhereArguments } from '@venncity/graphql-transformers';
@@ -86,7 +86,14 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const loadedEntities = await dataLoaderById.loadMany(args.where.id_in);
       return without(loadedEntities, undefined);
     }
-    return dataProvider.getAllEntities(entityName, args);
+
+    const resolvedEntities = await dataProvider.getAllEntities(entityName, args);
+    // update dataLoaderById, to avoid extra db calls later on
+    resolvedEntities.forEach(entity => {
+      dataLoaderById.prime(entity.id, entity);
+    });
+
+    return resolvedEntities;
   }
 
   async function getEntitiesByIdsInternal(entityIds) {
@@ -157,7 +164,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const fetchedEntities = await getAllEntitiesInternal(transformedArgs);
       const entitiesThatUserCanAccess: any = [];
       const entitiesThatUserCannotAccess: any = [];
-      for (const fetchedEntity of fetchedEntities) {
+      await asyncEach(fetchedEntities, async (fetchedEntity: any) => {
         const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
         if (hasPermission(auth, READ, authDataFromDB, context, authTypeName)) {
           let entityWithOnlyAuthorizedFields = context.skipAuth
@@ -168,7 +175,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         } else {
           entitiesThatUserCannotAccess.push(fetchedEntity);
         }
-      }
+      });
       logRequestsThatReturnUnauthorizedEntities(entitiesThatUserCannotAccess, context, GET_ALL_ENTITIES_FUNCTION_NAME);
       return entitiesThatUserCanAccess;
     },
