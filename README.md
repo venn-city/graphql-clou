@@ -30,6 +30,12 @@ a schematic and somehow simplistic illustration of a common flow between the pac
 ## Development guide:
 * circleci is used for ci, see `.circleci/config.yml` for details
 
+### Building
+```shell script
+$ yarn 
+$ yarn lerna run build
+```
+
 ### Running a local server:
 * To run a local apollo-server using the provided test entities, for a more interactive experience,
     you can run:
