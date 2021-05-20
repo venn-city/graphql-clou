@@ -88,7 +88,6 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     }
 
     const resolvedEntities = await dataProvider.getAllEntities(entityName, args);
-    // update dataLoaderById, to avoid extra db calls later on
     resolvedEntities.forEach(entity => {
       dataLoaderById.prime(entity.id, entity);
     });
