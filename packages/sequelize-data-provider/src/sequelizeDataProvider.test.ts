@@ -653,6 +653,7 @@ describe('sequelizeDataProvider', () => {
         );
 
         expect(mockCallback.mock.calls.length).toBe(1);
+        // @ts-ignore
         expect(mockCallback.mock.calls[0][1]).toBe(government2.id);
       });
 
