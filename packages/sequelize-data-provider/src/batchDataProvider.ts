@@ -18,9 +18,8 @@ export async function loadRelatedEntities(
   getRelatedEntities: (entityName: string, originalEntityId: string, relationFieldName: string, args?: any) => any
 ) {
   const [keysWithoutArgs, keysWithArgs] = partition(keys, key => {
-    const noArgs = isEmpty(key.args);
-    const objWithOnlySkipPagination = isEqual(key.args, { skipPagination: true }) || isEqual(key.args, { skipPagination: false });
-    return noArgs || objWithOnlySkipPagination;
+    const { skipPagination, ...newArg } = key?.args;
+    return isEmpty(newArg);
   });
 
   const originalEntitiesWithoutArgs = await fetchEntitiesWithRelations(keysWithoutArgs, entityName);
