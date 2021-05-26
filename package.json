@@ -24,7 +24,7 @@
     "db:migrate": "wait-on tcp:$npm_package_config_db_port && NODE_ENV=test sequelize-cli db:migrate",
     "db:seed": "NODE_ENV=test sequelize-cli db:seed:all",
     "db:start": "DB_PORT=$npm_package_config_db_port docker-compose up -d",
-    "db:stop": "DB_PORT=$npm_package_config_db_port docker-compose down "
+    "db:stop": "DB_PORT=$npm_package_config_db_port docker-compose down"
   },
   "husky": {
     "hooks": {

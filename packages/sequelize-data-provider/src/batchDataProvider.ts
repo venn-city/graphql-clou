@@ -17,10 +17,11 @@ export async function loadRelatedEntities(
   keys: readonly GetRelatedEntitiesArgs[],
   getRelatedEntities: (entityName: string, originalEntityId: string, relationFieldName: string, args?: any) => any
 ) {
-  const [keysWithoutArgs, keysWithArgs] = partition(
-    keys,
-    k => isEmpty(k.args) || isEqual(k.args, { skipPagination: true }) || isEqual(k.args, { skipPagination: false })
-  );
+  const [keysWithoutArgs, keysWithArgs] = partition(keys, key => {
+    const noArgs = isEmpty(key.args);
+    const objWithOnlySkipPagination = isEqual(key.args, { skipPagination: true }) || isEqual(key.args, { skipPagination: false });
+    return noArgs || objWithOnlySkipPagination;
+  });
 
   const originalEntitiesWithoutArgs = await fetchEntitiesWithRelations(keysWithoutArgs, entityName);
   const originalEntitiesWithArgs: { key: GetRelatedEntitiesArgs; relatedEntitiesWithArgs: any[] }[] = await async.map(
