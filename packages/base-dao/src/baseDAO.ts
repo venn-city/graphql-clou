@@ -183,11 +183,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const auth = await buildAuth(context, hooks);
       const entities = await dataLoaderById.loadMany(entityIds);
       const entitiesWithOnlyAuthorizedFields: any = [];
-      for (const entity of entities) {
+      await asyncEach(entities, async (entity: any) => {
         let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, entity, hooks, authTypeName);
         entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
         entitiesWithOnlyAuthorizedFields.push(entityWithOnlyAuthorizedFields);
-      }
+      });
       return entitiesWithOnlyAuthorizedFields;
     },
     // e.g createUnit
@@ -427,11 +427,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const fetchedEntities = await fetchFunction();
       const iterableFetchedEntities = Array.isArray(fetchedEntities) ? fetchedEntities : [fetchedEntities];
       const entitiesWithOnlyAuthorizedFields: any = [];
-      for (const entity of iterableFetchedEntities) {
+      await asyncEach(iterableFetchedEntities, async (entity: any) => {
         let entityWithOnlyAuthorizedFields = await verifyHasPermissionAndFilterUnauthorizedFields(context, auth, entity, hooks, authTypeName);
         entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
         entitiesWithOnlyAuthorizedFields.push(entityWithOnlyAuthorizedFields);
-      }
+      });
       return entitiesWithOnlyAuthorizedFields;
     },
     getHooks: () => {
