@@ -1,6 +1,6 @@
 {
   "name": "@venncity/nested-mutation-hooks",
-  "version": "1.3.34",
+  "version": "1.3.35",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@venncity/opencrud-schema-provider": "^1.4.14",
     "@venncity/sequelize": "1.0.0",
-    "@venncity/sequelize-data-provider": "^1.7.19",
+    "@venncity/sequelize-data-provider": "^1.7.20",
     "@venncity/sequelize-model": "^1.8.18",
     "async": "^3.1.0",
     "lodash": "^4.17.15",
