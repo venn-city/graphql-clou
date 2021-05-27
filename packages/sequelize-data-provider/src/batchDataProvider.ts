@@ -1,4 +1,4 @@
-import { partition, uniq, upperFirst, isEmpty, isEqual } from 'lodash';
+import { partition, uniq, upperFirst, isEmpty } from 'lodash';
 import async from 'async';
 import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
