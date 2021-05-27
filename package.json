@@ -23,7 +23,8 @@
     "db:createSchema": "wait-on -d 10000 tcp:$npm_package_config_db_port && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -p $npm_package_config_db_port -c \"CREATE SCHEMA IF NOT EXISTS venn;\"",
     "db:migrate": "wait-on tcp:$npm_package_config_db_port && NODE_ENV=test sequelize-cli db:migrate",
     "db:seed": "NODE_ENV=test sequelize-cli db:seed:all",
-    "db:start": "DB_PORT=$npm_package_config_db_port docker-compose up -d"
+    "db:start": "DB_PORT=$npm_package_config_db_port docker-compose up -d",
+    "db:stop": "DB_PORT=$npm_package_config_db_port docker-compose down"
   },
   "husky": {
     "hooks": {

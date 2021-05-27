@@ -626,6 +626,37 @@ describe('sequelizeDataProvider', () => {
         expect(relatedMinistries2).toEqual([]);
       });
 
+      test('loadRelatedEntities multiple keys with arg skipPagination - work as planned', async () => {
+        const [relatedMinistries1, relatedLobbyists1, relatedMinistries2] = await loadRelatedEntities(
+          'Government',
+          [
+            { originalEntityId: government1.id, relationEntityName: 'ministries', args: { where: { name: ministry2.name }, skipPagination: true } },
+            { originalEntityId: government1.id, relationEntityName: 'lobbyists', args: { skipPagination: false } },
+            { originalEntityId: government2.id, relationEntityName: 'ministries' }
+          ],
+          sequelizeDataProvider.getRelatedEntities
+        );
+        expect(relatedMinistries1.map(g => g.id).sort()).toEqual([ministry2.id].sort());
+        expect(relatedLobbyists1).toEqual([]);
+        expect(relatedMinistries2).toEqual([]);
+      });
+      test('loadRelatedEntities multiple keys with arg skipPagination call getRelatedEntities once', async () => {
+        const mockCallback = jest.fn(x => 42 + x);
+        await loadRelatedEntities(
+          'Government',
+          [
+            { originalEntityId: government1.id, relationEntityName: 'ministries', args: { skipPagination: true } },
+            { originalEntityId: government1.id, relationEntityName: 'lobbyists', args: { skipPagination: false } },
+            { originalEntityId: government2.id, relationEntityName: 'ministries', args: { where: { name: ministry2.name } } }
+          ],
+          mockCallback
+        );
+
+        expect(mockCallback.mock.calls.length).toBe(1);
+        // @ts-ignore
+        expect(mockCallback.mock.calls[0][1]).toBe(government2.id);
+      });
+
       test('loadRelatedEntities multiple keys with different args', async () => {
         const lobbyist1 = await sequelizeDataProvider.createEntity('Lobbyist', {
           name: `lobbyist1${randomNumber}`,
