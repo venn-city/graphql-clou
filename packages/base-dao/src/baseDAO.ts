@@ -58,12 +58,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       cacheKeyFn: key => hash(key)
     }
   );
-  const dataLoaderForRelatedEntities = new DataLoader<GetRelatedEntitiesArgs, any>(
-    keys => loadRelatedEntities(entityName, keys, dataProvider.getRelatedEntities),
-    {
-      cacheKeyFn: key => hash(key)
-    }
-  );
+  const dataLoaderForRelatedEntities = new DataLoader<GetRelatedEntitiesArgs, any>(keys => loadRelatedEntities(entityName, keys), {
+    cacheKeyFn: key => hash(key)
+  });
   hooks = {
     preCreate: async entity => {
       return entity;
