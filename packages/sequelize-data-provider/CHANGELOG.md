@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.7.20...@venncity/sequelize-data-provider@1.8.0) (2021-06-06)
+
+
+### Features
+
+* **sequelize-date-provider:** group batched related entities loading by args ([#151](https://github.com/venn-city/graphql-clou/issues/151)) ([f4240b8](https://github.com/venn-city/graphql-clou/commit/f4240b88860ce2f7c8c4686993884f569c3283cf))
+
+
+
+
+
 ## [1.7.20](https://github.com/venn-city/graphql-clou/compare/@venncity/sequelize-data-provider@1.7.19...@venncity/sequelize-data-provider@1.7.20) (2021-05-27)
 
 
