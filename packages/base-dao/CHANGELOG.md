@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.3.0...@venncity/base-dao@2.3.1) (2021-06-16)
+
+
+### Bug Fixes
+
+* **base-dao:** adjust id_in data-loader condition to support first and skip ([#152](https://github.com/venn-city/graphql-clou/issues/152)) ([73973db](https://github.com/venn-city/graphql-clou/commit/73973db34908ceeea940d5509aad56807477e60a))
+
+
+
+
+
 # [2.3.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.2.3...@venncity/base-dao@2.3.0) (2021-06-06)
 
 
