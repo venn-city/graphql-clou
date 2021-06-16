@@ -52,6 +52,23 @@ describe('BaseDao', () => {
       expect(governmentByCountry[0].id).toEqual(createdGovernment.id);
       await governmentDAO.deleteManyGovernments(serviceContext, { id_in: [createdGovernment.id] });
     });
+    test('fetch by id_in with pagination', async () => {
+      const createdGovernment1 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const createdGovernment2 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const createdGovernment3 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
+      const governmentByCountryFirstAndSkip = await governmentDAO.governments(serviceContext, {
+        where: { id_in: [createdGovernment1.id, createdGovernment2.id, createdGovernment3.id] },
+        first: 1,
+        skip: 2
+      });
+      const governmentByCountryFirst = await governmentDAO.governments(serviceContext, {
+        where: { id_in: [createdGovernment1.id, createdGovernment2.id, createdGovernment3.id] },
+        first: 1
+      });
+      expect(governmentByCountryFirstAndSkip[0].id).toEqual(createdGovernment3.id);
+      expect(governmentByCountryFirst[0].id).toEqual(createdGovernment1.id);
+      await governmentDAO.deleteManyGovernments(serviceContext, { id_in: [createdGovernment1.id, createdGovernment2.id, createdGovernment3.id] });
+    });
     test('fetch by unique non-id field', async () => {
       await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const governmentByCountry = await governmentDAO.government(serviceContext, { country: 'DE' });
