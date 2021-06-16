@@ -78,9 +78,16 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   }
 
   async function getAllEntitiesInternal(args) {
-    const fetchIsExactlyByIdIn = Object.keys(args).length === 1 && args.where && Object.keys(args.where).length === 1 && args.where.id_in;
+    const argsWithoutPagination = args.where;
+    const fetchIsExactlyByIdIn =
+      argsWithoutPagination && Object.keys(argsWithoutPagination).length === 1 && argsWithoutPagination.id_in && !args.orderBy;
     if (fetchIsExactlyByIdIn) {
-      const loadedEntities = await dataLoaderById.loadMany(args.where.id_in);
+      let loadedEntities = await dataLoaderById.loadMany(args.where.id_in);
+      if (args.first || args.skip) {
+        const startIndex = args.skip || 0;
+        const endIndex = startIndex + (args.first || 0);
+        loadedEntities = loadedEntities.slice(startIndex, endIndex);
+      }
       return without(loadedEntities, undefined);
     }
 
