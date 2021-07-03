@@ -7,8 +7,11 @@ import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthCon
 import createAllDAOs from './test/DAOs';
 // @ts-ignore
 import models from '../../../test/model';
+import mockConfig from '../../../test/mockConfig';
 
 sq.init(models);
+
+mockConfig();
 
 function buildTestObject() {
   return {
@@ -17,6 +20,7 @@ function buildTestObject() {
 }
 
 describe('BaseDao', () => {
+  afterAll(() => jest.resetAllMocks());
   describe('generic tests', () => {
     runGenericDAOTests({
       entityName: 'government',

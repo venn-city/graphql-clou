@@ -1,6 +1,9 @@
 import { transformComputedFieldsWhereArguments } from './computedFieldsWhereTransformation';
+import mockConfig from '../../../../test/mockConfig';
 
+mockConfig();
 describe('computedFieldsWhereTransformation', () => {
+  afterAll(() => jest.resetAllMocks());
   test('transformComputedFieldsWhereArguments should transform simple computed fields where clause', async () => {
     const originalWhere = {
       extendedFieldFoo: 'bar',

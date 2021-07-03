@@ -4,7 +4,9 @@ import { uniq } from 'lodash';
 import sequelizeModel from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
 import models from '../../../test/model';
+import mockConfig from '../../../test/mockConfig';
 
+mockConfig();
 sequelizeModel.sq.init(models);
 
 describe('sequelizeDataProvider paging tests', () => {
@@ -176,6 +178,7 @@ describe('sequelizeDataProvider paging tests', () => {
 
   afterAll(async () => {
     sequelizeModel.sq.sequelize.close();
+    jest.resetAllMocks();
   });
 
   test('getAllEntities with nested _every and _none filters', async () => {

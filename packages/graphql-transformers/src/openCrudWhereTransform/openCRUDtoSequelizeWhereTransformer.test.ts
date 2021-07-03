@@ -2,10 +2,13 @@ import sequelizeModel from '@venncity/sequelize-model';
 import { Op } from '@venncity/sequelize';
 import { openCrudToSequelize } from './openCRUDtoSequelizeWhereTransformer';
 import models from '../../../../test/model';
+import mockConfig from '../../../../test/mockConfig';
 
 const sq = sequelizeModel.sq.init(models);
 
+mockConfig();
 describe('openCRUDtoSequelizeWhereTransformer', () => {
+  afterAll(() => jest.resetAllMocks());
   describe('openCrudToSequelize should transform graphql openCRUD { where, first, skip, orderBy } to sequelize', () => {
     test('should transform first to "limit" and skip to "offset"', () => {
       const sqFilter = openCrudToSequelize({ where: { name: 'mu' }, first: 15, skip: 7 }, 'Government', ['Government']);
