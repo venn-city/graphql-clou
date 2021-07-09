@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.15](https://github.com/venn-city/graphql-clou/compare/@venncity/opencrud-schema-provider@1.4.14...@venncity/opencrud-schema-provider@1.4.15) (2021-07-09)
+
+**Note:** Version bump only for package @venncity/opencrud-schema-provider
+
+
+
+
+
 ## [1.4.14](https://github.com/venn-city/graphql-clou/compare/@venncity/opencrud-schema-provider@1.4.13...@venncity/opencrud-schema-provider@1.4.14) (2021-03-08)
 
 **Note:** Version bump only for package @venncity/opencrud-schema-provider
