@@ -38,10 +38,10 @@
     "prisma-datamodel": "^1.34.10"
   },
   "devDependencies": {
-    "@venncity/eslint-config": "^3.0.1",
-    "@venncity/jest-config-server": "^3.4.2",
-    "@venncity/nested-config": "3.1.8",
-    "@venncity/prettier-config-server": "^1.1.0",
+    "@venncity/eslint-config": "^4.0.0",
+    "@venncity/jest-config-server": "^3.4.3",
+    "@venncity/nested-config": "3.1.15",
+    "@venncity/prettier-config-server": "^1.1.7",
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
