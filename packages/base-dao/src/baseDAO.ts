@@ -202,7 +202,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         : entityToCreate);
       verifyHasPermission(auth, CREATE, entityForCreatePermissionCheck, context, authTypeName);
 
-      entityToCreate = await hooks.preCreate(entityToCreate);
+      entityToCreate = await hooks.preCreate(entityToCreate, context);
 
       entityToCreate = await hooks.preSave(entityToCreate, entityToCreate, context);
       let creationResult = await dataProvider.createEntity(entityName, entityToCreate);
@@ -335,6 +335,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
           context
         });
       }
+      if (hooks.postDelete) {
+        deletedEntity = await hooks.postDelete(deletedEntity, context);
+      }
       return deletedEntity;
     },
     // e.g deleteManyUnits
@@ -368,6 +371,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
           entityAfter: null,
           context
         });
+        if (hooks.postDelete) {
+          await hooks.postDelete({ id: entityToDelete.id }, context);
+        }
       }
       return { count: deleteEntities.length };
     },
