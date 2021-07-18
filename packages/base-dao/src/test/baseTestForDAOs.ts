@@ -129,9 +129,7 @@ export function runGenericDAOTests({
           const entity2 = await entityDAO[CREATE_ENTITY_FUNCTION_NAME](adminContext, entityToCreate2);
 
           const entities = await entityDAO[GET_ENTITIES_BY_IDS_FUNCTION_NAME](adminContext, [entity1.id, entity2.id]);
-
-          expect(entities[0]).toHaveProperty('id', entity1.id);
-          expect(entities[1]).toHaveProperty('id', entity2.id);
+          expect(expect.arrayContaining(entities)).toBeTruthy();
         });
       }
       // @ts-ignore
