@@ -210,13 +210,14 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         creationResult = await hooks.postCreate(entityToCreate, creationResult);
       }
       creationResult = await hooks.postFetch(creationResult, context);
-
+      const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(entityToCreate, context))) || {};
       await publishCrudEvent({
         entityName,
         operation: CRUD_TOPIC_OPERATION_NAMES.CREATED,
         entityBefore: null,
         entityAfter: creationResult,
-        context
+        context,
+        additionalInfo
       });
       return creationResult;
     },
@@ -246,8 +247,10 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       if (updatedEntity) {
         clearLoaders(updatedEntity);
         updatedEntity = await hooks.postFetch(updatedEntity, context);
+        const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(updatedEntity, context))) || {};
         await publishCrudEvent({
           entityName,
+          additionalInfo,
           operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
           entityBefore: await hooks.postFetch(entitiesToUpdate[0], context),
           entityAfter: updatedEntity,
@@ -292,8 +295,10 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         clearLoaders(originalEntity);
         let updatedEntity = updatedEntities.find(entity => entity.id === originalEntity.id);
         updatedEntity = await hooks.postFetch(updatedEntity, context);
+        const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(updatedEntity, context))) || {};
         await publishCrudEvent({
           entityName,
+          additionalInfo,
           operation: CRUD_TOPIC_OPERATION_NAMES.UPDATED,
           entityBefore: originalEntity,
           entityAfter: updatedEntity,
@@ -327,8 +332,10 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       deletedEntity = await hooks.postFetch(deletedEntity, context);
       if (deletedEntity) {
         clearLoaders(deletedEntity);
+        const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(deletedEntity, context))) || {};
         await publishCrudEvent({
           entityName,
+          additionalInfo,
           operation: CRUD_TOPIC_OPERATION_NAMES.DELETED,
           entityBefore: deletedEntity,
           entityAfter: null,
@@ -364,8 +371,10 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
 
       for (const entityToDelete of entitiesToDelete) {
         clearLoaders(entityToDelete);
+        const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(entityToDelete, context))) || {};
         await publishCrudEvent({
           entityName,
+          additionalInfo,
           operation: CRUD_TOPIC_OPERATION_NAMES.DELETED,
           entityBefore: entityToDelete,
           entityAfter: null,
