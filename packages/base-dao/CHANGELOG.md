@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.3.4...@venncity/base-dao@2.4.0) (2021-08-10)
+
+
+### Features
+
+* **basedao:** added an option too add additional info hook ([2e278ec](https://github.com/venn-city/graphql-clou/commit/2e278ec2a656290daacc01780c50e32ce1c5bfbb))
+
+
+
+
+
 ## [2.3.4](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.3.3...@venncity/base-dao@2.3.4) (2021-07-18)
 
 
