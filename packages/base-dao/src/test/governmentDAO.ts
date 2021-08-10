@@ -40,6 +40,10 @@ async function postFetch(government) {
   return government;
 }
 
+async function crudEventAdditionalInfo() {
+  return { data: 'test' };
+}
+
 // eslint-disable-next-line no-unused-vars,no-empty-function
 async function preDelete(context, where) {}
 
@@ -49,6 +53,7 @@ const hooks = {
   preDelete,
   preCreate,
   postCreate,
+  crudEventAdditionalInfo,
   authFunctions: {
     buildAuthContext,
     getAuthDataFromDB

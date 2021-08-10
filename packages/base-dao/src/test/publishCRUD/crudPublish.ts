@@ -4,13 +4,15 @@ import _ from 'lodash';
 
 const ENTITY_CRUD_TOPIC_NAME = 'entity-crud';
 
-export async function publishCrudEvent({ entityName, operation, entityBefore, entityAfter, context }) {
+export async function publishCrudEvent({ entityName, operation, entityBefore, entityAfter, context, additionalInfo = {} }) {
   const entityNameUpperSnake = toUpperSnakeCase(entityName);
   const { requestAdditionalInfo } = context.requestAdditionalInfo ? context : { requestAdditionalInfo: undefined };
 
   const messageAttributes = {
     entityType: entityNameUpperSnake,
-    eventType: operation
+    eventType: operation,
+    env: process.env.STAGE,
+    ...additionalInfo
   };
   const message = {
     entityType: entityNameUpperSnake,
