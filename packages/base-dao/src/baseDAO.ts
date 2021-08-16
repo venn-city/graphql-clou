@@ -210,7 +210,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         creationResult = await hooks.postCreate(entityToCreate, creationResult);
       }
       creationResult = await hooks.postFetch(creationResult, context);
-      const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(entityToCreate, context))) || {};
+      const additionalInfo = (hooks.crudEventAdditionalInfo && (await hooks.crudEventAdditionalInfo(creationResult, context))) || {};
       await publishCrudEvent({
         entityName,
         operation: CRUD_TOPIC_OPERATION_NAMES.CREATED,
