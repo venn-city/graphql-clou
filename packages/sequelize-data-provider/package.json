@@ -29,7 +29,6 @@
     ]
   },
   "dependencies": {
-    "@venncity/coverage-police": "^1.1.15",
     "@venncity/graphql-transformers": "^1.6.13",
     "@venncity/opencrud-schema-provider": "^1.4.15",
     "@venncity/sequelize": "1.0.0",
