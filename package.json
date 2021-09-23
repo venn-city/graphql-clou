@@ -42,7 +42,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@venncity/coverage-police": "^1.1.8"
+    "@venncity/coverage-police": "^1.1.19"
   },
   "devDependencies": {
     "commitizen": "^4.0.3",
