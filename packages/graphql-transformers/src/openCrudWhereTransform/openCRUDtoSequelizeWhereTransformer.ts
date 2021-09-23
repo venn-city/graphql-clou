@@ -20,7 +20,10 @@ const AND = 'AND';
 const OR = 'OR';
 const NOT = 'NOT';
 
-const isArrayFilter = whereArg => ['_contains', '_contains_some'].some(x => endsWith(whereArg, x));
+const isArrayField = (whereArg, whereArgFieldType) => (
+  isList(whereArgFieldType)
+  && ['_contains', '_contains_some'].some(x => endsWith(whereArg, x))
+);
 
 export function openCrudToSequelize(
   { where, first, skip, orderBy = 'id_ASC' }: { where?: any; first?: number; skip?: number; orderBy?: string },
@@ -106,9 +109,9 @@ function openCrudFilterToSequelize(whereArg, whereValue, entityName, pathWithinS
     sqIncludeElement = flatMap(sqElements, 'include');
   } else {
     const whereArgField = getField(openCrudSchema, entityName, whereArg) as any;
-    const isArrayField = isList(whereArgField.type) && isArrayFilter(whereArg);
-    if (isScalar(whereArgField.type) || isArrayField) {
-      sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames, isArrayField);
+    const isArray = isArrayField(whereArg, whereArgField.type);
+    if (isScalar(whereArgField.type) || isArray) {
+      sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames, isArray);
     } else if (isObject(whereArgField.type)) {
       const objectFieldTransform = handleObjectField(whereArg, whereValue, entityName, pathWithinSchema, useColumnNames);
       sqWhereElement = objectFieldTransform.sqWhereElement;
