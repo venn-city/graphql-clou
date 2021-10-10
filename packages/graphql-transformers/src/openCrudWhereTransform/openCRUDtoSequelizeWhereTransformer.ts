@@ -22,7 +22,7 @@ const NOT = 'NOT';
 
 const isArrayField = (whereArg, whereArgFieldType) => (
   isList(whereArgFieldType)
-  && ['_contains', '_contains_some'].some(x => endsWith(whereArg, x))
+  && ['_contains', '_contains_every', '_contains_some'].some(x => endsWith(whereArg, x))
 );
 
 export function openCrudToSequelize(
