@@ -106,6 +106,11 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
         expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.contains]: ['mu'] } }] });
       });
 
+      test('contains_every', () => {
+        const sqFilter = openCrudToSequelize({ where: { domains_contains_every: ['mu', 'su'] } }, 'Ministry');
+        expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.contains]: ['mu', 'su'] } }] });
+      });
+
       test('contains_some', () => {
         const sqFilter = openCrudToSequelize({ where: { domains_contains_some: ['mu', 'su'] } }, 'Ministry');
         expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.overlap]: ['mu', 'su'] } }] });
