@@ -365,9 +365,9 @@ const gqlPostfixesToSqOps = {
   _not_ends_with: { op: Op.notLike, valueTransformer: v => `%${v}` }
 };
 const arrayGqlPostfixesToSqOps = {
-  _contains: { op: Op.contains, valueTransformer: v => (Array.isArray(v) ? v : [v]) },
-  _contains_every: { op: Op.contains, valueTransformer: v => (Array.isArray(v) ? v : [v]) },
-  _contains_some: { op: Op.overlap, valueTransformer: v => (Array.isArray(v) ? v : [v]) }
+  _contains: { op: Op.contains, valueTransformer: v => [v] },
+  _contains_every: { op: Op.contains, valueTransformer: v => v },
+  _contains_some: { op: Op.overlap, valueTransformer: v => v }
 };
 
 export default {

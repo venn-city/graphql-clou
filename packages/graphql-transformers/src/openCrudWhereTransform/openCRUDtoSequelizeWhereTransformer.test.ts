@@ -96,13 +96,8 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
     });
 
     describe('array field transformations', () => {
-      test('contains (element)', () => {
+      test('contains', () => {
         const sqFilter = openCrudToSequelize({ where: { domains_contains: 'mu' } }, 'Ministry');
-        expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.contains]: ['mu'] } }] });
-      });
-
-      test('contains (array)', () => {
-        const sqFilter = openCrudToSequelize({ where: { domains_contains: ['mu'] } }, 'Ministry');
         expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.contains]: ['mu'] } }] });
       });
 
