@@ -490,7 +490,7 @@ describe('sequelizeDataProvider', () => {
       });
     });
 
-    describe.only('Array field filters', () => {
+    describe('Array field filters', () => {
       test('contains_every', async () => {
         const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
           where: {
