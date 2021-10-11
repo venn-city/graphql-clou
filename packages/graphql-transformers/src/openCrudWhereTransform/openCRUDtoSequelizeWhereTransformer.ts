@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-import { drop, endsWith, isNil, isEmpty, isArray, map, flatMap, isString } from 'lodash';
+import { drop, endsWith, isNil, isEmpty, map, flatMap, isString } from 'lodash';
 import Sequelize from '@venncity/sequelize';
 
 require('@venncity/nested-config')(__dirname);
@@ -19,6 +19,11 @@ const Op = Sequelize.Op;
 const AND = 'AND';
 const OR = 'OR';
 const NOT = 'NOT';
+
+const isArrayField = (whereArg, whereArgFieldType) => (
+  isList(whereArgFieldType)
+  && ['_contains', '_contains_every', '_contains_some'].some(x => endsWith(whereArg, x))
+);
 
 export function openCrudToSequelize(
   { where, first, skip, orderBy = 'id_ASC' }: { where?: any; first?: number; skip?: number; orderBy?: string },
@@ -104,8 +109,9 @@ function openCrudFilterToSequelize(whereArg, whereValue, entityName, pathWithinS
     sqIncludeElement = flatMap(sqElements, 'include');
   } else {
     const whereArgField = getField(openCrudSchema, entityName, whereArg) as any;
-    if (isScalar(whereArgField.type)) {
-      sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames);
+    const isArray = isArrayField(whereArg, whereArgField.type);
+    if (isScalar(whereArgField.type) || isArray) {
+      sqWhereElement = handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames, isArray);
     } else if (isObject(whereArgField.type)) {
       const objectFieldTransform = handleObjectField(whereArg, whereValue, entityName, pathWithinSchema, useColumnNames);
       sqWhereElement = objectFieldTransform.sqWhereElement;
@@ -138,17 +144,18 @@ function getFieldNameForQuery(useColumnNames, fieldName, entityName) {
   return !useColumnNames ? fieldName : sq[entityName].rawAttributes[fieldName].field;
 }
 
-function handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames) {
+function handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames, isArrayField) {
   let sqWhereElement;
   if (whereArgField.name === whereArg) {
     const fieldNameForQuery = getFieldNameForQuery(useColumnNames, whereArg, entityName);
     sqWhereElement = { [fieldNameForQuery]: whereValue };
   } else {
-    Object.keys(gqlPostfixesToSqOps).forEach(gqlPostfixToSqOpKey => {
+    const postfixes = isArrayField ? arrayGqlPostfixesToSqOps : gqlPostfixesToSqOps;
+    Object.keys(postfixes).forEach(gqlPostfixToSqOpKey => {
       if (endsWith(whereArg, gqlPostfixToSqOpKey)) {
         const fieldName = whereArg.replace(new RegExp(`${gqlPostfixToSqOpKey}$`), '');
         const fieldNameForQuery = getFieldNameForQuery(useColumnNames, fieldName, entityName);
-        const gqlPostfixesToSqOp = gqlPostfixesToSqOps[gqlPostfixToSqOpKey];
+        const gqlPostfixesToSqOp = postfixes[gqlPostfixToSqOpKey];
         sqWhereElement = {
           [fieldNameForQuery]: {
             [gqlPostfixesToSqOp.op]: gqlPostfixesToSqOp.valueTransformer(whereValue)
@@ -322,7 +329,7 @@ function addSelectAttributes(sqFilter, entityName) {
 
 function pushNotEmpty(array, other) {
   if (!isNil(other)) {
-    if (isArray(other)) {
+    if (Array.isArray(other)) {
       if (!isEmpty(other)) {
         other.forEach(o => array.push(o));
       }
@@ -356,6 +363,11 @@ const gqlPostfixesToSqOps = {
   _not_starts_with: { op: Op.notLike, valueTransformer: v => `${v}%` },
   _ends_with: { op: Op.like, valueTransformer: v => `%${v}` },
   _not_ends_with: { op: Op.notLike, valueTransformer: v => `%${v}` }
+};
+const arrayGqlPostfixesToSqOps = {
+  _contains: { op: Op.contains, valueTransformer: v => [v] },
+  _contains_every: { op: Op.contains, valueTransformer: v => v },
+  _contains_some: { op: Op.overlap, valueTransformer: v => v }
 };
 
 export default {

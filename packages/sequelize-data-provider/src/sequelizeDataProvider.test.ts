@@ -54,12 +54,15 @@ describe('sequelizeDataProvider', () => {
   let ministry1;
   const ministryName1 = `Finance${randomNumber}`;
   const ministryBudget1 = 87 + randomNumber;
+  const ministryDomains1 = ['Finance'];
   let ministry2;
   const ministryName2 = `Defence${randomNumber}`;
   const ministryBudget2 = 22.1 + randomNumber;
+  const ministryDomains2 = ['Defence'];
   let ministry3;
   const ministryName3 = `Healthcare${randomNumber}`;
   const ministryBudget3 = 22.1 + randomNumber;
+  const ministryDomains3 = ['Healthcare', 'Longevity'];
 
   let minister1;
   const ministerName1 = `Lazaros${randomNumber}`;
@@ -111,7 +114,8 @@ describe('sequelizeDataProvider', () => {
         connect: {
           id: minister1.id
         }
-      }
+      },
+      domains: ministryDomains1
     });
     ministry2 = await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName2,
@@ -125,7 +129,8 @@ describe('sequelizeDataProvider', () => {
         connect: {
           id: minister2.id
         }
-      }
+      },
+      domains: ministryDomains2
     });
     ministry3 = await sequelizeDataProvider.createEntity('Ministry', {
       name: ministryName3,
@@ -134,7 +139,8 @@ describe('sequelizeDataProvider', () => {
         connect: {
           id: government1.id
         }
-      }
+      },
+      domains: ministryDomains3
     });
 
     vote1 = await sequelizeDataProvider.createEntity('Vote', {
@@ -482,6 +488,41 @@ describe('sequelizeDataProvider', () => {
         expect(fetchedVotes).toHaveLength(1);
         expect(fetchedVotes[0]).toMatchObject(vote4);
       });
+    });
+
+    describe('Array field filters', () => {
+      test('contains_every', async () => {
+        const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+          where: {
+            name: ministryName3,
+            domains_contains_every: ['Healthcare', 'Longevity']
+          }
+        });
+        expect(fetchedMinistries).toHaveLength(1);
+        expect(fetchedMinistries[0]).toMatchObject(ministry3);
+      });
+
+      test('contains_every (negative)', async () => {
+        const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+          where: {
+            name: ministryName3,
+            domains_contains_every: ['Healthcare', 'Sport']
+          }
+        });
+        expect(fetchedMinistries).toHaveLength(0);
+      });
+
+      test('contains_some', async () => {
+        const fetchedMinistries = await sequelizeDataProvider.getAllEntities('Ministry', {
+          where: {
+            name: ministryName3,
+            domains_contains_some: ['Healthcare', 'Sport']
+          }
+        });
+        expect(fetchedMinistries).toHaveLength(1);
+        expect(fetchedMinistries[0]).toMatchObject(ministry3);
+      });
+
     });
   });
 

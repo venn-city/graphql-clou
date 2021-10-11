@@ -63,9 +63,7 @@ jobs:
           path: reports/junit/@venncity
       - run:
           name: Coverage Enforce
-          command: |
-            yarn global add @venncity/coverage-police
-            yarn exec-changed lerna exec 'COVERAGE_PROJECT_NAME=$LERNA_PACKAGE_NAME PATH="$PATH:$(yarn global bin)" coverage-enforce'
+          command: yarn exec-changed lerna exec 'COVERAGE_PROJECT_NAME=$LERNA_PACKAGE_NAME PATH="$PATH:$(yarn global bin)" coverage-enforce'
   lint:
     <<: *defaults
     steps:

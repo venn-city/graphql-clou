@@ -95,6 +95,23 @@ describe('openCRUDtoSequelizeWhereTransformer', () => {
       });
     });
 
+    describe('array field transformations', () => {
+      test('contains', () => {
+        const sqFilter = openCrudToSequelize({ where: { domains_contains: 'mu' } }, 'Ministry');
+        expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.contains]: ['mu'] } }] });
+      });
+
+      test('contains_every', () => {
+        const sqFilter = openCrudToSequelize({ where: { domains_contains_every: ['mu', 'su'] } }, 'Ministry');
+        expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.contains]: ['mu', 'su'] } }] });
+      });
+
+      test('contains_some', () => {
+        const sqFilter = openCrudToSequelize({ where: { domains_contains_some: ['mu', 'su'] } }, 'Ministry');
+        expect(sqFilter).toHaveProperty('where', { [Op.and]: [{ domains: { [Op.overlap]: ['mu', 'su'] } }] });
+      });
+    });
+
     describe('combined transformations', () => {
       test('boolean operators and relations', () => {
         const sqFilter = openCrudToSequelize(
