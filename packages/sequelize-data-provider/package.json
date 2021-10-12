@@ -1,6 +1,6 @@
 {
   "name": "@venncity/sequelize-data-provider",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -29,7 +29,7 @@
     ]
   },
   "dependencies": {
-    "@venncity/graphql-transformers": "^1.6.14",
+    "@venncity/graphql-transformers": "^1.7.0",
     "@venncity/opencrud-schema-provider": "^1.4.15",
     "@venncity/sequelize": "1.0.0",
     "@venncity/sequelize-model": "^1.8.19",
