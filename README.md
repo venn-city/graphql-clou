@@ -88,4 +88,3 @@ to the variable `datamodel`, and the content of the generated open crud schema (
 ## Misc:
 * To run the local postgres DB on a different port, e.g. 5433, change the `config.db_port` in package.json and
  the `DB_PORT` in the `.env` file.
-
