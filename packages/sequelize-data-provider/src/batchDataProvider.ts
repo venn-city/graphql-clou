@@ -3,7 +3,7 @@ import async, { Dictionary } from 'async';
 import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 import { openCrudToSequelize } from '@venncity/graphql-transformers';
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 import { extractManyResult, extractSingleResult } from './resultExtractionHelper';
 
 const { getFieldType } = opencrudSchemaProvider.graphqlSchemaUtils;

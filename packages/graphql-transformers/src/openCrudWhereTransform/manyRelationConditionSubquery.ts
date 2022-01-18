@@ -1,11 +1,11 @@
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 import { trimEnd } from 'lodash';
 
 const Op = Sequelize.Op;
 
 export function buildConditionSubquery(targetModel, filter, isNegative = false) {
   const positiveOrNegative = isNegative ? Op.not : Op.and;
-  const queryGenerator = targetModel.QueryGenerator;
+  const queryGenerator = targetModel.queryGenerator;
   const options = {
     ...filter,
     attributes: ['id'],
@@ -27,6 +27,7 @@ function addIntermediateModelsToOptions(model, options) {
   // This internal method is used by Sequielize to add all models needed to constract a query
   // For ex. model A is requested, but given filter is executed on model D, so request should include A->B->C->D models
   // Providing model A and options with filter on model D, this function adds B and C into includes of options
+  // @ts-ignore
   // eslint-disable-next-line no-underscore-dangle
   Sequelize.Model._validateIncludedElements.bind(model)(options);
 }

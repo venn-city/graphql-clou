@@ -1,4 +1,4 @@
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 
 // eslint-disable-next-line import/prefer-default-export
 export const baseModel = {

@@ -1,0 +1,19 @@
+diff --git a/node_modules/sequelize/dist/lib/dialects/abstract/query-generator.js b/node_modules/sequelize/dist/lib/dialects/abstract/query-generator.js
+index 940a3b1..be19d4e 100644
+--- a/node_modules/sequelize/dist/lib/dialects/abstract/query-generator.js
++++ b/node_modules/sequelize/dist/lib/dialects/abstract/query-generator.js
+@@ -822,6 +822,14 @@ class QueryGenerator {
+     }
+     attributes.main = this.escapeAttributes(attributes.main, options, mainTable.as);
+     attributes.main = attributes.main || (options.include ? [`${mainTable.as}.*`] : ["*"]);
++
++    // Push the DISTINCT attribute if it exists to be the first in the selection statement, so it is a valid sql.
++    const distinctAttributeIndex = _.findIndex(attributes.main, attr => attr.startsWith('DISTINCT'));
++    if (distinctAttributeIndex >= 0) {
++      const distinctAttribute = _.pullAt(attributes.main, distinctAttributeIndex);
++      attributes.main.unshift(distinctAttribute[0]);
++    }
++
+     if (subQuery || options.groupedLimit) {
+       attributes.subQuery = attributes.main;
+       attributes.main = [`${mainTable.as || mainTable.quotedName}.*`];

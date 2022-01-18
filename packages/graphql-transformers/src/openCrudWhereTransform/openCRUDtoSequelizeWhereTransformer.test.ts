@@ -1,5 +1,5 @@
 import sequelizeModel from '@venncity/sequelize-model';
-import { Op } from '@venncity/sequelize';
+import { Op } from 'sequelize';
 import { openCrudToSequelize } from './openCRUDtoSequelizeWhereTransformer';
 import models from '../../../../test/model';
 

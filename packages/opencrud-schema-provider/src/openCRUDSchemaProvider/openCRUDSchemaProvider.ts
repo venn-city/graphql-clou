@@ -44,8 +44,8 @@ export const openCrudSchema =
 let openCrudIntrospection: any;
 export function getOpenCrudIntrospection() {
   if (!openCrudIntrospection) {
-    // eslint-disable-next-line no-underscore-dangle
     // @ts-ignore
+    // eslint-disable-next-line no-underscore-dangle
     openCrudIntrospection = graphqlSync(openCrudSchema, introspectionQuery).data?.__schema;
   }
   return openCrudIntrospection;

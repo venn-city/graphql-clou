@@ -30,7 +30,7 @@
     "@types/jest": "^26.0.4",
     "@venncity/clou-utils": "^2.0.7",
     "@venncity/opencrud-schema-provider": "^1.4.15",
-    "@venncity/sequelize": "1.0.0",
+    "sequelize": "^6.13.0",
     "@venncity/sequelize-model": "^1.8.19",
     "async": "^3.2.0",
     "deepdash": "^4.2.17",

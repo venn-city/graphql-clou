@@ -1,7 +1,7 @@
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 import { forOwn } from 'lodash';
 import cls from 'cls-hooked';
-import DataTypes from '@venncity/sequelize/lib/data-types';
+import DataTypes from 'sequelize/lib/data-types';
 import { isTrue } from '@venncity/clou-utils';
 import { hookDefinitions } from './hooks/hooks';
 
@@ -16,18 +16,18 @@ if (process.env.IS_TEST !== 'true') {
   if (isTrue(config.get('xray.enabled'))) {
     // eslint-disable-next-line global-require
     const xray = require('aws-xray-sdk');
-    Sequelize.useCLS(xray.getNamespace());
+    Sequelize.Sequelize.useCLS(xray.getNamespace());
     pg = xray.capturePostgres(pg);
   } else if (process.env.CLS_ENABLED === 'true') {
     const namespace = cls.createNamespace(config.get('clsNamespace.name'));
-    Sequelize.useCLS(namespace);
+    Sequelize.Sequelize.useCLS(namespace);
   }
 }
 
 const enableLogging = isTrue(config.get('sequelize.logging'));
 const sq: any = {};
 
-const sequelize = new Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
+const sequelize = new Sequelize.Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
   pool: getPoolConfig(),
   port: config.has('db.port') ? config.get('db.port') : 5432,

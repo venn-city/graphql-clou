@@ -1,4 +1,4 @@
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 import cuid from 'cuid';
 import _ from 'lodash';
 import { openCrudDataModel } from '@venncity/opencrud-schema-provider';
@@ -7,31 +7,36 @@ const entityTypesSchema = openCrudDataModel.types;
 
 // eslint-disable-next-line import/prefer-default-export
 export const hookDefinitions = {
-  beforeCreate: entity => {
+  beforeCreate(entity) {
     entity.id = cuid();
   },
-  beforeBulkCreate: entities => {
+  beforeBulkCreate(entities) {
     entities.forEach(entity => {
       if (!entity.id) {
         entity.id = cuid();
       }
     });
   },
-  beforeValidate: entityInput => {
-    runSchemaBasedHooks(entityInput, [jsonToString]);
+  // this is used here and in other hooks as this is the only was to infer the entity name for which the hook is called.
+  beforeValidate(entityInput) {
+    // @ts-ignore
+    runSchemaBasedHooks(entityInput, [jsonToString], this.name);
   },
-  afterFind: entityInput => {
-    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+  afterFind(entityInput) {
+    // @ts-ignore
+    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate], this.name);
   },
-  afterCreate: entityInput => {
-    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+  afterCreate(entityInput) {
+    // @ts-ignore
+    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate], this.name);
   },
-  afterUpdate: entityInput => {
-    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate]);
+  afterUpdate(entityInput) {
+    // @ts-ignore
+    runSchemaBasedHooks(entityInput, [stringToJson, formatFloat, convertNullToEmptyArray, formatDate], this.name);
   }
 };
 
-function runSchemaBasedHooks(entityInput, hooks) {
+function runSchemaBasedHooks(entityInput, hooks, entityName) {
   if (!entityInput) {
     return;
   }
@@ -46,8 +51,6 @@ function runSchemaBasedHooks(entityInput, hooks) {
       entity.dataValues.deleted = 0;
     }
 
-    // eslint-disable-next-line no-underscore-dangle
-    const entityName = entity._modelOptions.name.singular;
     const entityTypeInSchema = entityTypesSchema.find(entityType => entityType.name === entityName);
     entity.dataValues = _.mapValues(entity.dataValues, (fieldValue, fieldName) => {
       const fieldInSchema = entityTypeInSchema?.fields?.find(field => field.name === fieldName);
@@ -56,9 +59,9 @@ function runSchemaBasedHooks(entityInput, hooks) {
 
       if (fieldInSchema) {
         if (Array.isArray(fieldValue)) {
-          handleRelatedEntityArray(fieldValue, hooks);
+          handleRelatedEntityArray(fieldValue, hooks, fieldInSchema.type.name);
         } else if (fieldValue instanceof Sequelize.Model) {
-          runSchemaBasedHooks(fieldValue, hooks);
+          runSchemaBasedHooks(fieldValue, hooks, fieldInSchema.type.name);
         } else {
           hooks.forEach(hook => {
             returnValue = hook(fieldInSchema, returnValue);
@@ -70,10 +73,10 @@ function runSchemaBasedHooks(entityInput, hooks) {
   });
 }
 
-function handleRelatedEntityArray(fieldValues, hooks) {
+function handleRelatedEntityArray(fieldValues, hooks, entityName) {
   fieldValues.forEach(fieldValue => {
     if (fieldValue instanceof Sequelize.Model) {
-      runSchemaBasedHooks(fieldValue, hooks);
+      runSchemaBasedHooks(fieldValue, hooks, entityName);
     }
   });
 }
