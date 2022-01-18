@@ -27,7 +27,7 @@ jobs:
             - v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "lerna-changed.txt" }}
       - run:
           name: bootstrap relevant packages
-          command: yarn && yarn exec-changed lerna bootstrap && yarn lerna run build
+          command: yarn exec-changed lerna bootstrap && yarn lerna run build
       - save_cache:
           paths:
             - ~/.cache
