@@ -1,6 +1,6 @@
 import { upperFirst, map, camelCase, isObject } from 'lodash';
 import cuid from 'cuid';
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 import { errors } from '@venncity/errors';
 import util from 'util';
 import async from 'async';

@@ -522,7 +522,6 @@ describe('sequelizeDataProvider', () => {
         expect(fetchedMinistries).toHaveLength(1);
         expect(fetchedMinistries[0]).toMatchObject(ministry3);
       });
-
     });
   });
 

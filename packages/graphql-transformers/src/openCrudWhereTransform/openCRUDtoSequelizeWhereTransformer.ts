@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import { drop, endsWith, isNil, isEmpty, map, flatMap, isString } from 'lodash';
-import Sequelize from '@venncity/sequelize';
+import Sequelize from 'sequelize';
 
 require('@venncity/nested-config')(__dirname);
 
@@ -19,11 +19,6 @@ const Op = Sequelize.Op;
 const AND = 'AND';
 const OR = 'OR';
 const NOT = 'NOT';
-
-const isArrayField = (whereArg, whereArgFieldType) => (
-  isList(whereArgFieldType)
-  && ['_contains', '_contains_every', '_contains_some'].some(x => endsWith(whereArg, x))
-);
 
 export function openCrudToSequelize(
   { where, first, skip, orderBy = 'id_ASC' }: { where?: any; first?: number; skip?: number; orderBy?: string },
@@ -144,13 +139,13 @@ function getFieldNameForQuery(useColumnNames, fieldName, entityName) {
   return !useColumnNames ? fieldName : sq[entityName].rawAttributes[fieldName].field;
 }
 
-function handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames, isArrayField) {
+function handleScalarField(whereArgField, whereArg, whereValue, entityName, useColumnNames, isFieldArray) {
   let sqWhereElement;
   if (whereArgField.name === whereArg) {
     const fieldNameForQuery = getFieldNameForQuery(useColumnNames, whereArg, entityName);
     sqWhereElement = { [fieldNameForQuery]: whereValue };
   } else {
-    const postfixes = isArrayField ? arrayGqlPostfixesToSqOps : gqlPostfixesToSqOps;
+    const postfixes = isFieldArray ? arrayGqlPostfixesToSqOps : gqlPostfixesToSqOps;
     Object.keys(postfixes).forEach(gqlPostfixToSqOpKey => {
       if (endsWith(whereArg, gqlPostfixToSqOpKey)) {
         const fieldName = whereArg.replace(new RegExp(`${gqlPostfixToSqOpKey}$`), '');
@@ -349,6 +344,9 @@ function validateSqInit(entityName) {
   }
 }
 
+const isArrayField = (whereArg, whereArgFieldType) =>
+  isList(whereArgFieldType) && ['_contains', '_contains_every', '_contains_some'].some(x => endsWith(whereArg, x));
+
 const gqlPostfixesToSqOps = {
   _not: { op: Op.not, valueTransformer: v => v },
   _in: { op: Op.in, valueTransformer: v => (Array.isArray(v) ? v : [v]) },
@@ -364,6 +362,7 @@ const gqlPostfixesToSqOps = {
   _ends_with: { op: Op.like, valueTransformer: v => `%${v}` },
   _not_ends_with: { op: Op.notLike, valueTransformer: v => `%${v}` }
 };
+
 const arrayGqlPostfixesToSqOps = {
   _contains: { op: Op.contains, valueTransformer: v => [v] },
   _contains_every: { op: Op.contains, valueTransformer: v => v },
