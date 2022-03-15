@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/venn-city/graphql-clou/compare/@venncity/clou-utils@2.0.8...@venncity/clou-utils@2.0.9) (2022-03-15)
+
+**Note:** Version bump only for package @venncity/clou-utils
+
+
+
+
+
 ## [2.0.8](https://github.com/venn-city/graphql-clou/compare/@venncity/clou-utils@2.0.7...@venncity/clou-utils@2.0.8) (2022-01-18)
 
 **Note:** Version bump only for package @venncity/clou-utils
