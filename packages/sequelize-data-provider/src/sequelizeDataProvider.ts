@@ -1,19 +1,12 @@
 import { upperFirst, map, camelCase, isObject } from 'lodash';
 import cuid from 'cuid';
 import Sequelize from 'sequelize';
-import { errors } from '@venncity/errors';
 import util from 'util';
 import async from 'async';
 import { openCrudToSequelize } from '@venncity/graphql-transformers';
 import sequelizeModel from '@venncity/sequelize-model';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 import { extractManyResult, extractSingleResult } from './resultExtractionHelper';
-
-const {
-  ClientDataValidationError,
-  ServerDataValidationError,
-  SUPPORTED_LOG_LEVELS: { WARN }
-} = errors;
 
 const CREATE_MANY = true;
 
@@ -155,10 +148,7 @@ async function handleRelatedConnects(entityName: string, entityField: string, en
         entityToCreate[camelCase(columnName)] = relatedEntity.id;
       }
     } else {
-      throw new ClientDataValidationError({
-        logLevel: WARN,
-        message: `Invalid argument in ${entityField} parameter`
-      });
+      throw new Error(`Invalid argument in ${entityField} parameter`);
     }
   }
   if (isListRelation(fieldInSchema)) {
@@ -254,7 +244,7 @@ async function handleEntityRelationsPreCreate(entityName: string, entityToCreate
     if (isObject(entityToCreate[entityField])) {
       if (isCreateMany && entityToCreate[entityField].create) {
         // In order to enable this need to verify that nested mutations work correctly with the bulk create scenario
-        throw new ServerDataValidationError({ message: 'Nested create of entities inside of createMany is not currently supported' });
+        throw new Error('Nested create of entities inside of createMany is not currently supported');
       }
       if (entityToCreate[entityField].connect) {
         listRelations.push(...(await handleRelatedConnects(entityName, entityField, entityToCreate)));
