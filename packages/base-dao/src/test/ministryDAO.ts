@@ -1,6 +1,5 @@
 import baseDAO from '../baseDAO';
-import { daoAuth } from './auth/daoAuth';
-import { publishCrudEvent } from './publishCRUD/crudPublish';
+import { mockDaoAuth } from './authTypes';
 
 // eslint-disable-next-line no-unused-vars
 function buildAuthContext(context) {
@@ -13,7 +12,7 @@ async function getAuthDataFromDB(context, ministryId) {
 }
 
 function createMinistryDAO() {
-  const ministryDAO = baseDAO.createEntityDAO({ entityName: 'ministry', hooks, daoAuth, publishCrudEvent });
+  const ministryDAO = baseDAO.createEntityDAO({ entityName: 'ministry', hooks, daoAuth: mockDaoAuth, publishCrudEvent: () => {} });
   return {
     ...ministryDAO
   };
