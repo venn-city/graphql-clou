@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.42](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.3.41...@venncity/nested-mutation-hooks@1.3.42) (2022-03-20)
+
+**Note:** Version bump only for package @venncity/nested-mutation-hooks
+
+
+
+
+
 ## [1.3.41](https://github.com/venn-city/graphql-clou/compare/@venncity/nested-mutation-hooks@1.3.40...@venncity/nested-mutation-hooks@1.3.41) (2022-03-15)
 
 **Note:** Version bump only for package @venncity/nested-mutation-hooks
