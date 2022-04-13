@@ -1,5 +1,5 @@
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
-import { preCreation, postCreation, preUpdate, postUpdate } from '../../../../src/index';
+import { preCreation, postCreation, preUpdate, postUpdate } from '../../../../resolverHooks';
 
 export default {
   Query: {

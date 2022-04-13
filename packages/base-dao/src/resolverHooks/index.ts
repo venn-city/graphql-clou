@@ -1,5 +1,5 @@
-import creationHooks from './resolverHooks/creationHooks';
-import updateHooks from './resolverHooks/updateHooks';
+import creationHooks from './creationHooks';
+import updateHooks from './updateHooks';
 
 export const preUpdate = updateHooks.preUpdate;
 export const postUpdate = updateHooks.postUpdate;

@@ -1,3 +1,0 @@
-{
-  "extends": ["@venncity/eslint-config", "plugin:prettier/recommended"]
-}

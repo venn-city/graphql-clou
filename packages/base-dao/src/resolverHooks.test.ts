@@ -1,14 +1,14 @@
 /* eslint-disable import/first */
 import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
-import { createTestClient } from 'apollo-server-testing/dist/index';
+import { createTestClient } from 'apollo-server-testing';
 import { hacker } from 'faker';
 import sinon from 'sinon';
 import { sq } from '@venncity/sequelize-model';
-import resolvers from '../test/graphqlTestServer/schema/resolvers';
-import models from '../../../test/model';
+import resolvers from './test/graphqlTestServer/schema/resolvers';
+import models from './../../../test/model';
 
 const mutationSpies = createMutationSpies();
-import { startApolloServer } from '../test/graphqlTestServer';
+import { startApolloServer } from './test/graphqlTestServer';
 
 const { mutate } = createTestClient(startApolloServer());
 
