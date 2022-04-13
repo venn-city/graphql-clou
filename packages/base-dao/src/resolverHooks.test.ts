@@ -5,7 +5,7 @@ import { hacker } from 'faker';
 import sinon from 'sinon';
 import { sq } from '@venncity/sequelize-model';
 import resolvers from './test/graphqlTestServer/schema/resolvers';
-import models from './../../../test/model';
+import models from '../../../test/model';
 
 const mutationSpies = createMutationSpies();
 import { startApolloServer } from './test/graphqlTestServer';

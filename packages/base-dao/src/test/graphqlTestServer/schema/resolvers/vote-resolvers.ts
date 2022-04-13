@@ -1,35 +1,34 @@
-import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
-import { preCreation, postCreation, preUpdate, postUpdate } from '../../../../resolverHooks';
+import { preCreation, postCreation, preUpdate, postUpdate } from '../../../../nestedMutationHooks';
 
 export default {
   Query: {
-    vote: async (parent, { where }) => {
-      return sequelizeDataProvider.getEntity('Vote', where);
+    vote: async (parent, { where }, context) => {
+      return context.DAOs.voteDAO.vote(context, where);
     },
-    ministries: async (parent, args) => {
-      return sequelizeDataProvider.getAllEntities('Vote', args);
+    votes: async (parent, args, context) => {
+      return context.DAOs.voteDAO.votes(context, args);
     }
   },
   Mutation: {
     createVote: async (parent, { data }, context) => {
       const postCreationCalls = await preCreation(context, data, 'Vote');
-      const createdVote = await sequelizeDataProvider.createEntity('Vote', data);
+      const createdVote = await context.DAOs.voteDAO.createVote(context, data);
       await postCreation(postCreationCalls, createdVote);
       return createdVote;
     },
-    deleteVote: async (parent, { where }) => {
-      return sequelizeDataProvider.deleteEntity('Vote', where);
+    deleteVote: async (parent, { where }, context) => {
+      return context.DAOs.voteDAO.deleteVote(context, where);
     },
     updateVote: async (parent, { data, where = {} }, context) => {
       const postUpdateCalls = await preUpdate(context, data, where, 'Vote');
-      const updateVote = await sequelizeDataProvider.updateEntity('Vote', data, where);
+      const updateVote = await context.DAOs.voteDAO.updateVote(context, { data, where });
       await postUpdate(postUpdateCalls, updateVote);
       return updateVote;
     }
   },
   Vote: {
-    minister: async parent => {
-      return sequelizeDataProvider.getRelatedEntity('Vote', parent.id, 'minister');
+    minister: async (parent, args, context) => {
+      return context.DAOs.voteDAO.getRelatedEntity(parent.id, 'minister', context);
     }
   }
 };

@@ -5,6 +5,7 @@ import { getOpenCrudIntrospection, openCrudDataModel, openCrudSchemaGraphql } fr
 import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
 
 import resolvers from './schema/resolvers';
+import createAllDAOs from '../DAOs';
 
 const fullSchema = makeExecutableSchema({
   typeDefs: [openCrudSchemaGraphql],
@@ -25,7 +26,15 @@ export function startApolloServer() {
     introspection: true,
     context: async req => {
       try {
-        return { ...req, openCrudDataModel, openCrudIntrospection: getOpenCrudIntrospection(), resolvers, dataProvider };
+        const DAOs = createAllDAOs();
+        return {
+          ...req,
+          openCrudDataModel,
+          openCrudIntrospection: getOpenCrudIntrospection(),
+          resolvers,
+          dataProvider,
+          DAOs
+        };
       } catch (e) {
         console.error('Failed building apollo context for request.', e);
         throw e;
