@@ -1,18 +1,18 @@
-import { get, keys } from 'lodash';
+import { get, keys, lowerFirst } from 'lodash';
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 
 const { findTypeInIntrospection, getChildFields, getFieldName } = opencrudSchemaProvider.introspectionUtils;
 
-export function getChildEntityCreateResolver(context, fieldType) {
-  return context.resolvers.Mutation[`create${fieldType}`];
+export function getChildEntityCreateDao(context, fieldType) {
+  return context.DAOs[`${lowerFirst(fieldType)}DAO`][`create${fieldType}`];
 }
 
-export function getChildEntityUpdateResolver(context, fieldType) {
-  return context.resolvers.Mutation[`update${fieldType}`];
+export function getChildEntityUpdateDao(context, fieldType) {
+  return context.DAOs[`${lowerFirst(fieldType)}DAO`][`update${fieldType}`];
 }
 
-export function getChildEntityDeleteResolver(context, fieldType) {
-  return context.resolvers.Mutation[`delete${fieldType}`];
+export function getChildEntityDeleteDao(context, fieldType) {
+  return context.DAOs[`${lowerFirst(fieldType)}DAO`][`delete${fieldType}`];
 }
 
 export function detectChildFieldsToChange(context, resource, data) {

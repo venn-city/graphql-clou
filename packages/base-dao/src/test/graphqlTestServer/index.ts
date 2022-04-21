@@ -5,7 +5,8 @@ import { getOpenCrudIntrospection, openCrudDataModel, openCrudSchemaGraphql } fr
 import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
 
 import resolvers from './schema/resolvers';
-import createAllDAOs from '../DAOs';
+// @ts-ignore
+import { createAllDAOs } from '../DAOs';
 
 const fullSchema = makeExecutableSchema({
   typeDefs: [openCrudSchemaGraphql],

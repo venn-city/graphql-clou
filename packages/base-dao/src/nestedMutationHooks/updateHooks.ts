@@ -4,9 +4,9 @@ import { lowerFirst } from 'lodash';
 
 import opencrudSchemaProvider from '@venncity/opencrud-schema-provider';
 import {
-  getChildEntityCreateResolver,
-  getChildEntityUpdateResolver,
-  getChildEntityDeleteResolver,
+  getChildEntityCreateDao,
+  getChildEntityUpdateDao,
+  getChildEntityDeleteDao,
   detectChildFieldsToChange,
   isReferencingSideOfJoin,
   nestedSetEntity
@@ -162,12 +162,12 @@ export async function preUpdate(context, parentUpdateData, where, entityName) {
 
 async function nestedCreate({ context, childFieldToChange, entityName, parentEntityMetadata, parentUpdateData, childElementData }: any) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChange);
-  const childEntityCreateResolver = getChildEntityCreateResolver(context, fieldType);
+  const childEntityCreateDao = getChildEntityCreateDao(context, fieldType);
   const childCreationData = parentUpdateData[fieldName];
   const childData = childElementData || childCreationData.create;
   if (isReferencingSideOfJoin(context, entityName, childFieldToChange)) {
     delete childCreationData.create;
-    const createdChild = await childEntityCreateResolver(parentUpdateData, { data: childData }, context);
+    const createdChild = await childEntityCreateDao(context, childData);
     childCreationData.connect = { id: createdChild.id };
     return null;
   }
@@ -177,16 +177,10 @@ async function nestedCreate({ context, childFieldToChange, entityName, parentEnt
   }
   const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
   return async entityId => {
-    return childEntityCreateResolver(
-      parentUpdateData,
-      {
-        data: {
-          [getFieldName(reverseReferenceFieldMetadata)]: { connect: { id: entityId } },
-          ...childData
-        }
-      },
-      context
-    );
+    return childEntityCreateDao(context, {
+      [getFieldName(reverseReferenceFieldMetadata)]: { connect: { id: entityId } },
+      ...childData
+    });
   };
 }
 
@@ -217,8 +211,8 @@ async function nestedConnect({
     delete parentUpdateData[fieldName];
     const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
     const reverseReferenceData = { [getFieldName(reverseReferenceFieldMetadata)]: { connect: { id: fetchedEntity.id } } };
-    const updateChildEntity = getChildEntityUpdateResolver(context, fieldType);
-    await updateChildEntity(parentUpdateData, { data: reverseReferenceData, where: { id: ownerId } }, context);
+    const updateChildEntity = getChildEntityUpdateDao(context, fieldType);
+    await updateChildEntity(context, { data: reverseReferenceData, where: { id: ownerId } });
   }
 }
 
@@ -230,10 +224,10 @@ async function nestedUpdate({ context, childFieldToChange, parentEntityMetadata,
       : await fetchChildEntityId(context.dataProvider, parentEntityMetadata, where, fieldName)
   );
   await each(childEntityIds, async childEntityId => {
-    const updateChildEntity = getChildEntityUpdateResolver(context, fieldType);
+    const updateChildEntity = getChildEntityUpdateDao(context, fieldType);
     const childData = childElementData ? childElementData.data : parentUpdateData[fieldName].update;
     delete parentUpdateData[fieldName].update;
-    await updateChildEntity(parentUpdateData, { data: childData, where: { id: childEntityId } }, context);
+    await updateChildEntity(context, { data: childData, where: { id: childEntityId } });
   });
 }
 
@@ -249,15 +243,15 @@ async function nestedDelete({ context, childFieldToChange, entityName, parentEnt
     parentUpdateData[fieldName] = buildDisconnectArgument(childFieldToChange, childEntityIds);
     return async () => {
       await each(childEntityIds, async childEntityId => {
-        const deleteChildEntity = getChildEntityDeleteResolver(context, fieldType);
-        await deleteChildEntity(parentUpdateData, { where: { id: childEntityId } }, context);
+        const deleteChildEntity = getChildEntityDeleteDao(context, fieldType);
+        await deleteChildEntity(context, { id: childEntityId });
       });
     };
   }
   delete parentUpdateData[fieldName];
   return each(childEntityIds, async childEntityId => {
-    const deleteChildEntity = getChildEntityDeleteResolver(context, fieldType);
-    await deleteChildEntity(parentUpdateData, { where: { id: childEntityId } }, context);
+    const deleteChildEntity = getChildEntityDeleteDao(context, fieldType);
+    await deleteChildEntity(context, { id: childEntityId });
   });
 }
 
@@ -296,8 +290,8 @@ async function nestedDisconnect({
     delete parentUpdateData[fieldName];
     const reverseReferenceFieldMetadata = getChildFieldOfType(childFieldToChange, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
     const reverseReferenceData = { [getFieldName(reverseReferenceFieldMetadata)]: { disconnect: true } };
-    const updateChildEntity = getChildEntityUpdateResolver(context, fieldType);
-    await updateChildEntity(parentUpdateData, { data: reverseReferenceData, where: { id: ownerId } }, context);
+    const updateChildEntity = getChildEntityUpdateDao(context, fieldType);
+    await updateChildEntity(context, { data: reverseReferenceData, where: { id: ownerId } });
   }
 }
 

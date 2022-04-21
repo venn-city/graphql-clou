@@ -1,13 +1,7 @@
 import asyncRunner from 'async';
 import { promisify } from 'util';
 import openCrudSchemaProvider from '@venncity/opencrud-schema-provider';
-import {
-  getChildEntityCreateResolver,
-  getChildEntityUpdateResolver,
-  detectChildFieldsToChange,
-  isReferencingSideOfJoin,
-  nestedSetEntity
-} from './common';
+import { getChildEntityCreateDao, getChildEntityUpdateDao, detectChildFieldsToChange, isReferencingSideOfJoin, nestedSetEntity } from './common';
 
 const { getChildFieldOfType, getFieldName, getFieldKind, getFieldType, extractFieldMetadata, KINDS } = openCrudSchemaProvider.introspectionUtils;
 
@@ -97,12 +91,12 @@ async function nestedCreate({
   childElementData?: any;
 }) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChangeMetadata);
-  const childEntityCreateResolver = getChildEntityCreateResolver(context, fieldType);
+  const childEntityCreateDao = getChildEntityCreateDao(context, fieldType);
   const childCreationData = parentCreationData[fieldName];
   const childData = childElementData || childCreationData.create;
   if (isReferencingSideOfJoin(context, entityName, childFieldToChangeMetadata)) {
     delete childCreationData.create;
-    const createdChild = await childEntityCreateResolver(parentCreationData, { data: childData }, context);
+    const createdChild = await childEntityCreateDao(context, childData);
     childCreationData.connect = { id: createdChild.id };
     return null;
   }
@@ -116,16 +110,10 @@ async function nestedCreate({
     context.openCrudIntrospection
   );
   return async entityId => {
-    return childEntityCreateResolver(
-      parentCreationData,
-      {
-        data: {
-          [getFieldName(reverseReferenceFieldMetadata)]: { connect: { id: entityId } },
-          ...childData
-        }
-      },
-      context
-    );
+    return childEntityCreateDao(context, {
+      [getFieldName(reverseReferenceFieldMetadata)]: { connect: { id: entityId } },
+      ...childData
+    });
   };
 }
 
@@ -145,7 +133,7 @@ async function nestedConnect({
   childElementData?: any;
 }) {
   const { fieldName, fieldType } = extractFieldMetadata(childFieldToChangeMetadata);
-  const childEntityUpdateResolver = getChildEntityUpdateResolver(context, fieldType);
+  const childEntityUpdateDao = getChildEntityUpdateDao(context, fieldType);
   const childConnectData = parentCreationData[fieldName];
   const childData = childElementData || childConnectData.connect;
   if (isReferencingSideOfJoin(context, entityName, childFieldToChangeMetadata)) {
@@ -157,7 +145,7 @@ async function nestedConnect({
   const reverseReferenceField = getChildFieldOfType(childFieldToChangeMetadata, getFieldType(parentEntityMetadata), context.openCrudIntrospection);
   return async entityId => {
     const reverseReferenceData = { [getFieldName(reverseReferenceField)]: { connect: { id: entityId } } };
-    return childEntityUpdateResolver(parentCreationData, { data: reverseReferenceData, where: { id: ownerId } }, context);
+    return childEntityUpdateDao(context, { data: reverseReferenceData, where: { id: ownerId } });
   };
 }
 

@@ -4,12 +4,14 @@ import { createTestClient } from 'apollo-server-testing';
 import { hacker } from 'faker';
 import sinon from 'sinon';
 import { sq } from '@venncity/sequelize-model';
-import resolvers from './test/graphqlTestServer/schema/resolvers';
+import { lowerFirst, set } from 'lodash';
+// @ts-ignore
+import daoFactory from './test/DAOs';
+// @ts-ignore
 import models from '../../../test/model';
-
-const mutationSpies = createMutationSpies();
 import { startApolloServer } from './test/graphqlTestServer';
 
+const mutationSpies = createMutationSpies();
 const { mutate } = createTestClient(startApolloServer());
 
 sq.init(models);
@@ -1668,7 +1670,7 @@ describe('Nested mutations', () => {
           where: { id_in: [ministry.id, anotherMinistry.id, yetAnotherMinistry.id] }
         });
         expect(ministries).toHaveLength(3);
-
+        expect(mutationSpies.updateGovernment.notCalled).toBeTruthy();
         const response = await executeMutation(
           `
               mutation(
@@ -1704,7 +1706,8 @@ describe('Nested mutations', () => {
 
         expect(ministriesAfterDelete).toHaveLength(1);
 
-        expect(mutationSpies.updateGovernment.calledOnce).toBeTruthy();
+        // One direct update, plus 2 resulting from cascade disconnects.
+        expect(mutationSpies.updateGovernment.calledThrice).toBeTruthy();
         expect(mutationSpies.deleteMinistry.calledTwice).toBeTruthy();
       });
 
@@ -2105,15 +2108,20 @@ async function executeMutation(mutation, variables) {
 }
 
 function createMutationSpies() {
+  const allDAOs = daoFactory.createAllDAOs();
   const entities = ['Government', 'Ministry', 'Minister', 'Vote'];
-  const mutationTypes = ['create', 'update', 'delete'];
+  const operations = ['create', 'update', 'delete'];
   const spies: any = {};
   entities.forEach(entity => {
-    mutationTypes.forEach(mutationType => {
-      const mutationName = `${mutationType}${entity}`;
+    operations.forEach(operation => {
+      const operationName = `${operation}${entity}`;
       // @ts-ignore
-      spies[mutationName] = sinon.spy(resolvers.Mutation, mutationName);
+      spies[operationName] = sinon.spy(allDAOs[`${lowerFirst(entity)}DAO`], operationName);
+      set(allDAOs, `${lowerFirst(entity)}DAO.${operationName}`, spies[operationName]);
     });
   });
+
+  sinon.replace(daoFactory, 'createAllDAOs', sinon.fake.returns(allDAOs));
+
   return spies;
 }

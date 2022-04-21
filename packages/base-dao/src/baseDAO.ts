@@ -16,6 +16,7 @@ import {
   GetRelatedEntityArgs
 } from '@venncity/sequelize-data-provider';
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
+import { preCreation, postCreation, preUpdate, postUpdate } from './nestedMutationHooks';
 
 const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
 const { getFieldType } = openCrudSchema.graphqlSchemaUtils;
@@ -196,6 +197,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     },
     // e.g createUnit
     [CREATE_ENTITY_FUNCTION_NAME]: async (context, entityToCreate) => {
+      const postCreationCalls = await preCreation(context, entityToCreate, upperFirst(entityName));
       const auth = await buildAuth(context, hooks);
       const entityForCreatePermissionCheck = await (hooks.authFunctions.transformEntityForCreate
         ? hooks.authFunctions.transformEntityForCreate(entityToCreate)
@@ -219,10 +221,12 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         context,
         additionalInfo
       });
+      await postCreation(postCreationCalls, creationResult);
       return creationResult;
     },
     // e.g updateUnit
     [UPDATE_ENTITY_FUNCTION_NAME]: async (context, { data, where }, info) => {
+      const postUpdateCalls = await preUpdate(context, data, where, upperFirst(entityName));
       const auth = await buildAuth(context, hooks);
       const whereInputName = getMutationWhereInputName(context, UPDATE_ENTITY_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
@@ -257,10 +261,12 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
           context
         });
       }
+      await postUpdate(postUpdateCalls, updatedEntity);
       return updatedEntity;
     },
     // e.g updateManyUnits
     [UPDATE_MANY_ENTITIES_FUNCTION_NAME]: async (context, { data, where }, info) => {
+      const postUpdateCalls = await preUpdate(context, data, where, upperFirst(entityName));
       const auth = await buildAuth(context, hooks);
       const whereInputName = getMutationWhereInputName(context, UPDATE_MANY_ENTITIES_FUNCTION_NAME);
       const transformedWhere = await transformComputedFieldsWhereArguments({
@@ -305,6 +311,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
           context
         });
       }
+      await postUpdate(postUpdateCalls, updatedEntities);
       return { count: updatedEntities.length };
     },
     // e.g deleteUnit

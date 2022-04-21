@@ -14,4 +14,4 @@ function createAllDAOs() {
   return allDAOs;
 }
 
-export default createAllDAOs;
+module.exports = { createAllDAOs };
