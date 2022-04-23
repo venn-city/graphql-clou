@@ -3,9 +3,9 @@ import { hacker, random } from 'faker';
 import { sq } from '@venncity/sequelize-model';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 import { transformJoinedEntityWhere } from './baseDAO';
-import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthContext } from './test/baseTestForDAOs';
+import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthContext } from './baseTestForDAOs';
 // @ts-ignore
-import { createAllDAOs } from './test/DAOs';
+import { createAllDAOs } from '../test/graphqlTestServer/graphql/DAOs';
 // @ts-ignore
 import models from '../../../test/model';
 

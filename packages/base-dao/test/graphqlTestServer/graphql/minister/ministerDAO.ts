@@ -1,5 +1,5 @@
-import baseDAO from '../baseDAO';
-import { mockDaoAuth } from './authTypes';
+import baseDAO from '../../../../src/baseDAO';
+import { mockDaoAuth } from '../../types/authTypes';
 
 // eslint-disable-next-line no-unused-vars
 function buildAuthContext(context) {

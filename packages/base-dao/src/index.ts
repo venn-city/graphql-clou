@@ -3,7 +3,7 @@ import {
   getFunctionNamesForEntity as getFunctionNamesForEntityOriginal,
   transformJoinedEntityWhere as transformJoinedEntityWhereOriginal
 } from './baseDAO';
-import { runGenericDAOTests as runGenericDAOTestsOriginal, BASE_DAO_TEST_TYPES as BASE_DAO_TEST_TYPES_ORIGINAL } from './test/baseTestForDAOs';
+import { runGenericDAOTests as runGenericDAOTestsOriginal, BASE_DAO_TEST_TYPES as BASE_DAO_TEST_TYPES_ORIGINAL } from './baseTestForDAOs';
 
 export const createEntityDAO = createEntityDAOOriginal;
 export const runGenericDAOTests = runGenericDAOTestsOriginal;

@@ -2,7 +2,7 @@ import pluralize from 'pluralize'; // eslint-disable-line import/no-extraneous-d
 import momentRandom from 'moment-random'; // eslint-disable-line import/no-extraneous-dependencies
 import { isArray, find } from 'lodash';
 import { getOpenCrudIntrospection, openCrudDataModel } from '@venncity/opencrud-schema-provider';
-import { getFunctionNamesForEntity } from '../baseDAO';
+import { getFunctionNamesForEntity } from './baseDAO';
 
 export const BASE_DAO_TEST_TYPES = {
   CREATE: 'CREATE',

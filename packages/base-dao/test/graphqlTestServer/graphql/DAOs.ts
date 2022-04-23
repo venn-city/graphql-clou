@@ -1,7 +1,7 @@
-import createGovernmentDAO from './governmentDAO';
-import createMinistryDAO from './ministryDAO';
-import createMinisterDAO from './ministerDAO';
-import createVoteDAO from './voteDAO';
+import createGovernmentDAO from './government/governmentDAO';
+import createMinistryDAO from './ministry/ministryDAO';
+import createMinisterDAO from './minister/ministerDAO';
+import createVoteDAO from './vote/voteDAO';
 
 function createAllDAOs() {
   const allDAOs = {

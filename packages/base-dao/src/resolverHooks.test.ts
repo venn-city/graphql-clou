@@ -6,10 +6,10 @@ import sinon from 'sinon';
 import { sq } from '@venncity/sequelize-model';
 import { lowerFirst, set } from 'lodash';
 // @ts-ignore
-import daoFactory from './test/DAOs';
+import daoFactory from '../test/graphqlTestServer/graphql/DAOs';
 // @ts-ignore
 import models from '../../../test/model';
-import { startApolloServer } from './test/graphqlTestServer';
+import { startApolloServer } from '../test/graphqlTestServer';
 
 const mutationSpies = createMutationSpies();
 const { mutate } = createTestClient(startApolloServer());
