@@ -1582,8 +1582,8 @@ describe('Nested mutations', () => {
         const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries).toHaveLength(2);
-        expect(updatedGovernment.ministries.find(e => e.id === ministry.id)).toHaveProperty('name', nameValue);
-        expect(updatedGovernment.ministries.find(e => e.id === anotherMinistry.id)).toHaveProperty('name', nameInitialValue);
+        expect(updatedGovernment.ministries.find((e: { id: any }) => e.id === ministry.id)).toHaveProperty('name', nameValue);
+        expect(updatedGovernment.ministries.find((e: { id: any }) => e.id === anotherMinistry.id)).toHaveProperty('name', nameInitialValue);
 
         expect(mutationSpies.updateGovernment.calledOnce).toBeTruthy();
         expect(mutationSpies.updateMinistry.calledOnce).toBeTruthy();
@@ -1782,9 +1782,9 @@ describe('Nested mutations', () => {
         const updatedGovernment = response?.data?.updateGovernment;
         expect(updatedGovernment).toHaveProperty('name', nameValue);
         expect(updatedGovernment.ministries).toHaveLength(3);
-        expect(updatedGovernment.ministries.find(e => e.id === ministry.id)).toHaveProperty('name', nameValue);
-        expect(updatedGovernment.ministries.find(e => e.id === anotherMinistry.id)).toHaveProperty('name', nameValue);
-        expect(updatedGovernment.ministries.find(e => e.id === yetAnotherMinistry.id)).toHaveProperty('name', nameValue);
+        expect(updatedGovernment.ministries.find((e: { id: any }) => e.id === ministry.id)).toHaveProperty('name', nameValue);
+        expect(updatedGovernment.ministries.find((e: { id: any }) => e.id === anotherMinistry.id)).toHaveProperty('name', nameValue);
+        expect(updatedGovernment.ministries.find((e: { id: any }) => e.id === yetAnotherMinistry.id)).toHaveProperty('name', nameValue);
       });
     });
 
@@ -2103,7 +2103,7 @@ describe('Nested mutations', () => {
   });
 });
 
-async function executeMutation(mutation, variables) {
+async function executeMutation(mutation: any, variables: any) {
   return mutate({ mutation, variables });
 }
 

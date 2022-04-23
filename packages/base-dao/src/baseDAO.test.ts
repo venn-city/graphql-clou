@@ -175,7 +175,7 @@ describe('BaseDao', () => {
     let vote4;
     const voteName4 = `Make war${randomNumber}`;
     const voteBallot4 = 'ABSTAIN';
-    let serviceContext;
+    let serviceContext: { auth: { isService: boolean; }; openCrudIntrospection: any; openCrudDataModel: any; DAOs: any; };
     beforeAll(async () => {
       serviceContext = await createServiceAuthContext(createAllDAOs());
       console.info('random seed', randomNumber);
