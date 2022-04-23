@@ -41,7 +41,8 @@
   },
   "license": "ISC",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/demo/*"
   ],
   "dependencies": {
     "@venncity/coverage-police": "^1.1.19"

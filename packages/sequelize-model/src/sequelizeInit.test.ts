@@ -3,7 +3,7 @@ process.env.CLS_ENABLED = 'true';
 process.env.IS_TEST = 'false';
 
 import { hacker, random } from 'faker';
-import models from '../../../test/model';
+import models from '../../demo/basic/sequelize/model';
 import sq from './sequelizeInit';
 
 sq.init(models);

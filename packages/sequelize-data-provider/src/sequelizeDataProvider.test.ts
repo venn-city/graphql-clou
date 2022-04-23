@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import sequelizeModel from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
 import { loadSingleRelatedEntities, loadRelatedEntities } from './batchDataProvider';
-import models from '../../../test/model';
+import models from '../../demo/basic/sequelize/model';
 
 sequelizeModel.sq.init(models);
 

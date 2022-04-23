@@ -12,7 +12,7 @@
     "build": "yarn build:cjs && yarn build:esm && yarn insertTestGraphqlFilesToLib",
     "build:cjs": "rm -rf lib/cjs && tsc",
     "build:esm": "rm -rf lib/esm && tsc -m esnext --outDir lib/esm",
-    "insertTestGraphqlFilesToLib": "cp -R ../../test lib",
+    "insertTestGraphqlFilesToLib": "cp -R ../demo lib",
     "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "npm run test -- --watchAll",
@@ -20,7 +20,7 @@
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit --runInBand --coverage",
     "lint:ci": "eslint . --format junit -o $LINT_JUNIT_OUTPUT",
     "generate-opencrud-schema": "node ./scripts/generateOpenCRUDSchema.js",
-    "generate-opencrud-schema:test": "node ./scripts/generateOpenCRUDSchema.js ../../test/datamodel.graphql ../../test/openCRUD.graphql"
+    "generate-opencrud-schema:test": "node ./scripts/generateOpenCRUDSchema.js ../demo/basic/src/graphql/datamodel.graphql ../../demo/openCRUD.graphql"
   },
   "husky": {
     "hooks": {

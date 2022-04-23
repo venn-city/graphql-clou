@@ -1,0 +1,18 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib/cjs",
+    "noEmit": false,
+    "noImplicitAny": false
+  },
+  "include": [
+    "src",
+    "modules.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "node_modules",
+    "lib",
+    "coverage"
+  ]
+}

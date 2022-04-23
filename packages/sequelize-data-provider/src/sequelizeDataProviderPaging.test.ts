@@ -3,7 +3,7 @@ import { random } from 'faker';
 import { uniq } from 'lodash';
 import sequelizeModel from '@venncity/sequelize-model';
 import sequelizeDataProvider from './sequelizeDataProvider';
-import models from '../../../test/model';
+import models from '../../demo/basic/sequelize/model';
 
 sequelizeModel.sq.init(models);
 

@@ -5,9 +5,9 @@ import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 import { transformJoinedEntityWhere } from './baseDAO';
 import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthContext } from './baseTestForDAOs';
 // @ts-ignore
-import { createAllDAOs } from '../test/graphqlTestServer/graphql/DAOs';
+import { createAllDAOs } from '../../demo/basic/src/graphql/DAOs';
 // @ts-ignore
-import models from '../../../test/model';
+import models from '../../demo/basic/sequelize/model';
 
 sq.init(models);
 

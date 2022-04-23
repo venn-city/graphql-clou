@@ -4,7 +4,7 @@ import { openCrudDataModel } from '@venncity/opencrud-schema-provider';
 import { sq } from '@venncity/sequelize-model';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 import { cascadeDelete } from './cascadeDelete';
-import models from '../../../test/model';
+import models from '../../demo/basic/sequelize/model';
 
 sq.init(models);
 
