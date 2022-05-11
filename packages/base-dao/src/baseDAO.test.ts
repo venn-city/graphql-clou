@@ -3,10 +3,11 @@ import { hacker, random } from 'faker';
 import { sq } from '@venncity/sequelize-model';
 import { sequelizeDataProvider } from '@venncity/sequelize-data-provider';
 import { transformJoinedEntityWhere } from './baseDAO';
-import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthContext } from './test/baseTestForDAOs';
-import createAllDAOs from './test/DAOs';
+import { runGenericDAOTests, createServiceAuthContext, createPublicAccessAuthContext } from './baseTestForDAOs';
 // @ts-ignore
-import models from '../../../test/model';
+import { createAllDAOs } from '../../demo/basic/src/graphql/DAOs';
+// @ts-ignore
+import models from '../../demo/basic/sequelize/model';
 
 sq.init(models);
 
@@ -174,7 +175,7 @@ describe('BaseDao', () => {
     let vote4;
     const voteName4 = `Make war${randomNumber}`;
     const voteBallot4 = 'ABSTAIN';
-    let serviceContext;
+    let serviceContext: { auth: { isService: boolean; }; openCrudIntrospection: any; openCrudDataModel: any; DAOs: any; };
     beforeAll(async () => {
       serviceContext = await createServiceAuthContext(createAllDAOs());
       console.info('random seed', randomNumber);

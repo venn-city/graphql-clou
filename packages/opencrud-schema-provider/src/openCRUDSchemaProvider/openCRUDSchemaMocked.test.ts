@@ -1,8 +1,8 @@
 import { getOpenCrudIntrospection, openCrudDataModel, openCrudSchema, openCrudSchemaGraphql } from './openCRUDSchemaProvider';
 
 jest.mock('@venncity/nested-config', () => {
-  const dataModelPath = './../../test/datamodel.graphql';
-  const sdlPath = './../../test/openCRUD.graphql';
+  const dataModelPath = './../demo/basic/src/graphql/datamodel.graphql';
+  const sdlPath = './../demo/basic/src/graphql/openCRUD.graphql';
   const dataModelKey = 'graphql.schema.datamodel.path';
   return () => ({
     has: () => true,

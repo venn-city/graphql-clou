@@ -1,0 +1,49 @@
+{
+  "name": "@venncity/graphql-demo-basic",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Venn Engineering",
+  "description": "a basic demo project showcasing the usage of the graphql-clou packages",
+  "config": {
+    "db_port": 5432
+  },
+  "scripts": {
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "rm -rf lib/cjs && tsc",
+    "build:esm": "rm -rf lib/esm && tsc -m esnext --outDir lib/esm",
+    "postinstall": "patch-package",
+    "lint": "eslint . --fix  --ext .js,.ts",
+    "lint:ci": "eslint . --format junit -o $LINT_JUNIT_OUTPUT",
+    "test": "echo TODO",
+    "test:ci": "echo TODO",
+    "start": "ts-node src/startServer.ts",
+    "db:bootstrap:local": "docker-compose down && yarn db:start && yarn db:createSchema && yarn db:migrate",
+    "db:createSchema": "wait-on -d 10000 tcp:$npm_package_config_db_port && PGPASSWORD=postgres psql -d venn -U postgres -h localhost -p $npm_package_config_db_port -c \"CREATE SCHEMA IF NOT EXISTS venn;\"",
+    "db:migrate": "wait-on tcp:$npm_package_config_db_port && NODE_ENV=test sequelize-cli db:migrate",
+    "db:seed": "NODE_ENV=test sequelize-cli db:seed:all",
+    "db:start": "DB_PORT=$npm_package_config_db_port docker-compose up -d",
+    "db:stop": "DB_PORT=$npm_package_config_db_port docker-compose down"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@venncity/opencrud-schema-provider": "^1.4.17",
+    "@venncity/sequelize-data-provider": "^1.9.0",
+    "@venncity/sequelize-model": "^1.8.21",
+    "@venncity/base-dao": "^2.5.0",
+    "apollo-server-express": "^2.9.8",
+    "express": "^4.17.3",
+    "graphql-tools": "^4.0.6",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "patch-package": "^6.4.7",
+    "sequelize": "^6.13.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^3.6.4",
+    "wait-on": "^3.3.0"
+  }
+}

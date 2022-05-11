@@ -5,12 +5,12 @@ A mono-repo for sequelize-based graphql opencrud data-access packages
 ## Packages:
 
 * `base-dao` - the main _api_ package of the project. Exposes a per-entity data-access-object with a set of 
-    CRUD operations for each entity.
+    CRUD operations for each entity. 
+  Also includes: pre/post resolve-operation hooks, designed to allow resolving OpenCRUD nested mutation api,
+  one level at a time (similarly to the way standard apollo server resolvers work on queried nested-entities)
 * `cascade-delete` - OpenCRUD data-model-based declarative implementation of cascade-delete/disconnect
 * `clou-utils` - a package containing common utils code required in this project
 * `graphql-transformers` - a package containing transformers between a graphql-api and lower implementation layers
-* `nested-mutation-hooks` - pre/post resolve-operation hooks, designed to allow resolving OpenCRUD nested mutation api, 
-    one level at a time (similarly to the way standard apollo server resolvers work on queried nested-entities)
 * `opencrud-schema-provider` - a package providing an OpenCRUD data-model and schema in different representations
 * `sequelize-data-provider` - a package providing DB access. Inputs should conform with OpenCRUD schema. 
     Implemented using sequelize based on an OpenCRUD data-model
@@ -19,8 +19,8 @@ A mono-repo for sequelize-based graphql opencrud data-access packages
 a schematic and somehow simplistic illustration of a common flow between the packages would be:
 
 ```markdown
-    nested-mutation-hooks (only for mutations, queries are resolved as is) =>
     base-dao =>
+    nested-mutation-hooks (only for mutations, queries are resolved as is) =>
     graphql-transformers (computed-fields transformation, if such exist to OpenCRUD fields) =>
     sequelize-data-provider =>
     graphql-transformers (OpenCrud to sequelize transformation) =>
@@ -40,7 +40,7 @@ $ yarn lerna run build
 * To run a local apollo-server using the provided test entities, for a more interactive experience,
     you can run:
 ```shell script
-packages/nested-mutation-hooks$ yarn start:local
+packages/demo$ yarn start
 ```
 * Then connect using your favourite graphql client (e.g. a playground would open on http://localhost:7777/graphql)
 
