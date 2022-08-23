@@ -29,11 +29,15 @@ describe('BaseDao', () => {
     let serviceContext: any;
     let publicAccessContext: any;
     let governmentDAO: any;
+    let ministryDAO: any;
+    let ministerDAO: any;
     beforeAll(async () => {
       const allDAOs = createAllDAOs();
+      governmentDAO = allDAOs.governmentDAO;
+      ministryDAO = allDAOs.ministryDAO;
+      ministerDAO = allDAOs.ministerDAO;
       serviceContext = await createServiceAuthContext(allDAOs);
       publicAccessContext = createPublicAccessAuthContext(allDAOs);
-      governmentDAO = createAllDAOs().governmentDAO;
     });
 
     test('update many with preSave', async () => {
@@ -53,6 +57,19 @@ describe('BaseDao', () => {
       expect(governmentByCountry[0].id).toEqual(createdGovernment.id);
       await governmentDAO.deleteManyGovernments(serviceContext, { id_in: [createdGovernment.id] });
     });
+
+    test('fetch by field with id inside', async () => {
+      const createdMinister = await ministerDAO.createMinister(serviceContext, { name: "def" })
+      const createdMinistry = await ministryDAO.createMinistry(serviceContext, { name: 'abc', minister: { connect: { id: createdMinister.id }} });
+
+
+      const ministryByMinister = await ministryDAO.ministries(serviceContext, {
+        skipPagination: true,
+        where: { minister: { id: createdMinistry.ministerId } }
+      });
+      expect(ministryByMinister[0].id).toEqual(createdMinistry.id);
+    });
+
     test('fetch by id_in with pagination', async () => {
       const createdGovernment1 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const createdGovernment2 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
@@ -175,7 +192,7 @@ describe('BaseDao', () => {
     let vote4;
     const voteName4 = `Make war${randomNumber}`;
     const voteBallot4 = 'ABSTAIN';
-    let serviceContext: { auth: { isService: boolean; }; openCrudIntrospection: any; openCrudDataModel: any; DAOs: any; };
+    let serviceContext: { auth: { isService: boolean }; openCrudIntrospection: any; openCrudDataModel: any; DAOs: any };
     beforeAll(async () => {
       serviceContext = await createServiceAuthContext(createAllDAOs());
       console.info('random seed', randomNumber);

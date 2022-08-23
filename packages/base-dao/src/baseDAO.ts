@@ -17,6 +17,7 @@ import {
 } from '@venncity/sequelize-data-provider';
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 import { preCreation, postCreation, preUpdate, postUpdate } from './nestedMutationHooks';
+import { createLoaders } from './dataLoaders';
 
 const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
 const { getFieldType } = openCrudSchema.graphqlSchemaUtils;
@@ -52,16 +53,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   const { READ, CREATE, DELETE } = supportedActions;
 
   const authTypeName = upperFirst(entityName);
-  const dataLoaderById = new DataLoader(getEntitiesByIdsInternal);
-  const dataLoaderForSingleRelatedEntity: DataLoader<GetRelatedEntityArgs, any> = new DataLoader(
-    keys => loadSingleRelatedEntities(entityName, keys),
-    {
-      cacheKeyFn: key => hash(key)
-    }
-  );
-  const dataLoaderForRelatedEntities = new DataLoader<GetRelatedEntitiesArgs, any>(keys => loadRelatedEntities(entityName, keys), {
-    cacheKeyFn: key => hash(key)
-  });
+
+  const { dataLoaderById, dataLoaderForSingleRelatedEntity, dataLoaderForField, dataLoaderForRelatedEntities } = createLoaders(entityName);
+
   hooks = {
     preCreate: async entity => {
       return entity;
@@ -98,15 +92,6 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     });
 
     return resolvedEntities;
-  }
-
-  async function getEntitiesByIdsInternal(entityIds) {
-    const entities = await dataProvider.getAllEntities(entityName, { where: { id_in: entityIds } });
-
-    // The result array must contain in each index a value corresponding to the id given in that index.
-    // See https://github.com/facebook/dataloader#batch-function
-    const entitiesToReturn = entityIds.map(entityId => entities.find(entity => entity.id === entityId));
-    return entitiesToReturn;
   }
 
   function isFetchingEntityById(where) {
