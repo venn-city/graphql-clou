@@ -8,6 +8,6 @@ export function createLoaders(entityName) {
     dataLoaderById: getDataLoaderById(entityName),
     dataLoaderForField: getDataLoaderForField(entityName),
     dataLoaderForRelatedEntities: getDataLoaderForRelatedEntities(entityName),
-    dataLoaderForSingleRelatedField: getDataLoaderForSingleRelatedEntity(entityName)
+    dataLoaderForSingleRelatedEntity: getDataLoaderForSingleRelatedEntity(entityName)
   };
 }

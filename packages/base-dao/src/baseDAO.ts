@@ -2,19 +2,12 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
 import DataLoader from 'dataloader';
 import { isEqual, without, upperFirst, lowerFirst, get } from 'lodash';
-import hash from 'object-hash';
 import { forEachOf, map as asyncMap, each as asyncEach } from 'async';
 import pluralize from 'pluralize';
 import openCrudSchema from '@venncity/opencrud-schema-provider';
 import { transformComputedFieldsWhereArguments } from '@venncity/graphql-transformers';
 import { cascadeDelete } from '@venncity/cascade-delete';
-import {
-  sequelizeDataProvider as dataProvider,
-  loadSingleRelatedEntities,
-  loadRelatedEntities,
-  GetRelatedEntitiesArgs,
-  GetRelatedEntityArgs
-} from '@venncity/sequelize-data-provider';
+import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 import { preCreation, postCreation, preUpdate, postUpdate } from './nestedMutationHooks';
 import { createLoaders } from './dataLoaders';
@@ -73,9 +66,8 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   }
 
   async function getAllEntitiesInternal(args) {
-    const argsWithoutPagination = args.where;
-    const fetchIsExactlyByIdIn =
-      argsWithoutPagination && Object.keys(argsWithoutPagination).length === 1 && argsWithoutPagination.id_in && !args.orderBy;
+    const whereArg = args.where;
+    const fetchIsExactlyByIdIn = whereArg && Object.keys(whereArg).length === 1 && whereArg.id_in && !args.orderBy;
     if (fetchIsExactlyByIdIn) {
       let loadedEntities = await dataLoaderById.loadMany(args.where.id_in);
       if (args.first || args.skip) {
@@ -84,6 +76,12 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
         loadedEntities = loadedEntities.slice(startIndex, endIndex);
       }
       return without(loadedEntities, undefined);
+    }
+
+    const fetchIsExactlyByFieldIdIn = whereArg && Object.keys(whereArg).length === 1 && isFetchingEntityByNestedId(whereArg) && !args.orderBy;
+    if (fetchIsExactlyByFieldIdIn) {
+      const loadedEntity = await dataLoaderForField.load(whereArg);
+      return [loadedEntity]; // TODO Verify
     }
 
     const resolvedEntities = await dataProvider.getAllEntities(entityName, args);
@@ -97,6 +95,11 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   function isFetchingEntityById(where) {
     const whereKeys = Object.keys(where);
     return whereKeys.length === 1 && whereKeys[0] === 'id';
+  }
+
+  function isFetchingEntityByNestedId(where) {
+    const whereKeys = Object.keys(where);
+    return whereKeys.length === 1 && Object.prototype.hasOwnProperty.call(where[whereKeys[0]], 'id');
   }
 
   function clearLoaders(entityToDelete) {

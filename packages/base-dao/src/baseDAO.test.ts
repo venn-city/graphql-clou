@@ -59,15 +59,41 @@ describe('BaseDao', () => {
     });
 
     test('fetch by field with id inside', async () => {
-      const createdMinister = await ministerDAO.createMinister(serviceContext, { name: "def" })
-      const createdMinistry = await ministryDAO.createMinistry(serviceContext, { name: 'abc', minister: { connect: { id: createdMinister.id }} });
+      const createMinister = async () => ministerDAO.createMinister(serviceContext, { name: random.alphaNumeric(10) });
+      const createMinistry = async ministerId =>
+        ministryDAO.createMinistry(serviceContext, { name: random.alphaNumeric(10), minister: { connect: { id: ministerId } } });
 
+      const [createdMinister, createdMinister2, createdMinister3] = await Promise.all([createMinister(), createMinister(), createMinister()]);
+      const [createdMinistry, createdMinistry2, createdMinistry3] = await Promise.all([
+        createMinistry(createdMinister.id),
+        createMinistry(createdMinister2.id),
+        createMinistry(createdMinister3.id)
+      ]);
 
-      const ministryByMinister = await ministryDAO.ministries(serviceContext, {
-        skipPagination: true,
-        where: { minister: { id: createdMinistry.ministerId } }
+      const dataProviderSpy = jest.spyOn(sequelizeDataProvider, 'getAllEntities');
+
+      const getMinistries = async ministerId =>
+        ministryDAO.ministries(serviceContext, {
+          skipPagination: true,
+          skipAuth: true, // TODO Verify
+          where: { minister: { id: ministerId } }
+        });
+
+      const [ministryByMinister1, ministryByMinister2, ministryByMinister3] = await Promise.all([
+        getMinistries(createdMinistry.ministerId),
+        getMinistries(createdMinistry2.ministerId),
+        getMinistries(createdMinistry3.ministerId)
+      ]);
+
+      expect(dataProviderSpy).toHaveBeenCalledTimes(1);
+      expect(dataProviderSpy).toHaveBeenCalledWith('ministry', {
+        where: { minister: { id_in: [createdMinister.id, createdMinister2.id, createdMinister3.id] } }
       });
-      expect(ministryByMinister[0].id).toEqual(createdMinistry.id);
+
+
+      expect(ministryByMinister1[0].id).toEqual(createdMinistry.id);
+      expect(ministryByMinister2[0].id).toEqual(createdMinistry2.id);
+      expect(ministryByMinister3[0].id).toEqual(createdMinistry3.id);
     });
 
     test('fetch by id_in with pagination', async () => {
