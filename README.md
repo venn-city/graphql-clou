@@ -20,7 +20,6 @@ a schematic and somehow simplistic illustration of a common flow between the pac
 
 ```markdown
     base-dao =>
-    nested-mutation-hooks (only for mutations, queries are resolved as is) =>
     graphql-transformers (computed-fields transformation, if such exist to OpenCRUD fields) =>
     sequelize-data-provider =>
     graphql-transformers (OpenCrud to sequelize transformation) =>
