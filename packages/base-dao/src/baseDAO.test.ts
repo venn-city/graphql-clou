@@ -75,7 +75,7 @@ describe('BaseDao', () => {
       const getMinistries = async ministerId =>
         ministryDAO.ministries(serviceContext, {
           skipPagination: true,
-          skipAuth: true, // TODO Verify
+          skipAuth: true,
           where: { minister: { id: ministerId } }
         });
 
