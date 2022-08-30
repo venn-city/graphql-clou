@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.5.0...@venncity/base-dao@2.5.1) (2022-08-30)
+
+**Note:** Version bump only for package @venncity/base-dao
+
+
+
+
+
 # [2.5.0](https://github.com/venn-city/graphql-clou/compare/@venncity/base-dao@2.4.6...@venncity/base-dao@2.5.0) (2022-03-20)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@venncity/cascade-delete",
-  "version": "1.2.61",
+  "version": "1.2.62",
   "author": "Venn Engineering",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -32,9 +32,9 @@
     ]
   },
   "dependencies": {
-    "@venncity/opencrud-schema-provider": "^1.4.17",
-    "@venncity/sequelize-data-provider": "^1.9.0",
-    "@venncity/sequelize-model": "^1.8.21",
+    "@venncity/opencrud-schema-provider": "^1.4.18",
+    "@venncity/sequelize-data-provider": "^1.9.1",
+    "@venncity/sequelize-model": "^1.8.22",
     "async": "^3.1.0",
     "lodash": "^4.17.15",
     "pluralize": "^8.0.0",
