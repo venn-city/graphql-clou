@@ -11,6 +11,7 @@ import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 import { preCreation, postCreation, preUpdate, postUpdate } from './nestedMutationHooks';
 import { createLoaders } from './dataLoaders';
+import { compact } from 'lodash';
 
 const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
 const { getFieldType } = openCrudSchema.graphqlSchemaUtils;
@@ -81,7 +82,7 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     const fetchIsExactlyByFieldIdIn = whereArg && Object.keys(whereArg).length === 1 && isFetchingEntityByNestedId(whereArg) && !args.orderBy;
     if (fetchIsExactlyByFieldIdIn) {
       const loadedEntity = await dataLoaderForField.load(whereArg);
-      return [loadedEntity];
+      return loadedEntity ? [loadedEntity] : [];
     }
 
     const resolvedEntities = await dataProvider.getAllEntities(entityName, args);
