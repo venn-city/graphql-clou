@@ -25,7 +25,6 @@ if (process.env.IS_TEST !== 'true') {
 }
 
 const enableLogging = isTrue(config.get('sequelize.logging'));
-const sq: any = {};
 
 const sequelize = new Sequelize.Sequelize(config.get('db.name'), config.get('db.user'), config.get('db.password'), {
   host: config.get('db.host'),
@@ -92,8 +91,11 @@ function init(models) {
   return sq;
 }
 
-sq.sequelize = sequelize;
-sq.Sequelize = Sequelize;
-sq.init = init;
+const sq = {
+  sequelize,
+  Sequelize,
+  init,
+  initialized: false
+};
 
 export default sq;
