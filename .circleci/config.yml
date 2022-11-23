@@ -18,7 +18,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && cp .npmrc ~/.npmrc
       - run:
           name: install Lerna
-          command: cd .. && yarn global add lerna@4.0.0
+          command: cd .. && yarn global add lerna
       - run:
           name: changed packages
           command: export PATH="$PATH:$(yarn global bin)" && lerna changed > lerna-changed.txt && lerna changed
@@ -63,7 +63,7 @@ jobs:
           path: reports/junit/@venncity
       - run:
           name: Coverage Enforce
-          command: yarn exec-changed lerna exec --ignore @venncity/graphql-demo-basic 'COVERAGE_PROJECT_NAME=$LERNA_PACKAGE_NAME PATH="$PATH:$(yarn global bin)" coverage-enforce'
+          command: yarn exec-changed lerna exec 'COVERAGE_PROJECT_NAME=$LERNA_PACKAGE_NAME PATH="$PATH:$(yarn global bin)" coverage-enforce'
   lint:
     <<: *defaults
     steps:
