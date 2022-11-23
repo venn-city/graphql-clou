@@ -1,6 +1,6 @@
 {
   "name": "@venncity/graphql-demo-basic",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -29,7 +29,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@venncity/base-dao": "^2.5.2",
+    "@venncity/base-dao": "^2.5.3",
     "@venncity/opencrud-schema-provider": "^1.4.18",
     "@venncity/sequelize-data-provider": "^1.9.1",
     "@venncity/sequelize-model": "^1.8.22",
