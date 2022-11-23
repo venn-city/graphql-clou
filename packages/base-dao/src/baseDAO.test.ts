@@ -29,15 +29,11 @@ describe('BaseDao', () => {
     let serviceContext: any;
     let publicAccessContext: any;
     let governmentDAO: any;
-    let ministryDAO: any;
-    let ministerDAO: any;
     beforeAll(async () => {
       const allDAOs = createAllDAOs();
-      governmentDAO = allDAOs.governmentDAO;
-      ministryDAO = allDAOs.ministryDAO;
-      ministerDAO = allDAOs.ministerDAO;
       serviceContext = await createServiceAuthContext(allDAOs);
       publicAccessContext = createPublicAccessAuthContext(allDAOs);
+      governmentDAO = createAllDAOs().governmentDAO;
     });
 
     test('update many with preSave', async () => {
@@ -57,45 +53,6 @@ describe('BaseDao', () => {
       expect(governmentByCountry[0].id).toEqual(createdGovernment.id);
       await governmentDAO.deleteManyGovernments(serviceContext, { id_in: [createdGovernment.id] });
     });
-
-    test('fetch by field with id inside', async () => {
-      const createMinister = async () => ministerDAO.createMinister(serviceContext, { name: random.alphaNumeric(10) });
-      const createMinistry = async ministerId =>
-        ministryDAO.createMinistry(serviceContext, { name: random.alphaNumeric(10), minister: { connect: { id: ministerId } } });
-
-      const [createdMinister, createdMinister2, createdMinister3] = await Promise.all([createMinister(), createMinister(), createMinister()]);
-      const [createdMinistry, createdMinistry2, createdMinistry3] = await Promise.all([
-        createMinistry(createdMinister.id),
-        createMinistry(createdMinister2.id),
-        createMinistry(createdMinister3.id)
-      ]);
-
-      const dataProviderSpy = jest.spyOn(sequelizeDataProvider, 'getAllEntities');
-
-      const getMinistries = async ministerId =>
-        ministryDAO.ministries(serviceContext, {
-          skipPagination: true,
-          skipAuth: true,
-          where: { minister: { id: ministerId } }
-        });
-
-      const [ministryByMinister1, ministryByMinister2, ministryByMinister3] = await Promise.all([
-        getMinistries(createdMinistry.ministerId),
-        getMinistries(createdMinistry2.ministerId),
-        getMinistries(createdMinistry3.ministerId)
-      ]);
-
-      expect(dataProviderSpy).toHaveBeenCalledTimes(1);
-      expect(dataProviderSpy).toHaveBeenCalledWith('ministry', {
-        where: { minister: { id_in: [createdMinister.id, createdMinister2.id, createdMinister3.id] } }
-      });
-
-
-      expect(ministryByMinister1[0].id).toEqual(createdMinistry.id);
-      expect(ministryByMinister2[0].id).toEqual(createdMinistry2.id);
-      expect(ministryByMinister3[0].id).toEqual(createdMinistry3.id);
-    });
-
     test('fetch by id_in with pagination', async () => {
       const createdGovernment1 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
       const createdGovernment2 = await governmentDAO.createGovernment(serviceContext, { ...buildTestObject(), country: 'DE' });
@@ -218,7 +175,7 @@ describe('BaseDao', () => {
     let vote4;
     const voteName4 = `Make war${randomNumber}`;
     const voteBallot4 = 'ABSTAIN';
-    let serviceContext: { auth: { isService: boolean }; openCrudIntrospection: any; openCrudDataModel: any; DAOs: any };
+    let serviceContext: { auth: { isService: boolean; }; openCrudIntrospection: any; openCrudDataModel: any; DAOs: any; };
     beforeAll(async () => {
       serviceContext = await createServiceAuthContext(createAllDAOs());
       console.info('random seed', randomNumber);

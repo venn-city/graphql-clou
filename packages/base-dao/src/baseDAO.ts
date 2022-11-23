@@ -2,15 +2,21 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "argsIgnorePattern": "info" }] */
 import DataLoader from 'dataloader';
 import { isEqual, without, upperFirst, lowerFirst, get } from 'lodash';
+import hash from 'object-hash';
 import { forEachOf, map as asyncMap, each as asyncEach } from 'async';
 import pluralize from 'pluralize';
 import openCrudSchema from '@venncity/opencrud-schema-provider';
 import { transformComputedFieldsWhereArguments } from '@venncity/graphql-transformers';
 import { cascadeDelete } from '@venncity/cascade-delete';
-import { sequelizeDataProvider as dataProvider } from '@venncity/sequelize-data-provider';
+import {
+  sequelizeDataProvider as dataProvider,
+  loadSingleRelatedEntities,
+  loadRelatedEntities,
+  GetRelatedEntitiesArgs,
+  GetRelatedEntityArgs
+} from '@venncity/sequelize-data-provider';
 import { enforcePagination } from '@venncity/graphql-pagination-enforce';
 import { preCreation, postCreation, preUpdate, postUpdate } from './nestedMutationHooks';
-import { createLoaders } from './dataLoaders';
 
 const { getQueryWhereInputName, getMutationWhereInputName } = openCrudSchema.introspectionUtils;
 const { getFieldType } = openCrudSchema.graphqlSchemaUtils;
@@ -46,9 +52,16 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   const { READ, CREATE, DELETE } = supportedActions;
 
   const authTypeName = upperFirst(entityName);
-
-  const { dataLoaderById, dataLoaderForSingleRelatedEntity, dataLoaderForField, dataLoaderForRelatedEntities } = createLoaders(entityName);
-
+  const dataLoaderById = new DataLoader(getEntitiesByIdsInternal);
+  const dataLoaderForSingleRelatedEntity: DataLoader<GetRelatedEntityArgs, any> = new DataLoader(
+    keys => loadSingleRelatedEntities(entityName, keys),
+    {
+      cacheKeyFn: key => hash(key)
+    }
+  );
+  const dataLoaderForRelatedEntities = new DataLoader<GetRelatedEntitiesArgs, any>(keys => loadRelatedEntities(entityName, keys), {
+    cacheKeyFn: key => hash(key)
+  });
   hooks = {
     preCreate: async entity => {
       return entity;
@@ -66,8 +79,9 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
   }
 
   async function getAllEntitiesInternal(args) {
-    const whereArg = args.where;
-    const fetchIsExactlyByIdIn = whereArg && Object.keys(whereArg).length === 1 && whereArg.id_in && !args.orderBy;
+    const argsWithoutPagination = args.where;
+    const fetchIsExactlyByIdIn =
+      argsWithoutPagination && Object.keys(argsWithoutPagination).length === 1 && argsWithoutPagination.id_in && !args.orderBy;
     if (fetchIsExactlyByIdIn) {
       let loadedEntities = await dataLoaderById.loadMany(args.where.id_in);
       if (args.first || args.skip) {
@@ -78,12 +92,6 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       return without(loadedEntities, undefined);
     }
 
-    const fetchIsExactlyByFieldIdIn = whereArg && Object.keys(whereArg).length === 1 && isFetchingEntityByNestedId(whereArg) && !args.orderBy;
-    if (fetchIsExactlyByFieldIdIn) {
-      const loadedEntity = await dataLoaderForField.load(whereArg);
-      return [loadedEntity];
-    }
-
     const resolvedEntities = await dataProvider.getAllEntities(entityName, args);
     resolvedEntities.forEach(entity => {
       dataLoaderById.prime(entity.id, entity);
@@ -92,14 +100,18 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     return resolvedEntities;
   }
 
+  async function getEntitiesByIdsInternal(entityIds) {
+    const entities = await dataProvider.getAllEntities(entityName, { where: { id_in: entityIds } });
+
+    // The result array must contain in each index a value corresponding to the id given in that index.
+    // See https://github.com/facebook/dataloader#batch-function
+    const entitiesToReturn = entityIds.map(entityId => entities.find(entity => entity.id === entityId));
+    return entitiesToReturn;
+  }
+
   function isFetchingEntityById(where) {
     const whereKeys = Object.keys(where);
     return whereKeys.length === 1 && whereKeys[0] === 'id';
-  }
-
-  function isFetchingEntityByNestedId(where) {
-    const whereKeys = Object.keys(where);
-    return whereKeys.length === 1 && Object.prototype.hasOwnProperty.call(where[whereKeys[0]], 'id');
   }
 
   function clearLoaders(entityToDelete) {
