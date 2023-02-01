@@ -120,6 +120,17 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
     dataLoaderForRelatedEntities.clearAll();
   }
 
+  async function handlePermissions(auth, authDataFromDB, context, fetchedEntity, entitiesThatUserCanAccess, entitiesThatUserCannotAccess) {
+    if (hasPermission(auth, READ, authDataFromDB, context, authTypeName)) {
+      let entityWithOnlyAuthorizedFields = context.skipAuth
+        ? fetchedEntity
+        : filterUnauthorizedFields(auth, { $type: authTypeName, ...fetchedEntity }, READ);
+      entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
+      entitiesThatUserCanAccess.push(entityWithOnlyAuthorizedFields);
+    } else {
+      entitiesThatUserCannotAccess.push(fetchedEntity);
+    }
+  }
   return {
     computedWhereArgumentsTransformation: hooks.computedWhereArgumentsTransformation,
     transformComputedFieldsWhereArguments,
@@ -168,18 +179,24 @@ export function createEntityDAO({ entityName, hooks, pluralizationFunction = plu
       const fetchedEntities = await getAllEntitiesInternal(transformedArgs);
       const entitiesThatUserCanAccess: any = [];
       const entitiesThatUserCannotAccess: any = [];
-      await asyncEach(fetchedEntities, async (fetchedEntity: any) => {
-        const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
-        if (hasPermission(auth, READ, authDataFromDB, context, authTypeName)) {
-          let entityWithOnlyAuthorizedFields = context.skipAuth
-            ? fetchedEntity
-            : filterUnauthorizedFields(auth, { $type: authTypeName, ...fetchedEntity }, READ);
-          entityWithOnlyAuthorizedFields = await hooks.postFetch(entityWithOnlyAuthorizedFields, context);
-          entitiesThatUserCanAccess.push(entityWithOnlyAuthorizedFields);
-        } else {
-          entitiesThatUserCannotAccess.push(fetchedEntity);
-        }
-      });
+
+      if (hooks.authFunctions?.getAuthDataFromDBForMultipleEntities) {
+        const fetchedEntitiesIds = fetchedEntities.map(fetchedEntity => fetchedEntity.id);
+        const entityToAuthDataMap = await hooks.authFunctions?.getAuthDataFromDBForMultipleEntities(context, fetchedEntitiesIds);
+        await asyncEach(fetchedEntities, async (fetchedEntity: any) => {
+          const entityToAuthData = entityToAuthDataMap.find(map => map.entityId);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { entityId, ...authDataFromDB } = entityToAuthData;
+
+          await handlePermissions(auth, authDataFromDB, context, fetchedEntity, entitiesThatUserCanAccess, entitiesThatUserCannotAccess);
+        });
+      } else {
+        await asyncEach(fetchedEntities, async (fetchedEntity: any) => {
+          const authDataFromDB = await hooks.authFunctions.getAuthDataFromDB(context, fetchedEntity.id);
+          await handlePermissions(auth, authDataFromDB, context, fetchedEntity, entitiesThatUserCanAccess, entitiesThatUserCannotAccess);
+        });
+      }
+
       logRequestsThatReturnUnauthorizedEntities(entitiesThatUserCannotAccess, context, GET_ALL_ENTITIES_FUNCTION_NAME);
       return entitiesThatUserCanAccess;
     },
